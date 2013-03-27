@@ -1,0 +1,23 @@
+[[ Presentacion: hoja tama~o carta. SObre rotulado con nombre de proyecto y categoria ]]
+
+   >Portada: *Logo y Nombres de la Universidad y del DI
+   	     *Nombre Pre-Empresa, Proyecto y Categoria
+	     *Nombre integrantes de equipo (e-mail y celulares). Indicar Jefe de Proyecto. Campus y Resumen del problema.
+   >Identificacion del problema u oportunidad: (2-3 paginas)
+   		       		  	       *Oportunidad (dif. situacion deseable y actual)
+					       *Contexto (personas y/o empresas o instituciones)
+					       *Caracteristicas importantes de segmento de clientes (usuario, cliente y/o beneficiario)
+					       *Posibles causales del problema.
+					       *Antecedentes cuantitativos sobre la identificacion del problema o segmento de clientes.
+   >Visualizacion de la solucion: (2-3 paginas)
+   		     		  *Breve descripcion de la propuesta de solucion
+				  *'Propuesta de valor' (valor agregado al segmento de cliente)
+				  *Dificultades para lograr solucion y/o factibilidad en el a~o.
+				  *Indicar si existe trabajo adelantado y/o se cuenta con cliente o usuario.
+   >Innovacion: (1-2 paginas)
+   	       	*Fundamentar innovacion (resolver problema y/o solucion propuesta)
+		*Identificar posibles competidores (Chile, latinoamerica, mundo) (justificar con respaldos o datos cuantitativos).
+		*Analizar caracteristicas diferenciadoras con la competencia
+   >Anexo I: copia presentacion (6ppt en una pagina)
+   >Anexo II: CV (1 pagina por integrante)
+   >Anexo III: Otros (1 pagina)

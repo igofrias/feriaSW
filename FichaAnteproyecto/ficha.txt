@@ -1,0 +1,14 @@
+Nombre de Proyecto:	V&RBot
+Nombre Pre-Empresa:	Kadras
+Descripcion corta:	[[ FALTA! ]] (130 caracteres)
+Jefe de Proyecto:	Rodrigo Frias	rodrigo.frias@alumnos.usm.cl	83988257
+Equipo Compuesto por:	Celeste Bertin	
+			Patricio Carrasco
+			Rocio Fernandez
+       		 	Rodrigo Frias	rodrigo.frias@alumnos.usm.cl	83988257
+Categoria:		Educacion
+Campus:			Santiago San Joaquin
+
+Resumen (160 palabras 4 parrafos. P1: Descripcion problema. P2: Solucion. P3: Propuesta de Valor. P4: Innovacion de la Solucion)
+
+[[ FALTA ]]
