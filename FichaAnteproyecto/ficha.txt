@@ -1,5 +1,5 @@
-Nombre de Proyecto:	V&RBot
-Nombre Pre-Empresa:	Kadras
+Nombre de Proyecto:	Lego Pet'o
+Nombre Pre-Empresa:	kartofel' ; 
 Descripcion corta:	[[ FALTA! ]] (130 caracteres)
 Jefe de Proyecto:	Rodrigo Frias	rodrigo.frias@alumnos.usm.cl	83988257
 Equipo Compuesto por:	Celeste Bertin	
