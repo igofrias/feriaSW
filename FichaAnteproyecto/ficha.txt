@@ -1,6 +1,6 @@
 Nombre de Proyecto:	Lego Pet
 Nombre Pre-Empresa:	Phyrex
-Descripcion corta:	Aplicación Android que expande la interacción entre un robot de Lego, a través de las funcionalidades integradas de los smartphone
+Descripcion corta:	Aplicación Android que expande la interacción de los robot de Lego, a través de las funcionalidades integradas de los smartphones.
 Jefe de Proyecto:	Rodrigo Frias	rodrigo.frias@alumnos.usm.cl	83988257
 Equipo Compuesto por:	Celeste Bertin	
 			Patricio Carrasco
