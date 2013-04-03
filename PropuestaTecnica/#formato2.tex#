@@ -1,0 +1,110 @@
+\documentclass[a4paper,11pt]{article} %tipo de documento y tamaño de papel y letra
+\usepackage[utf8]{inputenc} %codificación de caracteres
+\usepackage[spanish]{babel} %idioma
+\usepackage{fancyhdr} %tipo de página, LINDA biggrin.gif
+\usepackage[top=3.5cm,bottom=2.5cm,right=2cm,left=2.5cm]{geometry} %márgenes
+\usepackage[rflt]{floatflt} %ni puta idea
+
+
+%\usepackage{helvet} %esto es pa escribir con Arial en vez de times new roman
+%\renewcommand\familydefault{\sfdefault} %descomenta estas lineas para escribir en arial
+
+\usepackage{graphicx} %para usar imagenes
+%\newcommand{\imgdir}{doc-img} % para meter las imágenes en una carpeta especial, tunz en la carpeta del documento tiene q ir otra que se llame 'doc-img'
+\graphicspath{{\pic/}} %le dice que las imágenes están en la carpeta de arriba
+
+\usepackage{amsmath} %pa usar símbolos matematicos
+\numberwithin{equation}{section} % pa usar ecuaciones de modo lindo
+\numberwithin{figure}{section} %para agregar imágenes
+\numberwithin{table}{section} %para agregar tablas
+
+\usepackage{subfigure} % pa usar sub figuras
+
+
+
+\pagestyle{fancy} %configuración para la pagina linda
+\renewcommand{\sectionmark}[1]{\markboth{}{\thesection\ \ #1}} %cambios de comentarios
+\lhead{} %parte de arriba, izq
+\chead{} %parte de arriba, centro
+\rhead{\rightmark} %parte de arriba, derecha, le agrega la marca del capitulo
+\lfoot{} %parte de abajo, izq
+\cfoot{} %parte de abajo, centro
+\rfoot{\thepage} %parte de abajo, derecha, va el numero de la página
+
+
+%-------------portada---------------------------------%
+\begin{document}
+\begin{titlepage} %portada
+\thispagestyle{empty} %borrar el formato de pagina linda
+\begin{flushleft} %alinear a la izq
+\includegraphics[scale=0.25]{logoUSMC.eps} %agregar imagen, en mi caso es el logo del dpto, pero tu podríai poner el de qca.
+\vfill %vertical fill, llena hacia abajo
+\end{flushleft}
+
+\vspace{2cm} %espacio vertical , en realidad es un enter de 2 cm
+\begin{center} %centrar
+{\huge Laboratorio de análisis de señales: Experiencia 7 \\ %
+Sistemas Lineales Invariantes en el Tiempo\\
+Realizada el 3 de Diciembre de 2008
+}
+\end{center}
+
+\vspace{6cm}
+\begin{flushright} %alinear derecha
+Nombre: Javier Palma E.\\
+Curso: Laboratorio Análisis de Señales\\
+Profesor: Alex Ulloa\\
+10 de Diciembre 2008
+\end{flushright}
+\end{titlepage}
+%------------------fin de la portada --------------------%
+
+\setcounter{page}{1} %empezar enumerando la página 1
+
+\tableofcontents %índice
+\newpage
+
+\section{} %Nombre_de_la_sección (capitulo)
+\subsection{} %subsección, osea 1.1
+\subsubsection{} %1.1.1
+\subsubsubsection{} %1.1.1.1
+
+\begin{figure}[h] %insertar imagen, la h significa 'here', osea aquí
+\centering
+\includegraphics[scale=0.6]{} % nombre de la imagen entre las llaves
+\caption{} %leyenda bajo la imagen
+\label{} %etiqueta para ubicar la imagen despues
+\end{figure}
+
+{\bf } %escribir en negrita
+{\tt } %para escribir con letra tipo maquina de escribir, sirve para anotar códigos o en tu caso, fórmulas o reacciones químicas
+
+\begin{itemize} %para enumerar, y usar viñetas tipo
+%* hola
+%* como estas
+\item{} %este será el texto puntuado
+
+\end{itemize}
+
+\begin{table}[h] %tablas, h significa here
+\begin{center}
+\begin{tabular}{|c|c|} %la barrita representa la linea de separacion, y la 'c' la cantidad de columnas
+\hline
+primera columna & segunda columna \\ %el '&' es el separador de columnas
+\hline
+\\
+\hline
+\\
+\hline
+\\
+\hline
+\\ %y asi sucesivamente, no existe límite de filas
+\end{tabular}
+\end{center}
+\caption{}
+\label{}
+\end{table}
+
+
+
+\end{document}
