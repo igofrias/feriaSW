@@ -21,3 +21,20 @@
    >Anexo I: copia presentacion (6ppt en una pagina)
    >Anexo II: CV (1 pagina por integrante)
    >Anexo III: Otros (1 pagina)
+
+
+
+
+%-------------------------------------------------------------------------------
+
+Referencias
+        *Taller de robotica de la UChile (basado en Lego Mindstorm) [3 dias atras?] >> Posible competencia.
+        *Alma Lego Simulator
+        *IRE (Interescolar de Robotica para Escolares)
+
+Clientes
+        *DI
+        *SCCC
+        *Edubrick (?)
+
+
