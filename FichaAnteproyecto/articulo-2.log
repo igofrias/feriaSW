@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  3 APR 2013 04:03
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  3 APR 2013 22:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -9,8 +9,8 @@ Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, lo
 aded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
-File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -355,12 +355,12 @@ LaTeX Info: Redefining \% on input line 72.
 * \topmargin=-38.1381pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=12.0pt
+* \topskip=10.0pt
 * \footskip=30.0pt
-* \marginparwidth=44.0pt
-* \marginparsep=10.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -426,17 +426,36 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for U+msa on input line 97.
+LaTeX Font Info:    Try loading font information for U+msa on input line 98.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 97.
+LaTeX Font Info:    Try loading font information for U+msb on input line 98.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 113.
+Underfull \hbox (badness 10000) in paragraph at lines 106--108
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--112
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 114--115
+
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 118.
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--118
+
+ []
+
 Package epstopdf Info: Source file: <logoUSM-DI.eps>
 (epstopdf)                    date: 2013-04-03 02:57:34
 (epstopdf)                    size: 196681 bytes
@@ -445,20 +464,19 @@ Package epstopdf Info: Source file: <logoUSM-DI.eps>
 (epstopdf)                    size: 47161 bytes
 (epstopdf)             Command: <repstopdf --outfile=logoUSM-DI-eps-converted-t
 o.pdf logoUSM-DI.eps>
-(epstopdf)             \includegraphics on input line 113.
+(epstopdf)             \includegraphics on input line 118.
 Package epstopdf Info: Output file is already uptodate.
-
 <logoUSM-DI-eps-converted-to.pdf, id=8, 1168.365pt x 173.64874pt>
 File: logoUSM-DI-eps-converted-to.pdf Graphic file (type pdf)
 
 <use logoUSM-DI-eps-converted-to.pdf>
-Package pdftex.def Info: logoUSM-DI-eps-converted-to.pdf used on input line 113
+Package pdftex.def Info: logoUSM-DI-eps-converted-to.pdf used on input line 118
 .
 (pdftex.def)             Requested size: 292.09053pt x 43.41208pt.
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 47.76212pt.
+ Make it at least 47.01212pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
@@ -466,31 +484,31 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./logoUSM-DI-eps-converted
 -to.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 113.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 118.
  (./articulo-2.aux
 LaTeX Info: Redefining \. on input line 21.
 LaTeX Info: Redefining \% on input line 21.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 113.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 113.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 118.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 118.
 Package rerunfilecheck Info: File `articulo-2.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 113.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 118.
  ) 
 Here is how much of TeX's memory you used:
- 6935 strings out of 495059
- 98567 string characters out of 3182030
- 195177 words of memory out of 3000000
- 10033 multiletter control sequences out of 15000+200000
- 9706 words of font info for 37 fonts, out of 3000000 for 9000
+ 6922 strings out of 495059
+ 98427 string characters out of 3182030
+ 196152 words of memory out of 3000000
+ 10026 multiletter control sequences out of 15000+200000
+ 6757 words of font info for 27 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 29i,15n,43p,298b,435s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 29i,15n,43p,316b,435s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on articulo-2.pdf (1 page, 101967 bytes).
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on articulo-2.pdf (1 page, 112265 bytes).
 PDF statistics:
  43 PDF objects out of 1000 (max. 8388607)
  32 compressed objects within 1 object stream
