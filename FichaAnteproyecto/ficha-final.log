@@ -1,7 +1,16 @@
+<<<<<<< HEAD:FichaAnteproyecto/articulo-2.log
 This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.3.28)  3 APR 2013 23:27
 entering extended mode
 **C:/Users/Celeste/Documents/GitHub/feriaSW/FichaAnteproyecto/articulo-2.tex
 (C:/Users/Celeste/Documents/GitHub/feriaSW/FichaAnteproyecto/articulo-2.tex
+=======
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  3 APR 2013 23:44
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**ficha-final.tex
+(./ficha-final.tex
+>>>>>>> 74e8568a1bfb38ce5908358a82da4f0ecd76f608:FichaAnteproyecto/ficha-final.log
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -325,7 +334,16 @@ File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 LaTeX Warning: Unused global option(s):
     [letter].
 
+<<<<<<< HEAD:FichaAnteproyecto/articulo-2.log
 (C:\Users\Celeste\Documents\GitHub\feriaSW\FichaAnteproyecto\articulo-2.aux)
+=======
+(./ficha-final.aux
+LaTeX Info: Redefining \. on input line 21.
+LaTeX Info: Redefining \% on input line 21.
+)
+\openout1 = `ficha-final.aux'.
+
+>>>>>>> 74e8568a1bfb38ce5908358a82da4f0ecd76f608:FichaAnteproyecto/ficha-final.log
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 72.
 LaTeX Font Info:    ... okay on input line 72.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 72.
@@ -398,9 +416,15 @@ LaTeX Info: Redefining \ref on input line 72.
 LaTeX Info: Redefining \pageref on input line 72.
 LaTeX Info: Redefining \nameref on input line 72.
 
+<<<<<<< HEAD:FichaAnteproyecto/articulo-2.log
 (C:\Users\Celeste\Documents\GitHub\feriaSW\FichaAnteproyecto\articulo-2.out)
 (C:\Users\Celeste\Documents\GitHub\feriaSW\FichaAnteproyecto\articulo-2.out)
 \@outlinefile=\write3
+=======
+(./ficha-final.out) (./ficha-final.out)
+\@outlinefile=\write3
+\openout3 = `ficha-final.out'.
+>>>>>>> 74e8568a1bfb38ce5908358a82da4f0ecd76f608:FichaAnteproyecto/ficha-final.log
 
 (C:\Users\Celeste\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -459,15 +483,23 @@ l.116 \end{document}
 
 {C:/Users/Celeste/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 116.
+<<<<<<< HEAD:FichaAnteproyecto/articulo-2.log
 
 (C:\Users\Celeste\Documents\GitHub\feriaSW\FichaAnteproyecto\articulo-2.aux)
+=======
+ (./ficha-final.aux
+LaTeX Info: Redefining \. on input line 21.
+LaTeX Info: Redefining \% on input line 21.
+)
+>>>>>>> 74e8568a1bfb38ce5908358a82da4f0ecd76f608:FichaAnteproyecto/ficha-final.log
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 116.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 116.
-Package rerunfilecheck Info: File `articulo-2.out' has not changed.
+Package rerunfilecheck Info: File `ficha-final.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 116.
  ) 
 Here is how much of TeX's memory you used:
+<<<<<<< HEAD:FichaAnteproyecto/articulo-2.log
  6918 strings out of 493921
  99323 string characters out of 3144870
  195788 words of memory out of 3000000
@@ -481,6 +513,21 @@ Here is how much of TeX's memory you used:
 ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Prog
 ram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
 Output written on articulo-2.pdf (1 page, 71462 bytes).
+=======
+ 6923 strings out of 495059
+ 98448 string characters out of 3182030
+ 196156 words of memory out of 3000000
+ 10027 multiletter control sequences out of 15000+200000
+ 6757 words of font info for 27 fonts, out of 3000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 29i,15n,43p,368b,435s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on ficha-final.pdf (1 page, 112392 bytes).
+>>>>>>> 74e8568a1bfb38ce5908358a82da4f0ecd76f608:FichaAnteproyecto/ficha-final.log
 PDF statistics:
  37 PDF objects out of 1000 (max. 8388607)
  4 named destinations out of 1000 (max. 500000)
