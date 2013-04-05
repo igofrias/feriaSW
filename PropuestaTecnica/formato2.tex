@@ -1,17 +1,23 @@
-\documentclass[a4paper,11pt]{article} %tipo de documento y tamaño de papel y letra
-\usepackage[utf8]{inputenc} %codificación de caracteres
+\documentclass[letterpaper,11pt]{report} %tipo de documento y tamaño de papel y letra
+\usepackage[latin1]{inputenc} %codificación de caracteres
 \usepackage[spanish]{babel} %idioma
 \usepackage{fancyhdr} %tipo de página, LINDA biggrin.gif
 \usepackage[top=3.5cm,bottom=2.5cm,right=2cm,left=2.5cm]{geometry} %márgenes
 \usepackage[rflt]{floatflt} %ni puta idea
-
-
+\usepackage{pdfpages} %incluir archivos pdf
+\usepackage{hyperref} %hipervinculos
+\hypersetup{
+  colorlinks=true,
+  urlcolor=cyan
+}
 %\usepackage{helvet} %esto es pa escribir con Arial en vez de times new roman
 %\renewcommand\familydefault{\sfdefault} %descomenta estas lineas para escribir en arial
 
+\usepackage{multirow}
+
 \usepackage{graphicx} %para usar imagenes
 %\newcommand{\imgdir}{doc-img} % para meter las imágenes en una carpeta especial, tunz en la carpeta del documento tiene q ir otra que se llame 'doc-img'
-\graphicspath{{\pic/}} %le dice que las imágenes están en la carpeta de arriba
+\graphicspath{{./pic/}} %le dice que las imágenes están en la carpeta de arriba
 
 \usepackage{amsmath} %pa usar símbolos matematicos
 \numberwithin{equation}{section} % pa usar ecuaciones de modo lindo
@@ -36,75 +42,77 @@
 \begin{document}
 \begin{titlepage} %portada
 \thispagestyle{empty} %borrar el formato de pagina linda
-\begin{flushleft} %alinear a la izq
-\includegraphics[scale=0.25]{logoUSMC.eps} %agregar imagen, en mi caso es el logo del dpto, pero tu podríai poner el de qca.
-\vfill %vertical fill, llena hacia abajo
-\end{flushleft}
+%\begin{flushleft} %alinear a la izq
+\begin{center}
+\includegraphics[scale=0.25]{logoUSM-DI.eps}
+%\vfill
+\end{center}
+%\end{flushleft}
 
-\vspace{2cm} %espacio vertical , en realidad es un enter de 2 cm
+\vspace{3cm} %espacio vertical , en realidad es un enter de 2 cm
 \begin{center} %centrar
-{\huge Laboratorio de análisis de señales: Experiencia 7 \\ %
-Sistemas Lineales Invariantes en el Tiempo\\
-Realizada el 3 de Diciembre de 2008
+{\Huge Proyecto ``\emph{V.I.Pe.R.}''\\
+ \huge Pre-Empresa {\bf Phyrex} \\
+  \normalsize\today
 }
 \end{center}
 
-\vspace{6cm}
-\begin{flushright} %alinear derecha
-Nombre: Javier Palma E.\\
-Curso: Laboratorio Análisis de Señales\\
-Profesor: Alex Ulloa\\
-10 de Diciembre 2008
-\end{flushright}
+\vspace{2cm}
+\begin{flushleft}
+\begin{table}[h]
+    \begin{tabular}{lp{14cm}}
+      {\Large \bf Descripci\'on:} & {\large Simulador de mascota que explota caracter\'{\i}sticas de smartphones Android e interact\'ua con robot Lego, enfocado en la difusi\'on del Dpto. de Inform\'atica de la UTFSM.}\\
+      & \\
+      & \\
+      {\Large \bf Problema:} & {\large En las carreras inform\'aticas se encuentre una gran desinformaci\'on respecto a si mismas, adem\'as de una disminuci\'on en la tasa de matr\'{\i}culas anuales, tanto a nivel nacional como mundial, en particular en el caso de la UTFSM.}\\
+    \end{tabular}
+\end{table}
+\end{flushleft}
+
+%\vspace{6cm}
+\vfill
+\begin{flushleft} %alinear derecha
+\begin{table}[hb]
+  \begin{tabular}{lllc}
+    Jefe de Proyecto: & Rodrigo Fr\'{\i}as & \texttt{<rodrigo.frias@alumnos.usm.cl>} & [+56 9 83988257] \\
+    Equipo: & Celeste Bertin & \texttt{<celeste.bertin@alumnos.usm.cl>} &[+56 9 68410901]\\
+    & Patricio Carrasco &\texttt{<patricio.carrascod@alumnos.usm.cl>} &[+56 9 50626689]\\
+    & Rocio Fernandez &\texttt{<rocio.fernandezu@alumnos.usm.cl>} &[+56 9 62426549]\\
+    Categor\'{\i}a: & \multicolumn{3}{l}{Educaci\'on \& Entretenimiento.}\\
+    Campus: & \multicolumn{3}{l}{Santiago San Joaqu\'{\i}n.}
+  \end{tabular}
+\end{table}
+\end{flushleft}
 \end{titlepage}
 %------------------fin de la portada --------------------%
+
+%{\bf } %escribir en negrita
 
 \setcounter{page}{1} %empezar enumerando la página 1
 
 \tableofcontents %índice
 \newpage
 
-\section{} %Nombre_de_la_sección (capitulo)
-\subsection{} %subsección, osea 1.1
-\subsubsection{} %1.1.1
-\subsubsubsection{} %1.1.1.1
+\chapter{Propuesta T\'ecnica}
+\newpage
+\section{Identificaci\'on del problema u oportunidad}
 
-\begin{figure}[h] %insertar imagen, la h significa 'here', osea aquí
-\centering
-\includegraphics[scale=0.6]{} % nombre de la imagen entre las llaves
-\caption{} %leyenda bajo la imagen
-\label{} %etiqueta para ubicar la imagen despues
-\end{figure}
+\newpage
+\section{Visualizaci\'on de una soluci\'on}
 
-{\bf } %escribir en negrita
-{\tt } %para escribir con letra tipo maquina de escribir, sirve para anotar códigos o en tu caso, fórmulas o reacciones químicas
+\newpage
+\section{Innovaci\'on}
 
-\begin{itemize} %para enumerar, y usar viñetas tipo
-%* hola
-%* como estas
-\item{} %este será el texto puntuado
-
-\end{itemize}
-
-\begin{table}[h] %tablas, h significa here
-\begin{center}
-\begin{tabular}{|c|c|} %la barrita representa la linea de separacion, y la 'c' la cantidad de columnas
-\hline
-primera columna & segunda columna \\ %el '&' es el separador de columnas
-\hline
-\\
-\hline
-\\
-\hline
-\\
-\hline
-\\ %y asi sucesivamente, no existe límite de filas
-\end{tabular}
-\end{center}
-\caption{}
-\label{}
-\end{table}
-
+\newpage
+\chapter{Anexo I - Presentaci\'on} %Copia Presentacion
+\newpage
+\chapter{Anexo II - Curr\'{\i}culum Vitae} %Curriculum
+\includepdf[pages={1}]{../CV/cv-igo.pdf}
+\includepdf[pages={1}]{../CV/cv-celeste.pdf}
+\includepdf[pages={1}]{../CV/cv-pato.pdf}
+\includepdf[pages={1}]{../CV/cv-neko.pdf}
+\newpage
+\chapter{Anexo III - Otros} %Otros
 
 
 \end{document}
