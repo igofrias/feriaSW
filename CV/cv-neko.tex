@@ -5,7 +5,7 @@
 % conditions of the LaTeX Project Public License version 1.3c,
 % available at http://www.latex-project.org/lppl/.
 
-\documentclass[10pt,a4paper]{moderncv}
+\documentclass[10pt,letterpaper]{moderncv}
 \usepackage{hyperref}
 
 % moderncv themes
@@ -16,21 +16,21 @@
 \usepackage[latin1]{inputenc}                 % replace by the encoding you are using
 
 % adjust the page margins
-\usepackage[scale=0.8]{geometry}
+\usepackage[top=1.5cm,bottom=1.5cm,right=2.5cm,left=2.5cm]{geometry} %margenes
 \recomputelengths                             % required when changes are made to page layout lengths
 
 %%
-\graphicspath{{./pic/}} %le dice que las imagenes estan en la carpeta de arriba
+\graphicspath{{./pic/}} %le dice que las im\'agenes est\'an en la carpeta 'pic' del directorio local
 
 % personal data
-\firstname{Roc\'io Bel\'en}
-\familyname{Fern\'andez Ureta}
-\title{Alumna Ingenier\'ia Civil Inform\'atica}        % optional, remove the line if not wanted
-\address{Av. Irarrazaval 4569}{ Dpto. 205, \~Nu\~noa}    % optional, remove the line if not wanted
+\firstname{\Huge Roc\'io Bel\'en\\}
+\familyname{\Huge Fern\'andez Ureta}
+\title{\Large Alumna Ingenier\'ia Civil Inform\'atica}        % optional, remove the line if not wanted
+\address{Av. Irarrazaval 4569, Dpto. 205}{\~Nu\~noa}    % optional, remove the line if not wanted
 \mobile{+56 9 62426549}                            % optional, remove the line if not wanted
 \phone{+56 2 2 8817026}                    % optional, remove the line if not wanted 
-\email{rbfernan@alumnos.inf.utfsm.cl}                      % optional, remove the line if not wanted
-\photo[75pt]{neko}                         % '64pt' is the height the picture must be resized to and 'picture' is the name of the picture file; optional, remove the line if not wanted
+\email{rocio.fernandezu@alumnos.usm.cl}                      % optional, remove the line if not wanted
+\photo[64pt]{pic-neko}                         % '64pt' is the height the picture must be resized to and 'picture' is the name of the picture file; optional, remove the line if not wanted
 % \quote{Some quote (optional)}                 % optional, remove the line if not wanted
 
 \nopagenumbers{}                             % uncomment to suppress automatic page numbering for CVs longer than one page
@@ -46,7 +46,7 @@
 %%Informacion Personal
 %%
 \section{Informaci\'on Personal}
-\cvline{Fecha de Nacimiento}{\small 29 de Diciembre de 1990}
+\cvline{Fecha de Nac.}{\small 29 de Diciembre de 1990}
 \cvline{R.U.T.}{\small 17.626.909-k}
 \cvline{Estado Civil}{\small Soltero}
 
@@ -88,12 +88,10 @@
 \subsection{Conocimientos}
 %\cvcomputer{category 1}{XX, YY, ZZ}{category 4}{XX, YY, ZZ}
 \cvcomputer{SO}{\textbf{Gnu/Linux, Windows}}{}{}
-\cvcomputer{Lenguajes}{\textbf{C, Java, PHP, Scheme, }}{}{} % VHDL y Prolog
-\cvcomputer{Scripting}{\textbf{Python, Matlab, Wolfram Alpha, Matematica}}{}{}
-\cvcomputer{Diseo Web}{\textbf{HTML, CSS, PHP, ASP, JSP}}{}{}
+\cvcomputer{Lenguajes}{\textbf{C, Java, PHP, Scheme, Python, Matlab, Wolfram Alpha, Matematica, \LaTeX}}{}{}
+\cvcomputer{Dise\~no Web}{\textbf{HTML, CSS, PHP, ASP, JSP}}{}{}
 \cvcomputer{BD}{\textbf{MySQL, PostgreSQL, SQLServer, Oracle DB }}{}{}
-\cvcomputer{Utilidades}{\textbf{Microsoft Word, Excel, PowerPoint, }}{}{}
-\cvcomputer{Maquetaci\'in}{\textbf{\LaTeX, Photoshop, Gimp, modelamiento en UML}}{}{}
+\cvcomputer{Utilidades}{\textbf{Microsoft Word, Excel, PowerPoint, Photoshop, Gimp, UML}}{}{}
 
 %\subsection{Congresos y Seminarios}
 %\cvline{}{\small}
@@ -110,7 +108,7 @@
 %\cvline{}{}
 
 \section{Recomendaciones}
-\cvline{}{\small }
+\cventry{Mauricio Solar}{Universidad T\'ecnica Federico Santa Mar\'{\i}a}{Profesor Auxiliar}{\texttt{<msolar@inf.utfsm.cl>}}{[+56 2 3531363]}{}
 
 \closesection{}                   % needed to renewcommands
 \renewcommand{\listitemsymbol}{-} % change the symbol for lists
@@ -129,5 +127,4 @@
 % \nocite{*}
 % \bibliographystyle{plain}
 % \bibliography{publications}       % 'publications' is the name of a BibTeX file
-
 \end{document}

@@ -1,8 +1,8 @@
-\documentclass[letterpaper,11pt]{report} %tipo de documento y tamaño de papel y letra
-\usepackage[latin1]{inputenc} %codificación de caracteres
+\documentclass[letterpaper,11pt]{report} %tipo de documento y tama~o de papel y letra
+\usepackage[latin1]{inputenc} %codificacion de caracteres
 \usepackage[spanish]{babel} %idioma
-\usepackage{fancyhdr} %tipo de página, LINDA biggrin.gif
-\usepackage[top=3.5cm,bottom=2.5cm,right=2cm,left=2.5cm]{geometry} %márgenes
+\usepackage{fancyhdr} %tipo de pagina, LINDA biggrin.gif
+\usepackage[top=3.5cm,bottom=2.5cm,right=2cm,left=2.5cm]{geometry} %margenes
 \usepackage[rflt]{floatflt} %ni puta idea
 \usepackage{pdfpages} %incluir archivos pdf
 \usepackage{hyperref} %hipervinculos
@@ -16,26 +16,26 @@
 \usepackage{multirow}
 
 \usepackage{graphicx} %para usar imagenes
-%\newcommand{\imgdir}{doc-img} % para meter las imágenes en una carpeta especial, tunz en la carpeta del documento tiene q ir otra que se llame 'doc-img'
-\graphicspath{{./pic/}} %le dice que las imágenes están en la carpeta de arriba
+%\newcommand{\imgdir}{doc-img} % para meter las imagenes en una carpeta especial, tunz en la carpeta del documento tiene q ir otra que se llame 'doc-img'
+\graphicspath{{./pic/}} %le dice que las imagenes estan en la carpeta de arriba
 
-\usepackage{amsmath} %pa usar símbolos matematicos
+\usepackage{amsmath} %pa usar smbolos matematicos
 \numberwithin{equation}{section} % pa usar ecuaciones de modo lindo
-\numberwithin{figure}{section} %para agregar imágenes
+\numberwithin{figure}{section} %para agregar imagenes
 \numberwithin{table}{section} %para agregar tablas
 
 \usepackage{subfigure} % pa usar sub figuras
 
 
 
-\pagestyle{fancy} %configuración para la pagina linda
+\pagestyle{fancy} %configuracion para la pagina linda
 \renewcommand{\sectionmark}[1]{\markboth{}{\thesection\ \ #1}} %cambios de comentarios
 \lhead{} %parte de arriba, izq
 \chead{} %parte de arriba, centro
 \rhead{\rightmark} %parte de arriba, derecha, le agrega la marca del capitulo
 \lfoot{} %parte de abajo, izq
 \cfoot{} %parte de abajo, centro
-\rfoot{\thepage} %parte de abajo, derecha, va el numero de la página
+\rfoot{\thepage} %parte de abajo, derecha, va el numero de la pagina
 
 
 %-------------portada---------------------------------%
@@ -88,9 +88,9 @@
 
 %{\bf } %escribir en negrita
 
-\setcounter{page}{1} %empezar enumerando la página 1
+\setcounter{page}{1} %empezar enumerando la pagina 1
 
-\tableofcontents %índice
+\tableofcontents indice
 \newpage
 
 \chapter*{Propuesta T\'ecnica}
@@ -105,7 +105,7 @@
 
 \newpage
 \chapter*{Anexo I - Presentaci\'on} %Copia Presentacion
-\includepdf[pages={1-},frame=true,nup=2x3]{../Presentacion/diapo-1x1.pdf}
+\includepdf[pages={1-},frame=true,nup=2x3,delta=10 20,scale=0.85]{../Presentacion/diapo-1x1.pdf}
 \newpage
 \chapter*{Anexo II - Curr\'{\i}culum Vitae} %Curriculum
 \includepdf[pages={1}]{../CV/cv-igo.pdf}

@@ -5,7 +5,7 @@
 % conditions of the LaTeX Project Public License version 1.3c,
 % available at http://www.latex-project.org/lppl/.
 
-\documentclass[10pt]{moderncv}
+\documentclass[10pt,letterpaper]{moderncv}
 \usepackage{hyperref}
 
 % moderncv themes
@@ -16,23 +16,23 @@
 \usepackage[latin1]{inputenc}                 % replace by the encoding you are using
 
 % adjust the page margins
-\usepackage[letterpaper,scale=0.8]{geometry}
+\usepackage[top=1.5cm,bottom=1.5cm,right=2.5cm,left=2.5cm]{geometry} %margenes
 \recomputelengths                             % required when changes are made to page layout lengths
 
 %%
-\graphicspath{{./pic/}} %le dice que las im\'agenes est\'an en la carpeta de arriba
+\graphicspath{{./pic/}} %le dice que las im\'agenes est\'an en la carpeta 'pic' del directorio local
 
 % personal data
-\firstname{Rodrigo Andres}
-\familyname{Fr\'ias Meneses}
+\firstname{\Huge Rodrigo Andres\\}
+\familyname{\Huge Fr\'ias Meneses}
 \title{\Large Alumno Ingenier\'ia Civil Inform\'atica}        % optional, remove the line if not wanted
-\address{Lago Cochrane 4730, Villa El Alba}{8170082, Puente Alto}    % optional, remove the line if not wanted
+\address{Lago Cochrane 4730, Villa El Alba}{Puente Alto}    % optional, remove the line if not wanted
 \mobile{+56 9 83988257}                            % optional, remove the line if not wanted
 \phone{+56 2 2 4934826}                    % optional, remove the line if not wanted
 % \fax{fax (optional)}                        % optional, remove the line if not wanted
-\email{rodrigo.frias@alumnos.inf.utfsm.cl}                      % optional, remove the line if not wanted
-\extrainfo{\href{https://www.facebook.com/igo.frias}{Facebook}\\ \href{https://plus.google.com/115729213678098381962}{Google Plus}} % optional, remove the line if not wanted
-\photo[70pt]{pic-igo}                         % '64pt' is the height the picture must be resized to and 'picture' is the name of the picture file; optional, remove the line if not wanted
+\email{rodrigo.frias@alumnos.usm.cl}                      % optional, remove the line if not wanted
+%\extrainfo{\href{https://www.facebook.com/igo.frias}{Facebook}\\ \href{https://plus.google.com/115729213678098381962}{Google Plus}} % optional, remove the line if not wanted
+\photo[64pt]{pic-igo}                         % '64pt' is the height the picture must be resized to and 'picture' is the name of the picture file; optional, remove the line if not wanted
 % \quote{Some quote (optional)}                 % optional, remove the line if not wanted
 
 \nopagenumbers{}                             % uncomment to suppress automatic page numbering for CVs longer than one page
@@ -48,14 +48,12 @@
 %%Informacion Personal
 %%
 \section{Informaci\'on Personal}
-\cvline{Fecha de Nacimiento}{\small 09 de Febrero de 1987}
+\cvline{Fecha de Nac.}{\small 09 de Febrero de 1987}
 \cvline{R.U.T.}{\small 16.476.137-1}
 \cvline{Estado Civil}{\small Soltero}
 
 \subsection{Formaci\'on Acad\'emica}
 % \cventry{year--year}{Degree}{Institution}{City}{\textit{Grade}}{Description}  % arguments 3 to 6 are optional
-\cventry{}{Ense\~nanza B\'asica}{Colegio Inglaterra}{Santiago}{}{}
-\cventry{}{Ense\~nanza Media}{Colegio Quinto Centenario}{Santiago}{}{}
 \cventry{}{Ense\~nanza B\'asica y Media}{Florida High School}{Santiago}{}{}
 \cventry{2005--2008}{Licenciatura en Ciencias con Menci\'on en F\'isica}{Facultad de Ciencias, Universidad de Chile}{Santiago}{\textit{Incompleta}}{}
 \cventry{2009--2013}{Ingenier\'ia Civil Inform\'atica}{Departamento de Inform\'atica, Universidad T\'ecnica Federico Santa Mar\'ia}{Santiago}{\textit{Cursando}}{}
@@ -68,7 +66,7 @@
 \section{Descripci\'on Personal}
 \subsection{Aficiones}
 % \cvline{hobby 1}{\small Description}
-\cvline{Flauta Traversa}{\small Aprendizaje por iniciativa propia.}
+\cvline{M\'usica}{\small Aprendizaje de interpretaci\'on m\'usical, por iniciativa propia, de Flauta Traversa.}
 \cvline{Escribir}{\small Como forma de liberar estres, iniciativa propia.}
 \cvline{Deportes}{\small Aficionado a todos los deportes. Practico volleyball, f\'utbol y baloncesto.}
 
@@ -77,7 +75,7 @@
 \cvlanguage{ingl\'es}{Medio}{Estudios elementales durante colegio y universidad.}
 %\cvlanguage{franc\'es}{Bajo}{Estudios elementales durante secundaria.}
 
-\subsection{Becas y Otros}
+%\subsection{Becas y Otros}
 %\cventry{year--year}{Job title}{Employer}{City}{}{Description}  % arguments 3 to 6 are optional
 %\cventry{}{}{}{}{}{}
 
@@ -85,20 +83,17 @@
 %%Experiencias
 %%
 \section{Experiencia}
-
-\subsection{Proyectos}
+%\subsection{Proyectos}
 %\cvcomputer{Proyect Name}{}{Description}{\textit{Achievement}}
 
 
 \subsection{Conocimientos}
 %\cvcomputer{category 1}{XX, YY, ZZ}{category 4}{XX, YY, ZZ}
 \cvcomputer{SO}{\textbf{Gnu/Linux, Windows}}{}{}
-\cvcomputer{Lenguajes}{\textbf{C/C++, Java}}{}{} % VHDL y Prolog
-\cvcomputer{Scripting}{\textbf{Python, Matlab, Bash}}{}{}
+\cvcomputer{Lenguajes}{\textbf{C/C++, Python, Matlab, Bash,\LaTeX, R}}{}{}
 \cvcomputer{Dise\~no Web}{\textbf{HTML, PHP}}{}{}
 \cvcomputer{BD}{\textbf{MySQL, PostgreSQL}}{}{}
 \cvcomputer{Utilidades}{\textbf{GNU Emacs, Word, Excel, PowerPoint}}{}{}
-\cvcomputer{Maquetaci\'on}{\textbf{\LaTeX}}{}{}
 
 \subsection{Congresos y Seminarios}
 %\cvline{}{\small}
@@ -114,11 +109,12 @@
 \cventry{2012}{Ayudant\'ia Fundamentos de Investigaci\'on de Operaciones}{}{}{}{}
 \cventry{2011--2013}{Miembro de L.I.R.A.E.}{Investigaci\'on}{Santiago}{}{Investigador del grupo de Astroinform\'atica de la U.T.F.S.M., en el \'area del manejo de la informaci\'on.}
 
-\subsection{Otros Estudios}
+%\subsection{Otros Estudios}
 %\cvline{}{}
 
 \section{Recomendaciones}
-\cvline{}{\small }
+\cventry{Mauricio Solar}{Universidad T\'ecnica Federico Santa Mar\'{\i}a}{Profesor Auxiliar}{\texttt{<msolar@inf.utfsm.cl>}}{[+56 2 3531363]}{}
+
 
 \closesection{}                   % needed to renewcommands
 \renewcommand{\listitemsymbol}{-} % change the symbol for lists
@@ -137,5 +133,4 @@
 % \nocite{*}
 % \bibliographystyle{plain}
 % \bibliography{publications}       % 'publications' is the name of a BibTeX file
-
 \end{document}
