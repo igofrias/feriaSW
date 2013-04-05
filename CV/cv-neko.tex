@@ -1,0 +1,130 @@
+%% start of file `template_en.tex'.
+%% Copyright 2007 Xavier Danaux (xdanaux@gmail.com).
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License version 1.3c,
+% available at http://www.latex-project.org/lppl/.
+
+\documentclass[10pt,a4paper]{moderncv}
+\usepackage{hyperref}
+
+% moderncv themes
+\moderncvtheme[blue]{classic}                 % optional argument are 'blue' (default), 'orange', 'red', 'green', 'grey' and 'roman' (for roman fonts, instead of sans serif fonts)
+%\moderncvtheme[green]{casual}                % idem
+
+% character encoding
+\usepackage[latin1]{inputenc}                 % replace by the encoding you are using
+
+% adjust the page margins
+\usepackage[scale=0.8]{geometry}
+\recomputelengths                             % required when changes are made to page layout lengths
+
+%%
+\graphicspath{{./pic/}} %le dice que las imagenes estan en la carpeta de arriba
+
+% personal data
+\firstname{Roc\'io Bel\'en}
+\familyname{Fern\'andez Ureta}
+\title{Alumna Ingenier\'ia Civil Inform\'atica}        % optional, remove the line if not wanted
+\address{Av. Irarrazaval 4569}{ Dpto. 205, \~Nu\~noa}    % optional, remove the line if not wanted
+\mobile{+56 9 62426549}                            % optional, remove the line if not wanted
+\phone{+56 2 2 8817026}                    % optional, remove the line if not wanted 
+\email{rbfernan@alumnos.inf.utfsm.cl}                      % optional, remove the line if not wanted
+\photo[75pt]{neko}                         % '64pt' is the height the picture must be resized to and 'picture' is the name of the picture file; optional, remove the line if not wanted
+% \quote{Some quote (optional)}                 % optional, remove the line if not wanted
+
+\nopagenumbers{}                             % uncomment to suppress automatic page numbering for CVs longer than one page
+
+
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+\maketitle
+
+%%
+%%Informacion Personal
+%%
+\section{Informaci\'on Personal}
+\cvline{Fecha de Nacimiento}{\small 29 de Diciembre de 1990}
+\cvline{R.U.T.}{\small 17.626.909-k}
+\cvline{Estado Civil}{\small Soltero}
+
+\subsection{Formaci\'on Acad\'emica}
+% \cventry{year--year}{Degree}{Institution}{City}{\textit{Grade}}{Description}  % arguments 3 to 6 are optional
+\cventry{2003-2008}{Ense\~nanza B\'asica y Media }{Liceo Calrmela Carvajal de Prat}{Santiago}{}{}
+\cventry{2009--2013}{Ingenier\'ia Civil Inform\'atica}{Departamento de Inform\'atica, Universidad T\'ecnica Federico Santa Mar\'ia}{Santiago}{\textit{Cursando}}{}
+
+% \section{Master thesis}
+% \cvline{title}{\emph{Title}}
+% \cvline{supervisors}{Supervisors}
+% \cvline{description}{\small Short thesis abstract}
+
+\section{Descripci\'on Personal}
+\subsection{Aficiones}
+% \cvline{hobby 1}{\small Description}
+\cvline{Dibujo}{\small Aprendizaje personal, solo por divers\'on.}
+\cvline{Carpinter\'ia}{\small Hago trabajos de carpinteria entre tras cosas en mi tiempo libre.}
+\cvline{Deportes}{\small Practico volleyball, Karate-do y baloncesto.}
+\cvline{Administraci\'on p\'agina web}{\small Administro una p\'agina web meh meg }
+
+\subsection{Idiomas}
+%\cvlanguage{language 1}{Skill level}{Comment}
+\cvlanguage{ingl\'es}{Medio}{Estudios elementales durante colegio y universidad.}
+
+
+%%
+%%Experiencias
+%%
+\section{Experiencia}
+
+%\subsection{Proyectos}
+%\cvcomputer{Proyect Name}{}{Description}{\textit{Achievement}}
+
+
+\subsection{Conocimientos}
+%\cvcomputer{category 1}{XX, YY, ZZ}{category 4}{XX, YY, ZZ}
+\cvcomputer{SO}{\textbf{Gnu/Linux, Windows}}{}{}
+\cvcomputer{Lenguajes}{\textbf{C, Java, PHP, Scheme, }}{}{} % VHDL y Prolog
+\cvcomputer{Scripting}{\textbf{Python, Matlab, Wolfram Alpha, Matematica}}{}{}
+\cvcomputer{Diseo Web}{\textbf{HTML, CSS, PHP, ASP, JSP}}{}{}
+\cvcomputer{BD}{\textbf{MySQL, PostgreSQL, SQLServer, Oracle DB }}{}{}
+\cvcomputer{Utilidades}{\textbf{Microsoft Word, Excel, PowerPoint, }}{}{}
+\cvcomputer{Maquetaci\'in}{\textbf{\LaTeX, Photoshop, Gimp, modelamiento en UML}}{}{}
+
+%\subsection{Congresos y Seminarios}
+%\cvline{}{\small}
+%\cvline{Marzo 2010}{Taller ``Competencias de Liderazgo en el Servicio''}
+
+
+\subsection{Pr\'acticas y Ayudant\'ias}
+%\cventry{year--year}{Job title}{Employer}{City}{}{Description}  % arguments 3 to 6 are optional
+\cventry{2010}{Miembro del grupo de administraci\'on de Laboratorios y Medios Audio Visuales}{Administrador de Laboratorio}{UTFSM, Campus San Joaqu\'in, Santiago}{}{}
+\cventry{2013}{Ayudant\'ta de Laboratorio de Matematicas}{Ayudante Mat022}{ UTFSM, Campus San Joaqu\'in, Santiago}{}{}
+%\cventry{}{}{}{}{}{}
+
+%\subsection{Otros Estudios}
+%\cvline{}{}
+
+\section{Recomendaciones}
+\cvline{pepe}{\small }
+
+\closesection{}                   % needed to renewcommands
+\renewcommand{\listitemsymbol}{-} % change the symbol for lists
+
+% \section{Extra 1}
+% \cvlistitem{Item 1}
+% \cvlistitem{Item 2}
+% \cvlistitem[+]{Item 3}            % optional other symbol
+
+% \section{Extra 2}
+% \cvlistdoubleitem[\Neutral]{Item 1}{Item 4}
+% \cvlistdoubleitem[\Neutral]{Item 2}{Item 5}
+% \cvlistdoubleitem[\Neutral]{Item 3}{}
+
+% Publications from a BibTeX file
+% \nocite{*}
+% \bibliographystyle{plain}
+% \bibliography{publications}       % 'publications' is the name of a BibTeX file
+
+\end{document}
