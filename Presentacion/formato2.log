@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  5 APR 2013 15:52
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  5 APR 2013 15:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**formato2.tex
-(./formato2.tex
+**../PropuestaTecnica/formato2.tex
+(../PropuestaTecnica/formato2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, lo
 aded.
@@ -493,24 +493,34 @@ LaTeX Info: Redefining \nameref on input line 42.
 \openout3 = `formato2.out'.
 
 Package epstopdf Info: Source file: <./pic/logoUSM-DI.eps>
-(epstopdf)                    date: 2013-04-04 18:40:25
+(epstopdf)                    date: 2013-04-05 14:05:03
 (epstopdf)                    size: 196681 bytes
 (epstopdf)             Output file: <./pic/logoUSM-DI-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-04-04 18:43:01
+(epstopdf)                    date: 2013-04-05 14:37:28
 (epstopdf)                    size: 47161 bytes
 (epstopdf)             Command: <repstopdf --outfile=./pic/logoUSM-DI-eps-conve
 rted-to.pdf ./pic/logoUSM-DI.eps>
 (epstopdf)             \includegraphics on input line 47.
 Package epstopdf Info: Output file is already uptodate.
 
-<./pic/logoUSM-DI-eps-converted-to.pdf, id=16, 1168.365pt x 173.64874pt>
+<./pic/logoUSM-DI-eps-converted-to.pdf, id=32, 1168.365pt x 173.64874pt>
 File: ./pic/logoUSM-DI-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./pic/logoUSM-DI-eps-converted-to.pdf>
 Package pdftex.def Info: ./pic/logoUSM-DI-eps-converted-to.pdf used on input li
 ne 47.
 (pdftex.def)             Requested size: 292.09053pt x 43.41208pt.
- [1
+
+Overfull \hbox (23.3459pt too wide) in paragraph at lines 63--69
+[][] 
+ []
+
+
+Overfull \hbox (10.26463pt too wide) in paragraph at lines 76--84
+[][] 
+ []
+
+[1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./pic/logoUSM-DI-eps-conve
 rted-to.pdf>] (./formato2.toc
@@ -527,7 +537,9 @@ been already used, duplicate ignored
 l.94 \newpage
               [1
 
-] [2
+]
+Cap\'{\i }tulo 1.
+[2
 
 ]
 LaTeX Info: Redefining \. on input line 100.
@@ -559,10 +571,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[5] [6
+[5]
+Cap\'{\i }tulo 2.
+[6
 
-]
-<../Presentacion/diapo-1x1.pdf, id=63, page=1, 364.19562pt x 273.14648pt>
+] <../Presentacion/diapo-1x1.pdf, id=82, page=1, 364.19562pt x 273.14648pt>
 File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
 
 <use ../Presentacion/diapo-1x1.pdf, page 1>
@@ -574,130 +587,30 @@ File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
 <use ../Presentacion/diapo-1x1.pdf, page 1>
 Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page1 used on input lin
 e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
+(pdftex.def)             Requested size: 613.82283pt x 460.36671pt.
 File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
 
 <use ../Presentacion/diapo-1x1.pdf, page 1>
 Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page1 used on input lin
 e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
+(pdftex.def)             Requested size: 613.82283pt x 460.36671pt.
 File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
 
 <use ../Presentacion/diapo-1x1.pdf, page 1>
 Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page1 used on input lin
 e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-
-<../Presentacion/diapo-1x1.pdf, id=64, page=2, 364.19562pt x 273.14648pt>
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 2>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page2 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 2>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page2 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-
-<../Presentacion/diapo-1x1.pdf, id=65, page=3, 364.19562pt x 273.14648pt>
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 3>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page3 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 3>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page3 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-
-<../Presentacion/diapo-1x1.pdf, id=66, page=4, 364.19562pt x 273.14648pt>
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 4>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page4 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 4>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page4 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-
-<../Presentacion/diapo-1x1.pdf, id=67, page=5, 364.19562pt x 273.14648pt>
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 5>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page5 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 5>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page5 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-
-<../Presentacion/diapo-1x1.pdf, id=68, page=6, 364.19562pt x 273.14648pt>
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 6>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page6 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 6>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page6 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
+(pdftex.def)             Requested size: 613.82283pt x 460.36671pt.
 File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
 
 <use ../Presentacion/diapo-1x1.pdf, page 1>
 Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page1 used on input lin
 e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
+(pdftex.def)             Requested size: 613.82283pt x 460.36671pt.
+ [7 <../Presentacion/diapo-1x1.pdf>]
+Cap\'{\i }tulo 3.
+[8
 
-<use ../Presentacion/diapo-1x1.pdf, page 2>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page2 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 3>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page3 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 4>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page4 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 5>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page5 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
-File: ../Presentacion/diapo-1x1.pdf Graphic file (type pdf)
-
-<use ../Presentacion/diapo-1x1.pdf, page 6>
-Package pdftex.def Info: ../Presentacion/diapo-1x1.pdf, page6 used on input lin
-e 108.
-(pdftex.def)             Requested size: 306.71135pt x 230.03331pt.
- [7 <../Presentacion/diapo-1x1.pdf> <../Presentacion/diapo-1x1.pdf> <../Present
-acion/diapo-1x1.pdf> <../Presentacion/diapo-1x1.pdf> <../Presentacion/diapo-1x1
-.pdf> <../Presentacion/diapo-1x1.pdf>] [8
-
-] <../CV/cv-igo.pdf, id=299, page=1, 597.50829pt x 845.0471pt>
+] <../CV/cv-igo.pdf, id=297, page=1, 597.50829pt x 845.0471pt>
 File: ../CV/cv-igo.pdf Graphic file (type pdf)
 
 <use ../CV/cv-igo.pdf, page 1>
@@ -722,7 +635,7 @@ File: ../CV/cv-igo.pdf Graphic file (type pdf)
 Package pdftex.def Info: ../CV/cv-igo.pdf, page1 used on input line 111.
 (pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
  [9 <../CV/cv-igo.pdf>]
-<../CV/cv-celeste.pdf, id=354, page=1, 597.50829pt x 845.0471pt>
+<../CV/cv-celeste.pdf, id=352, page=1, 597.50829pt x 845.0471pt>
 File: ../CV/cv-celeste.pdf Graphic file (type pdf)
 
 <use ../CV/cv-celeste.pdf, page 1>
@@ -747,7 +660,7 @@ File: ../CV/cv-celeste.pdf Graphic file (type pdf)
 Package pdftex.def Info: ../CV/cv-celeste.pdf, page1 used on input line 112.
 (pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
  [10 <../CV/cv-celeste.pdf>]
-<../CV/cv-pato.pdf, id=390, page=1, 597.50829pt x 845.0471pt>
+<../CV/cv-pato.pdf, id=388, page=1, 597.50829pt x 845.0471pt>
 File: ../CV/cv-pato.pdf Graphic file (type pdf)
 
 <use ../CV/cv-pato.pdf, page 1>
@@ -772,7 +685,7 @@ File: ../CV/cv-pato.pdf Graphic file (type pdf)
 Package pdftex.def Info: ../CV/cv-pato.pdf, page1 used on input line 113.
 (pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
  [11 <../CV/cv-pato.pdf>]
-<../CV/cv-neko.pdf, id=431, page=1, 597.50829pt x 845.0471pt>
+<../CV/cv-neko.pdf, id=429, page=1, 597.50829pt x 845.0471pt>
 File: ../CV/cv-neko.pdf Graphic file (type pdf)
 
 <use ../CV/cv-neko.pdf, page 1>
@@ -797,8 +710,9 @@ File: ../CV/cv-neko.pdf Graphic file (type pdf)
 Package pdftex.def Info: ../CV/cv-neko.pdf, page1 used on input line 114.
 (pdftex.def)             Requested size: 562.12285pt x 795.00201pt.
  [12 <../CV/cv-neko.pdf>]
+Cap\'{\i }tulo 4.
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 119.
- [13
+[13
 
 ]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 119.
@@ -809,41 +723,42 @@ LaTeX Info: Redefining \% on input line 21.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 119.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 119.
 Package rerunfilecheck Info: File `formato2.out' has not changed.
-(rerunfilecheck)             Checksum: CCD7CB92D4106BFF7B7E15CAE88BFC03;203.
+(rerunfilecheck)             Checksum: 24A83332258FC8F058E33A1B04A3507A;462.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 119.
  ) 
 Here is how much of TeX's memory you used:
- 8222 strings out of 495059
- 117097 string characters out of 3182030
- 219596 words of memory out of 3000000
- 11264 multiletter control sequences out of 15000+200000
- 9851 words of font info for 36 fonts, out of 3000000 for 9000
+ 8213 strings out of 495059
+ 116629 string characters out of 3182030
+ 217596 words of memory out of 3000000
+ 11253 multiletter control sequences out of 15000+200000
+ 9991 words of font info for 36 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 43i,19n,47p,310b,495s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf/fonts/type1/public/
-lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx6.pfb></usr/share/tex
-mf/fonts/type1/public/lm/lmbx9.pfb></usr/share/texmf/fonts/type1/public/lm/lmr1
-0.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts
-/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></u
-sr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/p
-ublic/lm/lmri9.pfb></usr/share/texmf/fonts/type1/public/lm/lmro10.pfb></usr/sha
-re/texmf/fonts/type1/public/lm/lmro17.pfb></usr/share/texmf/fonts/type1/public/
-lm/lmro9.pfb></usr/share/texmf/fonts/type1/public/lm/lmss10.pfb></usr/share/tex
-mf/fonts/type1/public/lm/lmss12.pfb></usr/share/texmf/fonts/type1/public/lm/lms
-s17.pfb></usr/share/texmf/fonts/type1/public/lm/lmss9.pfb></usr/share/texmf/fon
-ts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsso10
-.pfb></usr/share/texmf/fonts/type1/public/lm/lmsso12.pfb></usr/share/texmf/font
-s/type1/public/lm/lmsso17.pfb></usr/share/texmf/fonts/type1/public/lm/lmsso9.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/marvosym/marvosym.pfb>
-Output written on formato2.pdf (14 pages, 753321 bytes).
+ 42i,19n,46p,330b,493s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmb
+x10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx6.pfb></usr/share/texmf/fon
+ts/type1/public/lm/lmbx9.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb>
+</usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1
+/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/sha
+re/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/
+lm/lmri9.pfb></usr/share/texmf/fonts/type1/public/lm/lmro10.pfb></usr/share/tex
+mf/fonts/type1/public/lm/lmro17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr
+o9.pfb></usr/share/texmf/fonts/type1/public/lm/lmss10.pfb></usr/share/texmf/fon
+ts/type1/public/lm/lmss12.pfb></usr/share/texmf/fonts/type1/public/lm/lmss17.pf
+b></usr/share/texmf/fonts/type1/public/lm/lmss9.pfb></usr/share/texmf/fonts/typ
+e1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsso10.pfb><
+/usr/share/texmf/fonts/type1/public/lm/lmsso12.pfb></usr/share/texmf/fonts/type
+1/public/lm/lmsso17.pfb></usr/share/texmf/fonts/type1/public/lm/lmsso9.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/marvosym/marvosym.pfb>
+Output written on formato2.pdf (14 pages, 756891 bytes).
 PDF statistics:
  555 PDF objects out of 1000 (max. 8388607)
- 308 compressed objects within 4 object streams
+ 321 compressed objects within 4 object streams
  22 named destinations out of 1000 (max. 500000)
- 130 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 137 words of extra memory for PDF output out of 10000 (max. 10000000)
 
