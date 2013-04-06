@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  5 APR 2013 19:11
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  5 APR 2013 23:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -368,7 +368,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\\' on input line 44.
 
-No file cv-pato.aux.
+(./cv-pato.aux)
 \openout1 = `cv-pato.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
@@ -386,7 +386,7 @@ LaTeX Font Info:    ... okay on input line 44.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
 LaTeX Font Info:    ... okay on input line 44.
 LaTeX Font Info:    Try loading font information for T1+lmss on input line 44.
-(/usr/share/texmf/tex/latex/lm/t1lmss.fd
+ (/usr/share/texmf/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
@@ -441,6 +441,8 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 44.
 LaTeX Info: Redefining \pageref on input line 44.
 LaTeX Info: Redefining \nameref on input line 44.
+
+(./cv-pato.out) (./cv-pato.out)
 \@outlinefile=\write3
 \openout3 = `cv-pato.out'.
 
@@ -543,12 +545,12 @@ LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
 (Font)              Font shape `T1/lmss/m/sl' tried instead on input line 76.
 
-Underfull \hbox (badness 1902) in paragraph at lines 93--93
+Underfull \hbox (badness 1902) in paragraph at lines 92--92
 []\T1/lmss/bx/n/9 Pascal, C/C++/C#, Java, Python,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 94--94
+Underfull \hbox (badness 10000) in paragraph at lines 93--93
 []\T1/lmss/bx/n/9 HTML, PHP, .NET, ASP, JSP,
  []
 
@@ -572,29 +574,32 @@ Package rerunfilecheck Warning: File `cv-pato.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `cv-pato.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  CC67A27150D69504749F37B9193055DF;639.
+(rerunfilecheck)             Before: CC67A27150D69504749F37B9193055DF;639
+(rerunfilecheck)             After:  27CC81200C93373401DA706734B5D68C;578.
  ) 
 Here is how much of TeX's memory you used:
- 8922 strings out of 495059
- 132969 string characters out of 3182030
- 258760 words of memory out of 3000000
- 11905 multiletter control sequences out of 15000+200000
- 71072 words of font info for 68 fonts, out of 3000000 for 9000
+ 8938 strings out of 495059
+ 133155 string characters out of 3182030
+ 257864 words of memory out of 3000000
+ 11917 multiletter control sequences out of 15000+200000
+ 70971 words of font info for 67 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  42i,13n,53p,794b,329s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/fonts/type1/
-public/lm/lmss10.pfb></usr/share/texmf/fonts/type1/public/lm/lmss12.pfb></usr/s
-hare/texmf/fonts/type1/public/lm/lmss17.pfb></usr/share/texmf/fonts/type1/publi
-c/lm/lmss9.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share
-/texmf/fonts/type1/public/lm/lmsso10.pfb></usr/share/texmf/fonts/type1/public/l
-m/lmsso12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsso9.pfb></usr/share/te
-xmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/marvosym/marvosym.pfb>
-Output written on cv-pato.pdf (1 page, 209331 bytes).
+pdfTeX warning (dest): name{section*.11} has been referenced but does not exi
+st, replaced by a fixed one
+
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/fonts/type1/pu
+blic/lm/lmss10.pfb></usr/share/texmf/fonts/type1/public/lm/lmss12.pfb></usr/sha
+re/texmf/fonts/type1/public/lm/lmss17.pfb></usr/share/texmf/fonts/type1/public/
+lm/lmss9.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/t
+exmf/fonts/type1/public/lm/lmsso10.pfb></usr/share/texmf/fonts/type1/public/lm/
+lmsso12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsso9.pfb></usr/share/texm
+f/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/marvosym/marvosym.pfb>
+Output written on cv-pato.pdf (1 page, 210182 bytes).
 PDF statistics:
- 69 PDF objects out of 1000 (max. 8388607)
- 55 compressed objects within 1 object stream
+ 103 PDF objects out of 1000 (max. 8388607)
+ 89 compressed objects within 1 object stream
  13 named destinations out of 1000 (max. 500000)
- 20993 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 21081 words of extra memory for PDF output out of 24883 (max. 10000000)
 
