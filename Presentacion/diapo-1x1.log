@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  5 APR 2013 15:11
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  6 APR 2013 01:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1154,10 +1154,10 @@ LaTeX Font Info:    Try loading font information for T1+cmtt on input line 61.
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 Package epstopdf Info: Source file: <./pic/logoUSM-DI.eps>
-(epstopdf)                    date: 2013-04-05 14:05:03
+(epstopdf)                    date: 2013-04-06 00:55:50
 (epstopdf)                    size: 196681 bytes
 (epstopdf)             Output file: <./pic/logoUSM-DI-eps-converted-to.pdf>
-(epstopdf)                    date: 2013-04-05 14:37:28
+(epstopdf)                    date: 2013-04-06 00:55:50
 (epstopdf)                    size: 47161 bytes
 (epstopdf)             Command: <repstopdf --outfile=./pic/logoUSM-DI-eps-conve
 rted-to.pdf ./pic/logoUSM-DI.eps>
@@ -1216,28 +1216,46 @@ Overfull \hbox (66.72185pt too wide) has occurred while \output is active
 
 [3
 
-]
+] <./pic/matricula.png, id=141, 593.96906pt x 206.27063pt>
+File: ./pic/matricula.png Graphic file (type png)
+
+<use ./pic/matricula.png>
+Package pdftex.def Info: ./pic/matricula.png used on input line 116.
+(pdftex.def)             Requested size: 237.5834pt x 82.50677pt.
+ <./pic/puntajes.png, id=142, 807.7678pt x 313.17pt>
+File: ./pic/puntajes.png Graphic file (type png)
+
+<use ./pic/puntajes.png>
+Package pdftex.def Info: ./pic/puntajes.png used on input line 116.
+(pdftex.def)             Requested size: 242.3322pt x 93.95172pt.
+
 Overfull \hbox (66.72185pt too wide) has occurred while \output is active
  [][]  \T1/cmss/bx/n/6 ([])  
  []
 
 [4
 
-]
+ <./pic/matricula.png> <./pic/puntajes.png>]
 Overfull \hbox (66.72185pt too wide) has occurred while \output is active
  [][]  \T1/cmss/bx/n/6 ([])  
  []
 
 [5
 
-]
+] <./pic/innova.png, id=195, 1135.24126pt x 584.1825pt>
+File: ./pic/innova.png Graphic file (type png)
+
+<use ./pic/innova.png>
+Package pdftex.def Info: ./pic/innova.png used on input line 134.
+(pdftex.def)             Requested size: 340.575pt x 175.25609pt.
+
 Overfull \hbox (66.72185pt too wide) has occurred while \output is active
  [][]  \T1/cmss/bx/n/6 ([])  
  []
 
 [6
 
-]
+ <./pic/innova.png>]
 \tf@nav=\write8
 \openout8 = `diapo-1x1.nav'.
 
@@ -1247,14 +1265,14 @@ Overfull \hbox (66.72185pt too wide) has occurred while \output is active
 \tf@snm=\write10
 \openout10 = `diapo-1x1.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 119.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 119.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 135.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 135.
  (./diapo-1x1.aux
 LaTeX Info: Redefining \. on input line 23.
 LaTeX Info: Redefining \% on input line 23.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 119.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 119.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 135.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 135.
 Package rerunfilecheck Info: File `diapo-1x1.out' has not changed.
 (rerunfilecheck)             Checksum: 2EE26D4FD1F44D2EC1AF728B31CB4C67;328.
 
@@ -1262,28 +1280,29 @@ Package rerunfilecheck Info: File `diapo-1x1.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 119.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 135.
  ) 
 Here is how much of TeX's memory you used:
- 20086 strings out of 495059
- 360955 string characters out of 3182030
- 511681 words of memory out of 3000000
- 22725 multiletter control sequences out of 15000+200000
- 13136 words of font info for 28 fonts, out of 3000000 for 9000
+ 20124 strings out of 495059
+ 361960 string characters out of 3182030
+ 511680 words of memory out of 3000000
+ 22758 multiletter control sequences out of 15000+200000
+ 13961 words of font info for 29 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  49i,16n,63p,590b,704s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/kain/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1200.600pk> </home/ka
-in/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecso0600.600pk> </home/kain/.texmf-va
-r/fonts/pk/ljfour/jknappen/ec/ecsx0600.600pk> </home/kain/.texmf-var/fonts/pk/l
-jfour/jknappen/ec/ecss0800.600pk> </home/kain/.texmf-var/fonts/pk/ljfour/jknapp
-en/ec/ecss1095.600pk> </home/kain/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx10
-95.600pk> </home/kain/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk> </
-home/kain/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecsi1440.600pk> </home/kain/.t
-exmf-var/fonts/pk/ljfour/jknappen/ec/ecss1440.600pk>
-Output written on diapo-1x1.pdf (6 pages, 105009 bytes).
+ </home/kain/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecsi1200.600pk> </home/ka
+in/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1200.600pk> </home/kain/.texmf-va
+r/fonts/pk/ljfour/jknappen/ec/ecso0600.600pk> </home/kain/.texmf-var/fonts/pk/l
+jfour/jknappen/ec/ecsx0600.600pk> </home/kain/.texmf-var/fonts/pk/ljfour/jknapp
+en/ec/ecss0800.600pk> </home/kain/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecss10
+95.600pk> </home/kain/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx1095.600pk> </
+home/kain/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk> </home/kain/.t
+exmf-var/fonts/pk/ljfour/jknappen/ec/ecsi1440.600pk> </home/kain/.texmf-var/fon
+ts/pk/ljfour/jknappen/ec/ecss1440.600pk>
+Output written on diapo-1x1.pdf (6 pages, 480570 bytes).
 PDF statistics:
- 417 PDF objects out of 1000 (max. 8388607)
- 227 compressed objects within 3 object streams
+ 453 PDF objects out of 1000 (max. 8388607)
+ 233 compressed objects within 3 object streams
  18 named destinations out of 1000 (max. 500000)
- 114 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 135 words of extra memory for PDF output out of 10000 (max. 10000000)
 
