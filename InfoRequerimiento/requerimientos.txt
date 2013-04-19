@@ -1,0 +1,6 @@
+>Ficha de Clasificación Rápida          Igo
+>Modelo de Dominio (inicial)            Juan
+>Actores Y Tareas Clave                 Neko
+>Requerimientos extra-funcionales       Celeste
+>Restricciones de Software y Hardware   Pato
+>Casos de Uso iniciales                 Igo

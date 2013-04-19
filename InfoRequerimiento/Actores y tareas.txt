@@ -1,0 +1,20 @@
+Parte de Neko - actores y tareas
+
+Actores
+
+Actor				Descripci\'on
+Usuario				interactuar\'a con el animal simulado
+Encargado de Robot		obtendr\'a datos acerca del uso del softwware
+
+
+Tareas
+
+Tarea clave 			Descripci\'on
+Crear nueva mascota		crea una nueva mascota a gusto del usuario.
+Parear smartphone con robot	conectar el dispositivo con el robot.
+interactuar con smartphone	el usuario interact\'ua con la mascota que se encuentra en el tel\'efono.
+interactuar con robot		el usuario activa sensores en el animal f\'isico, generando una interacci\'on entre ellos.
+recolectar informaci\'on de	el encargado del robot obtiene datos estad\'asticos sobre el uso de la aplicaci\'on por los usuarios.
+del robot
+
+
