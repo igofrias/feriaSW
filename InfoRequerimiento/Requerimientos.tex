@@ -92,15 +92,15 @@ Integrantes:
 
 \section{Ficha de Clasificaci\'on R\'apida}
 \subsection{Objetivo del Proyecto} %140 caracteres
-El objetivo principal del proyecto es el motivar a alumnos de ense\~nanza media a estudiar carreras de inform\'atica, adem\'as de generar una continuidad con los proyectos existentes en el DI, implementando una mascota virtual que mezcle las tecnolog\'ias de smartphone con OS Android y robot Lego Mindstoms, utilizando las funcionalidades del primero y los sensores del segundo, para generar experiencias que sean atractivas para el usuario.\\
+El objetivo principal del proyecto es el motivar a alumnos de ense\~nanza media a estudiar carreras de inform\'atica, adem\'as de generar una continuidad entre los proyectos de difusi\'on del DI, implementando una mascota virtual que mezcle las tecnolog\'ias de smartphone con SO Android y robot Lego Mindstorms, utilizando las funcionalidades del primero y los sensores del segundo, para generar experiencias que sean atractivas para el usuario.\\
 
 \subsection{Resumen del Proyecto} %media pagina
 
 \emph{V.I.Pe.R.}, busca mezclar distintos tipos de tecnolog\'ias para su llegada al usuario.\\
 
-Es una mascota virtual, desarrollada en smartphone con OS Android, que busca interactuar con el usuario final, a trav\'es de las distintas funcionalidades que poseen estos dispositivos (como son la pantalla t\'actil, sensores de luminosidad, giroscopio, etc.).\\
+Por un lado, es una mascota virtual, desarrollada en smartphone con SO Android, que busca interactuar con el usuario final, a trav\'es de las distintas funcionalidades que poseen estos dispositivos (como son la pantalla t\'actil, sensores de luminosidad, giroscopio, etc.).\\
 
-Por otro lado, \emph{V.I.Pe.R.} tambi\'en es una mascota f\'{\i}sica, correspondiente a un robot Lego Mindstorms, el cual se comunicar\'a con el smartphone a trav\'es de una conecci\'on bluetooth y realizar\'a diferentes acciones seg\'un la interacci\'on del usuario con el equipo movil.\\
+Por otro lado, \emph{V.I.Pe.R.} tambi\'en es una mascota f\'{\i}sica, correspondiente a un robot Lego Mindstorms, el cual se comunicar\'a con el smartphone a trav\'es de una conexi\'on Bluetooth y realizar\'a diferentes acciones seg\'un la interacci\'on del usuario con el equipo movil.\\
 
 Finalmente, el robot Lego Mindstorms contar\'a con sensores con los que el usuario podr\'a relacionarse directamente, de manera tal de usar el smartphone como el ``cerebro'' del robot y poder realizar interacciones de varias maneras con el usuario.\\
 
@@ -108,19 +108,19 @@ Todo ello enfocado a llamar la atenci\'on del usuario por las Tecnologias de la 
 \subsection{Cliente}
 ~\\
 Nombre: Jocelyn Simmonds\\
-Cargo: \\
+Cargo: Instructura Acad\'emica, Departamento de Inform\'atica, UTFSM.\\
 E-mail: jsimmond@inf.utfsm.cl\\
-Tel\'efono: \\
-Rol o Experiencia relevante al producto:
+Tel\'efono: +56 2 4326675\\
+Rol o Experiencia relevante al producto: Involucrada en varios proyectos de difusion de TI a nivel escolar (Taller Conectados, Olimpiadas Chilenas de Inform\'atica). Adem\'as usa Lego Mindstorms como herramienta didactica en sus [algo que no se entiende] UTFSM.
 
 \newpage
 \section{Modelo de Dominio}
 
-Es posible apreciar el Modelo del Dominio en la figura~\ref{fig:ModeloDominio}.
+Es posible apreciar el Modelo del Dominio en la Figura~\ref{fig:ModeloDominio}.
 
 \begin{figure}[H]
    \centering
-     \includegraphics[scale=0.7]{ModeloDominio.jpg}
+     \includegraphics[scale=0.6]{ModeloDominio.jpg}
    \caption{Se puede apreciar el Modelo de Dominio relativo a \emph{V.I.Pe.R}.}
    \label{fig:ModeloDominio}
 \end{figure}
@@ -132,10 +132,13 @@ Respecto a las entidades mostradas en~\ref{fig:ModeloDominio} la descripci\'on d
   \begin{tabular}{p{5cm}p{9cm}}\hline
     Entidad & Descripci\'on \\ \hline \hline %1 linea
     Usuario & Representa a quien va a ocupar la aplicaci\'on (Un alumno, por ejemplo). \\ \hline
-    Encargado & Es el que se encarga de mantener al robot y sacar la informaci\'on que este recolecte. \\ \hline
-    Celular & Es el smartphone que act\'ua como ``cerebro'' del robot. \\ \hline
+    Encargado & Es el que se encarga de mantener al robot y obtener los datos necesarios para difusion. \\ \hline
+    Smartphone & Maneja las interacciones entre el usuario y la mascota. Debe tener SO Android. \\ \hline
+    Mascota Virtual & Representa el ``cerebro'' de la mascota. \\ \hline
     Robot & Es el robot f\'isico, con las capacidades que tienen que estar almacenadas si o si en \'el. \\ \hline
-    Sensores & Representan a los sensores que puede poseer el robot y que le permiten ver el mundo. \\ \hline \hline
+    Motores & Representa a los motores que permiten que el robot se mueva. \\ \hline
+    Brick & Representa a la unidad de control del robot. \\ \hline
+    Sensores & Representan a los sensores que puede poseer el robot y que le permiten obtener informacion del ambiente. \\ \hline \hline
   \end{tabular}
 \end{table}
 
@@ -148,8 +151,8 @@ En la tabla siguiente, se puede apreciar la lista de los actores identificados e
   \centering
   \begin{tabular}{p{5cm}p{9cm}}\hline
     Actor & Descripci\'on \\ \hline \hline %1 linea
-    Usuario & interactuar\'a con el animal simulado \\ \hline
-    Encargado de Robot & obtendr\'a datos acerca del uso del softwware \\ \hline \hline
+    Usuario & Interactuar\'a con el robot simulado \\ \hline
+    Encargado de Robot & Obtendr\'a datos acerca del uso de las mascotas (tanto virtual como f\'isica).\\ \hline \hline
   \end{tabular}
 \end{table}
 
@@ -161,8 +164,8 @@ Y a continuaci\'on, se observa la lista de tareas clave correspondientes al mism
     Tarea Clave & Descripci\'on \\ \hline\hline %max 3 lineas
     Crear nueva mascota & Crea una nueva mascota a gusto del usuario. \\ \hline
     Parear smartphone con robot & Conectar el dispositivo con el robot. \\ \hline
-    Interactuar con smartphone & El usuario interact\'ua con la mascota que se encuentra en el tel\'efono. \\ \hline
-    Interactuar con robot & El usuario activa sensores en el animal f\'isico, generando una interacci\'on entre ellos. \\ \hline
+    Interactuar con smartphone & El usuario interact\'ua con la mascota que se encuentra en el smartphone. \\ \hline
+    Interactuar con robot & El usuario activa sensores en la mascota f\'isica, generando una interacci\'on entre ellos. \\ \hline
     Recolectar informaci\'on del robot & El encargado del robot obtiene datos estad\'asticos sobre el uso de la aplicaci\'on por los usuarios. \\ \hline\hline
   \end{tabular}
 \end{table}
@@ -170,15 +173,16 @@ Y a continuaci\'on, se observa la lista de tareas clave correspondientes al mism
 \newpage
 \section{Requerimientos Extra-funcionales}
 
-No se aprecian requerimientos extra-funcionales que sean importantes para el proyecto.\\
+Se pueden apreciar los siguientes requerimientos extra-funcionales referentes a \emph{V.I.Pe.R.}
 
-%\begin{table}[H]
-%  \centering
-%  \begin{tabular}{lp{9cm}}\hline 
-%    Req. Extra-funcional & Descripci\'on y medici\'on \\ \hline\hline %max 2 lineas
-%    & \\ \hline
-%  \end{tabular}
-%\end{table}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{p{5cm}p{9cm}}\hline 
+    Req. Extra-funcional & Descripci\'on y medici\'on \\ \hline\hline %max 2 lineas
+    Consistencia entre las mascotas & El n\'umero de patas de la mascota virtual tiene que corresponderse al n\'umero de las mismas en la mascota f\'isica.\\ \hline
+    N\'umero de sensores & El total de sensores no puede ser mayor a cuatro por ``brick''\\\hline \hline
+  \end{tabular}
+\end{table}
 
 \newpage
 \section{Restricciones de Software y Hardware}
@@ -189,32 +193,32 @@ A continuaci\'on se detallan las restricciones propias del Software y del Hardwa
   \centering
   \begin{tabular}{p{5cm}p{9cm}}\hline
     Restricci\'on & Raz\'on \\ \hline\hline %max 2 lineas
-    Sistema rob\'otico debe ser LEGO Mindstorm NXT & Herramienta para principiantes, permite mayor manipulaci\'on y dinamicidad a la construcci\'on, adem\'as de ser atractivo para el usuario.\\ \hline
-    Aplicaci\'on m\'ovil debe programarse para smartphones con OS Android & Facilidad en la disponibilidad del recurso de trabajo. \\ \hline
-    Conectividad entre mascota f\'isica y aplicaci\'on debe ser por bluetooth & Resulta de las restricciones anteriores. Es la tecnolog\'{\i}a que tienen en com\'un para comunicarse entre ellos.\\ \hline \hline
+    Sistema rob\'otico debe ser LEGO Mindstorms NXT & Herramienta para principiantes, permite mayor manipulaci\'on y dinamicidad a la construcci\'on, adem\'as de ser atractivo para el usuario.\\ \hline
+    Aplicaci\'on m\'ovil debe programarse para smartphones con SO Android & Facilidad en la disponibilidad del recurso de trabajo. \\ \hline
+    Conectividad entre mascota f\'isica y aplicaci\'on debe ser por Bluetooth & Resulta de las restricciones anteriores. Es la tecnolog\'{\i}a que tienen en com\'un para comunicarse entre ellos.\\ \hline \hline
   \end{tabular}
 \end{table}
 
 \newpage
 \section{Casos de Uso} %al menos 3 casos de uso no-triviales
 
-En la figura~\ref{fig:CasoUso}, se puede apreciar los casos de uso del proyecto, englobando algunos en un nivel de abstracci\'on alto como son los casos de interacci\'on, ya sea con el smartphone o con el robot.\\
+En la Figura~\ref{fig:CasoUso}, se puede apreciar los casos de uso del proyecto, englobando algunos en un nivel de abstracci\'on alto como son los casos de interacci\'on, ya sea con el smartphone o con el robot.\\
 
 \begin{figure}[H]
    \centering
      \includegraphics[scale=1]{CasoUso.jpg}
-   \caption{Es posible apreciar algunos Casos de Uso relativos al proyecto \emph{V.I.Pe.R.}.}
+   \caption{Diagrama de Casos de Uso relativos al proyecto \emph{V.I.Pe.R.}.}
    \label{fig:CasoUso}
 \end{figure}
 
-Respecto a los casos de uso no-triviales, cabe destacar tres que son necesarios para la aplicaci\'on, en distintos niveles de aplicaci\'on. Por un lado, est\'a el caso de uso ``Crear Mascota'' que hace referencia a la interacci\'on entre usuario y el smartphone con Android, y es el que se detalla a continuaci\'on.\\
+Respecto a los casos de uso no-triviales, cabe destacar tres que son necesarios para la aplicaci\'on, en distintos niveles de aplicaci\'on. Por un lado, est\'a el caso de uso ``Crear Nueva Mascota'' que hace referencia a la interacci\'on entre usuario y el smartphone con Android, y es el que se detalla a continuaci\'on.\\
 
 \begin{table}[H]
   \centering
   \begin{tabular}{p{5cm}p{9cm}}\hline\hline
-    Nombre: & Crear Mascota. \\ \hline
+    Nombre: & Crear Nueva Mascota. \\ \hline
     Descripci\'on: & El usuario al utilizar la aplicaci\'on Android por primera vez, debe crear una mascota virtual, que va a ser el medio de interacci\'on entre dicho dispositivo y el robot Lego Mindstorms\\ \hline %max 5 lineas
-    Pre-condiciones: & No debe existir una mascota anteriormente.\\ \hline
+    Pre-condiciones: & No debe existir una mascota anteriormente. Adem\'as el smartphone debe encontrarse pareado con el robot.\\ \hline
     Post-condiciones: & Mascota Virtual creada y esperando para interactuar con el usuario\\ \hline
     Requerimientos no Funcionales: & ---\\ \hline\hline %min 0 ; max 3
   \end{tabular}
@@ -226,27 +230,39 @@ Luego, el segundo caso de uso se denomina ``Parear y Calibrar'', el que es posib
 \begin{table}[H]
   \centering
   \begin{tabular}{p{5cm}p{9cm}}\hline\hline
-    Nombre: & Parear y Calibrar. \\ \hline
-    Descripci\'on: & Es necesario poder transmitir datos desde la aplicaci\'on Android hacia el robot y viceversa, para ello es necesario poder comunicar los equipos. Adem\'as, estos deben poder funcionar correctamente en el medio en el que se encuentran.\\ \hline %max 5 lineas
+    Nombre: & Parear Smartphone Con Robot. \\ \hline
+    Descripci\'on: & Es necesario poder transmitir datos desde la aplicaci\'on Android hacia el robot y viceversa, para ello es necesario poder comunicar los equipos.\\ \hline %max 5 lineas
     Pre-condiciones: & Smartphone Android y Robot Lego Mindstorms no pareados (sin comunicaci\'on entre ellos).\\ \hline
-    Post-condiciones: & Smartphone Android y Robot Lego Mindstorms pareados (con comunicaci\'on entre uno y otro) y con la funcionalidad correspondiente al medio en que se encuentre el robot (fuerza de los motores seg\'un terreno, sensibilidad de sensores, etc.)\\ \hline
-    Requerimientos no Funcionales: &
-    \begin{itemize}
-    \item Disponer de al menos 3 niveles de fuerza en motores encargados de movimiento.
-    \end{itemize}\\ \hline\hline %min 0 ; max 3
+    Post-condiciones: & Smartphone Android y Robot Lego Mindstorms pareados (con comunicaci\'on entre uno y otro).\\ \hline
+    Requerimientos no Funcionales: & ---\\ \hline\hline %min 0 ; max 3
   \end{tabular}
   \label{tab:Parear}
 \end{table}
+
+Al cambiar al robot de entorno, es necesario reacondicionar al robot para que pueda interactuar de mejor manera con el nuevo entorno, por lo que tenemos el caso de uso ``Calibrar Smartphone Y Robot'', que se detalla a continuaci\'on.\\
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{p{5cm}p{9cm}}\hline\hline
+    Nombre: & Calibrar Smartphone Y Robot. \\ \hline
+    Descripci\'on: & El robot puede enfrentarse a entornos distintos y para ello debe poder funcionar correctamente en el medio en el que se encuentra.\\\hline
+    Pre-condiciones: & Smartphone con SO Android y Robot Lego Mindstorms pareados (con comunicaci\'on entre ellos).\\ \hline
+    Post-condiciones: & El robot se encuentra en condiciones de interactuar con el medio sin problemas (fuerza suficiente en motores para desplazarse, por ejemplo)\\\hline
+    Requerimientos no Funcionales: & En cuanto a los motores, disponer de al menos 3 niveles de fuerza en ellos.\\ \hline\hline %min 0 ; max 3
+  \end{tabular}
+  \label{tab:Calibrar}
+\end{table}
+
 
 Finalmente tenemos el caso de uso ``Recolectar informaci\'on de uso'', que hace referencia al \'ambito de interacci\'on del caso anterior, pero para un posterior uso del ``Encargado del Robot''.\\
 
 \begin{table}[H]
   \centering
   \begin{tabular}{p{5cm}p{9cm}}\hline\hline
-    Nombre: & Recolectar informaci\'on de uso.\\ \hline
+    Nombre: & Recolectar Informaci\'on De Uso.\\ \hline
     Descripci\'on: & Debido al objetivo en cuanto a difusi\'on, se hace necesario saber que tipo de futuros alumnos est\'an utilizando el sistema, y que tipo de uso se le da al mismo.\\ \hline %max 5 lineas
-    Pre-condiciones: & ``Parear y Calibrar'', Usuario interactuando con el sistema.\\ \hline
-    Post-condiciones: & Datos de uso de las funcionalidades de la aplicaci\'on.\\ \hline
+    Pre-condiciones: & Debe existir la mascota virtual y el smartphone con el robot deben estar pareados y calibrados.\\ \hline
+    Post-condiciones: & \\ \hline
     Requerimientos no Funcionales: & ---\\ \hline\hline %min 0 ; max 3
   \end{tabular}
   \label{tab:Recolectar}
