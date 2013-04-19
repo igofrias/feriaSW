@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  5 APR 2013 19:11
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  6 APR 2013 01:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -368,7 +368,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\\' on input line 44.
 
-No file cv-pato.aux.
+(./cv-pato.aux)
 \openout1 = `cv-pato.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
@@ -386,7 +386,7 @@ LaTeX Font Info:    ... okay on input line 44.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
 LaTeX Font Info:    ... okay on input line 44.
 LaTeX Font Info:    Try loading font information for T1+lmss on input line 44.
-(/usr/share/texmf/tex/latex/lm/t1lmss.fd
+ (/usr/share/texmf/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
@@ -441,6 +441,8 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 44.
 LaTeX Info: Redefining \pageref on input line 44.
 LaTeX Info: Redefining \nameref on input line 44.
+
+(./cv-pato.out) (./cv-pato.out)
 \@outlinefile=\write3
 \openout3 = `cv-pato.out'.
 
@@ -517,16 +519,11 @@ File: mt-mvs.cfg 2006/07/05 v1.1 microtype config. file: Marvosym Euro (RS)
 )
 \makecvtitlepicturebox=\box30
 
-
-! LaTeX Error: File `pic-pato' not found.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.46 
-     
-? 
+<./pic/pic-pato.jpg, id=45, 301.125pt x 301.125pt>
+File: ./pic/pic-pato.jpg Graphic file (type jpg)
+ <use ./pic/pic-pato.jpg>
+Package pdftex.def Info: ./pic/pic-pato.jpg used on input line 46.
+(pdftex.def)             Requested size: 64.0pt x 64.00084pt.
 \makecvtitledetailswidth=\skip68
 \makecvtitlepicturewidth=\skip69
 
@@ -543,12 +540,12 @@ LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
 (Font)              Font shape `T1/lmss/m/sl' tried instead on input line 76.
 
-Underfull \hbox (badness 1902) in paragraph at lines 93--93
+Underfull \hbox (badness 1902) in paragraph at lines 92--92
 []\T1/lmss/bx/n/9 Pascal, C/C++/C#, Java, Python,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 94--94
+Underfull \hbox (badness 10000) in paragraph at lines 93--93
 []\T1/lmss/bx/n/9 HTML, PHP, .NET, ASP, JSP,
  []
 
@@ -560,27 +557,20 @@ File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 129.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./pic/pic-pato.jpg>]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 129.
  (./cv-pato.aux)
 Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 129.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 129.
-
-
-Package rerunfilecheck Warning: File `cv-pato.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `cv-pato.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  CC67A27150D69504749F37B9193055DF;639.
+Package rerunfilecheck Info: File `cv-pato.out' has not changed.
+(rerunfilecheck)             Checksum: 27CC81200C93373401DA706734B5D68C;578.
  ) 
 Here is how much of TeX's memory you used:
- 8922 strings out of 495059
- 132969 string characters out of 3182030
- 258760 words of memory out of 3000000
- 11905 multiletter control sequences out of 15000+200000
- 71072 words of font info for 68 fonts, out of 3000000 for 9000
+ 8929 strings out of 495059
+ 133176 string characters out of 3182030
+ 257864 words of memory out of 3000000
+ 11920 multiletter control sequences out of 15000+200000
+ 70971 words of font info for 67 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  42i,13n,53p,794b,329s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/fonts/type1/
@@ -591,10 +581,10 @@ c/lm/lmss9.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share
 m/lmsso12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsso9.pfb></usr/share/te
 xmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /public/marvosym/marvosym.pfb>
-Output written on cv-pato.pdf (1 page, 209331 bytes).
+Output written on cv-pato.pdf (1 page, 228301 bytes).
 PDF statistics:
- 69 PDF objects out of 1000 (max. 8388607)
- 55 compressed objects within 1 object stream
- 13 named destinations out of 1000 (max. 500000)
- 20993 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 99 PDF objects out of 1000 (max. 8388607)
+ 84 compressed objects within 1 object stream
+ 12 named destinations out of 1000 (max. 500000)
+ 21078 words of extra memory for PDF output out of 24883 (max. 10000000)
 
