@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  19 APR 2013 18:08
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  19 APR 2013 19:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -626,8 +626,8 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [4]
-LaTeX Info: Redefining \. on input line 188.
-LaTeX Info: Redefining \% on input line 188.
+LaTeX Info: Redefining \. on input line 187.
+LaTeX Info: Redefining \% on input line 187.
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -636,7 +636,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 191--192
+Underfull \hbox (badness 10000) in paragraph at lines 190--191
 
  []
 
@@ -692,24 +692,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 238--238
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 243--244
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 252--252
-[]\OT1/cmr/m/n/12 Requerimientos no Fun-
- []
-
-LaTeX Info: Redefining \. on input line 256.
-LaTeX Info: Redefining \% on input line 256.
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 14.49998pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[8]
 Underfull \hbox (badness 10000) in paragraph at lines 258--259
 
  []
@@ -719,9 +701,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 267--267
 []\OT1/cmr/m/n/12 Requerimientos no Fun-
  []
 
+LaTeX Info: Redefining \. on input line 271.
+LaTeX Info: Redefining \% on input line 271.
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 14.49998pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[8]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 273.
 LaTeX Info: Redefining \. on input line 273.
 LaTeX Info: Redefining \% on input line 273.
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -738,17 +730,13 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 273.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 273.
 Package rerunfilecheck Info: File `Requerimientos.out' has not changed.
 (rerunfilecheck)             Checksum: F3F444FCFE9D01CE6C54ABF9585E198C;559.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 273.
  ) 
 Here is how much of TeX's memory you used:
- 8268 strings out of 495059
- 117375 string characters out of 3182030
- 227297 words of memory out of 3000000
- 11309 multiletter control sequences out of 15000+200000
+ 8267 strings out of 495059
+ 117361 string characters out of 3182030
+ 227258 words of memory out of 3000000
+ 11308 multiletter control sequences out of 15000+200000
  9898 words of font info for 36 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  37i,12n,43p,479b,458s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -757,7 +745,7 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Requerimientos.pdf (10 pages, 182538 bytes).
+Output written on Requerimientos.pdf (10 pages, 181677 bytes).
 PDF statistics:
  133 PDF objects out of 1000 (max. 8388607)
  110 compressed objects within 2 object streams
