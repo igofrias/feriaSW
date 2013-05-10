@@ -96,7 +96,7 @@ El objetivo principal del proyecto es el motivar a alumnos de ense\~nanza media 
 
 \subsection{Resumen del Proyecto} %media pagina
 
-\emph{V.I.Pe.R.}, busca mezclar distintos tipos de tecnolog\'ias para su llegada al usuario.\\
+\emph{V.I.Pe.R.} busca mezclar distintos tipos de tecnolog\'ias para su llegada al usuario.\\
 
 Por un lado, es una mascota virtual, desarrollada en smartphone con SO Android, que busca interactuar con el usuario final, a trav\'es de las distintas funcionalidades que poseen estos dispositivos (como son la pantalla t\'actil, sensores de luminosidad, giroscopio, etc.).\\
 
@@ -111,7 +111,7 @@ Nombre: Jocelyn Simmonds\\
 Cargo: Instructura Acad\'emica, Departamento de Inform\'atica, UTFSM.\\
 E-mail: jsimmond@inf.utfsm.cl\\
 Tel\'efono: +56 2 4326675\\
-Rol o Experiencia relevante al producto: Involucrada en varios proyectos de difusion de TI a nivel escolar (Taller Conectados, Olimpiadas Chilenas de Inform\'atica). Adem\'as usa Lego Mindstorms como herramienta didactica en sus [algo que no se entiende] UTFSM.
+Rol o Experiencia relevante al producto: Involucrada en varios proyectos de difusion de TI a nivel escolar (Taller Conectados, Olimpiadas Chilenas de Inform\'atica). Adem\'as usa Lego Mindstorms como herramienta didactica en sus clases en la UTFSM.
 
 \newpage
 \section{Modelo de Dominio}
@@ -120,7 +120,7 @@ Es posible apreciar el Modelo del Dominio en la Figura~\ref{fig:ModeloDominio}.
 
 \begin{figure}[H]
    \centering
-     \includegraphics[scale=0.6]{ModeloDominio.jpg}
+     \includegraphics[scale=0.45]{ModeloDominio.jpg}
    \caption{Se puede apreciar el Modelo de Dominio relativo a \emph{V.I.Pe.R}.}
    \label{fig:ModeloDominio}
 \end{figure}
@@ -179,8 +179,8 @@ Se pueden apreciar los siguientes requerimientos extra-funcionales referentes a 
   \centering
   \begin{tabular}{p{5cm}p{9cm}}\hline 
     Req. Extra-funcional & Descripci\'on y medici\'on \\ \hline\hline %max 2 lineas
-    Consistencia entre las mascotas & El n\'umero de patas de la mascota virtual tiene que corresponderse al n\'umero de las mismas en la mascota f\'isica.\\ \hline
-    N\'umero de sensores & El total de sensores no puede ser mayor a cuatro por ``brick''\\\hline \hline
+    Rendimiento & El tiempo de respuesta entre smartphone con SO Android y el robot, debe ser menor a 2 segundos.\\\hline
+    Usabilidad & El n\'umero de patas de la mascota virtual tiene que corresponderse al n\'umero de las mismas en la mascota f\'isica.\\ \hline\hline
   \end{tabular}
 \end{table}
 
@@ -195,7 +195,8 @@ A continuaci\'on se detallan las restricciones propias del Software y del Hardwa
     Restricci\'on & Raz\'on \\ \hline\hline %max 2 lineas
     Sistema rob\'otico debe ser LEGO Mindstorms NXT & Herramienta para principiantes, permite mayor manipulaci\'on y dinamicidad a la construcci\'on, adem\'as de ser atractivo para el usuario.\\ \hline
     Aplicaci\'on m\'ovil debe programarse para smartphones con SO Android & Facilidad en la disponibilidad del recurso de trabajo. \\ \hline
-    Conectividad entre mascota f\'isica y aplicaci\'on debe ser por Bluetooth & Resulta de las restricciones anteriores. Es la tecnolog\'{\i}a que tienen en com\'un para comunicarse entre ellos.\\ \hline \hline
+    Conectividad entre mascota f\'isica y aplicaci\'on debe ser por Bluetooth & Resulta de las restricciones anteriores. Es la tecnolog\'{\i}a que tienen en com\'un para comunicarse entre ellos.\\ \hline
+    N\'umero de sensores & El total de sensores no puede ser mayor a cuatro por brick.\\\hline \hline
   \end{tabular}
 \end{table}
 
@@ -206,7 +207,7 @@ En la Figura~\ref{fig:CasoUso}, se puede apreciar los casos de uso del proyecto,
 
 \begin{figure}[H]
    \centering
-     \includegraphics[scale=1]{CasoUso.jpg}
+     \includegraphics[scale=.9]{CasoUso.jpg}
    \caption{Diagrama de Casos de Uso relativos al proyecto \emph{V.I.Pe.R.}.}
    \label{fig:CasoUso}
 \end{figure}
@@ -225,7 +226,7 @@ Respecto a los casos de uso no-triviales, cabe destacar tres que son necesarios 
   \label{tab:Crear}
 \end{table}
 
-Luego, el segundo caso de uso se denomina ``Parear y Calibrar'', el que es posible observar m\'as en detalle en la tabla siguiente, y abarca el nivel de interacci\'on entre el equipo smarthphone y el robot Lego Mindstorms.\\
+Luego, el segundo caso de uso se denomina ``Parear Smartphone Con Robot'', el que es posible observar m\'as en detalle en la tabla siguiente, y abarca el nivel de interacci\'on entre el equipo smartphone y el robot Lego Mindstorms.\\
 
 \begin{table}[H]
   \centering
@@ -239,19 +240,19 @@ Luego, el segundo caso de uso se denomina ``Parear y Calibrar'', el que es posib
   \label{tab:Parear}
 \end{table}
 
-Al cambiar al robot de entorno, es necesario reacondicionar al robot para que pueda interactuar de mejor manera con el nuevo entorno, por lo que tenemos el caso de uso ``Calibrar Smartphone Y Robot'', que se detalla a continuaci\'on.\\
-
-\begin{table}[H]
-  \centering
-  \begin{tabular}{p{5cm}p{9cm}}\hline\hline
-    Nombre: & Calibrar Smartphone Y Robot. \\ \hline
-    Descripci\'on: & El robot puede enfrentarse a entornos distintos y para ello debe poder funcionar correctamente en el medio en el que se encuentra.\\\hline
-    Pre-condiciones: & Smartphone con SO Android y Robot Lego Mindstorms pareados (con comunicaci\'on entre ellos).\\ \hline
-    Post-condiciones: & El robot se encuentra en condiciones de interactuar con el medio sin problemas (fuerza suficiente en motores para desplazarse, por ejemplo)\\\hline
-    Requerimientos no Funcionales: & En cuanto a los motores, disponer de al menos 3 niveles de fuerza en ellos.\\ \hline\hline %min 0 ; max 3
-  \end{tabular}
-  \label{tab:Calibrar}
-\end{table}
+%Al cambiar al robot de entorno, es necesario reacondicionar al robot para que pueda interactuar de mejor manera con el nuevo entorno, por lo que tenemos el caso de uso ``Calibrar Smartphone y Robot'', que se detalla a continuaci\'on.\\
+%
+%\begin{table}[H]
+%  \centering
+%  \begin{tabular}{p{5cm}p{9cm}}\hline\hline
+%    Nombre: & Calibrar Smartphone y Robot. \\ \hline
+%    Descripci\'on: & El robot puede enfrentarse a entornos distintos y para ello debe poder funcionar correctamente en el medio en el que se encuentra.\\\hline
+%    Pre-condiciones: & Smartphone con SO Android y Robot Lego Mindstorms pareados (con comunicaci\'on entre ellos).\\ \hline
+%    Post-condiciones: & El robot se encuentra en condiciones de interactuar con el medio sin problemas (fuerza suficiente en motores para desplazarse, por ejemplo)\\\hline
+%    Requerimientos no Funcionales: & En cuanto a los motores, disponer de al menos 3 niveles de fuerza en ellos.\\ \hline\hline %min 0 ; max 3
+%  \end{tabular}
+%  \label{tab:Calibrar}
+%\end{table}
 
 
 Finalmente tenemos el caso de uso ``Recolectar informaci\'on de uso'', que hace referencia al \'ambito de interacci\'on del caso anterior, pero para un posterior uso del ``Encargado del Robot''.\\
@@ -262,7 +263,7 @@ Finalmente tenemos el caso de uso ``Recolectar informaci\'on de uso'', que hace 
     Nombre: & Recolectar Informaci\'on De Uso.\\ \hline
     Descripci\'on: & Debido al objetivo en cuanto a difusi\'on, se hace necesario saber que tipo de futuros alumnos est\'an utilizando el sistema, y que tipo de uso se le da al mismo.\\ \hline %max 5 lineas
     Pre-condiciones: & Debe existir la mascota virtual y el smartphone con el robot deben estar pareados y calibrados.\\ \hline
-    Post-condiciones: & \\ \hline
+    Post-condiciones: & Se guardaran los datos para an\'alisis futuros.\\ \hline
     Requerimientos no Funcionales: & ---\\ \hline\hline %min 0 ; max 3
   \end{tabular}
   \label{tab:Recolectar}
