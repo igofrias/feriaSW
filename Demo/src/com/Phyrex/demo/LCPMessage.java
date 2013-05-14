@@ -1,5 +1,7 @@
 /**
- *   Copyright 2010, 2011, 2012 Guenther Hoelzl, Shawn Brown
+ *   (Changes from original are) Copyright 2010 Guenther Hoelzl, Shawn Brown
+ * 
+ * (original work is) Copyright (C) 2009 The Android Open Source Project
 **/
 
 package com.Phyrex.demo;

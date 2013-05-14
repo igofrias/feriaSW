@@ -34,10 +34,10 @@
             android:name="com.Phyrex.demo.LCPMessage"
             android:label="@string/title_activity_lcpmessage" >
         </activity>
-        <activity
-            android:name="com.Phyrex.demo.DeviceListActivity"
-            android:label="@string/title_activity_device_list" >
-        </activity>
+       	<activity android:name=".DeviceListActivity"
+			android:screenOrientation="portrait" android:label="@string/select_device"
+			android:theme="@android:style/Theme.Dialog">
+		</activity>
         <activity
             android:name="com.Phyrex.demo.DialogListener"
             android:label="@string/title_activity_dialog_listener" >
@@ -47,24 +47,8 @@
             android:label="@string/title_activity_file_dialog" >
         </activity>
         <activity
-            android:name="com.Phyrex.demo.GameView"
-            android:label="@string/title_activity_game_view" >
-        </activity>
-        <activity
             android:name="com.Phyrex.demo.DialogActivity"
             android:label="@string/title_activity_dialog" >
-        </activity>
-        <activity
-            android:name="com.Phyrex.demo.Looper"
-            android:label="@string/title_activity_looper" >
-        </activity>
-        <activity
-            android:name="com.Phyrex.demo.Hilitosd"
-            android:label="@string/title_activity_hilitosd" >
-        </activity>
-        <activity
-            android:name="com.Phyrex.demo.Hilitos"
-            android:label="@string/title_activity_hilitos" >
         </activity>
     </application>
 

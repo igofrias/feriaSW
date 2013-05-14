@@ -51,15 +51,8 @@ public class DeviceListActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         // Setup the window
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);//gargando en ek actionbar
         setContentView(R.layout.device_list);
-        //AlertDialog.Builder dialog = new AlertDialog.Builder(DeviceListActivity.this);  
-        //dialog.setTitle("Dialog");		
-        //dialog.setIcon(R.drawable.ic_launcher);	
-        
-        //View view = getLayoutInflater().inflate( R.layout.device_list, null ); 
-        //dialog.setView(view);
-        //dialog.show();
         // Set result CANCELLED in case the user backs out
         setResult(Activity.RESULT_CANCELED);
 

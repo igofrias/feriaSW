@@ -63,7 +63,8 @@ public class BTCommunicator extends Thread {
 
     private Handler uiHandler;
     private String mMACaddress;
-    private BTConnectable myOwner;
+
+	private BTConnectable myOwner;
 
     private byte[] returnMessage;
 
