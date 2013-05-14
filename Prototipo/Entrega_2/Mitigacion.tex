@@ -88,29 +88,42 @@ Integrantes:
 
 \setcounter{page}{1} %empezar enumerando la pagina 1
 
-\tableofcontents
+%\tableofcontents
 
-\newpage
+%\newpage
 \section{Artefactos de Mitigaci\'on.}
-%%%
- % Artefactos confeccionados para mitigar el riesgo
- % principal identificado en la 1ra parte
-%%%
+Para mitigar nuestro principal riesgo (a saber, \emph{Errores de inicio y mantenci\'on de conexi\'on v\'ia Bluetooth entre aplicaci\'on y sistema rob\'otico}) fue utilizado:
 
-\newpage
+\begin{itemize}
+\item Robot con un NXT Intelligent Brick y 3 motores.
+\item Aplicaci\'on Android de control.
+\end{itemize}
+
+%\newpage
 \section{C\'odigo Desarrollado.}
-%%%
- % Codigo fuente y ejecutable (si lo hubo) construido
- % para la mitigacion del rieso principal
-%%%
+Para resolver nuestro principal riesgo, se desarroll\'o una aplicaci\'on Android con la capacidad de conectarse con los NXT Intelligent Brick, el cual utiliza la librer\'ia ``BluetoohAdapter'' de las librerias de Bluetooth de Android.
 
-\newpage
+De ella, la aplicaci\'on desarrollada utiliza las siguientes funciones, para mantener la conexi\'on entre el dispositivo m\'ovil (smartphone) y el Robot.
+
+\begin{itemize}
+\item {\bf \verb+createBTCommunicator()+}: crea objeto para realizar conexi\'on
+\item {\bf \verb+startBTCommunicator()+}: inicia la conexi\'on
+\item {\bf \verb+destroyBTCommunicator()+}: termina la conexi\'on
+\end{itemize}
+
+Es a trav\'es de dichas funciones, que el dispositivo es capaz de mandarle las instrucciones necesarias al robot (por medio del NXT Intelligent Brick) para poder mover sus motores.
+
+%\newpage
 \section{Relaci\'on Entre Elementos.} %1 pag
-%%%
- % Breve documento explicativo indicando que artefactos se desarrollo, como esta
- % organizado el codigo desarrollado en el repositorio GIT/SVN y la relacion
- % entre estos elementos.
-%%%
+Para poder observar la relaci\'on existente entre los distintos elementos que interact\'uan con el sistema, se adjunta el diagrama de secuencia, observable en la Figura~\ref{img:diagrama}, en donde se detalla el funcionamiento de la soluci\'on implementada para mitigar el principal riesgo.
+
+\begin{figure}[H]
+   \centering
+     \includegraphics[scale=1]{DiagramaSecuencia_v01.png}
+   \caption{Diagrama de Secuencia de funcionamiento del Demo realizado para la mitigaci\'on del riesgo principal.}
+   \label{img:diagrama}
+\end{figure}
+
 
 \end{document}
 
