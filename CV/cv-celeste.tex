@@ -1,0 +1,135 @@
+%% start of file `template_en.tex'.
+%% Copyright 2007 Xavier Danaux (xdanaux@gmail.com).
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License version 1.3c,
+% available at http://www.latex-project.org/lppl/.
+
+\documentclass[10pt,letterpaper]{moderncv}
+\usepackage{hyperref}
+
+% moderncv themes
+\moderncvtheme[blue]{classic}                 % optional argument are 'blue' (default), 'orange', 'red', 'green', 'grey' and 'roman' (for roman fonts, instead of sans serif fonts)
+%\moderncvtheme[green]{casual}                % idem
+
+% character encoding
+\usepackage[latin1]{inputenc}                 % replace by the encoding you are using
+
+% adjust the page margins
+\usepackage[top=1.5cm,bottom=1.5cm,right=2.5cm,left=2.5cm]{geometry} %margenes
+\recomputelengths                             % required when changes are made to page layout lengths
+
+%%
+\graphicspath{{./pic/}} %le dice que las im\'agenes est\'an en la carpeta 'pic' del directorio local
+
+% personal data
+\firstname{\Huge Celeste Fernanda\\}
+\familyname{\Huge Bertin Aguilar}
+\title{\Large Alumna Ingenier\'ia Civil Inform\'atica}        % optional, remove the line if not wanted
+\address{Simon Gonzalez 8236}{La Reina}    % optional, remove the line if not wanted
+\mobile{+56 9 68410901}                            % optional, remove the line if not wanted
+\phone{+56 2 2 2751506}                    % optional, remove the line if not wanted
+% \fax{fax (optional)}                        % optional, remove the line if not wanted
+\email{celeste.bertin@alumnos.usm.cl}                      % optional, remove the line if not wanted
+\extrainfo{\href{https://www.facebook.com/igo.frias}{Facebook}\\ \href{https://plus.google.com/115729213678098381962}{Google Plus}} % optional, remove the line if not wanted
+\photo[70pt]{pic-celeste}                         % '64pt' is the height the picture must be resized to and 'picture' is the name of the picture file; optional, remove the line if not wanted
+% \quote{Some quote (optional)}                 % optional, remove the line if not wanted
+
+\nopagenumbers{}                             % uncomment to suppress automatic page numbering for CVs longer than one page
+
+
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+\maketitle
+
+%%
+%%Informacion Personal
+%%
+\section{Informaci\'on Personal}
+\cvline{Fecha de Nac.}{\small 28 de Mayo de 1988}
+\cvline{R.U.T.}{\small 16.937.746-4}
+\cvline{Estado Civil}{\small Soltera}
+
+\subsection{Formaci\'on Acad\'emica}
+% \cventry{year--year}{Degree}{Institution}{City}{\textit{Grade}}{Description}  % arguments 3 to 6 are optional
+\cventry{}{Ense\~nanza Media}{American School of Warsaw}{Polonia}{}{}
+\cventry{}{ Ense\~nanza Media}{American Nicaraguan School}{Nicaragua}{}{}
+\cventry{2008--2009}{Plan Comun de Ingenier\'ia}{Facultad de Ciencias F\'isica y Matem\'aticas, Universidad de Chile}{Santiago}{\textit{Incompleta}}{}
+\cventry{2010--2013}{Ingenier\'ia Civil Inform\'atica}{Departamento de Inform\'atica, Universidad T\'ecnica Federico Santa Mar\'ia}{Santiago}{\textit{Cursando}}{}
+
+% \section{Master thesis}
+% \cvline{title}{\emph{Title}}
+% \cvline{supervisors}{Supervisors}
+% \cvline{description}{\small Short thesis abstract}
+
+\section{Descripci\'on Personal}
+\subsection{Aficiones}
+% \cvline{hobby 1}{\small Description}
+\cvline{M\'usica}{\small  Aprendizaje de interpretaci\'on m\'usical, por iniciativa propia, de Guitarra El\'ectrica.}
+\cvline{Deportes}{\small F\'utbol, softball}
+
+\subsection{Idiomas}
+%\cvlanguage{language 1}{Skill level}{Comment}
+\cvlanguage{Ingl\'es}{Nativo}{Educacion media en ingl\'es.}
+\cvlanguage{Franc\'es}{Medio}{Delf B1.}
+
+%\subsection{Becas y Otros}
+%\cventry{year--year}{Job title}{Employer}{City}{}{Description}  % arguments 3 to 6 are optional
+%\cventry{}{}{}{}{}{}
+
+%%
+%%Experiencias
+%%
+\section{Experiencia}
+
+\subsection{Proyectos}
+%\cvcomputer{Proyect Name}{}{Description}{\textit{Achievement}}
+
+
+\subsection{Conocimientos}
+%\cvcomputer{category 1}{XX, YY, ZZ}{category 4}{XX, YY, ZZ}
+\cvcomputer{SO}{\textbf{Gnu/Linux, Windows}}{}{}
+\cvcomputer{Lenguajes}{\textbf{C/C++, Java, Python, Matlab, Mathematica, R, \LaTeX}}{}{}
+\cvcomputer{Dise\~no Web}{\textbf{HTML, PHP}}{}{}
+\cvcomputer{BD}{\textbf{MySQL, PostgreSQL, Microsoft SQL Server}}{}{}
+\cvcomputer{Utilidades}{\textbf{ Word, Excel, PowerPoint}}{}{}
+
+\subsection{Congresos y Seminarios}
+%\cvline{}{\small}
+\cvline{Nov 2011}{Conferencia Startechconf}
+%\cvline{Marzo 2013}{Sexto Follow Quinta}
+
+
+\subsection{Pr\'acticas y Ayudant\'ias}
+%\cventry{year--year}{Job title}{Employer}{City}{}{Description}  % arguments 3 to 6 are optional
+\cventry{2013}{Ayudante Fundamentos de Ingenier\'ia de Software}{}{}{}{}
+\cventry{2011-2012}{Ayudant\'ia Laboratorio de  Matem\'aticas II}{}{}{}{}
+\cventry{2011}{Asistente de laboratorio de computaci\'on}{}{}{}{}
+
+%\subsection{Otros Estudios}
+%\cvline{2013}{Taller de Android}
+%\cvline{2013}{Taller de administracion de PostgreSQL}
+
+\section{Recomendaciones}
+\cventry{Mariana Massardo Henr\'iquez}{Universidad T\'ecnica Federico Santa Mar\'{\i}a}{Profesor Auxiliar}{\texttt{<mariana.massardo@gmail.com>}}{[+56 9 62082263]}{}
+
+\closesection{}                   % needed to renewcommands
+\renewcommand{\listitemsymbol}{-} % change the symbol for lists
+
+% \section{Extra 1}
+% \cvlistitem{Item 1}
+% \cvlistitem{Item 2}
+% \cvlistitem[+]{Item 3}            % optional other symbol
+
+% \section{Extra 2}
+% \cvlistdoubleitem[\Neutral]{Item 1}{Item 4}
+% \cvlistdoubleitem[\Neutral]{Item 2}{Item 5}
+% \cvlistdoubleitem[\Neutral]{Item 3}{}
+
+% Publications from a BibTeX file
+% \nocite{*}
+% \bibliographystyle{plain}
+% \bibliography{publications}       % 'publications' is the name of a BibTeX file
+\end{document}
