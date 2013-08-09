@@ -1,0 +1,24 @@
+\select@language {spanish}
+\contentsline {chapter}{\numberline {1}Introducci\'on.}{7}{chapter.1}
+\contentsline {chapter}{\numberline {2}Soluci\'on Conceptual.}{9}{chapter.2}
+\contentsline {section}{\numberline {2.1}Diagn\'ostico de la situaci\'on actual.}{10}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Situaci\'on Actual.}{10}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Identificaci\'on de problemas y deficiencias.}{11}{subsection.2.1.2}
+\contentsline {section}{\numberline {2.2}Caracterizaci\'on del cambio.}{12}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Caracter\'isticas y potencialidades deseadas.}{12}{subsection.2.2.1}
+\contentsline {subsubsection}{Restricciones.}{12}{section*.4}
+\contentsline {section}{\numberline {2.3}An\'alisis de las alternativas de la soluci\'on.}{13}{section.2.3}
+\contentsline {section}{\numberline {2.4}Soluci\'on recomendada.}{15}{section.2.4}
+\contentsline {chapter}{\numberline {3}T\'ecnicas y herramientas de desarrollo.}{17}{chapter.3}
+\contentsline {section}{\numberline {3.1}Modelo de desarrollo.}{18}{section.3.1}
+\contentsline {section}{\numberline {3.2}Herramientas y t\'ecnicas de soporte para el desarrollo.}{19}{section.3.2}
+\contentsline {section}{\numberline {3.3}Personal y capacitaci\'on del equipo de desarrollo.}{20}{section.3.3}
+\contentsline {chapter}{\numberline {4}Gesti\'on de riesgos.}{21}{chapter.4}
+\contentsline {section}{\numberline {4.1}An\'alisis de riesgos.}{22}{section.4.1}
+\contentsline {section}{\numberline {4.2}Preparaci\'on para control de riesgos.}{23}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Riesgos T\'ecnicos}{23}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Riesgos de Proyecto}{27}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Riesgos de Negocio}{32}{subsection.4.2.3}
+\contentsline {chapter}{\numberline {5}Implementaci\'on (entrega y operaci\'on).}{35}{chapter.5}
+\contentsline {chapter}{\numberline {6}Planificaci\'on de actividades.}{37}{chapter.6}
+\contentsline {chapter}{\numberline {7}Anexos.}{39}{chapter.7}

@@ -1,0 +1,1176 @@
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  9 AUG 2013 14:30
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**PlanDeProyecto.tex
+(./PlanDeProyecto.tex
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, lo
+aded.
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk12.clo
+File: bk12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (./mystyle.sty
+Package: mystyle 
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2008/03/30 v1.1d Input encoding file
+\inpenc@prehook=\toks14
+\inpenc@posthook=\toks15
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def
+File: latin1.def 2008/03/30 v1.1d Input encoding file
+))
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2008/07/08 v3.8m The Babel package
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel/spanish.ldf
+Language: spanish.ldf 2011/10/06 v5.0k Spanish support from the babel system
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
+File: babel.def 2008/07/08 v3.8m Babel common definitions
+\babel@savecnt=\count88
+\U@D=\dimen103
+)
+
+Package babel Warning: No hyphenation patterns were loaded for
+(babel)                the language `Spanish'
+(babel)                I will use the patterns loaded for \language=0 instead.
+
+\l@spanish = a dialect from \language0
+\es@datefmt=\count89
+\es@quottoks=\toks16
+\es@quotdepth=\count90
+Package babel Info: Making " an active character on input line 496.
+Package babel Info: Making . an active character on input line 599.
+Package babel Info: Making < an active character on input line 644.
+Package babel Info: Making > an active character on input line 644.
+)) (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+\fancy@headwidth=\skip43
+\f@ncyO@elh=\skip44
+\f@ncyO@erh=\skip45
+\f@ncyO@olh=\skip46
+\f@ncyO@orh=\skip47
+\f@ncyO@elf=\skip48
+\f@ncyO@erf=\skip49
+\f@ncyO@olf=\skip50
+\f@ncyO@orf=\skip51
+)
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2010/09/12 v5.6 Page Geometry
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks17
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+\Gm@cnth=\count91
+\Gm@cntv=\count92
+\c@Gm@tempcnt=\count93
+\Gm@bindingoffset=\dimen104
+\Gm@wd@mp=\dimen105
+\Gm@odd@mp=\dimen106
+\Gm@even@mp=\dimen107
+\Gm@layoutwidth=\dimen108
+\Gm@layoutheight=\dimen109
+\Gm@layouthoffset=\dimen110
+\Gm@layoutvoffset=\dimen111
+\Gm@dimlist=\toks18
+)
+(/usr/share/texlive/texmf-dist/tex/latex/floatflt/floatflt.sty
+Package: floatflt 1997/07/16 v. 1.31
+\c@OptionTest=\count94
+\figbox=\box26
+\tabbox=\box27
+\pagebox=\box28
+\ffigcount=\count95
+\ftabcount=\count96
+\fftest=\count97
+\hangcount=\count98
+\nosuccesstryfig=\count99
+\nosuccesstrytab=\count100
+\figgutter=\dimen112
+\tabgutter=\dimen113
+\htdone=\dimen114
+\pageht=\dimen115
+\startpageht=\dimen116
+\tabbredd=\dimen117
+\floatfltwidth=\dimen118
+\fltitemwidth=\dimen119
+\outputpretest=\toks19
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+Package: pdfpages 2012/04/03 v0.4s Insert pages of external PDF documents (AM)
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count101
+\calc@Bcount=\count102
+\calc@Adimen=\dimen120
+\calc@Bdimen=\dimen121
+\calc@Askip=\skip52
+\calc@Bskip=\skip53
+LaTeX Info: Redefining \setlength on input line 76.
+LaTeX Info: Redefining \addtolength on input line 77.
+\calc@Ccount=\count103
+\calc@Cskip=\skip54
+)
+(/usr/share/texlive/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2010/10/06 v2.0c eso-pic (RN)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/atbegshi.sty
+Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+))
+(/usr/share/texmf/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+
+(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+\Gread@gobject=\count104
+)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+))
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+)
+\Gin@req@height=\dimen122
+\Gin@req@width=\dimen123
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pppdftex.def
+File: pppdftex.def 2012/04/03 v0.4s Pdfpages driver for pdfTeX (AM)
+)
+\AM@pagebox=\box29
+\AM@toc@title=\toks20
+\c@AM@survey=\count105
+\AM@templatesizebox=\box30
+)
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count106
+\float@exts=\toks21
+\float@box=\box31
+\@float@everytoks=\toks22
+\@floatcapt=\box32
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2012/05/13 v6.82q Hypertext links for LaTeX
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+Package: hobsub-hyperref 2012/05/28 v1.13 Bundle oberdiek, subset hyperref (HO)
+
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+Package: hobsub-generic 2012/05/28 v1.13 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2012/05/28 v1.13 Construct package bundles (HO)
+Package hobsub Info: Skipping package `infwarerr' (already loaded).
+Package hobsub Info: Skipping package `ltxcmds' (already loaded).
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package hobsub Info: Skipping package `ifvtex' (already loaded).
+Package: intcalc 2007/09/27 v1.1 Expandable calculations with integers (HO)
+Package hobsub Info: Skipping package `ifpdf' (already loaded).
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2011/11/25 v1.13 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2012/04/08 v1.3 Expandable calculations on big integers (HO
+)
+Package: bitset 2011/01/30 v1.1 Handle bit-vector datatype (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2012/05/28 v1.2 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/06/30 v1.8 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+Package hobsub Info: Skipping package `atbegshi' (already loaded).
+Package: refcount 2011/10/16 v3.4 Data extraction from label references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+)
+\@linkdim=\dimen124
+\Hy@linkcounter=\count107
+\Hy@pagecounter=\count108
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2012/05/13 v6.82q Hyperref: PDFDocEncoding definition (HO)
+)
+\Hy@SavedSpaceFactor=\count109
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4062.
+Package hyperref Info: Link nesting OFF on input line 4067.
+Package hyperref Info: Hyper index ON on input line 4070.
+Package hyperref Info: Plain pages OFF on input line 4077.
+Package hyperref Info: Backreferencing OFF on input line 4082.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4300.
+\c@Hy@tempcnt=\count110
+
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4653.
+\Fld@menulength=\count111
+\Field@Width=\dimen125
+\Fld@charsize=\dimen126
+Package hyperref Info: Hyper figures OFF on input line 5773.
+Package hyperref Info: Link nesting OFF on input line 5778.
+Package hyperref Info: Hyper index ON on input line 5781.
+Package hyperref Info: backreferencing OFF on input line 5788.
+Package hyperref Info: Link coloring OFF on input line 5793.
+Package hyperref Info: Link coloring with OCG OFF on input line 5798.
+Package hyperref Info: PDF/A mode OFF on input line 5803.
+LaTeX Info: Redefining \ref on input line 5843.
+LaTeX Info: Redefining \pageref on input line 5847.
+\Hy@abspage=\count112
+\c@Item=\count113
+\c@Hfootnote=\count114
+)
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2012/05/13 v6.82q Hyperref driver for pdfTeX
+\Fld@listcount=\count115
+\c@bookmark@seq@number=\count116
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip55
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 15.
+
+(/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen127
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip56
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks23
+\ex@=\dimen128
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen129
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count117
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count118
+\leftroot@=\count119
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count120
+\DOTSCASE@=\count121
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box33
+\strutbox@=\box34
+\big@size=\dimen130
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count122
+\c@MaxMatrixCols=\count123
+\dotsspace@=\muskip11
+\c@parentequation=\count124
+\dspbrk@lvl=\count125
+\tag@help=\toks24
+\row@=\count126
+\column@=\count127
+\maxfields@=\count128
+\andhelp@=\toks25
+\eqnshift@=\dimen131
+\alignsep@=\dimen132
+\tagshift@=\dimen133
+\tagwidth@=\dimen134
+\totwidth@=\dimen135
+\lineht@=\dimen136
+\@envbody=\toks26
+\multlinegap=\skip57
+\multlinetaggap=\skip58
+\mathdisplay@stack=\toks27
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/chngcntr/chngcntr.sty
+Package: chngcntr 2009/09/02 v1.0a change counter resetting
+)
+(/usr/share/texlive/texmf-dist/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip59
+\subfigcapskip=\skip60
+\subfigcaptopadj=\dimen137
+\subfigbottomskip=\skip61
+\subfigcapmargin=\dimen138
+\subfiglabelskip=\skip62
+\c@subfigure=\count129
+\c@lofdepth=\count130
+\c@subtable=\count131
+\c@lotdepth=\count132
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(/usr/share/texlive/texmf-dist/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip63
+\subfig@bottom=\skip64
+))
+(./PlanDeProyecto.aux
+LaTeX Info: Redefining \. on input line 21.
+LaTeX Info: Redefining \% on input line 21.
+
+
+LaTeX Warning: Label `fig:LegoMindstorms' multiply defined.
+
+)
+\openout1 = `PlanDeProyecto.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Info: Redefining \. on input line 6.
+LaTeX Info: Redefining \% on input line 6.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: letterpaper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(71.13188pt, 486.25761pt, 56.9055pt)
+* v-part:(T,H,B)=(99.58464pt, 624.25346pt, 71.13188pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=486.25761pt
+* \textheight=624.25346pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-15.36449pt
+* \topmargin=-4.55914pt
+* \headheight=12.0pt
+* \headsep=19.8738pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=98.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+\AtBeginShipoutBox=\box35
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count133
+\scratchdimen=\dimen139
+\scratchbox=\box36
+\nofMPsegments=\count134
+\nofMParguments=\count135
+\everyMPshowfont=\toks28
+\MPscratchCnt=\count136
+\MPscratchDim=\dimen140
+\MPnumerator=\count137
+\makeMPintoPDFobject=\count138
+\everyMPtoPDFconversion=\toks29
+) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+)
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package hyperref Info: Link coloring ON on input line 6.
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
+)
+\c@section@level=\count139
+)
+LaTeX Info: Redefining \ref on input line 6.
+LaTeX Info: Redefining \pageref on input line 6.
+LaTeX Info: Redefining \nameref on input line 6.
+
+(./PlanDeProyecto.out) (./PlanDeProyecto.out)
+\@outlinefile=\write3
+\openout3 = `PlanDeProyecto.out'.
+
+ (./tex/titulo.tex
+Package epstopdf Info: Source file: <./pic/logoUSM-DI.eps>
+(epstopdf)                    date: 2013-04-18 20:11:15
+(epstopdf)                    size: 196681 bytes
+(epstopdf)             Output file: <./pic/logoUSM-DI-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-08-09 12:18:55
+(epstopdf)                    size: 47161 bytes
+(epstopdf)             Command: <repstopdf --outfile=./pic/logoUSM-DI-eps-conve
+rted-to.pdf ./pic/logoUSM-DI.eps>
+(epstopdf)             \includegraphics on input line 5.
+Package epstopdf Info: Output file is already uptodate.
+
+<./pic/logoUSM-DI-eps-converted-to.pdf, id=84, 1168.365pt x 173.64874pt>
+File: ./pic/logoUSM-DI-eps-converted-to.pdf Graphic file (type pdf)
+
+<use ./pic/logoUSM-DI-eps-converted-to.pdf>
+Package pdftex.def Info: ./pic/logoUSM-DI-eps-converted-to.pdf used on input li
+ne 5.
+(pdftex.def)             Requested size: 408.93388pt x 60.77797pt.
+
+<./pic/logo_Phyrex8.png, id=85, 301.125pt x 174.6525pt>
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+
+<use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 22.
+(pdftex.def)             Requested size: 180.67638pt x 104.7923pt.
+ <./pic/VIPeR.png, id=87, 702.625pt x 702.625pt>
+File: ./pic/VIPeR.png Graphic file (type png)
+
+<use ./pic/VIPeR.png>
+Package pdftex.def Info: ./pic/VIPeR.png used on input line 22.
+(pdftex.def)             Requested size: 140.5225pt x 140.5225pt.
+ [1
+
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./pic/logoUSM-DI-eps-conve
+rted-to.pdf> <./pic/logo_Phyrex8.png> <./pic/VIPeR.png>]) (./PlanDeProyecto.toc
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+)
+\tf@toc=\write4
+\openout4 = `PlanDeProyecto.toc'.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.14 \listoffigures
+                    [1
+
+]
+LaTeX Info: Redefining \. on input line 14.
+LaTeX Info: Redefining \% on input line 14.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 14.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[2
+
+] (./PlanDeProyecto.lof
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+
+Overfull \hbox (0.39163pt too wide) detected at line 4
+\OT1/cmr/m/n/12 2.3.1. 
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 5
+\OT1/cmr/m/n/12 2.3.2. 
+ []
+
+)
+\tf@lof=\write5
+\openout5 = `PlanDeProyecto.lof'.
+
+ [3]
+LaTeX Info: Redefining \. on input line 15.
+LaTeX Info: Redefining \% on input line 15.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 15.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[4
+
+] (./PlanDeProyecto.lot
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+
+Overfull \hbox (0.39163pt too wide) detected at line 6
+\OT1/cmr/m/n/12 4.2.1. 
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 7
+\OT1/cmr/m/n/12 4.2.2. 
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 8
+\OT1/cmr/m/n/12 4.2.3. 
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 9
+\OT1/cmr/m/n/12 4.2.4. 
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 10
+\OT1/cmr/m/n/12 4.2.5. 
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 11
+\OT1/cmr/m/n/12 4.2.6. 
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 12
+\OT1/cmr/m/n/12 4.2.7. 
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 13
+\OT1/cmr/m/n/12 4.2.8. 
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 14
+\OT1/cmr/m/n/12 4.2.9. 
+ []
+
+
+Overfull \hbox (6.26657pt too wide) detected at line 15
+\OT1/cmr/m/n/12 4.2.10. 
+ []
+
+)
+\tf@lot=\write6
+\openout6 = `PlanDeProyecto.lot'.
+
+ [5] (./tex/intro.tex
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 1.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[6
+
+]
+Cap\'{\i }tulo 1.
+[7]) (./tex/seccion_1.tex
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 1.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[8
+
+]
+Cap\'{\i }tulo 2.
+[9]
+LaTeX Info: Redefining \. on input line 30.
+LaTeX Info: Redefining \% on input line 30.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 30.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[10]
+LaTeX Info: Redefining \. on input line 48.
+LaTeX Info: Redefining \% on input line 48.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 48.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[11]
+LaTeX Info: Redefining \. on input line 71.
+LaTeX Info: Redefining \% on input line 71.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 71.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[12] <./pic/Arduino.jpg, id=250, 481.8pt x 483.30562pt>
+File: ./pic/Arduino.jpg Graphic file (type jpg)
+
+<use ./pic/Arduino.jpg>
+Package pdftex.def Info: ./pic/Arduino.jpg used on input line 87.
+(pdftex.def)             Requested size: 192.71658pt x 193.31882pt.
+
+Underfull \vbox (badness 3838) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 91.
+LaTeX Info: Redefining \% on input line 91.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+
+<use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 91.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[13] <./pic/LegoMindstorms.jpg, id=267, 805.50937pt x 742.27313pt>
+File: ./pic/LegoMindstorms.jpg Graphic file (type jpg)
+
+<use ./pic/LegoMindstorms.jpg>
+Package pdftex.def Info: ./pic/LegoMindstorms.jpg used on input line 95.
+(pdftex.def)             Requested size: 201.37685pt x 185.56783pt.
+LaTeX Info: Redefining \. on input line 103.
+LaTeX Info: Redefining \% on input line 103.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 103.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[14 <./pic/Arduino.jpg> <./pic/LegoMindstorms.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 114--114
+[][][]\OT1/cmr/m/n/10 Tendencias de dis-pos-i-tivos moviles para 2013 [][]$\OT1
+/cmtt/m/n/10 http : / / blogthinkbig . com /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 114--114
+[][][]\OT1/cmr/m/n/10 Mobile De-vices [][]$\OT1/cmtt/m/n/10 http : / / www . ne
+wmediatrendwatch . com / markets-[]by-[]country / 17-[]usa /
+ []
+
+)
+LaTeX Info: Redefining \. on input line 21.
+LaTeX Info: Redefining \% on input line 21.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 21.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[15] (./tex/seccion_2.tex
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 1.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[16
+
+]
+Cap\'{\i }tulo 3.
+[17]
+
+LaTeX Warning: File `Modelo.jpg' not found on input line 11.
+
+
+! Package pdftex.def Error: File `Modelo.jpg' not found.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.11   \includegraphics[scale=0.45]{Modelo.jpg}
+                                               
+? 
+
+Overfull \hbox (6.08867pt too wide) in paragraph at lines 27--28
+[]\OT1/cmr/m/n/12 Las es-peci-fi-ca-ciones de los ca-sos de uso y re-quer-im-ie
+n-tos se en-cuen-tran en el archi-vo Anexo.xlsx 
+ []
+
+LaTeX Info: Redefining \. on input line 29.
+LaTeX Info: Redefining \% on input line 29.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+<use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 29.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[18]
+LaTeX Info: Redefining \. on input line 57.
+LaTeX Info: Redefining \% on input line 57.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 57.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[19])
+LaTeX Info: Redefining \. on input line 23.
+LaTeX Info: Redefining \% on input line 23.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 23.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[20] (./tex/seccion_3.tex
+Cap\'{\i }tulo 4.
+[21
+
+]
+LaTeX Info: Redefining \. on input line 29.
+LaTeX Info: Redefining \% on input line 29.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 29.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[22]
+Overfull \hbox (12.53368pt too wide) in paragraph at lines 48--59
+ [][] 
+ []
+
+LaTeX Info: Redefining \. on input line 120.
+LaTeX Info: Redefining \% on input line 120.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+<use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 120.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[23]
+LaTeX Info: Redefining \. on input line 120.
+LaTeX Info: Redefining \% on input line 120.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 120.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[24]
+LaTeX Info: Redefining \. on input line 120.
+LaTeX Info: Redefining \% on input line 120.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 120.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[25]
+LaTeX Info: Redefining \. on input line 120.
+LaTeX Info: Redefining \% on input line 120.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 120.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[26]
+LaTeX Info: Redefining \. on input line 197.
+LaTeX Info: Redefining \% on input line 197.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 197.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[27]
+LaTeX Info: Redefining \. on input line 197.
+LaTeX Info: Redefining \% on input line 197.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 197.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[28]
+LaTeX Info: Redefining \. on input line 197.
+LaTeX Info: Redefining \% on input line 197.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 197.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[29]
+LaTeX Info: Redefining \. on input line 197.
+LaTeX Info: Redefining \% on input line 197.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 197.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[30]
+LaTeX Info: Redefining \. on input line 197.
+LaTeX Info: Redefining \% on input line 197.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 197.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[31]
+Underfull \hbox (badness 10000) in paragraph at lines 224--233
+
+ []
+
+)
+LaTeX Info: Redefining \. on input line 25.
+LaTeX Info: Redefining \% on input line 25.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 25.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[32]
+LaTeX Info: Redefining \. on input line 25.
+LaTeX Info: Redefining \% on input line 25.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 25.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[33] (./tex/seccion_4.tex
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 1.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[34
+
+]
+Cap\'{\i }tulo 5.
+[35]) (./tex/seccion_5.tex
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 1.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[36
+
+]
+Cap\'{\i }tulo 6.
+[37]) (./tex/anexos.tex
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 1.
+(pdftex.def)             Requested size: 45.1668pt x 26.19673pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 30.54677pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[38
+
+]
+Cap\'{\i }tulo 7.
+[39])
+
+! LaTeX Error: File `./tex/bibliografia.tex' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: tex)
+
+Enter file name: 
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 38.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 38.
+(./PlanDeProyecto.aux
+LaTeX Info: Redefining \. on input line 21.
+LaTeX Info: Redefining \% on input line 21.
+)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 38.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 38.
+
+
+Package rerunfilecheck Warning: File `PlanDeProyecto.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `PlanDeProyecto.out':
+(rerunfilecheck)             Before: 494845375371CA88644835ACAEBB121E;1536
+(rerunfilecheck)             After:  E9548C35B973E51A97E78A9406BD6138;1681.
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 38.
+ ) 
+Here is how much of TeX's memory you used:
+ 8473 strings out of 495059
+ 119542 string characters out of 3182030
+ 240996 words of memory out of 3000000
+ 11354 multiletter control sequences out of 15000+200000
+ 11136 words of font info for 41 fonts, out of 3000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 44i,16n,45p,952b,600s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmtt12.pfb>
+Output written on PlanDeProyecto.pdf (40 pages, 949954 bytes).
+PDF statistics:
+ 489 PDF objects out of 1000 (max. 8388607)
+ 424 compressed objects within 5 object streams
+ 142 named destinations out of 1000 (max. 500000)
+ 186 words of extra memory for PDF output out of 10000 (max. 10000000)
+

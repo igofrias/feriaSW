@@ -1,6 +1,7 @@
-\section{Soluci\'on Conceptual.}
-\subsection{Diagn\'ostico de la situaci\'on actual.}
-\subsubsection{Situaci\'on Actual.}
+\chapter{Soluci\'on Conceptual.}
+\newpage
+\section{Diagn\'ostico de la situaci\'on actual.}
+\subsection{Situaci\'on Actual.}
 
 En la actualidad existen distintas tecnolog\'ias en cuanto a las mascotas que se est\'an desarrollando en el mundo. A pesar de ello, es posible catalogarlas en dos grandes grupos:
 
@@ -27,12 +28,12 @@ Finalmente, se destacan algunos productos correspondientes a ambas \'areas:
   \begin{enumerate}
   \item \emph{Furby},\footnote{\url{http://www.furby.es/es_ES/}} famosas en los 2000, los cuales era posible alimentar e interactuaban con otros de su misma clase.
   \item \emph{FurReal Friends},\footnote{\url{http://www.hasbro.com/furreal/en_US/}} mascotas rob\'oticas dise\~nadas para ni\~nas, las cuales reaccionan a caricias y realizan gestos similares a las de una mascota real.
-  \item \emph{Aibo},\footnote{\url{http://www.sony-aibo.co.uk/}} mascota fabricada por Sony. Simula un perro y posee sensores que le evitan chocar con objetos, una cola que funciona como antena adem\'as de “sentido del tacto” y un simulador de inteligencia artificial. Es utilizado por universidades e institutos para realizar estudios de inteligencia artificial.
+  \item \emph{Aibo},\footnote{\url{http://www.sony-aibo.co.uk/}} mascota fabricada por Sony. Simula un perro y posee sensores que le evitan chocar con objetos, una cola que funciona como antena adem\'as de ``sentido del tacto'' y un simulador de inteligencia artificial. Es utilizado por universidades e institutos para realizar estudios de inteligencia artificial.
   \end{enumerate}
 \end{enumerate}
 
 
-\subsubsection{Identificaci\'on de problemas y deficiencias.}
+\subsection{Identificaci\'on de problemas y deficiencias.}
 
 Si bien el mundo de las mascotas virtuales ha tenido cambios desde sus or\'igenes, estos no han variado mucho respecto a su concepci\'on original, sino que su mayor cambio ha sido en cuanto a la forma de realizar la interacci\'on con ellos, cambio que fue potenciado con la llegada de los dispositivos Touch.
 
@@ -45,8 +46,8 @@ Cabe destacar, en todo caso, que la adopci\'on masiva de mascotas rob\'oticas es
 Omitiendo lo anterior, por caer fuera de nuestro rango de acci\'on, mezclar las tecnolog\'ias actuales en rob\'otica, junto con las correspondientes en el \'area de los dispositivos m\'oviles, para utilizar ambos en el desarrollo de mascotas virtuales se destaca como una de las grandes falencias, en la actualidad, en el uso de este tipo de aplicaciones. Es un nicho no potenciado en el presente, y que podr\'ia ser de gran potencialidad, debido a la masificaci\'on que existe en estos momentos en el uso de dispositivos m\'oviles.
 
 \newpage
-\subsection{Caracterizaci\'on del cambio.}
-\subsubsection{Caracter\'isticas y potencialidades deseadas.}
+\section{Caracterizaci\'on del cambio.}
+\subsection{Caracter\'isticas y potencialidades deseadas.}
 
 Se espera que el sistema a implementar posea y/o sea capaz de:
 \begin{itemize}
@@ -68,7 +69,7 @@ Para un buen desarrollo del proyecto, y de manera tal que cumpla con las caracte
 \end{enumerate}
 
 \newpage
-\subsection{An\'alisis de las alternativas de la soluci\'on.}
+\section{An\'alisis de las alternativas de la soluci\'on.}
 
 Para poder ver otras posibles alternativas existentes, analizaremos seg\'un las distintas opciones existentes. Para esto se revisar\'an los dos aspectos m\'as importantes en todo el proyecto, como son el dispositivo m\'ovil a utilizar y el modelo rob\'otico. Estos se detallan a continuaci\'on.
 \begin{enumerate}
@@ -83,7 +84,7 @@ Para poder ver otras posibles alternativas existentes, analizaremos seg\'un las 
   \item {\bf Arduino}:\footnote{\url{http://www.arduino.cc/}} Es posible ver las grandes posibilidades que existen con este sistema. La posibilidad de crear modelos rob\'oticos de gran complejidad, adem\'as de la libertad de programaci\'on personalizada, donde est\'a la libertad de elecci\'on de como programar cada componente. Como punto en contra est\'a el que es necesario construir el equipo rob\'otico desde cero, utilizando servos para ciertos movimientos, motores.
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.45]{Arduino.jpg}
+  \includegraphics[scale=0.4]{Arduino.jpg}
   \caption{Algunas de las placas de Arduino existentes en el mercado.}
   \label{fig:LegoMindstorms}
 \end{figure}
@@ -91,7 +92,7 @@ Para poder ver otras posibles alternativas existentes, analizaremos seg\'un las 
   \item {\bf LEGO Mindstorms}:\footnote{\url{http://mindstorms.LEGO.com/en-us/default.aspx/}} Dentro de las fortalezas de este tipo de sistema, destaca su facilidad de armado y la predefinici\'on de muchos de sus sistemas, adem\'as de la versatilidad de funciones que es capaz de desarrollar. Al mismo tiempo, su alto costo y la restricci\'on del software necesario para desarrollar en \'el se destacan como sus mayores debilidades. Al mismo tiempo posee una baja curva de aprendizaje a la hora de programarlo; sin incluir que no es necesario saber de electr\'onica para su armado.
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.45]{LegoMindstorms.jpg}
+  \includegraphics[scale=0.25]{LegoMindstorms.jpg}
   \caption{Box de LEGO Mindstorms.}
   \label{fig:LegoMindstorms}
 \end{figure}
@@ -100,7 +101,7 @@ Para poder ver otras posibles alternativas existentes, analizaremos seg\'un las 
 \end{enumerate}
 
 \newpage
-\subsection{Soluci\'on recomendada.}
+\section{Soluci\'on recomendada.}
 
 En base a todo lo expuesto con anterioridad, el enfoque del proyecto que se plantea, corresponde a la uni\'on de dos tecnolog\'ias, es decir, el uso de mascotas tanto en el \'ambito virtual como rob\'otico, permitiendo la interacci\'on del usuario por medio de estas dos plataformas. Para ello, se hace necesario poder identificar las tecnolog\'ias a utilizarse, en base a las restricciones planteadas.
 
@@ -110,6 +111,6 @@ En cuanto a la restricci\'on n\'umero 4, esta queda solucionada inmediatamente c
 
 Respecto a la restricci\'on n\'umero 3, existen librer\'ias para tratar con la compatibilidad entre distintas versiones de los distintos SO existentes en el mercado, por lo que tampoco es determinante en la selecci\'on de la tecnolog\'ia m\'ovil a utilizar.
 
-Finalmente, en respuesta a la restricci\'on n\'umero 2, que impone un bajo costo en el desarrollo del proyecto y en relaci\'on a la restricci\'on n\'umero 1, que habla sobre la facilidad de acceso de los dispositivos m\'oviles, se har\'a uso de SO Android. Lo anterior debido a que corresponde al SO con un mayor mercado en el \'ambito de los dispositivos m\'oviles (en contraste con Windows Mobile o iOS)\footnote{Tendencias de dispositivos moviles para 2013 \url{http://blogthinkbig.com/tendencias-dispositivos-moviles-2013/} y Mobile Devices \url{http://www.newmediatrendwatch.com/markets-by-country/17-usa/855-mobile-devices?showall=1}} y, por otro lado, el acceso a desarrollo de aplicaciones no se encuentra limitado a SO determinados (como corresponde al caso iOS, que requiere equipos iMac para su elaboraci\'on, que poseen un costo de adquisici\'on alto).
+Finalmente, en respuesta a la restricci\'on n\'umero 2, que impone un bajo costo en el desarrollo del proyecto y en relaci\'on a la restricci\'on n\'umero 1, que habla sobre la facilidad de acceso de los dispositivos m\'oviles, se har\'a uso de SO Android. Lo anterior debido a que corresponde al SO con un mayor mercado en el \'ambito de los dispositivos m\'oviles (en contraste con Windows Mobile o iOS)\footnote{Tendencias de dispositivos moviles para 2013 \url{http://blogthinkbig.com/tendencias-dispositivos-moviles-2013/}} \footnote{Mobile Devices \url{http://www.newmediatrendwatch.com/markets-by-country/17-usa/855-mobile-devices?showall=1}} y, por otro lado, el acceso a desarrollo de aplicaciones no se encuentra limitado a SO determinados (como corresponde al caso iOS, que requiere equipos iMac para su elaboraci\'on, que poseen un costo de adquisici\'on alto).
 
 En vista de lo expuesto con anterioridad, se reafirma el uso de SO Android en los dispositivos m\'oviles a utilizar, adem\'as de LEGO Mindstorms para los robots a dise\~nar durante el desarrollo del proyecto.

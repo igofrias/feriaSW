@@ -1,4 +1,4 @@
-\documentclass[letterpaper,12pt]{article} %tipo de documento y tama~o de papel y letra
+\documentclass[letterpaper,12pt]{book} %tipo de documento y tama~o de papel y letra
 
 \usepackage{mystyle} %%Reemplazar por el contenido de 'mystyle.sty' en caso de no funcionar
 
@@ -14,12 +14,19 @@
 \listoffigures
 \listoftables
 
+\newpage
 \input{./tex/intro.tex}
+\newpage
 \input{./tex/seccion_1.tex}
+\newpage
 \input{./tex/seccion_2.tex}
+\newpage
 \input{./tex/seccion_3.tex}
+\newpage
 \input{./tex/seccion_4.tex}
+\newpage
 \input{./tex/seccion_5.tex}
+\newpage
 \input{./tex/anexos.tex}
 
 
@@ -29,28 +36,3 @@
 \input{./tex/bibliografia.tex}
 
 \end{document}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\begin{figure}[H]
-%   \centering
-%     \includegraphics[scale=0.45]{ModeloDominio.jpg}
-%   \caption{Se puede apreciar el Modelo de Dominio relativo a \emph{V.I.Pe.R}.}
-%   \label{fig:ModeloDominio}
-%\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\begin{table}[H]
-%  \centering
-%  \begin{tabular}{p{5cm}p{9cm}}\hline
-%    Entidad & Descripci\'on \\ \hline \hline %1 linea
-%    Usuario & Representa a quien va a ocupar la aplicaci\'on (Un alumno, por ejemplo). \\ \hline
-%    Encargado & Es el que se encarga de mantener al robot y obtener los datos necesarios para difusion. \\ \hline
-%    Smartphone & Maneja las interacciones entre el usuario y la mascota. Debe tener SO Android. \\ \hline
-%    Mascota Virtual & Representa el ``cerebro'' de la mascota. \\ \hline
-%    Robot & Es el robot f\'isico, con las capacidades que tienen que estar almacenadas si o si en \'el. \\ \hline
-%    Motores & Representa a los motores que permiten que el robot se mueva. \\ \hline
-%    Brick & Representa a la unidad de control del robot. \\ \hline
-%    Sensores & Representan a los sensores que puede poseer el robot y que le permiten obtener informacion del ambiente. \\ \hline \hline
-%  \end{tabular}
-%\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
