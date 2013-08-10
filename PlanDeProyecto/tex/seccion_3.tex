@@ -7,22 +7,22 @@ Los riesgos que han podido ser identificados se detallan a continuaci\'on, indic
 \begin{itemize}
 \item {\bf Riesgos T\'ecnicos}:
   \begin{itemize}
-  \item[{\bf R1. }] Errores de inicio y mantenci\'on de conexi\'on v\'ia Bluetooth entre aplicaci\'on y sistema rob\'otico.
-  \item[{\bf R2. }] Problemas de compatibilidad de hardware.
-  \item[{\bf R3. }] Inconsistencia entre robot f\'isico y mascota virtual.
-  \item[{\bf R4. }] P\'erdida de acceso al robot, ya sea por robo o falla t\'ecnica.
+  \item[{\bf RT1.}] Errores de inicio y mantenci\'on de conexi\'on v\'ia Bluetooth entre aplicaci\'on y sistema rob\'otico.
+  \item[{\bf RT2.}] Problemas de compatibilidad de hardware.
+  \item[{\bf RT3.}] Inconsistencia entre robot f\'isico y mascota virtual.
+  \item[{\bf RT4.}] P\'erdida de acceso al robot, ya sea por robo o falla t\'ecnica.
   \end{itemize}
 \item {\bf Riesgos de Proyecto}:
   \begin{itemize}
-  \item[{\bf R5. }] Falta de experiencia de miembros del equipo en programaci\'on en ROBOTC y Android
-  \item[{\bf R6. }] P\'erdida de personal.
-  \item[{\bf R7. }] Problemas inesperados durante la implementaci\'on del proyecto.
-  \item[{\bf R8. }] Alto costo monetario de hardware o software necesario para la implementaci\'on.
+  \item[{\bf RP1.}] Falta de experiencia de miembros del equipo en programaci\'on en ROBOTC y Android
+  \item[{\bf RP2.}] P\'erdida de personal.
+  \item[{\bf RP3.}] Problemas inesperados durante la implementaci\'on del proyecto.
+  \item[{\bf RP4.}] Alto costo monetario de hardware o software necesario para la implementaci\'on.
   \end{itemize}
 \item {\bf Riesgos de Negocio}:
   \begin{itemize}
-  \item[{\bf R9. }] Cese y desista por parte de LEGO.
-  \item[{\bf R10.}] Aplicaci\'on poco atractiva para p\'ublico objetivo.
+  \item[{\bf RN1.}] Cese y desista por parte de LEGO.
+  \item[{\bf RN2.}] Aplicaci\'on poco atractiva para p\'ublico objetivo.
   \end{itemize}
 \end{itemize}
 
@@ -43,7 +43,7 @@ Se iniciar\'a indicando los riesgos de tipo T\'ecnicos, luego los de Proyecto y 
 \subsection{Riesgos T\'ecnicos}
 
 %%
-%%Riesgo R1
+%%Riesgo RT1
 %%
 \begin{table}[htbp!]
   \centering
@@ -58,13 +58,13 @@ En caso de no poder cumplir uno de estos dos requerimientos se deber\'an tomar m
     \multicolumn{2}{|m{5cm}}{\bf Plan de Mitigaci\'on}& \multicolumn{4}{m{11cm}|}{\justifying De no lograrse una conexi\'on exitosa entre el NXT Intelligent Brick y el smartphone con Android:\begin{enumerate}\item se utilizar\'a un aparato m\'ovil con sistema operativo iOS permitiendo conservar la fuente de innovaci\'on tanto por parte de la interacci\'on entre el dispositivo y el robot, como la utilizaci\'on de sensores del smartphone para variadas funcionalidades.\item Se realizar\'a una conexi\'on v\'ia bluetooth con un computador.\item Se realizar\'a una conexi\'on v\'ia USB con el computador.\end{enumerate}}\\\hline
     \multicolumn{2}{|m{5cm}}{\bf Resoluci\'on}& \multicolumn{4}{m{11cm}|}{\justifying Al conectar exitosamente los dispositivos y mantener la conexi\'on se tendr\'a la base para llevar a cabo todo lo que demanda el proyecto.}\\\hline
   \end{tabular}
-  \caption[Riesgo T\'ecnico - R1]{Detalle del riesgo R1.}
-  \label{table:R1}
+  \caption[~RT1]{}
+  \label{table:RT1}
 \end{table}
 
 
 %%
-%%Riesgo R2
+%%Riesgo RT2
 %%
 \begin{table}[htbp!]
   \centering
@@ -78,13 +78,13 @@ Si no se puede detectar la presencia de sensores en el smartphone se utilizaran 
     \multicolumn{2}{|m{5cm}}{\bf Plan de Mitigaci\'on}& \multicolumn{4}{m{11cm}|}{\justifying De no estar presente alguno de los sensores que se desea utilizar:\begin{enumerate}\item Detectar los sensores presentes en el smartphone  para bloquear o dar opciones acerca de su uso.\item Disminuir el uso de sensores al m\'inimo.\end{enumerate}}\\\hline
     \multicolumn{2}{|m{5cm}}{\bf Resoluci\'on}& \multicolumn{4}{m{11cm}|}{\justifying Al mitigar este riesgo la aplicaci\'on no se caer\'a cuando intente usar sensores del smartphone.}\\\hline
   \end{tabular}
-  \caption{}
-  \label{table:R2}
+  \caption[~RT2]{}
+  \label{table:RT2}
 \end{table}
 
 
 %%
-%%Riesgo R3
+%%Riesgo RT3
 %%
 \begin{table}[htbp!]
   \centering
@@ -98,13 +98,13 @@ De darse esto, podr\'ia advertirse al usuario que el robot no se puede modificar
     \multicolumn{2}{|m{5cm}}{\bf Plan de Mitigaci\'on}& \multicolumn{4}{m{11cm}|}{\justifying Para evitar problemas de inconsistencia entre la maqueta f\'isica y virtual de la mascota se puede:\begin{enumerate}\item Crear un wizard de configuraci\'on de los motores, de manera que el usuario pueda modificar el robot sin problemas.\item Crear un mensaje donde se indique la posicion en donde el programa espera que esten conectados los motores.\end{enumerate}}\\\hline
     \multicolumn{2}{|m{5cm}}{\bf Resoluci\'on}& \multicolumn{4}{m{11cm}|}{\justifying Al ejecutar una acci\'on en el robot la cual proviene de la aplicaci\'on este la realizar\'a sin problemas.}\\\hline
   \end{tabular}
-  \caption{}
-  \label{table:R3}
+  \caption[~RT3]{}
+  \label{table:RT3}
 \end{table}
 
 
 %%
-%%Riesgo R4
+%%Riesgo RT4
 %%
 \begin{table}[htbp!]
   \centering
@@ -118,14 +118,14 @@ De no tener acceso al robot se deber\'a eliminar toda interacci\'on con este.}\t
     \multicolumn{2}{|m{5cm}}{\bf Plan de Mitigaci\'on}& \multicolumn{4}{m{11cm}|}{\justifying En caso de p\'erdida, robo o falla del robot se puede:\begin{enumerate}\item Comprar la pieza que falla.\item Pedir un robot nuevo a la Universidad o Cliente.\item Comprar un kit NXT Intelligent Brick nuevo.\end{enumerate}}\\\hline
     \multicolumn{2}{|m{5cm}}{\bf Resoluci\'on}& \multicolumn{4}{m{11cm}|}{\justifying Si se tiene el robot funcionando $100\%$ se podr\'a avanzar en el proyecto sin retrasos.}\\\hline
   \end{tabular}
-  \caption{}
-  \label{table:R4}
+  \caption[~RT4]{}
+  \label{table:RT4}
 \end{table}
 
 \newpage
 \subsection{Riesgos de Proyecto}
 %%
-%%Riesgo R5
+%%Riesgo RP1
 %%
 \begin{table}[htbp!]
   \centering
@@ -139,13 +139,13 @@ Por esto como medida de emergencia se recargar\'a a los miembros del equipo con 
     \multicolumn{2}{|m{5cm}}{\bf Plan de Mitigaci\'on}& \multicolumn{4}{m{11cm}|}{\justifying En caso de que los miembros del equipo no cuenten con suficiente conocimiento y experiencia se puede:\begin{enumerate}\item Capacitar a los miembros del equipo con menos conocimientos recibiendo clases de parte de los miembros con m\'as conocimientos.\item Utilizar la documentaci\'on disponible en internet como herramienta de autoaprendizaje.\end{enumerate}}\\\hline
     \multicolumn{2}{|m{5cm}}{\bf Resoluci\'on}& \multicolumn{4}{m{11cm}|}{\justifying Si los miembros del equipo tiene conocimiento y experiencia con los lenguajes que se requiere utilizar disminuyen dr\'asticamente las probabilidades de que el proyecto falle.}\\\hline
   \end{tabular}
-  \caption{}
-  \label{table:R5}
+  \caption[~RP1]{}
+  \label{table:RP1}
 \end{table}
 
 
 %%
-%%Riesgo R6
+%%Riesgo RP2
 %%
 \begin{table}[htbp!]
   \centering
@@ -159,13 +159,13 @@ En el caso de que alg\'un miembro no pueda realizar el trabajo que se le hab\'ia
     \multicolumn{2}{|m{5cm}}{\bf Plan de Mitigaci\'on}& \multicolumn{4}{m{11cm}|}{\justifying Si uno o m\'as de los miembros de equipo no puede realizar su trabajo se puede:\begin{enumerate}\item En caso de que los miembros no puedan tener disponibilidad debido a pruebas de otros ramos se puede realizar un calendario con todas las evaluaciones y as\'i poder programar c\'omo y cu\'ando se trabajar\'a.\item En caso de enfermedad, se puede disminuir la carga de trabajo del individuo enfermo o redistribuir los trabajos para, en caso de que se pueda, permitir que trabaje desde su hogar.\item En caso de p\'erdida definitiva se disminuir\'a el alcance del proyecto.\end{enumerate}}\\\hline
     \multicolumn{2}{|m{5cm}}{\bf Resoluci\'on}& \multicolumn{4}{m{11cm}|}{\justifying Al tener disponibilidad de todo el personal de trabajo no solo existe una mayor probabilidad de entregar en la fecha adecuada, sino que tambi\'en se disminuye la carga de todos.}\\\hline
   \end{tabular}
-  \caption{}
-  \label{table:R6}
+  \caption[~RP2]{}
+  \label{table:RP2}
 \end{table}
 
 
 %%
-%%Riesgo R7
+%%Riesgo RP3
 %%
 \begin{table}[htbp!]
   \centering
@@ -179,13 +179,13 @@ En el caso de que ocurran problemas inesperados que consuman tiempo extra no esp
     \multicolumn{2}{|m{5cm}}{\bf Plan de Mitigaci\'on}& \multicolumn{4}{m{11cm}|}{\justifying En caso de que problemas inesperados ocurran durante la implementaci\'on  del proyecto se puede:\begin{enumerate}\item Organiza el calendario de tal forma de dejar un margen entre la fecha de entrega y la finalizaci\'on de \'esta, para as\'i evitar casos de falta de tiempo por problemas inesperados.\item Volver a repartir el trabajo entre el equipo para ayudar a quien se vea afectado por el problema.\end{enumerate}}\\\hline
     \multicolumn{2}{|m{5cm}}{\bf Resoluci\'on}& \multicolumn{4}{m{11cm}|}{\justifying Si se pueden prevenir los problemas inesperados, se evitar\'an problemas de falta de tiempo al realizar las entregas.}\\\hline
   \end{tabular}
-  \caption{}
-  \label{table:R7}
+  \caption[~RP3]{}
+  \label{table:RP3}
 \end{table}
 
 
 %%
-%%Riesgo R8
+%%Riesgo RP4
 %%
 \begin{table}[htbp!]
   \centering
@@ -200,14 +200,14 @@ En caso de no poder costear alguno de los elementos necesarios se deber\'a obvia
     \multicolumn{2}{|m{5cm}}{\bf Plan de Mitigaci\'on}& \multicolumn{4}{m{11cm}|}{\justifying De no contar con presupuesto para tener acceso a hardware o software necesario se puede:\begin{enumerate}\item Solicitar al cliente que cubra los gastos necesarios.\item Preparar un saldo de emergencia para casos como este.\end{enumerate}}\\\hline
     \multicolumn{2}{|m{5cm}}{\bf Resoluci\'on}& \multicolumn{4}{m{11cm}|}{\justifying Al tener acceso a todos los elementos necesario, ya sean hardware o software disminuir\'a las probabilidades de fallo del proyecto.}\\\hline
   \end{tabular}
-  \caption{}
-  \label{table:R8}
+  \caption[~RP4]{}
+  \label{table:RP4}
 \end{table}
 
 \newpage
 \subsection{Riesgos de Negocio}
 %%
-%%Riesgo R9
+%%Riesgo RN1
 %%
 \begin{table}[htbp!]
   \centering
@@ -220,14 +220,14 @@ En caso de no poder costear alguno de los elementos necesarios se deber\'a obvia
     \multicolumn{2}{|m{5cm}}{\bf Plan de Mitigaci\'on}& \multicolumn{4}{m{11cm}|}{\justifying En caso de no tener permisos para utilizar LEGO Mindstorms se puede:\begin{enumerate}\item Crear el robot con otro tipo de tecnolog\'ias, por ejemplo, Arduino.\end{enumerate}}\\\hline
     \multicolumn{2}{|m{5cm}}{\bf Resoluci\'on}& \multicolumn{4}{m{11cm}|}{\justifying Si se tiene permisos para utilizar LEGO Mindstorms para el dise\~no del robot se podr\'a seguir contando con la innovaci\'on del negocio.}\\\hline
   \end{tabular}
-  \caption{}
-  \label{table:R9}
+  \caption[~RN1]{}
+  \label{table:RN1}
 \end{table}
 
 
 
 %%
-%%Riesgo R10
+%%Riesgo RN2
 %%
 \begin{table}[htbp!]
   \centering
@@ -242,6 +242,6 @@ En el  caso de que la interfaz y caracter\'isticas de la aplicaci\'on no sean at
     \multicolumn{2}{|m{5cm}}{\bf Plan de Mitigaci\'on}& \multicolumn{4}{m{11cm}|}{\justifying En caso de que la aplicaci\'on no resulte atractiva para el p\'ublico objetivo se puede:\begin{enumerate}\item Realizar un testing con un grupo de estudiantes y obtener datos.\item Realizar encuestas a un grupo de usuarios objetivos.\end{enumerate}}\\\hline
     \multicolumn{2}{|m{5cm}}{\bf Resoluci\'on}& \multicolumn{4}{m{11cm}|}{\justifying Al tener una aplicaci\'on atractiva para los estudiantes se podr\'a cumplir m\'as f\'acilmente el objetivo del negocio.}\\\hline
   \end{tabular}
-  \caption{}
-  \label{table:R10}
+  \caption[~~RN2]{}
+  \label{table:RN2}
 \end{table}

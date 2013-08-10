@@ -2,37 +2,49 @@
 
 \usepackage{mystyle} %%Reemplazar por el contenido de 'mystyle.sty' en caso de no funcionar
 
-
 \begin{document} %Inicio de documento
 \input{./tex/titulo.tex} %Inclusion del titulo
 
-%{\bf } %escribir en negrita
+\thispagestyle{empty}
+\cleardoublepage
 
+\pagenumbering{Roman} %numero de paginas de indices en numeros romanos
+\tableofcontents %indice de capitulos, secciones y subsecciones
+\clearpage
+\thispagestyle{empty}
+
+\listoffigures   %indice de imagenes
+\clearpage
+\thispagestyle{empty}
+
+\listoftables    %indice de tablas
+%\clearpage
+%\thispagestyle{empty}
+
+%\thispagestyle{empty}
+
+\newpage
+\pagenumbering{arabic} %numeracion en numeros arabicos
 \setcounter{page}{1} %empezar enumerando la pagina 1
-
-\tableofcontents
-\listoffigures
-\listoftables
-
-\newpage
 \input{./tex/intro.tex}
-\newpage
+%\newpage
 \input{./tex/seccion_1.tex}
-\newpage
+%\newpage
 \input{./tex/seccion_2.tex}
-\newpage
+%\newpage
 \input{./tex/seccion_3.tex}
-\newpage
+%\newpage
 \input{./tex/seccion_4.tex}
-\newpage
+%\newpage
 \input{./tex/seccion_5.tex}
-\newpage
+%\newpage
 \input{./tex/anexos.tex}
 
 
 %Bibliografia
 \clearpage
 \addcontentsline{toc}{chapter}{Bibliography}
-\input{./tex/bibliografia.tex}
+\bibliographystyle{acm}
+\bibliography{./tex/bibliografia.tex}
 
 \end{document}
