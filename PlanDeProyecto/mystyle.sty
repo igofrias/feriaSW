@@ -3,7 +3,7 @@
 \usepackage[latin1]{inputenc} %codificacion de caracteres
 \usepackage[spanish,es-tabla]{babel} %idioma
 \usepackage{fancyhdr} %tipo de pagina, LINDA biggrin.gif
-\usepackage[top=3.5cm,bottom=2.5cm,right=2cm,left=2.5cm]{geometry} %margenes
+\usepackage[top=2.5cm,bottom=2.5cm,right=2cm,left=2.5cm]{geometry} %margenes
 \usepackage[rflt]{floatflt} %ni puta idea
 \usepackage{pdfpages} %incluir archivos pdf
 \usepackage{float}
@@ -18,12 +18,14 @@
 
 \usepackage{ragged2e}%permite el uso de \justifying
 
-\usepackage{array}
-\usepackage{multirow}%multifilas en tablas
+\usepackage{array}    %agrega funcionalidades en tablas
+\usepackage{multirow} %multifilas en tablas
 
 \usepackage{graphicx} %para usar imagenes
 \usepackage{caption}
 \usepackage{subcaption}
+
+\usepackage{emptypage}%elimina el formato de las paginas en blanco
 
 \graphicspath{{./pic/}} %le dice que las imagenes estan en la carpeta de arriba
 
@@ -45,7 +47,7 @@
 \lhead[]{\rightmark} %parte de arriba, izq
 %\lhead[\includegraphics[scale=0.1]{logo_Phyrex8.png}]{\thesection. \rightmark} %parte de arriba, izq
 \chead[]{} %parte de arriba, centro
-\rhead[\leftmark]{\includegraphics[scale=0.1]{logo_Phyrex8.png}} %parte de arriba, derecha, le agrega la marca del capitulo
+\rhead[\leftmark]{\includegraphics[scale=0.2]{logo_Phyrex8.png}} %parte de arriba, derecha, le agrega la marca del capitulo
 \renewcommand{\headrulewidth}{0.5pt}
 \lfoot[\thepage]{} %parte de abajo, izq
 \cfoot[]{} %parte de abajo, centro
@@ -64,3 +66,4 @@
 }
 
 \pagestyle{fancy} %configuracion para la pagina linda
+\setlength{\headheight}{40pt} %alto de la zona superior
