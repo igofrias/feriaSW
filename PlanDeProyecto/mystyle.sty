@@ -29,10 +29,6 @@
 
 \graphicspath{{./pic/}} %le dice que las imagenes estan en la carpeta de arriba
 
-\renewcommand{\chaptername}{Parte}
-\renewcommand{\appendixname}{Anexo}
-\renewcommand{\bibname}{Bibliografía}
-
 \usepackage{amsmath} %pa usar smbolos matematicos
 \numberwithin{equation}{section} % pa usar ecuaciones de modo lindo
 \numberwithin{figure}{section} %para agregar imagenes
@@ -70,3 +66,6 @@
 \renewcommand{\headrulewidth}{0.5pt}
 
 \setlength{\headheight}{40pt} %alto del encabezado
+
+\addto\captionsspanish{\renewcommand\chaptername{Parte}}
+\addto\captionsspanish{\renewcommand\appendixname{Anexo}}
