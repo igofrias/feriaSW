@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  9 AUG 2013 23:59
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  10 AUG 2013 01:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -699,16 +699,25 @@ Cap\'{\i }tulo 1.
 [3]
 LaTeX Info: Redefining \. on input line 31.
 LaTeX Info: Redefining \% on input line 31.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 31.
+(pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [4]
-LaTeX Info: Redefining \. on input line 48.
-LaTeX Info: Redefining \% on input line 48.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
  <use ./pic/logo_Phyrex8.png>
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 48.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+LaTeX Info: Redefining \. on input line 48.
+LaTeX Info: Redefining \% on input line 48.
  [5]
 LaTeX Info: Redefining \. on input line 71.
 LaTeX Info: Redefining \% on input line 71.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+
+<use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 71.
+(pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [6]
 <./pic/Arduino.jpg, id=275, 481.8pt x 483.30562pt>
 File: ./pic/Arduino.jpg Graphic file (type jpg)
@@ -718,13 +727,13 @@ Package pdftex.def Info: ./pic/Arduino.jpg used on input line 87.
 
 Underfull \vbox (badness 8056) has occurred while \output is active []
 
-LaTeX Info: Redefining \. on input line 91.
-LaTeX Info: Redefining \% on input line 91.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 
 <use ./pic/logo_Phyrex8.png>
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 91.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+LaTeX Info: Redefining \. on input line 91.
+LaTeX Info: Redefining \% on input line 91.
  [7]
 <./pic/LegoMindstorms.jpg, id=293, 805.50937pt x 742.27313pt>
 File: ./pic/LegoMindstorms.jpg Graphic file (type jpg)
@@ -734,6 +743,10 @@ Package pdftex.def Info: ./pic/LegoMindstorms.jpg used on input line 95.
 (pdftex.def)             Requested size: 201.37685pt x 185.56783pt.
 LaTeX Info: Redefining \. on input line 103.
 LaTeX Info: Redefining \% on input line 103.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 103.
+(pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [8 <./pic/Arduino.jpg> <./pic/LegoMindstorms.jpg>]
 Underfull \hbox (badness 10000) in paragraph at lines 114--114
 [][][]\OT1/cmr/m/n/10 Tendencias de dis-pos-i-tivos moviles para 2013 [][]$\OT1
@@ -747,12 +760,12 @@ wmediatrendwatch . com / markets-[]by-[]country / 17-[]usa /
  []
 
 ) (./tex/seccion_2.tex
-LaTeX Info: Redefining \. on input line 1.
-LaTeX Info: Redefining \% on input line 1.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
  <use ./pic/logo_Phyrex8.png>
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 1.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
  [9] [10
 
 ]
@@ -770,23 +783,37 @@ n-tos se en-cuen-tran en el archi-vo ``Anexo.xlsx''.
 
 LaTeX Info: Redefining \. on input line 29.
 LaTeX Info: Redefining \% on input line 29.
-[12 <./pic/Modelo.jpg>]
-LaTeX Info: Redefining \. on input line 57.
-LaTeX Info: Redefining \% on input line 57.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
- <use ./pic/logo_Phyrex8.png>
+<use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 29.
+(pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+ [12 <./pic/Modelo.jpg>]
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+
+<use ./pic/logo_Phyrex8.png>
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 57.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+LaTeX Info: Redefining \. on input line 57.
+LaTeX Info: Redefining \% on input line 57.
  [13]) (./tex/seccion_3.tex
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
-[14]
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+
+<use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 1.
+(pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+ [14]
 Cap\'{\i }tulo 3.
 [15
 
 ]
 LaTeX Info: Redefining \. on input line 42.
 LaTeX Info: Redefining \% on input line 42.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 42.
+(pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [16]
 Overfull \hbox (14.13365pt too wide) in paragraph at lines 50--61
  [][] 
@@ -807,27 +834,35 @@ Overfull \hbox (14.13365pt too wide) in paragraph at lines 111--121
  [][] 
  []
 
-LaTeX Info: Redefining \. on input line 125.
-LaTeX Info: Redefining \% on input line 125.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 <use ./pic/logo_Phyrex8.png>
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 125.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
- [17]
 LaTeX Info: Redefining \. on input line 125.
 LaTeX Info: Redefining \% on input line 125.
- [18]
+ [17]
 LaTeX Info: Redefining \. on input line 125.
 LaTeX Info: Redefining \% on input line 125.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
  <use ./pic/logo_Phyrex8.png>
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 125.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+ [18]
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+
+<use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 125.
+(pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+LaTeX Info: Redefining \. on input line 125.
+LaTeX Info: Redefining \% on input line 125.
  [19]
 LaTeX Info: Redefining \. on input line 125.
 LaTeX Info: Redefining \% on input line 125.
-
-[20]
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 125.
+(pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+ [20]
 Underfull \hbox (badness 2173) in paragraph at lines 139--139
 []\OT1/cmr/m/n/12 Capacitar a los miem-bros del equipo con menos
  []
@@ -852,27 +887,35 @@ Overfull \hbox (14.13365pt too wide) in paragraph at lines 192--203
  [][] 
  []
 
-LaTeX Info: Redefining \. on input line 207.
-LaTeX Info: Redefining \% on input line 207.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 <use ./pic/logo_Phyrex8.png>
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 207.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
- [21]
 LaTeX Info: Redefining \. on input line 207.
 LaTeX Info: Redefining \% on input line 207.
- [22]
+ [21]
 LaTeX Info: Redefining \. on input line 207.
 LaTeX Info: Redefining \% on input line 207.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
  <use ./pic/logo_Phyrex8.png>
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 207.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+ [22]
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+
+<use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 207.
+(pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+LaTeX Info: Redefining \. on input line 207.
+LaTeX Info: Redefining \% on input line 207.
  [23]
 LaTeX Info: Redefining \. on input line 207.
 LaTeX Info: Redefining \% on input line 207.
-
-[24]
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 207.
+(pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+ [24]
 Overfull \hbox (14.13365pt too wide) in paragraph at lines 214--223
  [][] 
  []
@@ -883,15 +926,20 @@ Overfull \hbox (14.13365pt too wide) in paragraph at lines 234--245
  []
 
 ) (./tex/seccion_4.tex
-LaTeX Info: Redefining \. on input line 1.
-LaTeX Info: Redefining \% on input line 1.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
  <use ./pic/logo_Phyrex8.png>
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 1.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
  [25]
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+
+<use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 1.
+(pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [26]
 Cap\'{\i }tulo 4.
 [27
@@ -907,39 +955,49 @@ Ap\'{e}ndice A.
 [31]
 LaTeX Info: Redefining \. on input line 13.
 LaTeX Info: Redefining \% on input line 13.
+File: ./pic/logo_Phyrex8.png Graphic file (type png)
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 13.
+(pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [32])
-LaTeX Info: Redefining \. on input line 37.
-LaTeX Info: Redefining \% on input line 37.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
  <use ./pic/logo_Phyrex8.png>
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 37.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
+LaTeX Info: Redefining \. on input line 37.
+LaTeX Info: Redefining \% on input line 37.
  [33]
-No file PlanDeProyecto.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 42.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 42.
-(./PlanDeProyecto.aux
+[34
+
+
+] (./tex/bibliografia.tex)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 44.
+ [35
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 44.
+ (./PlanDeProyecto.aux
 LaTeX Info: Redefining \. on input line 21.
 LaTeX Info: Redefining \% on input line 21.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 42.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 42.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 44.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 44.
 Package rerunfilecheck Info: File `PlanDeProyecto.out' has not changed.
 (rerunfilecheck)             Checksum: 30DC94459FE1D59751354825E720D53F;1836.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 42.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 44.
  ) 
 Here is how much of TeX's memory you used:
- 9488 strings out of 495059
- 138761 string characters out of 3182030
- 265777 words of memory out of 3000000
- 12347 multiletter control sequences out of 15000+200000
+ 9500 strings out of 495059
+ 138985 string characters out of 3182030
+ 265878 words of memory out of 3000000
+ 12352 multiletter control sequences out of 15000+200000
  11136 words of font info for 41 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 44i,16n,45p,956b,638s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 44i,16n,45p,956b,632s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
@@ -949,10 +1007,10 @@ onts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmtt10.pfb>
-Output written on PlanDeProyecto.pdf (40 pages, 1058631 bytes).
+Output written on PlanDeProyecto.pdf (42 pages, 1059353 bytes).
 PDF statistics:
- 512 PDF objects out of 1000 (max. 8388607)
- 447 compressed objects within 5 object streams
- 149 named destinations out of 1000 (max. 500000)
+ 524 PDF objects out of 1000 (max. 8388607)
+ 457 compressed objects within 5 object streams
+ 154 named destinations out of 1000 (max. 500000)
  223 words of extra memory for PDF output out of 10000 (max. 10000000)
 

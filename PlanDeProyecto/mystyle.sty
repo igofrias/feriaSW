@@ -29,6 +29,10 @@
 
 \graphicspath{{./pic/}} %le dice que las imagenes estan en la carpeta de arriba
 
+\renewcommand{\chaptername}{Parte}
+\renewcommand{\appendixname}{Anexo}
+\renewcommand{\bibname}{Bibliografía}
+
 \usepackage{amsmath} %pa usar smbolos matematicos
 \numberwithin{equation}{section} % pa usar ecuaciones de modo lindo
 \numberwithin{figure}{section} %para agregar imagenes
@@ -40,18 +44,12 @@
 \counterwithin{table}{section}
 
 
-
-
-
-\renewcommand{\sectionmark}[1]{\markboth{}{\thesection\ \ #1}} %cambios de comentarios
-\lhead[]{\rightmark} %parte de arriba, izq
-%\lhead[\includegraphics[scale=0.1]{logo_Phyrex8.png}]{\thesection. \rightmark} %parte de arriba, izq
-\chead[]{} %parte de arriba, centro
-\rhead[\leftmark]{\includegraphics[scale=0.2]{logo_Phyrex8.png}} %parte de arriba, derecha, le agrega la marca del capitulo
-\renewcommand{\headrulewidth}{0.5pt}
-\lfoot[\thepage]{} %parte de abajo, izq
-\cfoot[]{} %parte de abajo, centro
-\rfoot[]{\thepage} %parte de abajo, derecha, va el numero de la pagina
+\pagestyle{fancy} %Configuracion para la pagina linda
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\chaptername~\thechapter. #1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\textbf{\thesection. #1}}}
+%\renewcommand{\sectionmark}[1]{\markboth{}{\thesection. \MakeLowercase{#1}}} %cambios de comentario
+%\renewcommand{\chaptermark}[1]{\markright{\chaptername \thechapter. \MakeUppercase{#1}}} %
 
 % primera pagina de un capitulo
 \fancypagestyle{plain}{
@@ -65,5 +63,10 @@
   \renewcommand{\footrulewidth}{0pt}
 }
 
-\pagestyle{fancy} %configuracion para la pagina linda
-\setlength{\headheight}{40pt} %alto de la zona superior
+\fancyhead[LO,RE]{\includegraphics[scale=0.2]{logo_Phyrex8.png}}%el logo se coloca en cabecera. Pagina par a la derecha y pagina impar a la izquierda
+\fancyhead[LE]{\leftmark}%Capitulos se colocan en encabezado. Paginas pares a la izquierda
+\fancyhead[RO]{\rightmark}%Secciones se colocan en encabezado. Paginas impares a la derecha
+\fancyfoot[LE,RO]{\thepage}%Numeros de pagina en pie de pagina. Pagina par a la izquierda. Pagina impar a la derecha.
+\renewcommand{\headrulewidth}{0.5pt}
+
+\setlength{\headheight}{40pt} %alto del encabezado
