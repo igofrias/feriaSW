@@ -1,0 +1,71 @@
+\ProvidesPackage{mystyle}
+
+\usepackage[latin1]{inputenc} %codificacion de caracteres
+\usepackage[spanish,es-tabla]{babel} %idioma
+\usepackage{fancyhdr} %tipo de pagina, LINDA biggrin.gif
+\usepackage[top=2.5cm,bottom=2.5cm,right=2cm,left=2.5cm]{geometry} %margenes
+\usepackage[rflt]{floatflt} %ni puta idea
+\usepackage{pdfpages} %incluir archivos pdf
+\usepackage{float}
+\usepackage{hyperref} %hipervinculos
+\hypersetup{
+  colorlinks=true,
+  urlcolor=cyan,
+  linkcolor=blue
+}
+%\usepackage{helvet} %esto es pa escribir con Arial en vez de times new roman
+%\renewcommand\familydefault{\sfdefault} %descomenta estas lineas para escribir en arial
+
+\usepackage{ragged2e}%permite el uso de \justifying
+
+\usepackage{array}    %agrega funcionalidades en tablas
+\usepackage{multirow} %multifilas en tablas
+
+\usepackage{graphicx} %para usar imagenes
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usepackage{emptypage}%elimina el formato de las paginas en blanco
+
+\graphicspath{{./pic/}} %le dice que las imagenes estan en la carpeta de arriba
+
+\usepackage{amsmath} %pa usar smbolos matematicos
+\numberwithin{equation}{section} % pa usar ecuaciones de modo lindo
+\numberwithin{figure}{section} %para agregar imagenes
+\numberwithin{table}{section} %para agregar tablas
+
+\usepackage{chngcntr}
+\counterwithin{equation}{section}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
+
+\pagestyle{fancy} %Configuracion para la pagina linda
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\chaptername~\thechapter. #1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\textbf{\thesection. #1}}}
+%\renewcommand{\sectionmark}[1]{\markboth{}{\thesection. \MakeLowercase{#1}}} %cambios de comentario
+%\renewcommand{\chaptermark}[1]{\markright{\chaptername \thechapter. \MakeUppercase{#1}}} %
+
+% primera pagina de un capitulo
+\fancypagestyle{plain}{
+  \fancyhead[L]{}
+  \fancyhead[C]{}
+  \fancyhead[R]{}
+  \fancyfoot[L]{}
+  \fancyfoot[C]{}
+  \fancyfoot[R]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\fancyhead[LO,RE]{\includegraphics[scale=0.2]{logo_Phyrex8.png}}%el logo se coloca en cabecera. Pagina par a la derecha y pagina impar a la izquierda
+\fancyhead[LE]{\leftmark}%Capitulos se colocan en encabezado. Paginas pares a la izquierda
+\fancyhead[RO]{\rightmark}%Secciones se colocan en encabezado. Paginas impares a la derecha
+\fancyfoot[LE,RO]{\thepage}%Numeros de pagina en pie de pagina. Pagina par a la izquierda. Pagina impar a la derecha.
+\renewcommand{\headrulewidth}{0.5pt}
+
+\setlength{\headheight}{40pt} %alto del encabezado
+
+\addto\captionsspanish{\renewcommand\chaptername{Parte}}
+\addto\captionsspanish{\renewcommand\appendixname{Anexo}}
