@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  16 AUG 2013 17:12
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  16 AUG 2013 17:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -321,7 +321,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip55
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 16.
+Package hyperref Info: Option `colorlinks' set `true' on input line 17.
 
 (/usr/share/texlive/texmf-dist/tex/latex/ms/ragged2e.sty
 Package: ragged2e 2009/05/21 v2.1 ragged2e Package (MS)
@@ -567,7 +567,7 @@ rted-to.pdf ./pic/logoUSM-DI.eps>
 (epstopdf)             \includegraphics on input line 5.
 Package epstopdf Info: Output file is already uptodate.
 
-<./pic/logoUSM-DI-eps-converted-to.pdf, id=128, 1168.365pt x 173.64874pt>
+<./pic/logoUSM-DI-eps-converted-to.pdf, id=131, 1168.365pt x 173.64874pt>
 File: ./pic/logoUSM-DI-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./pic/logoUSM-DI-eps-converted-to.pdf>
@@ -575,13 +575,13 @@ Package pdftex.def Info: ./pic/logoUSM-DI-eps-converted-to.pdf used on input li
 ne 5.
 (pdftex.def)             Requested size: 408.93388pt x 60.77797pt.
 
-<./pic/logo_Phyrex8.png, id=129, 301.125pt x 174.6525pt>
+<./pic/logo_Phyrex8.png, id=132, 301.125pt x 174.6525pt>
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 
 <use ./pic/logo_Phyrex8.png>
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 26.
 (pdftex.def)             Requested size: 194.50008pt x 112.81389pt.
- <./pic/VIPeR.png, id=131, 702.625pt x 702.625pt>
+ <./pic/VIPeR.png, id=134, 702.625pt x 702.625pt>
 File: ./pic/VIPeR.png Graphic file (type png)
 
 <use ./pic/VIPeR.png>
@@ -591,9 +591,7 @@ Package pdftex.def Info: ./pic/VIPeR.png used on input line 34.
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./pic/logoUSM-DI-eps-conve
-rted-to.pdf> <./pic/logo_Phyrex8.png> <./pic/VIPeR.png>]) [2
-
-] (./PlanDeProyecto.toc
+rted-to.pdf> <./pic/logo_Phyrex8.png> <./pic/VIPeR.png>]) (./PlanDeProyecto.toc
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
  [1
@@ -697,20 +695,18 @@ Overfull \hbox (3.32494pt too wide) detected at line 18
 \tf@lot=\write6
 \openout6 = `PlanDeProyecto.lot'.
 
- [5] (./tex/intro.tex) (./tex/seccion_1.texpdfTeX warning (ext4): destination w
-ith the same identifier (name{page.1}) has been already used, duplicate ignored
+ [5
 
+] [6
+
+] (./tex/intro.tex) (./tex/seccion_1.texpdfTeX warning (ext4): destination with
+ the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.1 \chapter
             {Soluci\'on Conceptual.} [1
 
-]pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
- been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.1 \chapter
-            {Soluci\'on Conceptual.} [2
+] [2
 
 ]
 Parte 1.
@@ -737,7 +733,7 @@ File: ./pic/logo_Phyrex8.png Graphic file (type png)
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 71.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [6]
-<./pic/Arduino.jpg, id=313, 481.8pt x 483.30562pt>
+<./pic/Arduino.jpg, id=318, 481.8pt x 483.30562pt>
 File: ./pic/Arduino.jpg Graphic file (type jpg)
  <use ./pic/Arduino.jpg>
 Package pdftex.def Info: ./pic/Arduino.jpg used on input line 87.
@@ -753,7 +749,7 @@ Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 91.
 LaTeX Info: Redefining \. on input line 91.
 LaTeX Info: Redefining \% on input line 91.
  [7]
-<./pic/LegoMindstorms.jpg, id=330, 805.50937pt x 742.27313pt>
+<./pic/LegoMindstorms.jpg, id=335, 805.50937pt x 742.27313pt>
 File: ./pic/LegoMindstorms.jpg Graphic file (type jpg)
 
 <use ./pic/LegoMindstorms.jpg>
@@ -765,21 +761,10 @@ File: ./pic/logo_Phyrex8.png Graphic file (type png)
  <use ./pic/logo_Phyrex8.png>
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 103.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
- [8 <./pic/Arduino.jpg> <./pic/LegoMindstorms.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 114--114
-[][][]\OT1/cmr/m/n/10 Tendencias de dis-pos-i-tivos moviles para 2013 [][]$\OT1
-/cmtt/m/n/10 http : / / blogthinkbig . com /
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 114--114
-[][][]\OT1/cmr/m/n/10 Mobile De-vices [][]$\OT1/cmtt/m/n/10 http : / / www . ne
-wmediatrendwatch . com / markets-[]by-[]country / 17-[]usa /
- []
-
-) (./tex/seccion_2.tex
+ [8 <./pic/Arduino.jpg> <./pic/LegoMindstorms.jpg>]) (./tex/seccion_2.tex
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
- <use ./pic/logo_Phyrex8.png>
+
+<use ./pic/logo_Phyrex8.png>
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 1.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
 LaTeX Info: Redefining \. on input line 1.
@@ -1109,8 +1094,14 @@ Package pdftex.def Info: ./pic/gantt.pdf, page3 used on input line 45.
 (pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
  [39 <./pic/gantt.pdf>]) [40
 
+] (./tex/bibliografia.tex
+Underfull \hbox (badness 6758) in paragraph at lines 12--16
+[]\OT1/cmr/bx/n/12 New\OT1/cmr/m/n/12 Media \OT1/cmr/bx/n/12 Trend\OT1/cmr/m/n/
+12 Watch, \OT1/cmr/m/it/12 Mo-bile De-vices\OT1/cmr/m/n/12 . [][]$\OT1/cmtt/m/n
+/12 http : / / www . newmediatrendwatch . com /
+ []
 
-] (./tex/bibliografia.tex)
+)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 44.
  [41
 
@@ -1123,7 +1114,7 @@ LaTeX Info: Redefining \% on input line 21.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 44.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 44.
 Package rerunfilecheck Info: File `PlanDeProyecto.out' has not changed.
-(rerunfilecheck)             Checksum: 6D84FBFEC9B756079A00393E717E596D;2323.
+(rerunfilecheck)             Checksum: 6E6FFAA45A28427F4FC4F80081819C4E;2380.
 
 
 LaTeX Warning: There were undefined references.
@@ -1134,28 +1125,27 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 44.
  ) 
 Here is how much of TeX's memory you used:
- 9647 strings out of 495059
- 141150 string characters out of 3182030
- 267442 words of memory out of 3000000
+ 9646 strings out of 495059
+ 141115 string characters out of 3182030
+ 267432 words of memory out of 3000000
  12475 multiletter control sequences out of 15000+200000
  11136 words of font info for 41 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  47i,21n,52p,1040b,629s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt
-12.pfb>
-Output written on PlanDeProyecto.pdf (48 pages, 1239446 bytes).
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmtt12.pfb>
+Output written on PlanDeProyecto.pdf (48 pages, 1231548 bytes).
 PDF statistics:
- 1020 PDF objects out of 1200 (max. 8388607)
+ 1019 PDF objects out of 1200 (max. 8388607)
  914 compressed objects within 10 object streams
- 170 named destinations out of 1000 (max. 500000)
- 314 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 169 named destinations out of 1000 (max. 500000)
+ 322 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -6,19 +6,20 @@
 \input{./tex/titulo.tex} %Inclusion del titulo
 
 %\thispagestyle{empty}
-\cleardoublepage
+%\cleardoublepage
 
 \pagenumbering{Roman} %numero de paginas de indices en numeros romanos
 \tableofcontents %indice de capitulos, secciones y subsecciones
 \listoffigures   %indice de imagenes
+\cleardoublepage
 \listoftables    %indice de tablas
-
+\cleardoublepage
 %\thispagestyle{empty}
 
-\newpage
+%\newpage
+\input{./tex/intro.tex}
 \pagenumbering{arabic} %numeracion en numeros arabicos
 \setcounter{page}{1} %empezar enumerando la pagina 1
-\input{./tex/intro.tex}
 %\newpage
 \input{./tex/seccion_1.tex}
 %\newpage
@@ -34,10 +35,9 @@
 
 
 %Bibliografia
-\clearpage
 \backmatter
-%\addcontentsline{toc}{chapter}{Bibliography}
-%\bibliographystyle{acm}
+\addcontentsline{toc}{chapter}{Bibliograf\'ia}
+\bibliographystyle{acm}
 %\bibliography{./tex/bibliografia.tex}
 
 \input{./tex/bibliografia.tex}
