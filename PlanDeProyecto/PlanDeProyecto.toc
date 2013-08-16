@@ -1,12 +1,12 @@
 \select@language {spanish}
-\contentsline {chapter}{Introducci\'on}{1}{chapter*.6}
+\contentsline {chapter}{Introducci\'on}{1}{chapter*.8}
 \contentsline {chapter}{\numberline {1}Soluci\'on Conceptual.}{3}{chapter.1}
 \contentsline {section}{\numberline {1.1}Diagn\'ostico de la situaci\'on actual.}{4}{section.1.1}
 \contentsline {subsection}{\numberline {1.1.1}Situaci\'on Actual.}{4}{subsection.1.1.1}
 \contentsline {subsection}{\numberline {1.1.2}Identificaci\'on de problemas y deficiencias.}{5}{subsection.1.1.2}
 \contentsline {section}{\numberline {1.2}Caracterizaci\'on del cambio.}{6}{section.1.2}
 \contentsline {subsection}{\numberline {1.2.1}Caracter\'isticas y potencialidades deseadas.}{6}{subsection.1.2.1}
-\contentsline {subsubsection}{Restricciones.}{6}{section*.7}
+\contentsline {subsubsection}{Restricciones.}{6}{section*.9}
 \contentsline {section}{\numberline {1.3}An\'alisis de las alternativas de la soluci\'on.}{7}{section.1.3}
 \contentsline {section}{\numberline {1.4}Soluci\'on recomendada.}{9}{section.1.4}
 \contentsline {chapter}{\numberline {2}T\'ecnicas y herramientas de desarrollo.}{11}{chapter.2}
@@ -27,7 +27,7 @@
 \contentsline {section}{\numberline {5.1}Work Breakdown Structure (WBS)}{32}{section.5.1}
 \contentsline {section}{\numberline {5.2}Carta Gantt.}{32}{section.5.2}
 \contentsline {section}{\numberline {5.3}Resumen de Compromisos.}{32}{section.5.3}
-\contentsline {chapter}{Anexos}{33}{section*.21}
+\contentsline {chapter}{Anexos}{33}{section*.23}
 \contentsline {chapter}{\numberline {A}Planificaci\'on de Actividades}{35}{appendix.Alph1}
 \contentsline {section}{\numberline {A.1}WBS}{36}{section.Alph1.1}
 \contentsline {section}{\numberline {A.2}Carta Gantt.}{37}{section.Alph1.2}
