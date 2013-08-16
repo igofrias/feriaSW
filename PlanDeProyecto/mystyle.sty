@@ -1,12 +1,13 @@
 \ProvidesPackage{mystyle}
 
 \usepackage[latin1]{inputenc} %codificacion de caracteres
-\usepackage[spanish,es-tabla]{babel} %idioma
+\usepackage[spanish,es-tabla]{babel} %idioma, con configuracion para tablas en ES
 \usepackage{fancyhdr} %tipo de pagina, LINDA biggrin.gif
 \usepackage[top=2.5cm,bottom=2.5cm,right=2cm,left=2.5cm]{geometry} %margenes
 \usepackage[rflt]{floatflt} %ni puta idea
 \usepackage{pdfpages} %incluir archivos pdf
-\usepackage{float}
+\usepackage{float}    %edicion de elementos flotantes
+\usepackage{appendix} %configuraciones del apendice
 \usepackage{hyperref} %hipervinculos
 \hypersetup{
   colorlinks=true,
@@ -39,6 +40,13 @@
 \counterwithin{figure}{section}
 \counterwithin{table}{section}
 
+%\addto\captionsspanish{\renewcommand\chaptername{Parte}}
+%\addto\captionsspanish{\renewcommand\appendixname{Anexos}}
+
+\addto\captionsspanish{\renewcommand\chaptername{Parte}}
+\addto\captionsspanish{\renewcommand\appendixname{Anexos}}
+\renewcommand\appendixtocname{Anexos}
+\renewcommand\appendixpagename{Anexos}
 
 \pagestyle{fancy} %Configuracion para la pagina linda
 \fancyhf{}
@@ -66,6 +74,3 @@
 \renewcommand{\headrulewidth}{0.5pt}
 
 \setlength{\headheight}{40pt} %alto del encabezado
-
-\addto\captionsspanish{\renewcommand\chaptername{Parte}}
-\addto\captionsspanish{\renewcommand\appendixname{Anexo}}
