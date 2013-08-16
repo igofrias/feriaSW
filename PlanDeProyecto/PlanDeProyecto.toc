@@ -20,7 +20,14 @@
 \contentsline {subsection}{\numberline {3.2.2}Riesgos de Proyecto}{21}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}Riesgos de Negocio}{25}{subsection.3.2.3}
 \contentsline {chapter}{\numberline {4}Implementaci\'on (entrega y operaci\'on).}{27}{chapter.4}
-\contentsline {chapter}{\numberline {5}Planificaci\'on de actividades.}{29}{chapter.5}
-\contentsline {chapter}{\numberline {A}Planificaci\'on de Actividades}{31}{appendix.Alph1}
-\contentsline {section}{\numberline {A.1}WBS}{32}{section.Alph1.1}
-\contentsline {section}{\numberline {A.2}Carta Gantt}{33}{section.Alph1.2}
+\contentsline {section}{\numberline {4.1}Plan de operaci\'on del sistema.}{28}{section.4.1}
+\contentsline {section}{\numberline {4.2}Plan de implementaci\'on (entrega).}{29}{section.4.2}
+\contentsline {section}{\numberline {4.3}Plan de mantenci\'on.}{30}{section.4.3}
+\contentsline {chapter}{\numberline {5}Planificaci\'on de actividades.}{31}{chapter.5}
+\contentsline {section}{\numberline {5.1}Work Breakdown Structure (WBS)}{32}{section.5.1}
+\contentsline {section}{\numberline {5.2}Carta Gantt.}{32}{section.5.2}
+\contentsline {section}{\numberline {5.3}Resumen de Compromisos.}{32}{section.5.3}
+\contentsline {chapter}{Anexos}{33}{section*.21}
+\contentsline {chapter}{\numberline {A}Planificaci\'on de Actividades}{35}{appendix.Alph1}
+\contentsline {section}{\numberline {A.1}WBS}{36}{section.Alph1.1}
+\contentsline {section}{\numberline {A.2}Carta Gantt}{37}{section.Alph1.2}
