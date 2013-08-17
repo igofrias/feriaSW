@@ -3,10 +3,12 @@
 \contentsline {chapter}{\numberline {2}Soluci\'on Conceptual}{3}{chapter.2}
 \contentsline {section}{\numberline {2.1}Diagn\'ostico de la situaci\'on actual}{4}{section.2.1}
 \contentsline {subsection}{\numberline {2.1.1}Situaci\'on Actual}{4}{subsection.2.1.1}
+\contentsline {subsubsection}{\numberline {2.1.1.1} Mascotas Virtuales}{4}{subsubsection.2.1.1.1}
+\contentsline {subsubsection}{\numberline {2.1.1.2}Mascotas Rob\'oticas}{5}{subsubsection.2.1.1.2}
 \contentsline {subsection}{\numberline {2.1.2}Identificaci\'on de problemas y deficiencias}{5}{subsection.2.1.2}
 \contentsline {section}{\numberline {2.2}Caracterizaci\'on del cambio}{6}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}Caracter\'isticas y potencialidades deseadas}{6}{subsection.2.2.1}
-\contentsline {subsubsection}{Restricciones}{6}{section*.8}
+\contentsline {subsection}{\numberline {2.2.2}Restricciones}{6}{subsection.2.2.2}
 \contentsline {section}{\numberline {2.3}An\'alisis de las alternativas de la soluci\'on}{7}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Respecto al dispositivo m\'ovil}{7}{subsection.2.3.1}
 \contentsline {subsection}{\numberline {2.3.2}Respecto al modelo Rob\'otico}{7}{subsection.2.3.2}
@@ -29,7 +31,7 @@
 \contentsline {section}{\numberline {6.1}Work Breakdown Structure (WBS)}{32}{section.6.1}
 \contentsline {section}{\numberline {6.2}Carta Gantt}{32}{section.6.2}
 \contentsline {section}{\numberline {6.3}Resumen de Compromisos}{32}{section.6.3}
-\contentsline {chapter}{Anexos}{33}{section*.23}
+\contentsline {chapter}{Anexos}{33}{section*.22}
 \contentsline {chapter}{\numberline {A}Planificaci\'on de Actividades}{35}{appendix.Alph1}
 \contentsline {section}{\numberline {A.1}WBS}{36}{section.Alph1.1}
 \contentsline {section}{\numberline {A.2}Carta Gantt}{37}{section.Alph1.2}

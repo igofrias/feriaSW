@@ -8,13 +8,14 @@
 \newpage
 \section[WBS]{Work Breakdown Structure}
 \label{section:wbs}
+El proyecto ser\'a realizado mediante la estructura \emph{RUP}. Cada actividad, a realizar en cada fase, tendr\'a un nivel de dificultad entre 1 y 5, siendo 5 la m\'as alta. Adem\'as, cada punto de dificultad quivaldr\'a a 4 Horas/Equipo (HE) y cada una de estas a 4 Horas/Hombre (HH).!
 
 En las siguientes p\'aginas se muestra la estimaci\'on del esfuerzo estimado para el proyecto \emph{V.I.Pe.R.}:
 
 \begin{table}[H]
   \centering
   \begin{tabular}{|l|m{5cm}|c|c|c|}\hline
-    {\bf Fase} & {\bf Tarea} & {\bf Esfuerzo} & {\bf Hrs. Equipo} & {\bf Hrs. Hombre}\\\hline
+    {\bf Fase} & {\bf Tarea} & {\bf Esfuerzo} & {\bf HE} & {\bf HH}\\\hline
     \multirow{4}{*}{Inicio} & Decisi\'on aplicaci\'on                & 3 & 12 & 48\\\cline{2-5}
            & Pruebas de robot                   & 3 & 12 & 48\\\cline{2-5}
            & Definici\'on software de desarrollo  & 2 & 12 & 48\\\cline{2-5}
@@ -27,14 +28,28 @@ En las siguientes p\'aginas se muestra la estimaci\'on del esfuerzo estimado par
                 & P\'agina web                  & 3 & 12 & 48\\\cline{2-5}
                 & Plan de proyecto            & 4 & 16 & 64\\\hline
     \multirow{5}{*}{Desarrollo} & Dise\~no de Interfaz                            & 5 & 20 & 100\\\cline{2-5}
-               & Programaci\'on de Casos de Uso/Requerimientos   & 5 & 20 & 100\\\cline{2-5}
+               & Programaci\'on de Casos de Uso/Requerimientos   & -- & 75 & 300\\\cline{2-5}
                & Testing                                       & 3 & 12 & 60\\\cline{2-5}
-               & Feedback                                      & 3 & 12 & 60\\\cline{2-5}
-               & Algo de nivel 3?!                             &   &    &\\\hline
-                & {\bf Total}                 & 55 & 224 & 960\\\hline
+               & Feedback                                      & 3 & 12 & 60\\\hline
+                & {\bf Total}                 & -- & {\bf 279} & {\bf 1160}\\\hline
   \end{tabular}
   \label{tab:wbs}
   \caption[~Tabla WBS]{Divisi\'on de trabajo, seg\'un modelo utilizado, por esfuerzo.}
+\end{table}
+
+
+La que se resume, por fases, en la siguiente tabla:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|}\hline
+    {\bf Fase} & {\bf HE} & {\bf HH}\\\hline
+    Inicio     & 44 & 176 \\\hline
+    Elaboraci\'on & 116 & 464 \\\hline
+    Desarrollo & 119 & 520 \\\hline
+    {\bf Total} & {\bf 279} & {\bf 1160}\\\hline
+\end{tabular}
+\label{tab:fase}
+\caption[~Distribuci\'on de horas para cada Fase]{Distribuci\'on de horas para cada Fase.}
 \end{table}
 
 \newpage

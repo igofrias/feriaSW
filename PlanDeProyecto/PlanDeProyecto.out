@@ -2,33 +2,36 @@
 \BOOKMARK [0][-]{chapter.2}{Soluci\363n Conceptual}{}% 2
 \BOOKMARK [1][-]{section.2.1}{Diagn\363stico de la situaci\363n actual}{chapter.2}% 3
 \BOOKMARK [2][-]{subsection.2.1.1}{Situaci\363n Actual}{section.2.1}% 4
-\BOOKMARK [2][-]{subsection.2.1.2}{Identificaci\363n de problemas y deficiencias}{section.2.1}% 5
-\BOOKMARK [1][-]{section.2.2}{Caracterizaci\363n del cambio}{chapter.2}% 6
-\BOOKMARK [2][-]{subsection.2.2.1}{Caracter\355sticas y potencialidades deseadas}{section.2.2}% 7
-\BOOKMARK [1][-]{section.2.3}{An\341lisis de las alternativas de la soluci\363n}{chapter.2}% 8
-\BOOKMARK [2][-]{subsection.2.3.1}{Respecto al dispositivo m\363vil}{section.2.3}% 9
-\BOOKMARK [2][-]{subsection.2.3.2}{Respecto al modelo Rob\363tico}{section.2.3}% 10
-\BOOKMARK [1][-]{section.2.4}{Soluci\363n recomendada}{chapter.2}% 11
-\BOOKMARK [0][-]{chapter.3}{T\351cnicas y herramientas de desarrollo}{}% 12
-\BOOKMARK [1][-]{section.3.1}{Modelo de desarrollo}{chapter.3}% 13
-\BOOKMARK [1][-]{section.3.2}{Herramientas y t\351cnicas de soporte para el desarrollo}{chapter.3}% 14
-\BOOKMARK [1][-]{section.3.3}{Personal y capacitaci\363n del equipo de desarrollo}{chapter.3}% 15
-\BOOKMARK [0][-]{chapter.4}{Gesti\363n de riesgos}{}% 16
-\BOOKMARK [1][-]{section.4.1}{An\341lisis de riesgos}{chapter.4}% 17
-\BOOKMARK [1][-]{section.4.2}{Preparaci\363n para control de riesgos}{chapter.4}% 18
-\BOOKMARK [2][-]{subsection.4.2.1}{Riesgos T\351cnicos}{section.4.2}% 19
-\BOOKMARK [2][-]{subsection.4.2.2}{Riesgos de Proyecto}{section.4.2}% 20
-\BOOKMARK [2][-]{subsection.4.2.3}{Riesgos de Negocio}{section.4.2}% 21
-\BOOKMARK [0][-]{chapter.5}{Implementaci\363n \(entrega y operaci\363n\)}{}% 22
-\BOOKMARK [1][-]{section.5.1}{Plan de operaci\363n del sistema}{chapter.5}% 23
-\BOOKMARK [1][-]{section.5.2}{Plan de implementaci\363n \(entrega\)}{chapter.5}% 24
-\BOOKMARK [1][-]{section.5.3}{Plan de mantenci\363n}{chapter.5}% 25
-\BOOKMARK [0][-]{chapter.6}{Planificaci\363n de actividades}{}% 26
-\BOOKMARK [1][-]{section.6.1}{Work Breakdown Structure \(WBS\)}{chapter.6}% 27
-\BOOKMARK [1][-]{section.6.2}{Carta Gantt}{chapter.6}% 28
-\BOOKMARK [1][-]{section.6.3}{Resumen de Compromisos}{chapter.6}% 29
-\BOOKMARK [0][-]{section*.23}{Anexos}{}% 30
-\BOOKMARK [0][-]{appendix.Alph1}{Planificaci\363n de Actividades}{}% 31
-\BOOKMARK [1][-]{section.Alph1.1}{WBS}{appendix.Alph1}% 32
-\BOOKMARK [1][-]{section.Alph1.2}{Carta Gantt}{appendix.Alph1}% 33
-\BOOKMARK [0][-]{figure.caption.27}{Bibliograf\355a}{}% 34
+\BOOKMARK [3][-]{subsubsection.2.1.1.1}{ Mascotas Virtuales}{subsection.2.1.1}% 5
+\BOOKMARK [3][-]{subsubsection.2.1.1.2}{Mascotas Rob\363ticas}{subsection.2.1.1}% 6
+\BOOKMARK [2][-]{subsection.2.1.2}{Identificaci\363n de problemas y deficiencias}{section.2.1}% 7
+\BOOKMARK [1][-]{section.2.2}{Caracterizaci\363n del cambio}{chapter.2}% 8
+\BOOKMARK [2][-]{subsection.2.2.1}{Caracter\355sticas y potencialidades deseadas}{section.2.2}% 9
+\BOOKMARK [2][-]{subsection.2.2.2}{Restricciones}{section.2.2}% 10
+\BOOKMARK [1][-]{section.2.3}{An\341lisis de las alternativas de la soluci\363n}{chapter.2}% 11
+\BOOKMARK [2][-]{subsection.2.3.1}{Respecto al dispositivo m\363vil}{section.2.3}% 12
+\BOOKMARK [2][-]{subsection.2.3.2}{Respecto al modelo Rob\363tico}{section.2.3}% 13
+\BOOKMARK [1][-]{section.2.4}{Soluci\363n recomendada}{chapter.2}% 14
+\BOOKMARK [0][-]{chapter.3}{T\351cnicas y herramientas de desarrollo}{}% 15
+\BOOKMARK [1][-]{section.3.1}{Modelo de desarrollo}{chapter.3}% 16
+\BOOKMARK [1][-]{section.3.2}{Herramientas y t\351cnicas de soporte para el desarrollo}{chapter.3}% 17
+\BOOKMARK [1][-]{section.3.3}{Personal y capacitaci\363n del equipo de desarrollo}{chapter.3}% 18
+\BOOKMARK [0][-]{chapter.4}{Gesti\363n de riesgos}{}% 19
+\BOOKMARK [1][-]{section.4.1}{An\341lisis de riesgos}{chapter.4}% 20
+\BOOKMARK [1][-]{section.4.2}{Preparaci\363n para control de riesgos}{chapter.4}% 21
+\BOOKMARK [2][-]{subsection.4.2.1}{Riesgos T\351cnicos}{section.4.2}% 22
+\BOOKMARK [2][-]{subsection.4.2.2}{Riesgos de Proyecto}{section.4.2}% 23
+\BOOKMARK [2][-]{subsection.4.2.3}{Riesgos de Negocio}{section.4.2}% 24
+\BOOKMARK [0][-]{chapter.5}{Implementaci\363n \(entrega y operaci\363n\)}{}% 25
+\BOOKMARK [1][-]{section.5.1}{Plan de operaci\363n del sistema}{chapter.5}% 26
+\BOOKMARK [1][-]{section.5.2}{Plan de implementaci\363n \(entrega\)}{chapter.5}% 27
+\BOOKMARK [1][-]{section.5.3}{Plan de mantenci\363n}{chapter.5}% 28
+\BOOKMARK [0][-]{chapter.6}{Planificaci\363n de actividades}{}% 29
+\BOOKMARK [1][-]{section.6.1}{Work Breakdown Structure \(WBS\)}{chapter.6}% 30
+\BOOKMARK [1][-]{section.6.2}{Carta Gantt}{chapter.6}% 31
+\BOOKMARK [1][-]{section.6.3}{Resumen de Compromisos}{chapter.6}% 32
+\BOOKMARK [0][-]{section*.22}{Anexos}{}% 33
+\BOOKMARK [0][-]{appendix.Alph1}{Planificaci\363n de Actividades}{}% 34
+\BOOKMARK [1][-]{section.Alph1.1}{WBS}{appendix.Alph1}% 35
+\BOOKMARK [1][-]{section.Alph1.2}{Carta Gantt}{appendix.Alph1}% 36
+\BOOKMARK [0][-]{figure.caption.27}{Bibliograf\355a}{}% 37
