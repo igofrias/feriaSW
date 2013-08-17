@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  16 AUG 2013 17:51
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  16 AUG 2013 18:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -579,14 +579,14 @@ ne 5.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 
 <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 26.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 15.
 (pdftex.def)             Requested size: 194.50008pt x 112.81389pt.
  <./pic/VIPeR.png, id=134, 702.625pt x 702.625pt>
 File: ./pic/VIPeR.png Graphic file (type png)
 
 <use ./pic/VIPeR.png>
-Package pdftex.def Info: ./pic/VIPeR.png used on input line 34.
-(pdftex.def)             Requested size: 121.56439pt x 121.55673pt.
+Package pdftex.def Info: ./pic/VIPeR.png used on input line 21.
+(pdftex.def)             Requested size: 97.25003pt x 97.2411pt.
  [1
 
 
@@ -733,7 +733,7 @@ File: ./pic/logo_Phyrex8.png Graphic file (type png)
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 71.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [6]
-<./pic/Arduino.jpg, id=318, 481.8pt x 483.30562pt>
+<./pic/Arduino.jpg, id=320, 481.8pt x 483.30562pt>
 File: ./pic/Arduino.jpg Graphic file (type jpg)
  <use ./pic/Arduino.jpg>
 Package pdftex.def Info: ./pic/Arduino.jpg used on input line 87.
@@ -749,7 +749,7 @@ Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 91.
 LaTeX Info: Redefining \. on input line 91.
 LaTeX Info: Redefining \% on input line 91.
  [7]
-<./pic/LegoMindstorms.jpg, id=335, 805.50937pt x 742.27313pt>
+<./pic/LegoMindstorms.jpg, id=337, 805.50937pt x 742.27313pt>
 File: ./pic/LegoMindstorms.jpg Graphic file (type jpg)
 
 <use ./pic/LegoMindstorms.jpg>
@@ -773,7 +773,7 @@ LaTeX Info: Redefining \% on input line 1.
 
 ]
 Parte 2.
-[11] <./pic/Modelo.jpg, id=361, 513.92pt x 342.27875pt>
+[11] <./pic/Modelo.jpg, id=363, 513.92pt x 342.27875pt>
 File: ./pic/Modelo.jpg Graphic file (type jpg)
  <use ./pic/Modelo.jpg>
 Package pdftex.def Info: ./pic/Modelo.jpg used on input line 11.
@@ -964,17 +964,17 @@ Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 26.
  [28]
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
  <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 38.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 39.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
-LaTeX Info: Redefining \. on input line 38.
-LaTeX Info: Redefining \% on input line 38.
+LaTeX Info: Redefining \. on input line 39.
+LaTeX Info: Redefining \% on input line 39.
  [29]
-LaTeX Info: Redefining \. on input line 46.
-LaTeX Info: Redefining \% on input line 46.
+LaTeX Info: Redefining \. on input line 47.
+LaTeX Info: Redefining \% on input line 47.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 
 <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 46.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 47.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [30]) (./tex/seccion_5.tex
 Parte 5.
@@ -1009,7 +1009,7 @@ File: ./pic/logo_Phyrex8.png Graphic file (type png)
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 41.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [36]
-<./pic/gantt.pdf, id=503, page=1, 776.78206pt x 595.62527pt>
+<./pic/gantt.pdf, id=505, page=1, 776.78206pt x 595.62527pt>
 File: ./pic/gantt.pdf Graphic file (type pdf)
 
 <use ./pic/gantt.pdf, page 1>
@@ -1039,7 +1039,7 @@ File: ./pic/gantt.pdf Graphic file (type pdf)
  <use ./pic/gantt.pdf, page 1>
 Package pdftex.def Info: ./pic/gantt.pdf, page1 used on input line 44.
 (pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
- [37 <./pic/gantt.pdf>] <./pic/gantt.pdf, id=667, page=2, 776.78206pt x 595.625
+ [37 <./pic/gantt.pdf>] <./pic/gantt.pdf, id=669, page=2, 776.78206pt x 595.625
 27pt>
 File: ./pic/gantt.pdf Graphic file (type pdf)
 
@@ -1070,7 +1070,7 @@ File: ./pic/gantt.pdf Graphic file (type pdf)
  <use ./pic/gantt.pdf, page 2>
 Package pdftex.def Info: ./pic/gantt.pdf, page2 used on input line 45.
 (pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
- [38 <./pic/gantt.pdf>] <./pic/gantt.pdf, id=800, page=3, 776.78206pt x 595.625
+ [38 <./pic/gantt.pdf>] <./pic/gantt.pdf, id=802, page=3, 776.78206pt x 595.625
 27pt>
 File: ./pic/gantt.pdf Graphic file (type pdf)
 
@@ -1114,7 +1114,7 @@ LaTeX Info: Redefining \% on input line 21.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 44.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 44.
 Package rerunfilecheck Info: File `PlanDeProyecto.out' has not changed.
-(rerunfilecheck)             Checksum: 6E6FFAA45A28427F4FC4F80081819C4E;2380.
+(rerunfilecheck)             Checksum: D316C9470FF5ADA7179FB51037C926A0;2380.
 
 
 LaTeX Warning: There were undefined references.
@@ -1125,11 +1125,11 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 44.
  ) 
 Here is how much of TeX's memory you used:
- 9646 strings out of 495059
- 141115 string characters out of 3182030
- 267432 words of memory out of 3000000
- 12475 multiletter control sequences out of 15000+200000
- 11136 words of font info for 41 fonts, out of 3000000 for 9000
+ 9626 strings out of 495059
+ 140778 string characters out of 3182030
+ 267373 words of memory out of 3000000
+ 12453 multiletter control sequences out of 15000+200000
+ 10789 words of font info for 40 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  47i,21n,52p,1040b,629s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
@@ -1142,10 +1142,10 @@ nts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type
 ic/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmtt12.pfb>
-Output written on PlanDeProyecto.pdf (48 pages, 1231548 bytes).
+Output written on PlanDeProyecto.pdf (48 pages, 1231931 bytes).
 PDF statistics:
- 1019 PDF objects out of 1200 (max. 8388607)
- 914 compressed objects within 10 object streams
- 169 named destinations out of 1000 (max. 500000)
+ 1021 PDF objects out of 1200 (max. 8388607)
+ 916 compressed objects within 10 object streams
+ 171 named destinations out of 1000 (max. 500000)
  322 words of extra memory for PDF output out of 10000 (max. 10000000)
 
