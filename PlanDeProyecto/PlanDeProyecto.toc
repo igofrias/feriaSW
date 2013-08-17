@@ -32,6 +32,5 @@
 \contentsline {chapter}{Anexos}{33}{section*.23}
 \contentsline {chapter}{\numberline {A}Planificaci\'on de Actividades}{35}{appendix.Alph1}
 \contentsline {section}{\numberline {A.1}WBS}{36}{section.Alph1.1}
-\contentsline {section}{\numberline {A.2}\ignorespaces Carta Gantt}{37}{section.Alph1.2}
-\contentsline {section}{\numberline {A.3}Carta Gantt}{37}{section.Alph1.3}
-\contentsline {chapter}{Bibliograf\'ia}{41}{section.Alph1.3}
+\contentsline {section}{\numberline {A.2}Carta Gantt}{37}{section.Alph1.2}
+\contentsline {chapter}{Bibliograf\'ia}{41}{figure.caption.27}
