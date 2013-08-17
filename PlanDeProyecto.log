@@ -1,0 +1,120 @@
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  16 AUG 2013 20:04
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**PlanDeProyecto/PlanDeProyecto.tex
+(./PlanDeProyecto/PlanDeProyecto.tex
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, lo
+aded.
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk12.clo
+File: bk12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+
+! LaTeX Error: File `mystyle.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: q
+
+! LaTeX Error: File `q.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+No file PlanDeProyecto.aux.
+\openout1 = `PlanDeProyecto.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+
+! LaTeX Error: File `./tex/titulo.tex' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: tex)
+
+Enter file name: 
+! Interruption.
+<to be read again> 
+                   }
+l.6 \input{./tex/titulo.tex}
+                             %Inclusion del titulo^^M
+? q
+OK, entering \batchmode...
+No file PlanDeProyecto.toc.
+\tf@toc=\write3
+\openout3 = `PlanDeProyecto.toc'.
+
+ [1
+
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
+
+]
+No file PlanDeProyecto.lof.
+\tf@lof=\write4
+\openout4 = `PlanDeProyecto.lof'.
+
+ [3] [4
+
+]
+No file PlanDeProyecto.lot.
+\tf@lot=\write5
+\openout5 = `PlanDeProyecto.lot'.
+
+ [5
+
+] [6
+
+]
+
+! LaTeX Error: File `./tex/intro.tex' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: tex)
+
+ Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.16 \input{./tex/intro.tex}
+                            ^^M
+*** (cannot \read from terminal in nonstop modes)
+
+ 
+Here is how much of TeX's memory you used:
+ 242 strings out of 495059
+ 2590 string characters out of 3182030
+ 46654 words of memory out of 3000000
+ 3501 multiletter control sequences out of 15000+200000
+ 4896 words of font info for 18 fonts, out of 3000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 22i,4n,19p,158b,145s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!

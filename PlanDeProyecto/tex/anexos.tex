@@ -1,5 +1,4 @@
 \appendix
-\clearpage
 \addappheadtotoc
 \appendixpage
 
@@ -35,16 +34,11 @@ En las siguientes p\'aginas se muestra la estimaci\'on del esfuerzo estimado par
                 & {\bf Total}                 & 55 & 224 & 960\\\hline
   \end{tabular}
   \label{tab:wbs}
-  \caption[Tabla WBS]{Divisi\'on de trabajo, seg\'un modelo utilizado, por esfuerzo.}
+  \caption[~Tabla WBS]{Divisi\'on de trabajo, seg\'un modelo utilizado, por esfuerzo.}
 \end{table}
 
 \newpage
-%\section{Carta Gantt}
-
-\includepdf[scale=0.7,pages=1,angle=-90,pagecommand=\section{Carta Gantt.}]{./pic/gantt.pdf}
+%CARTA GANTT
+\includepdf[pagecommand={\section{Carta Gantt}},scale=0.7,pages=1,angle=-90,addtotoc={1,section,1,{Carta Gantt},appen:gantt}]{./pic/gantt.pdf}
+%\label{appen:gantt}
 \includepdf[scale=0.7,pages=2-3,angle=-90,pagecommand={}]{./pic/gantt.pdf}
-%\chapter{Glosario de T\'erminos.}
-%\begin{itemize}
-%\item {\bf SO}: Abreviatura de \textbf{S}istema \textbf{O}perativo. Programa encargado de la gesti\'on de recursos de Hardware. Provee los servicios a los programas de aplicaci\'on.
-%\item LEGO Mindstorms: Juego de rob\'otica para ni\~nos, elaborado por la empresa LEGO en colaboraci\'on con el MIT. Posee distintos tipos de sensores, as\'i como un
-%\end{itemize}
