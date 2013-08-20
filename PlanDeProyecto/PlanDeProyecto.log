@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  16 AUG 2013 17:51
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.3.16)  16 AUG 2013 23:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -449,6 +449,12 @@ LaTeX Info: Redefining \% on input line 21.
 
 LaTeX Warning: Label `fig:LegoMindstorms' multiply defined.
 
+
+LaTeX Warning: Label `fig:gantt1' multiply defined.
+
+
+LaTeX Warning: Label `fig:gantt1' multiply defined.
+
 )
 \openout1 = `PlanDeProyecto.aux'.
 
@@ -567,7 +573,7 @@ rted-to.pdf ./pic/logoUSM-DI.eps>
 (epstopdf)             \includegraphics on input line 5.
 Package epstopdf Info: Output file is already uptodate.
 
-<./pic/logoUSM-DI-eps-converted-to.pdf, id=131, 1168.365pt x 173.64874pt>
+<./pic/logoUSM-DI-eps-converted-to.pdf, id=152, 1168.365pt x 173.64874pt>
 File: ./pic/logoUSM-DI-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./pic/logoUSM-DI-eps-converted-to.pdf>
@@ -575,18 +581,18 @@ Package pdftex.def Info: ./pic/logoUSM-DI-eps-converted-to.pdf used on input li
 ne 5.
 (pdftex.def)             Requested size: 408.93388pt x 60.77797pt.
 
-<./pic/logo_Phyrex8.png, id=132, 301.125pt x 174.6525pt>
+<./pic/logo_Phyrex8.png, id=153, 301.125pt x 174.6525pt>
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 
 <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 26.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 15.
 (pdftex.def)             Requested size: 194.50008pt x 112.81389pt.
- <./pic/VIPeR.png, id=134, 702.625pt x 702.625pt>
+ <./pic/VIPeR.png, id=155, 702.625pt x 702.625pt>
 File: ./pic/VIPeR.png Graphic file (type png)
 
 <use ./pic/VIPeR.png>
-Package pdftex.def Info: ./pic/VIPeR.png used on input line 34.
-(pdftex.def)             Requested size: 121.56439pt x 121.55673pt.
+Package pdftex.def Info: ./pic/VIPeR.png used on input line 21.
+(pdftex.def)             Requested size: 97.25003pt x 97.2411pt.
  [1
 
 
@@ -600,29 +606,29 @@ LaTeX Info: Redefining \% on input line 1.
 \tf@toc=\write4
 \openout4 = `PlanDeProyecto.toc'.
 
-LaTeX Info: Redefining \. on input line 13.
-LaTeX Info: Redefining \% on input line 13.
+LaTeX Info: Redefining \. on input line 10.
+LaTeX Info: Redefining \% on input line 10.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
  <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 13.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 10.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [2]
 (./PlanDeProyecto.lof
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 
-Overfull \hbox (0.39163pt too wide) detected at line 3
-\OT1/cmr/m/n/12 1.3.1. 
- []
-
-
 Overfull \hbox (0.39163pt too wide) detected at line 4
-\OT1/cmr/m/n/12 1.3.2. 
+\OT1/cmr/m/n/12 2.3.1. 
  []
 
 
-Overfull \hbox (0.39163pt too wide) detected at line 6
-\OT1/cmr/m/n/12 2.1.1. 
+Overfull \hbox (0.39163pt too wide) detected at line 5
+\OT1/cmr/m/n/12 2.3.2. 
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 7
+\OT1/cmr/m/n/12 3.1.1. 
  []
 
 )
@@ -637,58 +643,68 @@ Overfull \hbox (0.39163pt too wide) detected at line 6
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 
-Overfull \hbox (0.39163pt too wide) detected at line 5
-\OT1/cmr/m/n/12 3.2.1. 
- []
-
-
 Overfull \hbox (0.39163pt too wide) detected at line 6
-\OT1/cmr/m/n/12 3.2.2. 
+\OT1/cmr/m/n/12 4.2.1. 
  []
 
 
 Overfull \hbox (0.39163pt too wide) detected at line 7
-\OT1/cmr/m/n/12 3.2.3. 
+\OT1/cmr/m/n/12 4.2.2. 
  []
 
 
 Overfull \hbox (0.39163pt too wide) detected at line 8
-\OT1/cmr/m/n/12 3.2.4. 
+\OT1/cmr/m/n/12 4.2.3. 
  []
 
 
 Overfull \hbox (0.39163pt too wide) detected at line 9
-\OT1/cmr/m/n/12 3.2.5. 
+\OT1/cmr/m/n/12 4.2.4. 
  []
 
 
 Overfull \hbox (0.39163pt too wide) detected at line 10
-\OT1/cmr/m/n/12 3.2.6. 
+\OT1/cmr/m/n/12 4.2.5. 
  []
 
 
 Overfull \hbox (0.39163pt too wide) detected at line 11
-\OT1/cmr/m/n/12 3.2.7. 
+\OT1/cmr/m/n/12 4.2.6. 
  []
 
 
 Overfull \hbox (0.39163pt too wide) detected at line 12
-\OT1/cmr/m/n/12 3.2.8. 
+\OT1/cmr/m/n/12 4.2.7. 
  []
 
 
 Overfull \hbox (0.39163pt too wide) detected at line 13
-\OT1/cmr/m/n/12 3.2.9. 
+\OT1/cmr/m/n/12 4.2.8. 
  []
 
 
-Overfull \hbox (6.26657pt too wide) detected at line 14
-\OT1/cmr/m/n/12 3.2.10. 
+Overfull \hbox (0.39163pt too wide) detected at line 14
+\OT1/cmr/m/n/12 4.2.9. 
  []
 
 
-Overfull \hbox (3.32494pt too wide) detected at line 18
+Overfull \hbox (6.26657pt too wide) detected at line 15
+\OT1/cmr/m/n/12 4.2.10. 
+ []
+
+
+Overfull \hbox (0.39163pt too wide) detected at line 18
+\OT1/cmr/m/n/12 6.1.1. 
+ []
+
+
+Overfull \hbox (3.32494pt too wide) detected at line 20
 \OT1/cmr/m/n/12 A.1.1. 
+ []
+
+
+Overfull \hbox (3.32494pt too wide) detected at line 21
+\OT1/cmr/m/n/12 A.1.2. 
  []
 
 )
@@ -699,48 +715,47 @@ Overfull \hbox (3.32494pt too wide) detected at line 18
 
 ] [6
 
-] (./tex/intro.tex) (./tex/seccion_1.texpdfTeX warning (ext4): destination with
- the same identifier (name{page.1}) has been already used, duplicate ignored
+] (./tex/intro.tex
+Parte 1.
+) (./tex/seccion_1.texpdfTeX warning (ext4): destination with the same identifi
+er (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.1 \chapter
-            {Soluci\'on Conceptual.} [1
+            {Soluci\'on Conceptual} [1
 
 ] [2
 
 ]
-Parte 1.
+Parte 2.
 [3]
-LaTeX Info: Redefining \. on input line 31.
-LaTeX Info: Redefining \% on input line 31.
+LaTeX Info: Redefining \. on input line 29.
+LaTeX Info: Redefining \% on input line 29.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
  <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 31.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 29.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [4]
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
  <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 48.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 46.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
-LaTeX Info: Redefining \. on input line 48.
-LaTeX Info: Redefining \% on input line 48.
+LaTeX Info: Redefining \. on input line 46.
+LaTeX Info: Redefining \% on input line 46.
  [5]
-LaTeX Info: Redefining \. on input line 71.
-LaTeX Info: Redefining \% on input line 71.
+LaTeX Info: Redefining \. on input line 70.
+LaTeX Info: Redefining \% on input line 70.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 
 <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 71.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 70.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [6]
-<./pic/Arduino.jpg, id=318, 481.8pt x 483.30562pt>
+<./pic/Arduino.jpg, id=346, 481.8pt x 483.30562pt>
 File: ./pic/Arduino.jpg Graphic file (type jpg)
  <use ./pic/Arduino.jpg>
 Package pdftex.def Info: ./pic/Arduino.jpg used on input line 87.
 (pdftex.def)             Requested size: 192.71658pt x 193.31882pt.
-
-Underfull \vbox (badness 8056) has occurred while \output is active []
-
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 
 <use ./pic/logo_Phyrex8.png>
@@ -749,17 +764,17 @@ Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 91.
 LaTeX Info: Redefining \. on input line 91.
 LaTeX Info: Redefining \% on input line 91.
  [7]
-<./pic/LegoMindstorms.jpg, id=335, 805.50937pt x 742.27313pt>
+<./pic/LegoMindstorms.jpg, id=361, 805.50937pt x 742.27313pt>
 File: ./pic/LegoMindstorms.jpg Graphic file (type jpg)
 
 <use ./pic/LegoMindstorms.jpg>
 Package pdftex.def Info: ./pic/LegoMindstorms.jpg used on input line 95.
 (pdftex.def)             Requested size: 201.37685pt x 185.56783pt.
-LaTeX Info: Redefining \. on input line 103.
-LaTeX Info: Redefining \% on input line 103.
+LaTeX Info: Redefining \. on input line 102.
+LaTeX Info: Redefining \% on input line 102.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
  <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 103.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 102.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [8 <./pic/Arduino.jpg> <./pic/LegoMindstorms.jpg>]) (./tex/seccion_2.tex
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
@@ -772,32 +787,32 @@ LaTeX Info: Redefining \% on input line 1.
  [9] [10
 
 ]
-Parte 2.
-[11] <./pic/Modelo.jpg, id=361, 513.92pt x 342.27875pt>
+Parte 3.
+[11] <./pic/Modelo.jpg, id=387, 513.92pt x 342.27875pt>
 File: ./pic/Modelo.jpg Graphic file (type jpg)
  <use ./pic/Modelo.jpg>
-Package pdftex.def Info: ./pic/Modelo.jpg used on input line 11.
+Package pdftex.def Info: ./pic/Modelo.jpg used on input line 10.
 (pdftex.def)             Requested size: 359.74153pt x 239.59348pt.
 
-Overfull \hbox (21.1024pt too wide) in paragraph at lines 27--28
+Overfull \hbox (21.1024pt too wide) in paragraph at lines 26--27
 []\OT1/cmr/m/n/12 Las es-peci-fi-ca-ciones de los ca-sos de uso y re-quer-im-ie
 n-tos se en-cuen-tran en el archi-vo ``Anexo.xlsx''. 
  []
 
-LaTeX Info: Redefining \. on input line 29.
-LaTeX Info: Redefining \% on input line 29.
+LaTeX Info: Redefining \. on input line 28.
+LaTeX Info: Redefining \% on input line 28.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 29.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 28.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [12 <./pic/Modelo.jpg>]
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 
 <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 57.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 56.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
-LaTeX Info: Redefining \. on input line 57.
-LaTeX Info: Redefining \% on input line 57.
+LaTeX Info: Redefining \. on input line 56.
+LaTeX Info: Redefining \% on input line 56.
  [13]) (./tex/seccion_3.tex
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -807,7 +822,7 @@ File: ./pic/logo_Phyrex8.png Graphic file (type png)
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 1.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [14]
-Parte 3.
+Parte 4.
 [15
 
 ]
@@ -944,7 +959,7 @@ File: ./pic/logo_Phyrex8.png Graphic file (type png)
 Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 1.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [26]
-Parte 4.
+Parte 5.
 [27
 
 ]
@@ -954,44 +969,40 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 8.
-LaTeX Info: Redefining \. on input line 26.
-LaTeX Info: Redefining \% on input line 26.
+LaTeX Info: Redefining \. on input line 27.
+LaTeX Info: Redefining \% on input line 27.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 
 <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 26.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 27.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [28]
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
  <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 38.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 40.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
-LaTeX Info: Redefining \. on input line 38.
-LaTeX Info: Redefining \% on input line 38.
+LaTeX Info: Redefining \. on input line 40.
+LaTeX Info: Redefining \% on input line 40.
  [29]
-LaTeX Info: Redefining \. on input line 46.
-LaTeX Info: Redefining \% on input line 46.
+LaTeX Info: Redefining \. on input line 48.
+LaTeX Info: Redefining \% on input line 48.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 
 <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 46.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 48.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [30]) (./tex/seccion_5.tex
-Parte 5.
+Parte 6.
 [31
 
 ]
-
-LaTeX Warning: Reference `section:gantt' on page 32 undefined on input line 5.
-
-LaTeX Info: Redefining \. on input line 18.
-LaTeX Info: Redefining \% on input line 18.
+LaTeX Info: Redefining \. on input line 43.
+LaTeX Info: Redefining \% on input line 43.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
-<use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 18.
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 43.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [32]) (./tex/anexos.tex [33
-
 
 ] [34]
 Anexos A.
@@ -1002,97 +1013,89 @@ Underfull \hbox (badness 10000) in paragraph at lines 22--22
 []|\OT1/cmr/m/n/12 Definici^^Son nom-bre pre-
  []
 
-LaTeX Info: Redefining \. on input line 41.
-LaTeX Info: Redefining \% on input line 41.
+LaTeX Info: Redefining \. on input line 55.
+LaTeX Info: Redefining \% on input line 55.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
 <use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 41.
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 55.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
  [36]
-<./pic/gantt.pdf, id=503, page=1, 776.78206pt x 595.62527pt>
-File: ./pic/gantt.pdf Graphic file (type pdf)
+Package epstopdf Info: Source file: <./pic/gantt1.eps>
+(epstopdf)                    date: 2013-08-16 22:22:47
+(epstopdf)                    size: 213570 bytes
+(epstopdf)             Output file: <./pic/gantt1-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-08-16 22:24:46
+(epstopdf)                    size: 74993 bytes
+(epstopdf)             Command: <repstopdf --outfile=./pic/gantt1-eps-converted
+-to.pdf ./pic/gantt1.eps>
+(epstopdf)             \includegraphics on input line 65.
+Package epstopdf Info: Output file is already uptodate.
 
-<use ./pic/gantt.pdf, page 1>
-Package pdftex.def Info: ./pic/gantt.pdf, page1 used on input line 44.
-(pdftex.def)             Requested size: 776.78017pt x 595.62381pt.
-File: ./pic/gantt.pdf Graphic file (type pdf)
- <use ./pic/gantt.pdf, page 1>
-Package pdftex.def Info: ./pic/gantt.pdf, page1 used on input line 44.
-(pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
-File: ./pic/gantt.pdf Graphic file (type pdf)
+<./pic/gantt1-eps-converted-to.pdf, id=530, 723.70375pt x 543.02875pt>
+File: ./pic/gantt1-eps-converted-to.pdf Graphic file (type pdf)
 
-<use ./pic/gantt.pdf, page 1>
-Package pdftex.def Info: ./pic/gantt.pdf, page1 used on input line 44.
-(pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
-File: ./pic/gantt.pdf Graphic file (type pdf)
- <use ./pic/gantt.pdf, page 1>
-Package pdftex.def Info: ./pic/gantt.pdf, page1 used on input line 44.
-(pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
+<use ./pic/gantt1-eps-converted-to.pdf>
+Package pdftex.def Info: ./pic/gantt1-eps-converted-to.pdf used on input line 6
+5.
+(pdftex.def)             Requested size: 723.70198pt x 543.0274pt.
+Package epstopdf Info: Source file: <./pic/gantt2.eps>
+(epstopdf)                    date: 2013-08-16 22:21:45
+(epstopdf)                    size: 74207 bytes
+(epstopdf)             Output file: <./pic/gantt2-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-08-16 22:25:31
+(epstopdf)                    size: 29212 bytes
+(epstopdf)             Command: <repstopdf --outfile=./pic/gantt2-eps-converted
+-to.pdf ./pic/gantt2.eps>
+(epstopdf)             \includegraphics on input line 71.
+Package epstopdf Info: Output file is already uptodate.
+
+<./pic/gantt2-eps-converted-to.pdf, id=531, 723.70375pt x 543.02875pt>
+File: ./pic/gantt2-eps-converted-to.pdf Graphic file (type pdf)
+
+<use ./pic/gantt2-eps-converted-to.pdf>
+Package pdftex.def Info: ./pic/gantt2-eps-converted-to.pdf used on input line 7
+1.
+(pdftex.def)             Requested size: 723.70198pt x 543.0274pt.
+Package epstopdf Info: Source file: <./pic/gantt3.eps>
+(epstopdf)                    date: 2013-08-16 22:22:12
+(epstopdf)                    size: 74230 bytes
+(epstopdf)             Output file: <./pic/gantt3-eps-converted-to.pdf>
+(epstopdf)                    date: 2013-08-16 22:25:31
+(epstopdf)                    size: 29306 bytes
+(epstopdf)             Command: <repstopdf --outfile=./pic/gantt3-eps-converted
+-to.pdf ./pic/gantt3.eps>
+(epstopdf)             \includegraphics on input line 77.
+Package epstopdf Info: Output file is already uptodate.
+
+<./pic/gantt3-eps-converted-to.pdf, id=532, 723.70375pt x 543.02875pt>
+File: ./pic/gantt3-eps-converted-to.pdf Graphic file (type pdf)
+
+<use ./pic/gantt3-eps-converted-to.pdf>
+Package pdftex.def Info: ./pic/gantt3-eps-converted-to.pdf used on input line 7
+7.
+(pdftex.def)             Requested size: 723.70198pt x 543.0274pt.
+)
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
-
-<use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 44.
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 28.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
-LaTeX Info: Redefining \. on input line 44.
-LaTeX Info: Redefining \% on input line 44.
-File: ./pic/gantt.pdf Graphic file (type pdf)
- <use ./pic/gantt.pdf, page 1>
-Package pdftex.def Info: ./pic/gantt.pdf, page1 used on input line 44.
-(pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
- [37 <./pic/gantt.pdf>] <./pic/gantt.pdf, id=667, page=2, 776.78206pt x 595.625
-27pt>
-File: ./pic/gantt.pdf Graphic file (type pdf)
-
-<use ./pic/gantt.pdf, page 2>
-Package pdftex.def Info: ./pic/gantt.pdf, page2 used on input line 45.
-(pdftex.def)             Requested size: 776.78017pt x 595.62381pt.
-File: ./pic/gantt.pdf Graphic file (type pdf)
- <use ./pic/gantt.pdf, page 2>
-Package pdftex.def Info: ./pic/gantt.pdf, page2 used on input line 45.
-(pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
-File: ./pic/gantt.pdf Graphic file (type pdf)
-
-<use ./pic/gantt.pdf, page 2>
-Package pdftex.def Info: ./pic/gantt.pdf, page2 used on input line 45.
-(pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
-File: ./pic/gantt.pdf Graphic file (type pdf)
- <use ./pic/gantt.pdf, page 2>
-Package pdftex.def Info: ./pic/gantt.pdf, page2 used on input line 45.
-(pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
-LaTeX Info: Redefining \. on input line 45.
-LaTeX Info: Redefining \% on input line 45.
+LaTeX Info: Redefining \. on input line 28.
+LaTeX Info: Redefining \% on input line 28.
+ [37 <./pic/gantt1-eps-converted-to.pdf>]
+LaTeX Info: Redefining \. on input line 28.
+LaTeX Info: Redefining \% on input line 28.
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
-
-<use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 45.
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 28.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
-File: ./pic/gantt.pdf Graphic file (type pdf)
- <use ./pic/gantt.pdf, page 2>
-Package pdftex.def Info: ./pic/gantt.pdf, page2 used on input line 45.
-(pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
- [38 <./pic/gantt.pdf>] <./pic/gantt.pdf, id=800, page=3, 776.78206pt x 595.625
-27pt>
-File: ./pic/gantt.pdf Graphic file (type pdf)
-
-<use ./pic/gantt.pdf, page 3>
-Package pdftex.def Info: ./pic/gantt.pdf, page3 used on input line 45.
-(pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
-File: ./pic/gantt.pdf Graphic file (type pdf)
- <use ./pic/gantt.pdf, page 3>
-Package pdftex.def Info: ./pic/gantt.pdf, page3 used on input line 45.
-(pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
+ [38 <./pic/gantt2-eps-converted-to.pdf>]
 File: ./pic/logo_Phyrex8.png Graphic file (type png)
-
-<use ./pic/logo_Phyrex8.png>
-Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 45.
+ <use ./pic/logo_Phyrex8.png>
+Package pdftex.def Info: ./pic/logo_Phyrex8.png used on input line 28.
 (pdftex.def)             Requested size: 60.22392pt x 34.92987pt.
-LaTeX Info: Redefining \. on input line 45.
-LaTeX Info: Redefining \% on input line 45.
-File: ./pic/gantt.pdf Graphic file (type pdf)
- <use ./pic/gantt.pdf, page 3>
-Package pdftex.def Info: ./pic/gantt.pdf, page3 used on input line 45.
-(pdftex.def)             Requested size: 543.74374pt x 416.93484pt.
- [39 <./pic/gantt.pdf>]) [40
+LaTeX Info: Redefining \. on input line 28.
+LaTeX Info: Redefining \% on input line 28.
+ [39 <./pic/gantt3-eps-converted-to.pdf>] [40
 
 ] (./tex/bibliografia.tex
 Underfull \hbox (badness 6758) in paragraph at lines 12--16
@@ -1102,36 +1105,33 @@ Underfull \hbox (badness 6758) in paragraph at lines 12--16
  []
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 44.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 32.
  [41
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 44.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 32.
  (./PlanDeProyecto.aux
 LaTeX Info: Redefining \. on input line 21.
 LaTeX Info: Redefining \% on input line 21.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 44.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 44.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 32.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 32.
 Package rerunfilecheck Info: File `PlanDeProyecto.out' has not changed.
-(rerunfilecheck)             Checksum: 6E6FFAA45A28427F4FC4F80081819C4E;2380.
-
-
-LaTeX Warning: There were undefined references.
+(rerunfilecheck)             Checksum: 42DAF652CBACE0AC819638D6E17964A0;2763.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 44.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 32.
  ) 
 Here is how much of TeX's memory you used:
- 9646 strings out of 495059
- 141115 string characters out of 3182030
- 267432 words of memory out of 3000000
- 12475 multiletter control sequences out of 15000+200000
- 11136 words of font info for 41 fonts, out of 3000000 for 9000
+ 9645 strings out of 495059
+ 141334 string characters out of 3182030
+ 267648 words of memory out of 3000000
+ 12467 multiletter control sequences out of 15000+200000
+ 10789 words of font info for 40 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 47i,21n,52p,1040b,629s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 44i,16n,45p,1040b,605s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texliv
@@ -1142,10 +1142,10 @@ nts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type
 ic/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmtt12.pfb>
-Output written on PlanDeProyecto.pdf (48 pages, 1231548 bytes).
+Output written on PlanDeProyecto.pdf (48 pages, 1176294 bytes).
 PDF statistics:
- 1019 PDF objects out of 1200 (max. 8388607)
- 914 compressed objects within 10 object streams
- 169 named destinations out of 1000 (max. 500000)
- 322 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 921 PDF objects out of 1000 (max. 8388607)
+ 829 compressed objects within 9 object streams
+ 175 named destinations out of 1000 (max. 500000)
+ 342 words of extra memory for PDF output out of 10000 (max. 10000000)
 

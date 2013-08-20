@@ -5,32 +5,22 @@
 \begin{document} %Inicio de documento
 \input{./tex/titulo.tex} %Inclusion del titulo
 
-%\thispagestyle{empty}
-%\cleardoublepage
-
 \pagenumbering{Roman} %numero de paginas de indices en numeros romanos
 \tableofcontents %indice de capitulos, secciones y subsecciones
 \listoffigures   %indice de imagenes
 \cleardoublepage
 \listoftables    %indice de tablas
 \cleardoublepage
-%\thispagestyle{empty}
 
-%\newpage
+
 \input{./tex/intro.tex}
 \pagenumbering{arabic} %numeracion en numeros arabicos
 \setcounter{page}{1} %empezar enumerando la pagina 1
-%\newpage
 \input{./tex/seccion_1.tex}
-%\newpage
 \input{./tex/seccion_2.tex}
-%\newpage
 \input{./tex/seccion_3.tex}
-%\newpage
 \input{./tex/seccion_4.tex}
-%\newpage
 \input{./tex/seccion_5.tex}
-%\newpage
 \input{./tex/anexos.tex}
 
 
@@ -38,7 +28,5 @@
 \backmatter
 \addcontentsline{toc}{chapter}{Bibliograf\'ia}
 \bibliographystyle{acm}
-%\bibliography{./tex/bibliografia.tex}
-
 \input{./tex/bibliografia.tex}
 \end{document}
