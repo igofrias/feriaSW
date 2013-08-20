@@ -1,6 +1,7 @@
 package com.Phyrex.demo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -28,6 +29,7 @@ public class ControlRemoto extends Activity implements SensorEventListener{
 	int vel_robot_z = 0;
 	public void initControlRemoto(Sensor accel, SensorManager senman)
 	{
+		//Inicializador en caso de necesitar inicializar estas cosas desde afuera
 		acelerometro = accel;
 		manager = senman;
 		gravity = new double[3];
@@ -37,7 +39,13 @@ public class ControlRemoto extends Activity implements SensorEventListener{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	}
+		manager =(SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		acelerometro = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		gravity = new double[3];
+		MAX_RANGE = 127;
+		MAX_VEL = 22;
+	}	
+		
 	 
 	public void procesar_aceleraciones()
 	{
