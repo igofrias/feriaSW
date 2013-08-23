@@ -2,8 +2,8 @@
 #pragma config(Sensor, S2, lightSensor, sensorLightInactive)
 #pragma config(Motor, motorA, rightMotor, tmotorNXT, PIDControl)
 #pragma config(Motor, motorB, leftMotor, tmotorNXT, PIDControl)
-#define MAX_DIST 10 //distancia maxima de 10cm
-#define MIN_DIST 5  //distancia minima de 5cm
+#define MAX_DIST 15 //distancia maxima de 10cm
+#define MIN_DIST 10  //distancia minima de 5cm
 
 //variables globales
 int SonarValue;
@@ -28,10 +28,12 @@ task MonitorSonar(){
  */
 task main(){
 	//Variables definitions
-	TFileHandle myFileHandle;          // create a file handle variable 'myFileHandle'
-	TFileIOResult IOResult;            // create an IO result variable 'IOResult'
-	string lightFile = "lightCal.txt"; // create and initialize a string variable 'myFileName'
-	int myFileSize = 10;               // create and initialize an integer variable 'myFileSize'
+	TFileHandle lightCal;         			// create a file handle variable 'lightCal'
+	TFileIOResult IOResult;           	// create an IO result variable 'IOResult'
+	string lightFile = "lightCal.dat";	// create and initialize a string variable 'myFileName'
+	int myFileSize = 10;              	// create and initialize an integer variable 'myFileSize'
+	int LightData[10];									// create an array 'LightData' for data of light sensor
+	float average, deviation;						// create two float variables 'average' & 'deviation'
 
 	//Start MonitorSonar & MonitorLight
 	StartTask(MonitorSonar);
@@ -68,6 +70,7 @@ task main(){
 				 *	CODIGO DE SENSOR!!!!!
 				 *
 				 */
+				//LightData[i] = LightValue;
 				nxtDisplayString(3, "Medicion %2d", i);
 				nxtDisplayString(4, "Sonar: %3d", SonarValue);
 
@@ -86,11 +89,18 @@ task main(){
 	 * ANALIZAR DATOS!!!!!!
 	 *
 	 */
+	average = 5.9;
+	deviation = 2.1;
 
-	//Save data
+	//Delete Previous Data & Save New Data
 	eraseDisplay();
+	Delete("lightCal.dat", IOResult);
 	nxtDisplayTextLine(2, "Guardando Datos");
-	OpenWrite(myFileHandle, IOResult, lightFile, myFileSize);  // open for write: "myFile.txt"
+	OpenWrite(lightCal, IOResult, lightFile, myFileSize);	// open for write: "myFile.txt"
+	WriteFloat(lightCal, IOResult, average);							// writes "average" value to the file handled by 'lightCal'
+	WriteFloat(lightCal, IOResult, deviation);						// writes "deviation" value to the file handled by 'lightCal'
+	Close(lightCal, IOResult);														// close the file (DON'T FORGET THIS STEP!)
+
 	wait1Msec(500);
 
 	//Finish Running Task
@@ -100,7 +110,7 @@ task main(){
 	eraseDisplay();
 	nxtDisplayCenteredTextLine(2, "Calibracion");
 	nxtDisplayCenteredTextLine(3, "Terminada");
-	wait10Msec(100);
+	wait10Msec(1000);
 	eraseDisplay();
 
 }
