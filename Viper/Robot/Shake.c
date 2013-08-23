@@ -4,19 +4,13 @@
 task main(){
 	int waitTime = 75;
 	nSyncedMotors = synchAB;	//Left motor slaved to Right motor
-	nSyncedTurnRatio = -100;	//Left motor turns -100% of right motor
-	bool asdf = true;
+	nSyncedTurnRatio = -100;	//Left motor turns -100% of right
+	int totalShake = 10;
 
-	while(true){
-		if(asdf == true){
+	for(int i = 0;i<totalShake;i++){
 			motor[rightMotor] = -100;
-			asdf = false;
 			wait1Msec(waitTime);
-		}
-		else{
 			motor[rightMotor] = 100;
-			asdf = true;
 			wait1Msec(waitTime);
-		}
 	}
 }

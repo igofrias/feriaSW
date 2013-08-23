@@ -1,43 +1,57 @@
 #pragma config(Sensor, S1, sonarSensor, sensorSONAR)
 #pragma config(Sensor, S2, lightSensor, sensorLightInactive)
+#pragma config(Sensor, S3, soundSensor, sensorSoundDB)
 #pragma config(Motor, motorA, rightMotor, tmotorNXT, PIDControl)
 #pragma config(Motor, motorB, leftMotor, tmotorNXT, PIDControl)
 #define MAX_DIST 15 //distancia maxima de 10cm
 #define MIN_DIST 10  //distancia minima de 5cm
 
-//variables globales
+//Global Variables
 int SonarValue;
 int LightValue;
+//int SoundValue;
 
-//Medicion de nivel de luz con Sensor correspondiente
+//Light level monitoring
 task MonitorLight(){
 	while(true){
 		LightValue = SensorValue[lightSensor];
 	}
 }
 
-//Medicion de distancias con Sonar
+//Distance monitoring (with Sonar)
 task MonitorSonar(){
 	while(true){
 		SonarValue = SensorValue[sonarSensor];
 	}
 }
-
 /*
- *	Tarea principal
- */
+//Sound level monitoring
+task MonitorSound(){
+	while(true){
+		SoundValue = SensorValue[soundSensor];
+	}
+}
+*/
+
+//
+//MAIN
+//
 task main(){
 	//Variables definitions
-	TFileHandle lightCal;         			// create a file handle variable 'lightCal'
+	TFileHandle calFile;         				// create a file handle variable 'calFile'
 	TFileIOResult IOResult;           	// create an IO result variable 'IOResult'
-	string lightFile = "lightCal.dat";	// create and initialize a string variable 'myFileName'
+	string lightFile = "lightCal.dat";	// create and initialize a string variable 'lightCal'
+	string soundFile = "soundCal.dat";	// create and initialize a string variable 'soundCal'
 	int myFileSize = 10;              	// create and initialize an integer variable 'myFileSize'
 	int LightData[10];									// create an array 'LightData' for data of light sensor
-	float average = 0, deviation = 0;						// create two float variables 'average' & 'deviation'
+//	int SoundData[10];									// create an array 'SoundData' for data of light sensor
+	float averLight = 0, devLight = 0;		// create two float variables 'averLight' & 'devLight'
+//	float averSound = 0, devSound = 0;		// create two float variables 'averSound' & 'devSound'
 
 	//Start MonitorSonar & MonitorLight
 	StartTask(MonitorSonar);
 	StartTask(MonitorLight);
+//	StartTask(MonitorSound);
 
 	//Synch Motors
 	nSyncedMotors = synchAB;	//Left motor slaved to Right motor
@@ -65,18 +79,14 @@ task main(){
 
 			//Light medition
 			for(int i = 0;i<10; i++){
-				/*
-				 *
-				 *	CODIGO DE SENSOR!!!!!
-				 *
-				 */
 				LightData[i] = LightValue;
+//				SoundData[i] = SoundValue;
 				eraseDisplay();
 				nxtDisplayString(4, "Obteniendo Datos");
-//				nxtDisplayString(4, "Luz: %3d", LightValue);
 
 				//Obtain Average
-				average += (LightData[i]/10);
+				averLight += (LightData[i]/10);
+//				averSound += (SoundData[i]/10);
 
 				//wait time
 				wait1Msec(500);
@@ -88,26 +98,31 @@ task main(){
 		}
 	}
 
+	//Obtain Standard Deviation
 	for(int i = 0;i<10;i++){
-		deviation = pow( (LightData[i]-average), 2);
+		devLight = pow( (LightData[i]-averLight), 2);
+//		devSound = pow( (SoundData[i]-averSound), 2);
 	}
-	deviation = sqrt(deviation/9);
-/*
-	eraseDisplay();
-	nxtDisplayString(3, "Promedio  : %3d", average);
-	nxtDisplayString(4, "Desviacion: %3d", deviation);
-	wait1Msec(2000);
-*/
+	devLight = sqrt(devLight/9);
+//	debSound = sqrt(devSound/9);
+
 	//Delete Previous Data & Save New Data
 	eraseDisplay();
 	Delete("lightCal.dat", IOResult);
+//	Delete("soundCal.dat", IOResult);
 	nxtDisplayTextLine(2, "Guardando Datos");
-	OpenWrite(lightCal, IOResult, lightFile, myFileSize);	// open for write: "myFile.txt"
-	WriteFloat(lightCal, IOResult, average);							// writes "average" value to the file handled by 'lightCal'
-	WriteFloat(lightCal, IOResult, deviation);						// writes "deviation" value to the file handled by 'lightCal'
-	Close(lightCal, IOResult);														// close the file (DON'T FORGET THIS STEP!)
-
-	wait1Msec(500);
+	//Save Light Calibration
+	OpenWrite(calFile, IOResult, lightFile, myFileSize);	// open for write: "myFile.txt"
+	WriteFloat(calFile, IOResult, averLight);							// writes "average" value to the file handled by 'calFile'
+	WriteFloat(calFile, IOResult, devLight);							// writes "deviation" value to the file handled by 'calFile'
+	Close(calFile, IOResult);															// close the file (DON'T FORGET THIS STEP!)
+/*
+	//Save Sound Calibration
+	OpenWrite(calFile, IOResult, soundFile, myFileSize);	// open for write: "myFile.txt"
+	WriteFloat(calFile, IOResult, averSound);							// writes "average" value to the file handled by 'calFile'
+	WriteFloat(calFile, IOResult, devSound);							// writes "deviation" value to the file handled by 'calFile'
+	Close(calFile, IOResult);															// close the file (DON'T FORGET THIS STEP!)
+*/	wait1Msec(500);
 
 	//Finish Running Task
 	StopAllTasks();
