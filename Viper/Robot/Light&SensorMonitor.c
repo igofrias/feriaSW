@@ -1,5 +1,5 @@
 #pragma config(Sensor, S1, sonar, sensorSONAR)
-#pragma config(Sensor, S2, light, sensorLightInactive)
+#pragma config(Sensor, S2, light, sensorLightActive)
 
 //variables globales
 int SonarValue;

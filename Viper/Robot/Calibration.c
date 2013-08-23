@@ -33,7 +33,7 @@ task main(){
 	string lightFile = "lightCal.dat";	// create and initialize a string variable 'myFileName'
 	int myFileSize = 10;              	// create and initialize an integer variable 'myFileSize'
 	int LightData[10];									// create an array 'LightData' for data of light sensor
-	float average, deviation;						// create two float variables 'average' & 'deviation'
+	float average = 0, deviation = 0;						// create two float variables 'average' & 'deviation'
 
 	//Start MonitorSonar & MonitorLight
 	StartTask(MonitorSonar);
@@ -54,7 +54,7 @@ task main(){
 		//Detect distance range
 		if( (SonarValue<=MAX_DIST)&&(SonarValue>=MIN_DIST) ){
 			eraseDisplay();
-			motor[rightMotor] = 20;				//Right motor moves at 50% power
+			motor[rightMotor] = 15;				//Right motor moves at 50% power
 																		//Left motor automatically moves at -50%
 																		//because of synch and synch ratio.
 
@@ -70,9 +70,13 @@ task main(){
 				 *	CODIGO DE SENSOR!!!!!
 				 *
 				 */
-				//LightData[i] = LightValue;
-				nxtDisplayString(3, "Medicion %2d", i);
-				nxtDisplayString(4, "Sonar: %3d", SonarValue);
+				LightData[i] = LightValue;
+				eraseDisplay();
+				nxtDisplayString(4, "Obteniendo Datos");
+//				nxtDisplayString(4, "Luz: %3d", LightValue);
+
+				//Obtain Average
+				average += (LightData[i]/10);
 
 				//wait time
 				wait1Msec(500);
@@ -84,14 +88,16 @@ task main(){
 		}
 	}
 
-	/*
-	 *
-	 * ANALIZAR DATOS!!!!!!
-	 *
-	 */
-	average = 5.9;
-	deviation = 2.1;
-
+	for(int i = 0;i<10;i++){
+		deviation = pow( (LightData[i]-average), 2);
+	}
+	deviation = sqrt(deviation/9);
+/*
+	eraseDisplay();
+	nxtDisplayString(3, "Promedio  : %3d", average);
+	nxtDisplayString(4, "Desviacion: %3d", deviation);
+	wait1Msec(2000);
+*/
 	//Delete Previous Data & Save New Data
 	eraseDisplay();
 	Delete("lightCal.dat", IOResult);
