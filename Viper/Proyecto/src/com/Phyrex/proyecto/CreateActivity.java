@@ -103,6 +103,9 @@ public class CreateActivity extends SherlockFragment{
 						entry.open_write();            	
 				    	entry.createEntry(name.getText().toString(), currentDateandTime, raza.getSelectedItem().toString(), color.getSelectedItem().toString(), ((MainActivity)thisActivity).return_mac());
 				    	entry.close();
+				    	((MainActivity)thisActivity).detach_create();
+				    	((MainActivity)thisActivity).launch_states();
+				    	((MainActivity)thisActivity).launch_mainpet();
 					}else{
 						nametext.setText("error no hay mac :c");
 					}

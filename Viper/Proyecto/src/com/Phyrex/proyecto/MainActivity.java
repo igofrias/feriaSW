@@ -96,24 +96,14 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 		frame2 = (FrameLayout)findViewById(R.id.frame2);
 		//bncnt.setOnClickListener(listener);
 		reusableToast = Toast.makeText(thisActivity, "", Toast.LENGTH_SHORT);
-		launch_create2();
-		launch_states();
-		
-		
-		
+		launch_create();
 		//task.execute();	
 	}
-    
-    
-    //inicia servicio de blublu
-   /* public void conect(){
-    	startService(new Intent(getBaseContext(), BTService.class));
-    }*/
-    
+   
     //llama al supa framento
     void launch_create() {//identificamos y cargamos el fragmento menu
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		SherlockFragment fragmento_crear1 = ((CreateActivity)getSupportFragmentManager().findFragmentByTag("main"));
+		SherlockFragment fragmento_crear1 = ((CreateActivity)getSupportFragmentManager().findFragmentByTag("create"));
 		
 		if(fragmento_crear1==null){
 			fragmento_crear1 = new CreateActivity();
@@ -127,13 +117,29 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 		ft.commit();
 	}
     //llama al supa framento
-    private void launch_create2() {//identificamos y cargamos el fragmento menu
+    void detach_create() {//identificamos y cargamos el fragmento menu
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		SherlockFragment fragmento_crear1 = ((CreateActivity)getSupportFragmentManager().findFragmentByTag("main"));
+		SherlockFragment fragmento_crear1 = ((CreateActivity)getSupportFragmentManager().findFragmentByTag("create"));
+		
+		Log.d("pepe", "pepe2");
+		if(fragmento_crear1!=null){
+			Log.d("pepe", "pepe3");
+			if(!fragmento_crear1.isDetached()){
+				Log.d("pepe", "pepe4");
+				ft.detach(fragmento_crear1);
+			}
+		}
+		ft.commit();
+	}
+
+    //llama al supa framento
+    void launch_mainpet() {//identificamos y cargamos el fragmento menu
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		SherlockFragment fragmento_crear1 = ((MainPetActivity)getSupportFragmentManager().findFragmentByTag("mainpet"));
 		
 		if(fragmento_crear1==null){
-			fragmento_crear1 = new CreateActivity();
-			ft.add(R.id.frame2, fragmento_crear1,"create");
+			fragmento_crear1 = new MainPetActivity();
+			ft.add(R.id.frame2, fragmento_crear1,"mainpet");
 		}
 		else{
 			if(fragmento_crear1.isDetached()){
@@ -144,9 +150,9 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 	}
     
   //llama al supa framento
-    private void launch_states() {//identificamos y cargamos el fragmento menu
+    void launch_states() {//identificamos y cargamos el fragmento menu
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		SherlockFragment fragmento_crear1 = ((CreateActivity)getSupportFragmentManager().findFragmentByTag("main"));
+		SherlockFragment fragmento_crear1 = ((StatesActivity)getSupportFragmentManager().findFragmentByTag("state"));
 		
 		if(fragmento_crear1==null){
 			fragmento_crear1 = new StatesActivity();
@@ -251,42 +257,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 	
 
 	}
-	/*/////listener  para los botones////////////
-		OnClickListener listener = new OnClickListener(){
-		  @Override
-		  public void onClick(View v) {
-			  switch(v.getId()){
-				case R.id.bncnt:
-					
-					
-				        
-				break;
-				case R.id.action://ejecuta accion 1
-					showToast(R.string.action_1, Toast.LENGTH_SHORT);
-					boton1();
-				break;
-				case R.id.action2://ejecuta accion 2
-					showToast(R.string.action_2, Toast.LENGTH_SHORT);
-					boton2();    
-				break;
-				case R.id.bup://ejecutar 
-					showToast(R.string.caminar, Toast.LENGTH_SHORT);
-					caminar(1);    
-				break;
-				case R.id.bleft://ejecutar 
-					showToast(R.string.caminar, Toast.LENGTH_SHORT);
-					caminar(2);    
-				break;
-				case R.id.bdown://ejecutar 
-					showToast(R.string.caminar, Toast.LENGTH_SHORT);
-					caminar(3);    
-				break;
-				case R.id.bright://ejecutar 
-					showToast(R.string.caminar, Toast.LENGTH_SHORT);
-					caminar(4);    
-				break;
-			  }
-		  }*/
+
     
 	@Override
     protected void onDestroy() {

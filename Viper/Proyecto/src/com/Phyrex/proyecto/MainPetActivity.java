@@ -1,5 +1,42 @@
 package com.Phyrex.proyecto;
 
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+ 
+public class MainPetActivity extends SherlockFragment {
+	@Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);        
+        setRetainInstance(true);
+    }
+
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
+		View v = inflater.inflate(R.layout.activity_mainpet, container, false);
+		return v;
+	}	
+	
+	@Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+		 super.onActivityCreated(savedInstanceState);    
+		
+	}
+ 
+}
+
+
+
+
+
+/////////////////////uso de libreria grafica no aplicable a fragmentos :C///////////////////
+/*
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
@@ -50,7 +87,7 @@ public class MainPetActivity extends SimpleBaseGameActivity{
 
 	@Override
 	protected void onCreateResources() {
-		/* Load all the textures this game needs. */
+		/* Load all the textures this game needs. 
 		mBitmapTextureAtlas = new BitmapTextureAtlas(this.getTextureManager(), 331, 611);
 		mPlayerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mBitmapTextureAtlas, this, "tentogrande.png", 0, 0);
 		mBitmapTextureAtlas.load();
@@ -68,7 +105,7 @@ public class MainPetActivity extends SimpleBaseGameActivity{
 		final int iStartX = (CAMERA_WIDTH - mBitmapTextureAtlas.getWidth()) / 2;
 		final int iStartY = (CAMERA_HEIGHT - mBitmapTextureAtlas.getHeight()) / 2;
 
-		/* Create the sprite and add it to the scene. */
+		/* Create the sprite and add it to the scene. 
 		final Sprite oPlayer = new Sprite(iStartX, iStartY, mPlayerTextureRegion, getVertexBufferObjectManager());
 		this.mMainScene.attachChild(oPlayer);
 
@@ -79,3 +116,4 @@ public class MainPetActivity extends SimpleBaseGameActivity{
 
 
 }
+*/
