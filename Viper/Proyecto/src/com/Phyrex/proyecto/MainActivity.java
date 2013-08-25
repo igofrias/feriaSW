@@ -582,6 +582,9 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 			}
 		}	   
 	}
-
+    public boolean isConnected()
+    {
+    	return connected;
+    }
     
 }
