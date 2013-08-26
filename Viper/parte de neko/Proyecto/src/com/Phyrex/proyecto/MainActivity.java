@@ -222,7 +222,6 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     //crea y arranca un thread para la conexion bluetooth/////////////
     //recibe la mac del robot/////////////
     public void startBTCommunicator(String mac_address) {
-        connected = false;
         mac_nxt= mac_address;
         connectingProgressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.connecting_please_wait), true);
 
@@ -344,21 +343,39 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         // for .rxe programs: get program name, eventually stop this and start the new one delayed
         // is handled in startRXEprogram()
         if (name.endsWith(".rxe")) {
+        	Log.d("pepe", "rxe");
             programToStart = name;        
             sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.GET_PROGRAM_NAME, 0, 0);
-            return;
+            Log.d("pepe", "startprogram fin D:");
+            //return;
         }
               
-        // for .nxj programs: stop bluetooth communication after starting the program
-        if (name.endsWith(".nxj")) {
+       /// for .nxj programs: stop bluetooth communication after starting the program
+        /*if (name.endsWith(".nxj")) {
             sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name);
             destroyBTCommunicator();
             return;
-        }        
-
+        } */      
+        Log.d("pepe", "start!!!!!!!!!!!!!!!");
         // for all other programs: just start the program
         sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name);
     }
+    
+    /**
+     * Depending on the status (whether the program runs already) we stop it, wait and restart it again.
+     * @param status The current status, 0x00 means that the program is already running.
+     */   
+    public void startRXEprogram(byte status) {
+        if (status == 0x00) {
+        	 Log.d("pepe", "status 0x00");
+            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.STOP_PROGRAM, 0, 0);
+            sendBTCmessage(1000, BTCommunicator.START_PROGRAM, programToStart);
+        }    
+        else {
+        	 Log.d("pepe", "no status 0x00");
+            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, programToStart);
+        }
+    }   
     
     ///envia al bthandler los mensajes via blublu   (enteros)
     void sendBTCmessage(int delay, int message, int value1, int value2) {
@@ -561,6 +578,15 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
                     }
 
                     break;
+                    
+                case BTCommunicator.PROGRAM_NAME:
+                    if (myBTCommunicator != null) {
+                        byte[] returnMessage = myBTCommunicator.getReturnMessage();
+                        Log.d("pepe", "handler bsdgns");
+                        startRXEprogram(returnMessage[2]);
+                    }
+                    
+                    break;
 
                 case BTCommunicator.STATE_CONNECTERROR_PAIRING:
                     connectingProgressDialog.dismiss();
@@ -612,6 +638,16 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         }
     };
 
+    
+    @Override
+    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu){
+     // Inflate the menu; this adds items to the action bar if it is present.
+     
+     com.actionbarsherlock.view.MenuInflater inflater = getSupportMenuInflater();
+   //  getMenuInflater().inflate(R.menu.main, menu);
+     inflater.inflate(R.menu.main, menu);
+     return true;
+    }
 
    /**
      * Creates the menu items

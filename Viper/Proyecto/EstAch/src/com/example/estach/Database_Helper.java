@@ -48,14 +48,14 @@ public class Database_Helper {
 		@Override
 		public void onCreate(SQLiteDatabase db) {		//creacion de la base de datos
 														//SQLITE
-			/*db.execSQL("DROP TABLE IF EXISTS " + DB_table);
+			db.execSQL("DROP TABLE IF EXISTS " + DB_table);
 			db.execSQL("CREATE TABLE " + DB_table + " (" 
 					+ Key_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 					+ Key_name + " TEXT NOT NULL," 
 					+ Key_raza + " VARCHAR(15),"
 					+ Key_color + " VARCHAR(15),"
 					+ Key_date + " DATETIME, " 
-					+ Key_mac + " VARCHAR(18));");*/
+					+ Key_mac + " VARCHAR(18));");
 
 			db.execSQL("DROP TABLE IF EXISTS " + DB_table_ach);
 			db.execSQL("CREATE TABLE " + DB_table_ach + " (" 
@@ -64,12 +64,12 @@ public class Database_Helper {
 					+ Key_desc_ach + " TEXT NOT NULL, "
 					+ Key_hecho + " INTEGER NOT NULL);");	
 			
-			/*db.execSQL("DROP TABLE IF EXISTS " + DB_table_est);
+			db.execSQL("DROP TABLE IF EXISTS " + DB_table_est);
 			db.execSQL("CREATE TABLE " + DB_table_est + " (" 
 					+ Key_id_est + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 					+ Key_name_est + " TEXT NOT NULL," 
 					+ Key_desc_est + " TEXT NOT NULL,"
-					+ Key_cant_est + " INTEGER NOT NULL);");*/
+					+ Key_cant_est + " INTEGER NOT NULL);");
 			
 		}
 

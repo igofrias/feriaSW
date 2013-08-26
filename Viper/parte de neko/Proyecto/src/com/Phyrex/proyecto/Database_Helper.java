@@ -37,7 +37,7 @@ public class Database_Helper {
 		@Override
 		public void onCreate(SQLiteDatabase db) {		//creacion de la base de datos
 														//SQLITE
-			db.execSQL("DROP TABLE IF EXISTS " + DB_table);
+			//db.execSQL("DROP TABLE IF EXISTS " + DB_table);
 			db.execSQL("CREATE TABLE " + DB_table + " (" 
 					+ Key_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 					+ Key_name + " TEXT NOT NULL," + Key_raza + " VARCHAR(15),"+ Key_color + " VARCHAR(15),"
