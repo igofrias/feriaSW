@@ -36,7 +36,7 @@
         android:layout_below="@+id/button2"
         android:layout_marginRight="14dp"
         android:layout_marginTop="15dp"
-        android:text="Mostrar Mascota Creada" />
+        android:text="Mostrar Estadística Creada" />
 
     <Button
         android:id="@+id/button5"
@@ -63,5 +63,14 @@
         android:layout_below="@+id/textView2"
         android:layout_marginTop="16dp"
         android:text="Perfil Mascota Actual" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button3"
+        android:layout_below="@+id/button1"
+        android:layout_marginTop="22dp"
+        android:text="Jugar" />
 
 </RelativeLayout>
