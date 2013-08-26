@@ -17,14 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		final Database_Helper helper = new Database_Helper(this);
+		final Database_Helper helper = new Database_Helper(this); 
 		
 		final Intent i = new Intent(this, Logros.class);
 		
@@ -34,55 +33,84 @@ public class MainActivity extends Activity {
         Button button3 = (Button) findViewById(R.id.button3);
         Button button4 = (Button) findViewById(R.id.button4); 
         Button button5 = (Button) findViewById(R.id.button5); 
+        Button button6 = (Button) findViewById(R.id.button6);
+        Button button7 = (Button) findViewById(R.id.button7);
+        Button button8 = (Button) findViewById(R.id.button8);
         
         final String nombre;
+        
+        //Inicializa lista de logros y estadísticas en la BD
         listaAchievements(helper);
-        //listaEstadisticas(helper);
- 
-        //Ver estados
+        listaEstadisticas(helper);   
+        
+        //Ver estados     
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Perform action on click
             	helper.open_read();
-            	Cursor lol2 = helper.getPet("Perro");
-            	if(lol2.moveToFirst()){
-                	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
-                	;
-                	builder1.setMessage("Nombre:"+ lol2.getString(1) +
-                			"\nRaza: "+ lol2.getString(2) + "\nCumpleaños: "+ lol2.getString(4) +
-                			"\nSalud:" + "\nHambre: " + "\nEnergía:" + cargaBateria() +"\nFelicidad:");          	
-                	builder1.show();
-                	helper.close();            		
+            	int aux1 = 0;
+            	int aux2 = 0;
+            	int aux3 = 0;
+            	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
+            	Cursor lol3 = helper.getEstadistica("Jugar");
+            	if(lol3.moveToFirst()){              	
+                	aux1 = Integer.parseInt(lol3.getString(3));      		
             	}
-            	else{
-                	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
-                	;
-                	builder1.setMessage("Aun no inicializa su mascota");          	
-                	builder1.show();
-                	helper.close();   
+            	
+            	lol3 = helper.getEstadistica("Comer");
+            	if(lol3.moveToFirst()){              	
+                	aux2 = Integer.parseInt(lol3.getString(3));            		
             	}
+            	
+            	lol3 = helper.getEstadistica("Dormir");
+            	if(lol3.moveToFirst()){              	
+                	aux3 = Integer.parseInt(lol3.getString(3));          		
+            	}
+            	
+            	builder1.setMessage("Jugó: " + aux1 +" veces.\nComió: " + aux2 + "veces\nDurmió " +aux3+"veces");
+            	builder1.show();
 
             }
         });
         
-        //Crea personaje
+        
+        
+        //Crea personaje, con valores por defecto. Si ya existe un personaje no desbloquea nada.
+        //Se agrega
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Perform action on click
             	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
             	
             	helper.open_read();
+            	
             	Cursor lol  = helper.getAll();
+            	Cursor lol2 = helper.getAchievement("Born to be Wild");
             	
             	//Comprueba si se ha creado una mascota de antes
             	if (lol.moveToFirst() == false){
-            		
+            			int  id;
+            			String nombre;
+            			String descripcion;
+            			int hecho;
+        			
             		   //el cursor está vacío. O sea, es la primera mascota.
             		   // ---> Achievement: Born to Be Wild
-            		   //Muestra achievement en pantalla. Luego, registra el logro el BD.
-            		
-            		   builder1.setMessage("Achievement Unlocked: Born To be Wild");
+            			
+            			//Datos a actualizar en achievement en BD
+            			lol2.moveToFirst();
+            			id = Integer.parseInt(lol2.getString(0));
+            			nombre = lol2.getString(1);
+            			descripcion = lol2.getString(2);
+            			hecho = Integer.parseInt(lol2.getString(3)) + 1;
+            			
+             		    helper.confirmarAchievement(id, nombre, descripcion, hecho);
+            			
+            			//Mensaje avisando achievement
+            		    builder1.setMessage("Achievement Unlocked: Born To be Wild");
             		   
+            		   
+
             		   
                    	   builder1.setNeutralButton("OK",new DialogInterface.OnClickListener() {
                    			@Override
@@ -112,35 +140,30 @@ public class MainActivity extends Activity {
             	//En caso que ya exista una mascota en la BD
             	helper.close();   	
             	
-            	helper.open_write();
-            	
+            	helper.open_write();           	
             	builder1.setMessage("Se insertará un personaje.");
-            	helper.createPet("Perro", fechaCorta() , "perruno", "1" , "wut");
-            	          	
+            	helper.createPet("Perro", fechaCorta() , "perruno", "1" , "wut");           	          	
             	builder1.show();
             	helper.close();
             }
         });
         
-        //Mostrar mascota creada
+        
+        //Mostrar última achievement creada
         button3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Perform action on click
             	helper.open_read();
-            	Cursor lol  = helper.getAll();
-            	//AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
+            	Cursor lol  = helper.getAllAchievements();
             	
             	if (lol.moveToFirst() == false){
-            		   //el cursor está vacío.
-            		   // ---> Achievement
-            		   //builder1.setMessage("No hay nada =O");
             		   comp.setText("Nada");
-            		   //builder1.show();
             		   return;
             	}
-            	//builder1.setMessage("wea qla");
-            	comp.setText(lol.getString(0)+ lol.getString(1)+" "+lol.getString(2)+" "+lol.getString(4));          	
-            	//builder1.show();
+            	lol.moveToNext();
+            	lol.moveToNext();
+            	
+            	comp.setText("Nombre: "+lol.getString(1)+"\n Descripción: "+lol.getString(2)+"\nVeces: "+ lol.getString(3));          	
             	helper.close();
             	
             	
@@ -152,20 +175,101 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //Perform action on click
             	helper.open_read();
-            	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
+            	//AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
             	helper.deleteAll();
-            	builder1.setMessage("wea qla");          	
-            	builder1.show();
+            	//builder1.setMessage("wea qla");          	
+            	//builder1.show();
             	helper.close();
             }
         });
         
-        //Ver Logros
+        //Ver Logros. Actividad aparte que debería mostrar los logros.
         button5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Perform action on click
-            	
+            
                 startActivity(i);
+            }
+        });
+        
+        //Modifica Estadistica "Jugar"
+        button6.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Perform action on click
+            	int aux;
+            	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
+            	
+            	helper.open_read();
+            	Cursor lol  = helper.getEstadistica("Jugar");
+            	
+            	if (lol.moveToFirst() == false){
+            		   return;
+            	} 
+            	
+            	
+            	aux = Integer.parseInt(lol.getString(3));
+            	aux = aux+1;
+            	helper.close();   		
+            	helper.open_write(); 
+            	builder1.setMessage(lol.getString(0)+lol.getString(1)+lol.getString(2)+lol.getString(3)+aux);
+            	builder1.show();
+            	helper.modificarEstadistica(Integer.parseInt(lol.getString(0)), lol.getString(1), lol.getString(2), aux);           	          	
+            	
+            	helper.close();
+            }
+        });
+        
+        //Modifica Estadistica "Comer"
+        button7.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Perform action on click
+            	int aux;
+            	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
+            	
+            	helper.open_read();
+            	Cursor lol  = helper.getEstadistica("Comer");
+            	
+            	if (lol.moveToFirst() == false){
+            		   return;
+            	} 
+            	
+            	
+            	aux = Integer.parseInt(lol.getString(3));
+            	aux = aux+1;
+            	helper.close();   		
+            	helper.open_write(); 
+            	builder1.setMessage(lol.getString(0)+lol.getString(1)+lol.getString(2)+lol.getString(3)+aux);
+            	builder1.show();
+            	helper.modificarEstadistica(Integer.parseInt(lol.getString(0)), lol.getString(1), lol.getString(2), aux);           	          	
+            	
+            	helper.close();
+            }
+        });
+        
+        //Modifica Estadistica Dormir
+        button8.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Perform action on click
+            	int aux;
+            	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
+            	
+            	helper.open_read();
+            	Cursor lol  = helper.getEstadistica("Dormir");
+            	
+            	if (lol.moveToFirst() == false){
+            		   return;
+            	} 
+            	
+            	
+            	aux = Integer.parseInt(lol.getString(3));
+            	aux = aux+1;
+            	helper.close();   		
+            	helper.open_write(); 
+            	builder1.setMessage(lol.getString(0)+lol.getString(1)+lol.getString(2)+lol.getString(3)+aux);
+            	builder1.show();
+            	helper.modificarEstadistica(Integer.parseInt(lol.getString(0)), lol.getString(1), lol.getString(2), aux);           	          	
+            	
+            	helper.close();
             }
         });
 
@@ -216,7 +320,7 @@ public class MainActivity extends Activity {
     	helper.open_read();
     	Cursor aux = helper.getAllAchievements();
     	
-    	if(aux.moveToFirst() == false){ 
+    	if(aux.moveToFirst()){ 
     		//Ya existe la tabla de Achievements registrada
     		helper.close();
     		return;
@@ -224,9 +328,12 @@ public class MainActivity extends Activity {
     	helper.close();
     	
 		helper.open_write();
+    	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
+    	builder1.setMessage("pasó por aqui");          	
+    	builder1.show(); 
 		helper.createAchievement("Born to be Wild", "Crea su primera mascota", 0);
-		//helper.createAchievement("Walk", "Camina", 0);
-		//helper.createAchievement("Armed and Ready", "Tiene más del 75% de Energía", 0);
+		helper.createAchievement("Walk", "Camina", 0);
+		helper.createAchievement("Armed and Ready", "Tiene más del 75% de Energía", 0);
     	helper.close();    	
     }
     
@@ -240,12 +347,16 @@ public class MainActivity extends Activity {
     		helper.close();
     		return;
     	}
-    	helper.close();
+    	helper.close();  
+    	
+    	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
+    	builder1.setMessage("pasó por aqui");          	
+    	builder1.show(); 
     	
 		helper.open_write();
 		helper.createEstadistica("Comer", "Cuantas veces la ha alimentado?", 0);
-		//helper.createEstadistica("Dormir", "Cuantas veces ha dormido?", 0);
-		//helper.createEstadistica("Jugar", "Cuantas veces ha jugado?", 0);
+		helper.createEstadistica("Dormir", "Cuantas veces ha dormido?", 0);
+		helper.createEstadistica("Jugar", "Cuantas veces ha jugado?", 0);
     	helper.close();    	
     }
     
