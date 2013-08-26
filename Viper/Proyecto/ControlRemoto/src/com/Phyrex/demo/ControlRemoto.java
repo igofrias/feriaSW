@@ -86,6 +86,7 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 		MAX_RANGE = 100;
 		MAX_VEL = 10;
 		sensibilidad = 0.8;
+		canvas.setWillNotDraw(false);
 	    return canvas;
 	  }	
 	@Override
@@ -373,6 +374,7 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 		@Override
 		public void onDraw(Canvas canvas)
 		{
+			canvas.drawARGB(255, 255, 255, 255);
 			canvas.drawCircle(vel_x, vel_y, 100, color);
 			canvas.drawCircle(canvas.getHeight()/2,canvas.getWidth()/2,100, color);
 		}
