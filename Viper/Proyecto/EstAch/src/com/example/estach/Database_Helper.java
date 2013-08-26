@@ -205,6 +205,30 @@ public class Database_Helper {
 		// return contact list
 		return listaLogros;
 	}
+	
+	public List<LogroBD> getAllDoneEstadisticas() {
+		List<LogroBD> listaEstadisticas = new ArrayList<LogroBD>();
+		// Select All Query
+		String selectQuery = "SELECT  * FROM " + DB_table_est + " Where " + Key_cant_est + " >= 1";
+
+		Cursor cursor = Database.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			do {
+				LogroBD estad = new LogroBD();
+				estad.setID(Integer.parseInt(cursor.getString(0)));
+				estad.setName(cursor.getString(1));
+				estad.setDescripcion(cursor.getString(2));
+				estad.setHecho(Integer.parseInt(cursor.getString(3)));
+				// Adding contact to list
+				listaEstadisticas.add(estad);
+			} while (cursor.moveToNext());
+		}
+		Database.close();
+		// return contact list
+		return listaEstadisticas;
+	}
 
 	//Obtener todas los achievements existentes
 	public Cursor getAllAchievements() {

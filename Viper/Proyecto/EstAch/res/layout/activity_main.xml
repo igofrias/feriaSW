@@ -36,7 +36,7 @@
         android:layout_below="@+id/button2"
         android:layout_marginRight="14dp"
         android:layout_marginTop="15dp"
-        android:text="Mostrar Estadística Creada" />
+        android:text="Mostrar Última Estadística Creada" />
 
     <Button
         android:id="@+id/button5"
@@ -62,7 +62,7 @@
         android:layout_alignLeft="@+id/button2"
         android:layout_below="@+id/textView2"
         android:layout_marginTop="16dp"
-        android:text="Perfil Mascota Actual" />
+        android:text="Lista Estadísticas" />
 
     <Button
         android:id="@+id/button6"
@@ -72,5 +72,23 @@
         android:layout_below="@+id/button1"
         android:layout_marginTop="22dp"
         android:text="Jugar" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button6"
+        android:layout_alignBottom="@+id/button6"
+        android:layout_alignRight="@+id/textView2"
+        android:text="Comer" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button7"
+        android:layout_alignBottom="@+id/button7"
+        android:layout_toRightOf="@+id/button1"
+        android:text="Dormir" />
 
 </RelativeLayout>
