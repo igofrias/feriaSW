@@ -9,17 +9,29 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Database_Helper {
  
+	//Elementos Mascota
 	public static final String Key_id = "_id";
 	public static final String Key_name = "name";
 	public static final String Key_raza = "raza";
 	public static final String Key_color = "color";
 	public static final String Key_date = "birthdate";
 	private static final String Key_mac = "mac_adress";
-	private static final String DB_name = "BD_1";
-	
+	private static final String DB_name = "BD_1";	
 	private static final String DB_table = "Pet_data";
 	
+	//Elementos Achievement
+	private static final String key_id_ach = "_id";
+	public static final String Key_name_ach = "name";
+	public static final String Key_desc_ach = "descripcion";
+	public static final String Key_hecho = "hecho";
+	private static final String DB_table_ach = "achievement_data";	
 	
+	//Elementos Estadisticas
+	private static final String key_id_est = "_id";
+	public static final String Key_name_est = "name";
+	public static final String Key_desc_est = "descripcion";
+	public static final String Key_cant_est = "cantidad";
+	private static final String DB_table_est = "estadisticas_data";			
 
 	private static final int DB_version= 1;
 	
@@ -39,8 +51,26 @@ public class Database_Helper {
 			db.execSQL("DROP TABLE IF EXISTS " + DB_table);
 			db.execSQL("CREATE TABLE " + DB_table + " (" 
 					+ Key_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
-					+ Key_name + " TEXT NOT NULL," + Key_raza + " VARCHAR(15),"+ Key_color + " VARCHAR(15),"
-					+ Key_date + " DATETIME, " + Key_mac + " VARCHAR(18));");
+					+ Key_name + " TEXT NOT NULL," 
+					+ Key_raza + " VARCHAR(15),"
+					+ Key_color + " VARCHAR(15),"
+					+ Key_date + " DATETIME, " 
+					+ Key_mac + " VARCHAR(18));");
+
+			db.execSQL("DROP TABLE IF EXISTS " + DB_table_ach);
+			db.execSQL("CREATE TABLE " + DB_table_ach + " (" 
+					+ key_id_ach + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
+					+ Key_name_ach + " TEXT NOT NULL, " 
+					+ Key_desc_ach + " TEXT NOT NULL, "
+					+ Key_hecho + " INTEGER NOT NULL);");	
+			
+			db.execSQL("DROP TABLE IF EXISTS " + DB_table_est);
+			db.execSQL("CREATE TABLE " + DB_table_est + " (" 
+					+ key_id_est + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
+					+ Key_name_est + " TEXT NOT NULL," 
+					+ Key_desc_est + " TEXT NOT NULL,"
+					+ Key_cant_est + " INTEGER NOT NULL);");
+			
 		}
 
 		@Override
@@ -84,10 +114,13 @@ public class Database_Helper {
 		helper = new DBhelper(context);
 		Database = helper.getWritableDatabase();
 	    Database.delete(DB_table, null, null);
+	    Database.delete(DB_table_ach, null, null);
+	    Database.delete(DB_table_est, null, null);
 	    helper.close();
 	}
-	//agregar entrada nueva
-	public void createEntry(String nombre, String datetime, String raza, String color, String mac_adress) {
+	
+	//Agregar mascota
+	public void createPet(String nombre, String datetime, String raza, String color, String mac_adress) {
 		ContentValues cv = new ContentValues();
 		cv.put(Key_name, nombre);
 		cv.put(Key_date, datetime);
@@ -96,22 +129,89 @@ public class Database_Helper {
 		cv.put(Key_mac, mac_adress);
 		Database.insert(DB_table, null, cv);
 	}
-	//obtener datos por el nombre
-	public Cursor getEntry(String nombre) {
+	
+	//agregar achievement
+	public void createAchievement(String nombre, String descripcion, int hecho) {
+		ContentValues cv = new ContentValues();
+		cv.put(Key_name_ach, nombre);
+		cv.put(Key_desc_ach, descripcion);
+		cv.put(Key_hecho, hecho);
+		Database.insert(DB_table_ach, null, cv);
+	}	
+
+	//agregar indicador en estadística
+	public void createEstadistica(String nombre, String descripcion, int cantidad) {
+		ContentValues cv = new ContentValues();
+		cv.put(Key_name_est, nombre);
+		cv.put(Key_desc_est, descripcion);
+		cv.put(Key_cant_est, cantidad);
+		Database.insert(DB_table_est, null, cv);
+	}
+	
+	//obtener mascota por el nombre
+	public Cursor getPet(String nombre) {
 		String select = "Select * From "+DB_table+" Where "+Key_name+" = '"+nombre+"'";
     	Cursor c = Database.rawQuery(select, null);
 		return c;
 	}
-	//obtener todo
+	
+	//Obtener achievement por nombre
+	public Cursor getAchievement(String nombre) {
+		String select = "Select * From "+DB_table_ach+" Where "+Key_name_ach+" = '"+nombre+"'";
+    	Cursor c = Database.rawQuery(select, null);
+		return c;
+	}	
+	
+	//Obtener Indicador Estadístico por nombre
+	public Cursor getEstadistica(String nombre) {
+		String select = "Select * From "+DB_table_est+" Where "+Key_name_est+" = '"+nombre+"'";
+    	Cursor c = Database.rawQuery(select, null);
+		return c;
+	}	
+	
+	//Obtener todas las mascotas creadas
 	public Cursor getAll() {
 		String select = "Select * From "+DB_table;
 		select = select + " ORDER BY "+Key_id+" DESC";
     	Cursor c = Database.rawQuery(select, null);
 		return c;
 	}
-	//borrar por nombre
-	public void delete(String query) {
-		Database.delete(DB_table, Key_name + " = '"+query+"'", null);
+
+	//Obtener todas los achievements existentes
+	public Cursor getAllAchievements() {
+		String select = "Select * From "+DB_table_ach;
+		select = select + " ORDER BY "+Key_id+" DESC";
+    	Cursor c = Database.rawQuery(select, null);
+		return c;
+	}
+	
+	//Obtener todas las estadísticas existentes
+	public Cursor getAllEstadisticas() {
+		String select = "Select * From "+DB_table_est;
+		select = select + " ORDER BY "+Key_id+" DESC";
+    	Cursor c = Database.rawQuery(select, null);
+		return c;
+	}	
+	
+	
+	//Confirma realización de achievement
+	public void confirmarAchievement(int id, String nombre, String descripcion, int hecho){
+	    ContentValues cv = new ContentValues();
+	    cv.put("_id", id);
+		cv.put(Key_name_ach, nombre);
+		cv.put(Key_desc_ach, descripcion);
+		cv.put(Key_hecho, hecho);
+	    Database.update(DB_table_ach, cv, "_id=" + id, null);   
+	}
+	
+	//Confirma realización de achievement
+	public void modificarEstadistica(int id, String nombre, String descripcion, int cantidad){
+	    ContentValues cv = new ContentValues();
+	    cv.put("_id", id);
+		cv.put(Key_name_est, nombre);
+		cv.put(Key_desc_est, descripcion);
+		cv.put(Key_cant_est, cantidad);
+	    Database.update(DB_table_ach, cv, "_id=" + id, null);   
 	}
 	
 }

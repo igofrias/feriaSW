@@ -24,24 +24,27 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		final Database_Helper helper = new Database_Helper(this);	
-		//final achievements lol = new achievements(this);
+		final Database_Helper helper = new Database_Helper(this);
 		
-		final TextView comp = (TextView)findViewById(R.id.textView2);
+		final Intent i = new Intent(this, Logros.class);
 		
+		final TextView comp = (TextView)findViewById(R.id.textView2);	
 		Button button1 = (Button) findViewById(R.id.button1);
         Button button2 = (Button) findViewById(R.id.button2);
         Button button3 = (Button) findViewById(R.id.button3);
         Button button4 = (Button) findViewById(R.id.button4); 
+        Button button5 = (Button) findViewById(R.id.button5); 
         
         final String nombre;
+        listaAchievements(helper);
+        //listaEstadisticas(helper);
  
         //Ver estados
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Perform action on click
             	helper.open_read();
-            	Cursor lol2 = helper.getEntry("Perro");
+            	Cursor lol2 = helper.getPet("Perro");
             	if(lol2.moveToFirst()){
                 	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
                 	;
@@ -75,13 +78,11 @@ public class MainActivity extends Activity {
             	if (lol.moveToFirst() == false){
             		
             		   //el cursor está vacío. O sea, es la primera mascota.
-            		   // ---> Achievement: Let the Blood Flow
+            		   // ---> Achievement: Born to Be Wild
             		   //Muestra achievement en pantalla. Luego, registra el logro el BD.
             		
-            		   builder1.setMessage("Achievement Unlocked: Let the Blood Flow");
+            		   builder1.setMessage("Achievement Unlocked: Born To be Wild");
             		   
-            		   //FUNCION PARA DEJARLO EN LA BD
-            		   //
             		   
                    	   builder1.setNeutralButton("OK",new DialogInterface.OnClickListener() {
                    			@Override
@@ -96,8 +97,10 @@ public class MainActivity extends Activity {
                    	   //Ingresa valores por defecto. Aqui debiera ir el ingreso de los datos de la mascota
                    	   //FechaCorta ingresa el día de hoy como el día de cumpleaños del weta
                    	   helper.open_write();
-                   	   helper.createEntry("Perro", fechaCorta() , "perruno", "1" , "wut");
-                	          	
+                   	   
+                   	   
+                   	   helper.createPet("Perro", fechaCorta() , "perruno", "1" , "wut");
+                	   //helper.confirmarAchievement("Born to be Wild", "Crea su primera mascota", 0);      	
                    	   //builder1.show();
                    	   helper.close(); 
                    	   
@@ -112,7 +115,7 @@ public class MainActivity extends Activity {
             	helper.open_write();
             	
             	builder1.setMessage("Se insertará un personaje.");
-            	helper.createEntry("Perro", fechaCorta() , "perruno", "1" , "wut");
+            	helper.createPet("Perro", fechaCorta() , "perruno", "1" , "wut");
             	          	
             	builder1.show();
             	helper.close();
@@ -136,7 +139,7 @@ public class MainActivity extends Activity {
             		   return;
             	}
             	//builder1.setMessage("wea qla");
-            	comp.setText(lol.getString(1)+" "+lol.getString(2)+" "+lol.getString(4));          	
+            	comp.setText(lol.getString(0)+ lol.getString(1)+" "+lol.getString(2)+" "+lol.getString(4));          	
             	//builder1.show();
             	helper.close();
             	
@@ -154,6 +157,15 @@ public class MainActivity extends Activity {
             	builder1.setMessage("wea qla");          	
             	builder1.show();
             	helper.close();
+            }
+        });
+        
+        //Ver Logros
+        button5.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Perform action on click
+            	
+                startActivity(i);
             }
         });
 
@@ -197,6 +209,45 @@ public class MainActivity extends Activity {
            return 0;
         }       
     } 
+    
+    
+    public void listaAchievements(Database_Helper helper)
+    {
+    	helper.open_read();
+    	Cursor aux = helper.getAllAchievements();
+    	
+    	if(aux.moveToFirst() == false){ 
+    		//Ya existe la tabla de Achievements registrada
+    		helper.close();
+    		return;
+    	}
+    	helper.close();
+    	
+		helper.open_write();
+		helper.createAchievement("Born to be Wild", "Crea su primera mascota", 0);
+		//helper.createAchievement("Walk", "Camina", 0);
+		//helper.createAchievement("Armed and Ready", "Tiene más del 75% de Energía", 0);
+    	helper.close();    	
+    }
+    
+    public void listaEstadisticas(Database_Helper helper)
+    {
+    	helper.open_read();
+    	Cursor aux = helper.getAllEstadisticas();
+    	
+    	if(aux.moveToFirst()){ 
+    		//Ya existe la tabla de Achievements registrada
+    		helper.close();
+    		return;
+    	}
+    	helper.close();
+    	
+		helper.open_write();
+		helper.createEstadistica("Comer", "Cuantas veces la ha alimentado?", 0);
+		//helper.createEstadistica("Dormir", "Cuantas veces ha dormido?", 0);
+		//helper.createEstadistica("Jugar", "Cuantas veces ha jugado?", 0);
+    	helper.close();    	
+    }
     
 
 }
