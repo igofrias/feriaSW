@@ -2,6 +2,7 @@ package com.example.estach;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import android.os.BatteryManager;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-
+	//static List<LogroBD> listaEstadisticas;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		final Database_Helper helper = new Database_Helper(this);
+		//listaEstadisticas = helper.getAllDoneEstadisticas(); 
 		
 		final Intent i = new Intent(this, Logros.class);
 		
@@ -91,17 +93,20 @@ public class MainActivity extends Activity {
             	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
             	
             	helper.open_read();
+            	
             	Cursor lol  = helper.getAll();
+            	//Cursor lol2 = helper.getAchievement("Born to be Wild");
             	
             	//Comprueba si se ha creado una mascota de antes
             	if (lol.moveToFirst() == false){
-            		
+            			
             		   //el cursor está vacío. O sea, es la primera mascota.
             		   // ---> Achievement: Born to Be Wild
             		   //Muestra achievement en pantalla. Luego, registra el logro el BD.
-            		
+            		   helper.close();
+            		   helper.open_write();
             		   builder1.setMessage("Achievement Unlocked: Born To be Wild");
-            		   
+                       //Perform action on click
             		   
                    	   builder1.setNeutralButton("OK",new DialogInterface.OnClickListener() {
                    			@Override
@@ -139,12 +144,12 @@ public class MainActivity extends Activity {
             }
         });
         
-        //Mostrar estadistica creada
+        //Mostrar achievements creada
         button3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Perform action on click
             	helper.open_read();
-            	Cursor lol  = helper.getAllEstadisticas();
+            	Cursor lol  = helper.getAllAchievements();
             	
             	if (lol.moveToFirst() == false){
             		   comp.setText("Nada");
@@ -176,8 +181,8 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 //Perform action on click
             	
-            	i.putExtra("helper",(Serializable) helper);
-                startActivity(i);
+            	//i.putExtra("listaEstadisticas",(Serializable) listaEstadisticas);
+                //startActivity(i);
             }
         });
         
@@ -256,7 +261,7 @@ public class MainActivity extends Activity {
     	helper.open_read();
     	Cursor aux = helper.getAllAchievements();
     	
-    	if(aux.moveToFirst() == false){ 
+    	if(aux.moveToFirst()){ 
     		//Ya existe la tabla de Achievements registrada
     		helper.close();
     		return;
