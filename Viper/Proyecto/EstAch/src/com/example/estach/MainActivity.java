@@ -1,8 +1,8 @@
 package com.example.estach;
 
-import java.io.Serializable;
+//import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.List;
+//import java.util.List;
 
 import android.os.BatteryManager;
 import android.os.Bundle;
@@ -38,14 +38,14 @@ public class MainActivity extends Activity {
         Button button4 = (Button) findViewById(R.id.button4); 
         Button button5 = (Button) findViewById(R.id.button5); 
         Button button6 = (Button) findViewById(R.id.button6);
+        Button button7 = (Button) findViewById(R.id.button7);
+        Button button8 = (Button) findViewById(R.id.button8);
         
         final String nombre;
         
         //Inicializa lista de logros y estadísticas en la BD
         listaAchievements(helper);
-        listaEstadisticas(helper);
- 
-        
+        listaEstadisticas(helper);   
         
         //Ver estados     
         button1.setOnClickListener(new View.OnClickListener() {
@@ -195,6 +195,62 @@ public class MainActivity extends Activity {
             	
             	helper.open_read();
             	Cursor lol  = helper.getEstadistica("Jugar");
+            	
+            	//Comprueba si se ha creado una mascota de antes
+            	if (lol.moveToFirst() == false){
+            		   return;
+            	} 
+            	
+            	
+            	aux = Integer.parseInt(lol.getString(3));
+            	aux = aux+1;
+            	helper.close();   		
+            	helper.open_write(); 
+            	builder1.setMessage(lol.getString(0)+lol.getString(1)+lol.getString(2)+lol.getString(3)+aux);
+            	builder1.show();
+            	helper.modificarEstadistica(Integer.parseInt(lol.getString(0)), lol.getString(1), lol.getString(2), aux);           	          	
+            	
+            	helper.close();
+            }
+        });
+        
+        //Modifica Estadistica Comer
+        button7.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Perform action on click
+            	int aux;
+            	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
+            	
+            	helper.open_read();
+            	Cursor lol  = helper.getEstadistica("Comer");
+            	
+            	//Comprueba si se ha creado una mascota de antes
+            	if (lol.moveToFirst() == false){
+            		   return;
+            	} 
+            	
+            	
+            	aux = Integer.parseInt(lol.getString(3));
+            	aux = aux+1;
+            	helper.close();   		
+            	helper.open_write(); 
+            	builder1.setMessage(lol.getString(0)+lol.getString(1)+lol.getString(2)+lol.getString(3)+aux);
+            	builder1.show();
+            	helper.modificarEstadistica(Integer.parseInt(lol.getString(0)), lol.getString(1), lol.getString(2), aux);           	          	
+            	
+            	helper.close();
+            }
+        });
+        
+        //Modifica Estadistica Dormir
+        button8.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Perform action on click
+            	int aux;
+            	AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
+            	
+            	helper.open_read();
+            	Cursor lol  = helper.getEstadistica("Dormir");
             	
             	//Comprueba si se ha creado una mascota de antes
             	if (lol.moveToFirst() == false){
