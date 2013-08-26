@@ -1,5 +1,7 @@
-
 package com.example.estach;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +10,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class Database_Helper {
- 
+	
+	private static final String DB_name = "BD_1";
+	
 	//Elementos Mascota
 	public static final String Key_id = "_id";
 	public static final String Key_name = "name";
@@ -16,7 +20,7 @@ public class Database_Helper {
 	public static final String Key_color = "color";
 	public static final String Key_date = "birthdate";
 	private static final String Key_mac = "mac_adress";
-	private static final String DB_name = "BD_1";	
+		
 	private static final String DB_table = "Pet_data";
 	
 	//Elementos Achievement
@@ -48,14 +52,14 @@ public class Database_Helper {
 		@Override
 		public void onCreate(SQLiteDatabase db) {		//creacion de la base de datos
 														//SQLITE
-			/*db.execSQL("DROP TABLE IF EXISTS " + DB_table);
+			db.execSQL("DROP TABLE IF EXISTS " + DB_table);
 			db.execSQL("CREATE TABLE " + DB_table + " (" 
 					+ Key_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 					+ Key_name + " TEXT NOT NULL," 
 					+ Key_raza + " VARCHAR(15),"
 					+ Key_color + " VARCHAR(15),"
 					+ Key_date + " DATETIME, " 
-					+ Key_mac + " VARCHAR(18));");*/
+					+ Key_mac + " VARCHAR(18));");
 
 			db.execSQL("DROP TABLE IF EXISTS " + DB_table_ach);
 			db.execSQL("CREATE TABLE " + DB_table_ach + " (" 
@@ -64,12 +68,12 @@ public class Database_Helper {
 					+ Key_desc_ach + " TEXT NOT NULL, "
 					+ Key_hecho + " INTEGER NOT NULL);");	
 			
-			/*db.execSQL("DROP TABLE IF EXISTS " + DB_table_est);
+			db.execSQL("DROP TABLE IF EXISTS " + DB_table_est);
 			db.execSQL("CREATE TABLE " + DB_table_est + " (" 
 					+ Key_id_est + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 					+ Key_name_est + " TEXT NOT NULL," 
 					+ Key_desc_est + " TEXT NOT NULL,"
-					+ Key_cant_est + " INTEGER NOT NULL);");*/
+					+ Key_cant_est + " INTEGER NOT NULL);");
 			
 		}
 
@@ -176,6 +180,31 @@ public class Database_Helper {
     	Cursor c = Database.rawQuery(select, null);
 		return c;
 	}
+	
+	
+	public List<LogroBD> getAllDoneAchievements() {
+		List<LogroBD> listaLogros = new ArrayList<LogroBD>();
+		// Select All Query
+		String selectQuery = "SELECT  * FROM " + DB_table_ach + " Where " + Key_hecho + " = 1";
+
+		Cursor cursor = Database.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			do {
+				LogroBD logro = new LogroBD();
+				logro.setID(Integer.parseInt(cursor.getString(0)));
+				logro.setName(cursor.getString(1));
+				logro.setDescripcion(cursor.getString(2));
+				logro.setHecho(Integer.parseInt(cursor.getString(3)));
+				// Adding contact to list
+				listaLogros.add(logro);
+			} while (cursor.moveToNext());
+		}
+		Database.close();
+		// return contact list
+		return listaLogros;
+	}
 
 	//Obtener todas los achievements existentes
 	public Cursor getAllAchievements() {
@@ -184,6 +213,7 @@ public class Database_Helper {
     	Cursor c = Database.rawQuery(select, null);
 		return c;
 	}
+	
 	
 	//Obtener todas las estadísticas existentes
 	public Cursor getAllEstadisticas() {
@@ -211,7 +241,7 @@ public class Database_Helper {
 		cv.put(Key_name_est, nombre);
 		cv.put(Key_desc_est, descripcion);
 		cv.put(Key_cant_est, cantidad);
-	    Database.update(DB_table_ach, cv, "_id=" + id, null);   
+	    Database.update(DB_table_est, cv, "_id=" + id, null);   
 	}
 	
 }
