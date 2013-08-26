@@ -36,7 +36,7 @@
         android:layout_below="@+id/button2"
         android:layout_marginRight="14dp"
         android:layout_marginTop="15dp"
-        android:text="Mostrar Estadística Creada" />
+        android:text="Mostrar Última Estadística Creada" />
 
     <Button
         android:id="@+id/button5"
@@ -62,7 +62,7 @@
         android:layout_alignLeft="@+id/button2"
         android:layout_below="@+id/textView2"
         android:layout_marginTop="16dp"
-        android:text="Perfil Mascota Actual" />
+        android:text="Lista Estadísticas" />
 
     <Button
         android:id="@+id/button6"

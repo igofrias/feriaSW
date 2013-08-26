@@ -8,57 +8,67 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 //Logros Actuando como Activity_Base Adapter
 public class Logros extends Activity {
 	
-	static List<LogroBD> listaEstadisticas;
 
 	/** Called when the activity is first created. */
-	
-	
+		
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base_adapter);
-        
-        Intent startingIntent = getIntent();
-        AlertDialog.Builder builder1=new AlertDialog.Builder(this);
-        
-        Bundle b = startingIntent.getBundleExtra("android.intent.extra.INTENT");
-        //this.helper = (Database_Helper)getIntent().getSerializableExtra("helper");
-        
-        /*Cursor random = helper.getAllEstadisticas();
-        
-    	if (random.moveToFirst() == false){
- 		   return;
-    	} 
-    	else{
-    		do{
-    			
-    			builder1.setMessage(random.getString(1)+random.getString(2));
-    			builder1.show(); 
-    			
-    		}while(random.moveToNext());
-    	}
-    	*/
-        /*
-        List<LogroBD> listaEstadisticas = (List<LogroBD>)getIntent().getSerializableExtra("listaEstadisticas"); //lista de logros logrados       
-        Iterator iterador = listaEstadisticas.listIterator();
-        while( iterador.hasNext() ) {
-            LogroBD b = (LogroBD)iterador.next(); //Obtener elemento
-            builder1.setMessage(b.getName()+b.getDescripcion());
-        }
-        */
+        setContentView(R.layout.fragmento_ranking);
         
         	    
     }
     
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
+    	Database_Helper helper = new Database_Helper(this);
+    	
+    	List<LogroBD> listaLogros = helper.getAllDoneAchievements();
+    	
+		View v = inflater.inflate(R.layout.fragmento_ranking, container, false);
+		ListView listView1 = (ListView)v.findViewById(R.id.lst_1);
+		
+		ArrayAdapter<LogroBD> adapter = new ArrayAdapter<LogroBD>(this,
+                android.R.layout.simple_list_item_1, listaLogros);
+
+    listView1.setAdapter(adapter);
+		//db.close();
+		return v;
+	}
+    
     public void cerrar(View view) {
     	finish();
     }  
+    
+	void leerBD(String nombre, String descripcion, int score){ //guarda en base de datos
+		
+		//para guardar en la BD
+		Database_Helper helper = new Database_Helper(this);
+		
+        Log.d("Reading: ", "Reading all contacts..");
+        List<LogroBD> logroBD = helper.getAllDoneAchievements();
+        
+        for (LogroBD cn : logroBD) {
+            String log = "Id: "+cn.getID()+", Name: " + cn.getName() + "Description: " + cn.getDescripcion()+" Score: " + cn.getHecho();
+                // Writing Contacts to log
+        Log.d("Name: ", log);
+        
+        //db.close();
+        
+        }
+	}
     
     
 }
