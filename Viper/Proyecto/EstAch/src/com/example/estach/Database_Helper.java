@@ -20,18 +20,18 @@ public class Database_Helper {
 	private static final String DB_table = "Pet_data";
 	
 	//Elementos Achievement
-	private static final String key_id_ach = "_id";
+	private static final String Key_id_ach = "_id";
 	public static final String Key_name_ach = "name";
 	public static final String Key_desc_ach = "descripcion";
 	public static final String Key_hecho = "hecho";
-	private static final String DB_table_ach = "achievement_data";	
+	private static final String DB_table_ach = "Achievement_data";	
 	
 	//Elementos Estadisticas
-	private static final String key_id_est = "_id";
+	private static final String Key_id_est = "_id";
 	public static final String Key_name_est = "name";
 	public static final String Key_desc_est = "descripcion";
 	public static final String Key_cant_est = "cantidad";
-	private static final String DB_table_est = "estadisticas_data";			
+	private static final String DB_table_est = "Estadisticas_data";			
 
 	private static final int DB_version= 1;
 	
@@ -48,28 +48,28 @@ public class Database_Helper {
 		@Override
 		public void onCreate(SQLiteDatabase db) {		//creacion de la base de datos
 														//SQLITE
-			db.execSQL("DROP TABLE IF EXISTS " + DB_table);
+			/*db.execSQL("DROP TABLE IF EXISTS " + DB_table);
 			db.execSQL("CREATE TABLE " + DB_table + " (" 
 					+ Key_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 					+ Key_name + " TEXT NOT NULL," 
 					+ Key_raza + " VARCHAR(15),"
 					+ Key_color + " VARCHAR(15),"
 					+ Key_date + " DATETIME, " 
-					+ Key_mac + " VARCHAR(18));");
+					+ Key_mac + " VARCHAR(18));");*/
 
 			db.execSQL("DROP TABLE IF EXISTS " + DB_table_ach);
 			db.execSQL("CREATE TABLE " + DB_table_ach + " (" 
-					+ key_id_ach + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
+					+ Key_id_ach + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 					+ Key_name_ach + " TEXT NOT NULL, " 
 					+ Key_desc_ach + " TEXT NOT NULL, "
 					+ Key_hecho + " INTEGER NOT NULL);");	
 			
-			db.execSQL("DROP TABLE IF EXISTS " + DB_table_est);
+			/*db.execSQL("DROP TABLE IF EXISTS " + DB_table_est);
 			db.execSQL("CREATE TABLE " + DB_table_est + " (" 
-					+ key_id_est + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
+					+ Key_id_est + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 					+ Key_name_est + " TEXT NOT NULL," 
 					+ Key_desc_est + " TEXT NOT NULL,"
-					+ Key_cant_est + " INTEGER NOT NULL);");
+					+ Key_cant_est + " INTEGER NOT NULL);");*/
 			
 		}
 
