@@ -8,66 +8,60 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
+    <Button
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="14dp"
+        android:layout_toLeftOf="@+id/button4"
+        android:text="Crea Mascota" />
 
     <Button
         android:id="@+id/button4"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView1"
-        android:layout_marginRight="38dp"
-        android:layout_marginTop="25dp"
+        android:layout_alignBaseline="@+id/button2"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_marginLeft="15dp"
         android:text="Borrar Datos BD" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button4"
-        android:layout_alignBottom="@+id/button4"
-        android:layout_alignLeft="@+id/textView1"
-        android:text="Crea Mascota" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_below="@+id/button4"
-        android:layout_marginTop="25dp"
+        android:layout_alignRight="@+id/button4"
+        android:layout_below="@+id/button2"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="15dp"
         android:text="Mostrar Mascota Creada" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:text="TextView" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button3"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="27dp"
-        android:text="Perfil Mascota Actual" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/button1"
-        android:layout_below="@+id/button1"
-        android:layout_marginTop="22dp"
+        android:layout_alignParentBottom="true"
         android:text="Ver Logros (No disponible)" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/button3"
+        android:layout_marginLeft="110dp"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="16dp"
+        android:text="Perfil Mascota Actual" />
 
 </RelativeLayout>
