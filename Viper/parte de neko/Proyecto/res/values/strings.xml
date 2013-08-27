@@ -69,12 +69,13 @@
     <string name="bt_initialization_failure">        Bluetooth no soportsado.</string>
     <string name="title_activity_main_pet">MainPetActivity</string>
     <string name="title_activity_btservice">BTService</string>
-
-    
     <string name="about">About</string>
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="start">Start Program</string>
-    <string name="quit">Quit</string>    
-    <string name="action">Action!</string>   
+    <string name="quit">Quit</string>
+    <string name="action">Action!</string>
+    <string name="title_activity_control_remoto">ControlRemoto</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>

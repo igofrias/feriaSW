@@ -19,6 +19,7 @@ public class MainPetActivity extends SherlockFragment {
 	private Button action;
 	private Button conectar;
 	private Button calibrar;
+	private Button shake;
 	private static Activity thisActivity;
 	
 	@Override
@@ -42,6 +43,7 @@ public class MainPetActivity extends SherlockFragment {
 		 action = (Button)thisActivity.findViewById(R.id.action);
 		 conectar = (Button)thisActivity.findViewById(R.id.conectar);
 		 calibrar = (Button)thisActivity.findViewById(R.id.calibrar);
+		 shake = (Button)thisActivity.findViewById(R.id.shake);
 		 
 		 action.setOnClickListener(new OnClickListener(){
 				@Override
@@ -60,8 +62,17 @@ public class MainPetActivity extends SherlockFragment {
 		 calibrar.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
-					if(((MainActivity)thisActivity).connected()){
-						((MainActivity)thisActivity).startProgram("pepe");
+					if(((MainActivity)thisActivity).isConnected()){
+						((MainActivity)thisActivity).startProgram("Calibration.rxe");
+					}else{
+						Toast.makeText(thisActivity, "No hay robot conectado", Toast.LENGTH_SHORT).show();
+					}
+				}});
+		 shake.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					if(((MainActivity)thisActivity).isConnected()){
+						((MainActivity)thisActivity).startProgram("Shake.rxe");
 					}else{
 						Toast.makeText(thisActivity, "No hay robot conectado", Toast.LENGTH_SHORT).show();
 					}

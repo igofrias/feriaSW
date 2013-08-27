@@ -22,7 +22,8 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -62,7 +63,13 @@
             android:name="com.Phyrex.proyecto.MainPetActivity"
             android:label="@string/title_activity_main_pet" >
         </activity>
-		<service android:name=".BTService" />
+
+        <service android:name="com.Phyrex.proyecto.BTService" />
+
+        <activity
+            android:name="com.Phyrex.proyecto.ControlRemoto"
+            android:label="@string/title_activity_control_remoto" >
+        </activity>
     </application>
 
 </manifest>

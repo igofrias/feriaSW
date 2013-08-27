@@ -5,7 +5,9 @@ import com.Phyrex.proyecto.BTCommunicator;
 import com.Phyrex.proyecto.DeviceListActivity;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import android.support.v4.app.FragmentTransaction;
 
@@ -21,7 +23,6 @@ import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +53,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     private Activity thisActivity;
     private boolean btErrorPending = false;
     private String programToStart;
+	private Hilitos thread;
     private FrameLayout frame;
     private FrameLayout frame1;
     private FrameLayout frame2;
@@ -96,12 +98,23 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 		frame2 = (FrameLayout)findViewById(R.id.frame2);
 		//bncnt.setOnClickListener(listener);
 		reusableToast = Toast.makeText(thisActivity, "", Toast.LENGTH_SHORT);
+		thread = new Hilitos(new Handler() {
+			@Override
+			public void handleMessage(Message m) {
+
+			}
+		});
+		thread.setRunning(true);
+		thread.start();
+		
 		if(revisarBD()){
 			launch_create();
 		}else{
 			launch_states();
 			launch_mainpet();
 		}
+		
+		
 	}
    
    /* @Override
@@ -157,6 +170,49 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 		ft.commit();
 	}
     
+    //llama al supa framento
+    void detach_mainpet() {//identificamos y cargamos el fragmento menu
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		SherlockFragment fragmento_crear1 = ((MainPetActivity)getSupportFragmentManager().findFragmentByTag("mainpet"));
+		
+		if(fragmento_crear1!=null){
+			if(!fragmento_crear1.isDetached()){
+				ft.detach(fragmento_crear1);
+			}
+		}
+		ft.commit();
+	}
+    
+    //llama al supa framento
+    void launch_controlremoto() {//identificamos y cargamos el fragmento menu
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		SherlockFragment fragmento_crear1 = ((ControlRemoto)getSupportFragmentManager().findFragmentByTag("remotecontrol"));
+		
+		if(fragmento_crear1==null){
+			fragmento_crear1 = new ControlRemoto();
+			ft.add(R.id.frame2, fragmento_crear1,"remotecontrol");
+		}
+		else{
+			if(fragmento_crear1.isDetached()){
+				ft.attach(fragmento_crear1);
+			}
+		}
+		ft.commit();
+	}
+    
+    //llama al supa framento
+    void detach_controlremoto() {//identificamos y cargamos el fragmento menu
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		SherlockFragment fragmento_crear1 = ((ControlRemoto)getSupportFragmentManager().findFragmentByTag("remotecontrol"));
+
+		if(fragmento_crear1!=null){
+			if(!fragmento_crear1.isDetached()){
+				ft.detach(fragmento_crear1);
+			}
+		}
+		ft.commit();
+	}
+    
   //llama al supa framento
     void launch_states() {//identificamos y cargamos el fragmento menu
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -173,6 +229,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 		}
 		ft.commit();
 	}
+
     
 	/*private void Reload() {
 	db = new Database_Helper(this);
@@ -222,7 +279,6 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     //crea y arranca un thread para la conexion bluetooth/////////////
     //recibe la mac del robot/////////////
     public void startBTCommunicator(String mac_address) {
-        connected = false;
         mac_nxt= mac_address;
         connectingProgressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.connecting_please_wait), true);
 
@@ -344,21 +400,39 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         // for .rxe programs: get program name, eventually stop this and start the new one delayed
         // is handled in startRXEprogram()
         if (name.endsWith(".rxe")) {
+        	Log.d("pepe", "rxe");
             programToStart = name;        
             sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.GET_PROGRAM_NAME, 0, 0);
-            return;
+            Log.d("pepe", "startprogram fin D:");
+            //return;
         }
               
-        // for .nxj programs: stop bluetooth communication after starting the program
-        if (name.endsWith(".nxj")) {
+       /// for .nxj programs: stop bluetooth communication after starting the program
+        /*if (name.endsWith(".nxj")) {
             sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name);
             destroyBTCommunicator();
             return;
-        }        
-
+        } */      
+        Log.d("pepe", "start!!!!!!!!!!!!!!!");
         // for all other programs: just start the program
         sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name);
     }
+    
+    /**
+     * Depending on the status (whether the program runs already) we stop it, wait and restart it again.
+     * @param status The current status, 0x00 means that the program is already running.
+     */   
+    public void startRXEprogram(byte status) {
+        if (status == 0x00) {
+        	 Log.d("pepe", "status 0x00");
+            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.STOP_PROGRAM, 0, 0);
+            sendBTCmessage(1000, BTCommunicator.START_PROGRAM, programToStart);
+        }    
+        else {
+        	 Log.d("pepe", "no status 0x00");
+            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, programToStart);
+        }
+    }   
     
     ///envia al bthandler los mensajes via blublu   (enteros)
     void sendBTCmessage(int delay, int message, int value1, int value2) {
@@ -493,7 +567,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         return pairing;
     }
     
-    public boolean connected(){
+    public boolean isConnected(){
     	return connected;
     }
     
@@ -561,6 +635,15 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
                     }
 
                     break;
+                    
+                case BTCommunicator.PROGRAM_NAME:
+                    if (myBTCommunicator != null) {
+                        byte[] returnMessage = myBTCommunicator.getReturnMessage();
+                        Log.d("pepe", "handler bsdgns");
+                        startRXEprogram(returnMessage[2]);
+                    }
+                    
+                    break;
 
                 case BTCommunicator.STATE_CONNECTERROR_PAIRING:
                     connectingProgressDialog.dismiss();
@@ -612,6 +695,39 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         }
     };
 
+    
+    @Override
+    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu){
+     // Inflate the menu; this adds items to the action bar if it is present.
+     
+     com.actionbarsherlock.view.MenuInflater inflater = getSupportMenuInflater();
+   //  getMenuInflater().inflate(R.menu.main, menu);
+     inflater.inflate(R.menu.menu, menu);
+     return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+     
+	     switch (item.getItemId()) {
+	        case R.id.main:
+	    		detach_controlremoto();
+	    		launch_mainpet();
+	        return true;
+	        case R.id.controlremoto:
+	        	if (isConnected()){
+	        		detach_mainpet();
+	        		launch_controlremoto();
+	        	}else{
+	        		Toast.makeText(thisActivity, "Debe estar conectado para usar esta función", Toast.LENGTH_SHORT).show();
+	        	}
+	        return true;
+	        case R.id.salir:
+	            onDestroy();
+	            return true;
+	        default:
+	        return super.onOptionsItemSelected(item);
+	    }
+    }
 
    /**
      * Creates the menu items

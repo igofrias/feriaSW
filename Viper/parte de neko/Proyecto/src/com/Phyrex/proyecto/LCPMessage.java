@@ -1,4 +1,7 @@
 package com.Phyrex.proyecto;
+
+import android.util.Log;
+
 /**
  *   (Changes from original are) Copyright 2010 Guenther Hoelzl, Shawn Brown
  * 
@@ -189,6 +192,41 @@ public class LCPMessage {
         message[0] = SYSTEM_COMMAND_REPLY;
         message[1] = GET_FIRMWARE_VERSION;
 
+        return message;
+    }
+    
+    public static byte[] getStartProgramMessage(String programName) {
+    	Log.d("pepe", "start program message");
+        byte[] message = new byte[22];
+
+        message[0] = DIRECT_COMMAND_NOREPLY;
+        message[1] = START_PROGRAM;
+
+        // copy programName and end with 0 delimiter
+        for (int pos=0; pos<programName.length(); pos++)
+            message[2+pos] = (byte) programName.charAt(pos);
+
+        message[programName.length()+2] = 0;
+
+        return message;
+    }
+
+    public static byte[] getStopProgramMessage() {
+        byte[] message = new byte[2];
+
+        message[0] = DIRECT_COMMAND_NOREPLY;
+        message[1] = STOP_PROGRAM;
+
+        return message;
+    }
+    
+    public static byte[] getProgramNameMessage() {
+    	Log.d("pepe", "got name del lcp >:C");
+        byte[] message = new byte[2];
+
+        message[0] = DIRECT_COMMAND_REPLY;
+        message[1] = GET_CURRENT_PROGRAM_NAME;
+        Log.d("pepe", "got name del lcp >:C fin");
         return message;
     }
 

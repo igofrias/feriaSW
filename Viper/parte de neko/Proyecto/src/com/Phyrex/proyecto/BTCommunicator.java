@@ -13,11 +13,14 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.UUID;
+
 
 /**
  * This class is for talking to a LEGO NXT robot via bluetooth.
@@ -38,9 +41,7 @@ public class BTCommunicator extends Thread {
     public static final int READ_MOTOR_STATE = 60;
     public static final int GET_FIRMWARE_VERSION = 70;
     public static final int DISCONNECT = 99;
-    public static final int START_PROGRAM = 1008;
-    public static final int STOP_PROGRAM = 1009;
-    public static final int GET_PROGRAM_NAME = 1010;
+
     public static final int DISPLAY_TOAST = 1000;
     public static final int STATE_CONNECTED = 1001;
     public static final int STATE_CONNECTERROR = 1002;
@@ -49,6 +50,13 @@ public class BTCommunicator extends Thread {
     public static final int STATE_RECEIVEERROR = 1004;
     public static final int STATE_SENDERROR = 1005;
     public static final int FIRMWARE_VERSION = 1006;
+    public static final int FIND_FILES = 1007;
+    public static final int START_PROGRAM = 1008;
+    public static final int STOP_PROGRAM = 1009;
+    public static final int GET_PROGRAM_NAME = 1010;
+    public static final int PROGRAM_NAME = 1011;
+    public static final int SAY_TEXT = 1030;
+    public static final int VIBRATE_PHONE = 1031;
 
     public static final int NO_DELAY = 0;
 
@@ -222,6 +230,7 @@ public class BTCommunicator extends Thread {
      * @param message, the message as a byte array
      */
     public void sendMessage(byte[] message) throws IOException {
+    	Log.d("pepe", "sendMessage");
         if (nxtOutputStream == null)
             throw new IOException();
 
@@ -230,6 +239,7 @@ public class BTCommunicator extends Thread {
         nxtOutputStream.write(messageLength);
         nxtOutputStream.write(messageLength >> 8);
         nxtOutputStream.write(message, 0, message.length);
+        Log.d("pepe", "sendMessage fin");
     }  
 
     /**
@@ -246,17 +256,20 @@ public class BTCommunicator extends Thread {
         nxtInputStream.read(returnMessage);
         return returnMessage;
     }    
-
+    
     /**
      * Sends a message on the opened OutputStream. In case of 
      * an error the state is sent to the handler.
      * @param message, the message as a byte array
      */
     private void sendMessageAndState(byte[] message) {
-        if (nxtOutputStream == null)
+    	Log.d("pepe", "sendMessageAndState");
+        if (nxtOutputStream == null){
+        	Log.d("pepe", "sendMessageAndState");
             return;
-
+        }
         try {
+        	Log.d("pepe", "try send message  >:C");
             sendMessage(message);
         }
         catch (IOException e) {
@@ -284,6 +297,24 @@ public class BTCommunicator extends Thread {
         }
     }
 
+    private void startProgram(String programName) {
+    	Log.d("pepe", "start");
+        byte[] message = LCPMessage.getStartProgramMessage(programName);
+        sendMessageAndState(message);
+        
+    }
+
+    private void stopProgram() {
+        byte[] message = LCPMessage.getStopProgramMessage();
+        sendMessageAndState(message);
+    }
+    
+    private void getProgramName() {
+    	Log.d("pepe", "got program name  >:C");
+        byte[] message = LCPMessage.getProgramNameMessage();
+        sendMessageAndState(message);
+        Log.d("pepe", "got name del get program >:C");
+    }
     private void doBeep(int frequency, int duration) {
         byte[] message = LCPMessage.getBeepMessage(frequency, duration);
         sendMessageAndState(message);
@@ -378,6 +409,18 @@ public class BTCommunicator extends Thread {
                 case DO_BEEP:
                     doBeep(myMessage.getData().getInt("value1"), myMessage.getData().getInt("value2"));
                     break;
+                case START_PROGRAM:
+                	Log.d("pepe", "star program! :D >:C");
+                    startProgram(myMessage.getData().getString("name"));
+                    break;
+                case STOP_PROGRAM:
+                	stopProgram();
+                    break;
+                case GET_PROGRAM_NAME:
+                	Log.d("pepe", "got name  >:C");
+                    getProgramName();
+                    Log.d("pepe", "got name  >:C fin");
+                    break;    
                 case DO_ACTION:
                     doAction(myMessage.getData().getInt("value1"));
                     break;
