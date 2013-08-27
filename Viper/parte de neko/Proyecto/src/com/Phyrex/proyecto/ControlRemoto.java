@@ -40,7 +40,7 @@ public class ControlRemoto extends SherlockFragment implements SensorEventListen
 	double accel_y = 0;
 	double accel_z = 0;
 	double gravity[];
-    boolean running;
+    boolean running=true;
 	double vel_x = 0;
 	double vel_y = 0;
 	double vel_z = 0;
@@ -78,8 +78,8 @@ public class ControlRemoto extends SherlockFragment implements SensorEventListen
 	      Bundle savedInstanceState) {
 		  //Crea el fragmento con el acelerometr listo
 		canvas = new DrawJoystick(getActivity());
-//	    View view = inflater.inflate(R.layout.control_remoto_debug_layout,
-//	        container, false);
+	    View view = inflater.inflate(R.layout.control_remoto_debug_layout,
+	        container, false);
 	    
 	    manager =(SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
 		acelerometro = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -88,7 +88,7 @@ public class ControlRemoto extends SherlockFragment implements SensorEventListen
 		MAX_VEL = 10;
 		sensibilidad = 0.8;
 		canvas.setWillNotDraw(false);
-	    return canvas;
+	    return view;
 	  }	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -280,7 +280,7 @@ public class ControlRemoto extends SherlockFragment implements SensorEventListen
 	    procesar_aceleraciones();
 	    obtener_velocidades();
 	    
-	    //mostrar_velocidades_debug();
+	    mostrar_velocidades_debug();
 	    
 	    
 	    
@@ -288,6 +288,7 @@ public class ControlRemoto extends SherlockFragment implements SensorEventListen
 	@Override
 	public void onResume() {
 		super.onResume();
+		running=true;
 		manager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_NORMAL);
 		if(!thMesseger.isAlive())
 		{
@@ -299,6 +300,7 @@ public class ControlRemoto extends SherlockFragment implements SensorEventListen
 	public void onPause() {
 		super.onPause();
 		manager.unregisterListener(this);
+		running=false;
 	}
         @Override
 	public void onDetach(){

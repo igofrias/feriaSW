@@ -714,8 +714,12 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 	    		launch_mainpet();
 	        return true;
 	        case R.id.controlremoto:
-	        	detach_mainpet();
-	        	launch_controlremoto();
+	        	if (isConnected()){
+	        		detach_mainpet();
+	        		launch_controlremoto();
+	        	}else{
+	        		Toast.makeText(thisActivity, "Debe estar conectado para usar esta función", Toast.LENGTH_SHORT).show();
+	        	}
 	        return true;
 	        case R.id.salir:
 	            onDestroy();
