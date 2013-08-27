@@ -5,7 +5,9 @@ import com.Phyrex.proyecto.BTCommunicator;
 import com.Phyrex.proyecto.DeviceListActivity;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import android.support.v4.app.FragmentTransaction;
 
@@ -21,7 +23,6 @@ import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +53,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     private Activity thisActivity;
     private boolean btErrorPending = false;
     private String programToStart;
+	private Hilitos thread;
     private FrameLayout frame;
     private FrameLayout frame1;
     private FrameLayout frame2;
@@ -96,12 +98,23 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 		frame2 = (FrameLayout)findViewById(R.id.frame2);
 		//bncnt.setOnClickListener(listener);
 		reusableToast = Toast.makeText(thisActivity, "", Toast.LENGTH_SHORT);
+		thread = new Hilitos(new Handler() {
+			@Override
+			public void handleMessage(Message m) {
+
+			}
+		});
+		thread.setRunning(true);
+		thread.start();
+		
 		if(revisarBD()){
 			launch_create();
 		}else{
 			launch_states();
 			launch_mainpet();
 		}
+		
+		
 	}
    
    /* @Override
@@ -157,6 +170,49 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 		ft.commit();
 	}
     
+    //llama al supa framento
+    void detach_mainpet() {//identificamos y cargamos el fragmento menu
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		SherlockFragment fragmento_crear1 = ((MainPetActivity)getSupportFragmentManager().findFragmentByTag("mainpet"));
+		
+		if(fragmento_crear1!=null){
+			if(!fragmento_crear1.isDetached()){
+				ft.detach(fragmento_crear1);
+			}
+		}
+		ft.commit();
+	}
+    
+    //llama al supa framento
+    void launch_controlremoto() {//identificamos y cargamos el fragmento menu
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		SherlockFragment fragmento_crear1 = ((ControlRemoto)getSupportFragmentManager().findFragmentByTag("remotecontrol"));
+		
+		if(fragmento_crear1==null){
+			fragmento_crear1 = new ControlRemoto();
+			ft.add(R.id.frame2, fragmento_crear1,"remotecontrol");
+		}
+		else{
+			if(fragmento_crear1.isDetached()){
+				ft.attach(fragmento_crear1);
+			}
+		}
+		ft.commit();
+	}
+    
+    //llama al supa framento
+    void detach_controlremoto() {//identificamos y cargamos el fragmento menu
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		SherlockFragment fragmento_crear1 = ((ControlRemoto)getSupportFragmentManager().findFragmentByTag("remotecontrol"));
+
+		if(fragmento_crear1!=null){
+			if(!fragmento_crear1.isDetached()){
+				ft.detach(fragmento_crear1);
+			}
+		}
+		ft.commit();
+	}
+    
   //llama al supa framento
     void launch_states() {//identificamos y cargamos el fragmento menu
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -173,6 +229,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 		}
 		ft.commit();
 	}
+
     
 	/*private void Reload() {
 	db = new Database_Helper(this);
@@ -510,7 +567,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         return pairing;
     }
     
-    public boolean connected(){
+    public boolean isConnected(){
     	return connected;
     }
     
@@ -645,8 +702,27 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
      
      com.actionbarsherlock.view.MenuInflater inflater = getSupportMenuInflater();
    //  getMenuInflater().inflate(R.menu.main, menu);
-     inflater.inflate(R.menu.main, menu);
+     inflater.inflate(R.menu.menu, menu);
      return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+     
+	     switch (item.getItemId()) {
+	        case R.id.main:
+	    		detach_controlremoto();
+	    		launch_mainpet();
+	        return true;
+	        case R.id.controlremoto:
+	        	detach_mainpet();
+	        	launch_controlremoto();
+	        return true;
+	        case R.id.salir:
+	            onDestroy();
+	            return true;
+	        default:
+	        return super.onOptionsItemSelected(item);
+	    }
     }
 
    /**

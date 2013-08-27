@@ -182,7 +182,7 @@ public class StatesActivity extends SherlockFragment{
 
 			Log.d("pepe", "task!");
 	    	energia.setProgress((int) ((MainActivity)thisActivity).getBatteryLevel());
-			if(((MainActivity)thisActivity).connected()){
+			if(((MainActivity)thisActivity).isConnected()){
 				btstate.setVisibility(View.VISIBLE);
 			}else{
 				btstate.setVisibility(View.INVISIBLE);
