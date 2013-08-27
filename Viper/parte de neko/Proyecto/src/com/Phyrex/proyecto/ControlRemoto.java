@@ -40,7 +40,7 @@ public class ControlRemoto extends SherlockFragment implements SensorEventListen
 	double accel_y = 0;
 	double accel_z = 0;
 	double gravity[];
-	
+    boolean running;
 	double vel_x = 0;
 	double vel_y = 0;
 	double vel_z = 0;
@@ -97,18 +97,18 @@ public class ControlRemoto extends SherlockFragment implements SensorEventListen
 		thMesseger = new Thread(new Runnable() {
 	        public void run() {
 	        	long wait_time = 100;
-	        	while(true)
+	        	while(running)
 	        	{
 	        		if(thisActivity.isConnected())
 	        		{
 	        			enviar_velocidades();
 	        			canvas.update_coordinates(vel_robot_x, vel_robot_y);
-	        			SurfaceHolder hold = canvas.getHolder();
-	        			Canvas can = hold.lockCanvas();
+	        			//SurfaceHolder hold = canvas.getHolder();
+	        			//Canvas can = hold.lockCanvas();
 	        			
-	        				canvas.draw(can);
+	        			//	canvas.draw(can);
 	       
-	        			hold.unlockCanvasAndPost(can);
+	        			//hold.unlockCanvasAndPost(can);
 	        			
 	        		}
 	        		SystemClock.sleep(wait_time);
@@ -299,6 +299,12 @@ public class ControlRemoto extends SherlockFragment implements SensorEventListen
 	public void onPause() {
 		super.onPause();
 		manager.unregisterListener(this);
+	}
+        @Override
+	public void onDetach(){
+		super.onDetach();
+		manager.unregisterListener(this);
+		running = false;
 	}
 	public int getMAX_RANGE() {
 		return MAX_RANGE;
