@@ -1,10 +1,10 @@
 #pragma config(Sensor, S1, sonarSensor, sensorSONAR)
 #pragma config(Sensor, S2, lightSensor, sensorLightInactive)
 #pragma config(Sensor, S3, soundSensor, sensorSoundDB)
-#pragma config(Motor, motorA, rightMotor, tmotorNXT, PIDControl)
-#pragma config(Motor, motorB, leftMotor, tmotorNXT, PIDControl)
-#define MAX_DIST 15 //distancia maxima de 10cm
-#define MIN_DIST 10  //distancia minima de 5cm
+#pragma config(Motor, motorB, rightMotor, tmotorNXT, PIDControl)
+#pragma config(Motor, motorC, leftMotor, tmotorNXT, PIDControl)
+#define MAX_DIST 15	//Max Distance
+#define MIN_DIST 10	//Min Distance
 
 //Global Variables
 int SonarValue;
@@ -45,8 +45,8 @@ task main(){
 	int myFileSize = 10;              	// create and initialize an integer variable 'myFileSize'
 	int LightData[10];									// create an array 'LightData' for data of light sensor
 //	int SoundData[10];									// create an array 'SoundData' for data of light sensor
-	float averLight = 0, devLight = 0;		// create two float variables 'averLight' & 'devLight'
-//	float averSound = 0, devSound = 0;		// create two float variables 'averSound' & 'devSound'
+	float averLight = 0, devLight = 0;	// create two float variables 'averLight' & 'devLight'
+//	float averSound = 0, devSound = 0;	// create two float variables 'averSound' & 'devSound'
 
 	//Start MonitorSonar & MonitorLight
 	StartTask(MonitorSonar);
@@ -54,7 +54,7 @@ task main(){
 //	StartTask(MonitorSound);
 
 	//Synch Motors
-	nSyncedMotors = synchAB;	//Left motor slaved to Right motor
+	nSyncedMotors = synchBC;	//Left motor slaved to Right motor
 	nSyncedTurnRatio = -100;	//Left motor turns -100% of right motor
 
 	//Display message
@@ -64,9 +64,11 @@ task main(){
 	nxtDisplayTextLine(5, "del sonar.");
 
 	//Wait condition
+/*ELIMINAR PARA USAR SONAR!
 	while(true){
 		//Detect distance range
 		if( (SonarValue<=MAX_DIST)&&(SonarValue>=MIN_DIST) ){
+*/
 			eraseDisplay();
 			motor[rightMotor] = 15;				//Right motor moves at 50% power
 																		//Left motor automatically moves at -50%
@@ -94,9 +96,11 @@ task main(){
 
 			//Stop motors
 			motor[rightMotor] = 0;
+/*ELIMINAR PARA USAR SONAR!!!!!!!
 			break;
 		}
 	}
+*/
 
 	//Obtain Standard Deviation
 	for(int i = 0;i<10;i++){
