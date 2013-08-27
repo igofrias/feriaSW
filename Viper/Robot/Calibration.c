@@ -41,7 +41,7 @@ task main(){
 	TFileHandle calFile;         				// create a file handle variable 'calFile'
 	TFileIOResult IOResult;           	// create an IO result variable 'IOResult'
 	string lightFile = "lightCal.dat";	// create and initialize a string variable 'lightCal'
-	string soundFile = "soundCal.dat";	// create and initialize a string variable 'soundCal'
+//	string soundFile = "soundCal.dat";	// create and initialize a string variable 'soundCal'
 	int myFileSize = 10;              	// create and initialize an integer variable 'myFileSize'
 	int LightData[10];									// create an array 'LightData' for data of light sensor
 //	int SoundData[10];									// create an array 'SoundData' for data of light sensor
@@ -70,7 +70,7 @@ task main(){
 		if( (SonarValue<=MAX_DIST)&&(SonarValue>=MIN_DIST) ){
 */
 			eraseDisplay();
-			motor[rightMotor] = 15;				//Right motor moves at 50% power
+//			motor[rightMotor] = 15;				//Right motor moves at 50% power
 																		//Left motor automatically moves at -50%
 																		//because of synch and synch ratio.
 
@@ -126,16 +126,21 @@ task main(){
 	WriteFloat(calFile, IOResult, averSound);							// writes "average" value to the file handled by 'calFile'
 	WriteFloat(calFile, IOResult, devSound);							// writes "deviation" value to the file handled by 'calFile'
 	Close(calFile, IOResult);															// close the file (DON'T FORGET THIS STEP!)
-*/	wait1Msec(500);
-
-	//Finish Running Task
-	StopAllTasks();
+*/	wait1Msec(1000);
 
 	//Exit Message
 	eraseDisplay();
+	nxtDisplayTextLine(2, "Nivel Luz: %3d", averLight);
+	nxtDisplayTextLine(3, "Error Luz: %3d", devLight);
+	wait10Msec(500);
+
+	eraseDisplay();
 	nxtDisplayCenteredTextLine(2, "Calibracion");
 	nxtDisplayCenteredTextLine(3, "Terminada");
-	wait10Msec(1000);
+	wait10Msec(100);
 	eraseDisplay();
+
+	//Finish Running Task
+	StopAllTasks();
 
 }
