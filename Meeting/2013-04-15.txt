@@ -1,4 +1,0 @@
->Introduccion a miembro nuevo Juan Avalo al grupo (se le explica de que consiste el proyecto)
->Se comunica información sobre encuentro con Tia Cecy el Viernes 12 de Abril (se ofrece a traernos un robot Lego Mindstorms para trabajar.)
->Se decide que Jocelyn le dé el visto bueno al informe de requerimientos (Deadline Jueves 18 de Abril 2013)
->Hablar con Jocelyn hoy o mañana sobre informe de requerimiento.

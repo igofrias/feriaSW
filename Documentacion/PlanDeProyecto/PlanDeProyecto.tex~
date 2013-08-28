@@ -1,0 +1,32 @@
+\documentclass[letterpaper,12pt]{book} %tipo de documento y tama~o de papel y letra
+
+\usepackage{mystyle} %%Reemplazar por el contenido de 'mystyle.sty' en caso de no funcionar
+
+\begin{document} %Inicio de documento
+\input{./tex/titulo.tex} %Inclusion del titulo
+
+\pagenumbering{Roman} %numero de paginas de indices en numeros romanos
+\tableofcontents %indice de capitulos, secciones y subsecciones
+\listoffigures   %indice de imagenes
+\cleardoublepage
+\listoftables    %indice de tablas
+\cleardoublepage
+
+
+\input{./tex/intro.tex}
+\pagenumbering{arabic} %numeracion en numeros arabicos
+\setcounter{page}{1} %empezar enumerando la pagina 1
+\input{./tex/seccion_1.tex}
+\input{./tex/seccion_2.tex}
+\input{./tex/seccion_3.tex}
+\input{./tex/seccion_4.tex}
+\input{./tex/seccion_5.tex}
+\input{./tex/anexos.tex}
+
+
+%Bibliografia
+\backmatter
+\addcontentsline{toc}{chapter}{Bibliograf\'ia}
+\bibliographystyle{acm}
+\input{./tex/bibliografia.tex}
+\end{document}
