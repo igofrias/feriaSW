@@ -1,7 +1,0 @@
-\beamer@endinputifotherversion {3.10pt}
-\select@language {spanish}
-\beamer@sectionintoc {1}{Explicaci\'on del Problema}{2}{0}{1}
-\beamer@sectionintoc {2}{Visualizaci\'on de Solucion}{3}{0}{2}
-\beamer@sectionintoc {3}{Caracter\'isticas del Segmento de Clientes}{4}{0}{3}
-\beamer@sectionintoc {4}{Propuesta de Valor}{5}{0}{4}
-\beamer@sectionintoc {5}{Fundamentaci\'on de la Innovaci\'on}{6}{0}{5}
