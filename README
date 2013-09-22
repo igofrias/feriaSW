@@ -1,0 +1,3 @@
+Proyecto en rama 'Desarrollo' y 'Testing'.
+Si necesitan subir cosas, primero creen una rama de la forma 'EX-Nombre' (donde 'X' es el numero de entregable, y 'Nombre' el de uds), y luego una vez que esten seguros de los cambios q han hecho en ella, hacen merge a la rama 'Testing'. Una vez que estemos seguros de todo lo que hemos subido a dicha rama (Testing), lo pasamos a 'Desarrollo', para prevenir que hayan problemas. Una vez tengamos la entrega armada, hacemos merge de 'Desarrollo' a 'master' y entregamos.
+
