@@ -1,5 +1,5 @@
-#pragma config(Motor, motorA,  headMotor, tmotorNXT, PIDControl)
-#pragma config(Motor, motorB, rightMotor, tmotorNXT, PIDControl)
+#pragma config(Motor, motorA, rightMotor, tmotorNXT, PIDControl)
+#pragma config(Motor, motorB,  headMotor, tmotorNXT, PIDControl)
 #pragma config(Motor, motorC,  leftMotor, tmotorNXT, PIDControl)
 
 task main(){
@@ -18,8 +18,8 @@ task main(){
 	}
 }
 /*
- * motorA -> CABEZA
- * motorB -> PIERNA DERECHA
+ * motorA -> PIERNA DERECHA
+ * motorB -> CABEZA
  * motorC -> PIERNA IZQUIERDA
  *
  */

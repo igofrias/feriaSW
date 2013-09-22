@@ -1,6 +1,6 @@
-#pragma config(Sensor, S1, sonarSensor, sensorSONAR)
-#pragma config(Sensor, S2, lightSensor, sensorLightInactive)
-#pragma config(Sensor, S3, soundSensor, sensorSoundDB)
+#pragma config(Sensor, S1, lightSensor, sensorLightInactive)
+#pragma config(Sensor, S2, soundSensor, sensorSoundDB)
+#pragma config(Sensor, S3, sonarSensor, sensorSONAR)
 #pragma config(Motor, motorB, rightMotor, tmotorNXT, PIDControl)
 #pragma config(Motor, motorC, leftMotor, tmotorNXT, PIDControl)
 #define MAX_DIST 15	//Max Distance
@@ -87,7 +87,7 @@ task main(){
 				nxtDisplayString(4, "Obteniendo Datos");
 
 				//Obtain Average
-				averLight += (LightData[i]/10);
+				averLight += (LightData[i]/10.0);
 //				averSound += (SoundData[i]/10);
 
 				//wait time
