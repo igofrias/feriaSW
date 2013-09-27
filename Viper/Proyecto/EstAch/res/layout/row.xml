@@ -14,7 +14,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/titulo"
+                android:id="@+id/subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#AA000000"
@@ -37,7 +37,7 @@
             android:padding="8dp" >
 
             <TextView
-                android:id="@+id/titulo1"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -45,12 +45,12 @@
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
-                android:id="@+id/titulo3"
+                android:id="@+id/desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="titulo3"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:text="titulo2"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </LinearLayout>
 

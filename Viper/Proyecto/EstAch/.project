@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>EstAch</name>
+	<name>VIPeR</name>
 	<comment></comment>
 	<projects>
+		<project>Lib_SherlockActionBar</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -30,4 +31,10 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>sherlock</name>
+			<value>file:/D:/USM/9no%20semestre/Taller%20Android/librerias/Lib_SherlockActionBar</value>
+		</variable>
+	</variableList>
 </projectDescription>
