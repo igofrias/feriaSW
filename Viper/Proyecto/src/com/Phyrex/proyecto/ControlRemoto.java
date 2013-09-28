@@ -1,12 +1,16 @@
-package com.Phyrex.demo;
+package com.Phyrex.proyecto;
 
-import com.Phyrex.demo.BTCommunicator;
+
+import com.actionbarsherlock.app.SherlockFragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,16 +20,18 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.SeekBar;
 //Maneja el control remoto usando acelerometro
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class ControlRemoto extends Fragment implements SensorEventListener{
+public class ControlRemoto extends SherlockFragment implements SensorEventListener{
 	private int MAX_RANGE;
 	private double MAX_VEL;
-	private Sensor acelerometro;
+	private Sensor accelerometer;
 	SensorManager manager;
 	double raw_accel_x = 0;
 	double raw_accel_y = 0;
@@ -34,44 +40,47 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 	double accel_y = 0;
 	double accel_z = 0;
 	double gravity[];
-	
+    boolean running=true;
 	double vel_x = 0;
 	double vel_y = 0;
 	double vel_z = 0;
 	int vel_robot_x = 0;
 	int vel_robot_y = 0;
 	int vel_robot_z = 0;
-	double sensibilidad;
+	double sens;
 	Thread thMesseger;
 	
+	DrawJoystick canvas;
+	Activity parent_activity;
 	MainActivity thisActivity;
-	public void initControlRemoto(Sensor accel, SensorManager senman)
-	{
-		//Inicializador en caso de necesitar inicializar estas cosas desde afuera
-		acelerometro = accel;
-		manager = senman;
-		gravity = new double[3];
-		MAX_RANGE = 127;
-		MAX_VEL = 1;
-	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
-	}	
+	}
+	@Override
+	public void onAttach(Activity activity)
+	{
+		super.onAttach(activity);
+		parent_activity = activity;
+	}
 	@Override
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	      Bundle savedInstanceState) {
-		  //Crea el fragmento con el acelerometr listo
+		  //Creates fragment
+		canvas = new DrawJoystick(getActivity());
 	    View view = inflater.inflate(R.layout.control_remoto_debug_layout,
 	        container, false);
+	    
 	    manager =(SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-		acelerometro = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		accelerometer = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		gravity = new double[3];
 		MAX_RANGE = 100;
 		MAX_VEL = 10;
-		sensibilidad = 0.8;
-	    return view;
+		sens = 0.8;
+		canvas.setWillNotDraw(false);
+	    return canvas;
 	  }	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -80,11 +89,19 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 		thMesseger = new Thread(new Runnable() {
 	        public void run() {
 	        	long wait_time = 100;
-	        	while(true)
+	        	while(running)
 	        	{
 	        		if(thisActivity.isConnected())
 	        		{
-	        			enviar_velocidades();
+	        			send_speeds();
+	        			
+	        			//SurfaceHolder hold = canvas.getHolder();
+	        			//Canvas can = hold.lockCanvas();
+	        			
+	        			//	canvas.draw(can);
+	       
+	        			//hold.unlockCanvasAndPost(can);
+	        			
 	        		}
 	        		SystemClock.sleep(wait_time);
 	        		
@@ -93,7 +110,7 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 	    });
 		
 	}
-	public void procesar_aceleraciones()
+	public void process_aceleration()
 	{
 		//Ocupa los filtros indicados en el tutorial para dejar una aceleracion
 		//pura sin influencia de la gravedad.
@@ -119,7 +136,7 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 		//Transforma una velocidad de celular a perro
 		//Velocidad del robot proporcional a rango de movimiento 
 		double k =(double)MAX_RANGE/MAX_VEL;
-		int vel_robot = (int) (Math.ceil(vel*sensibilidad*k));
+		int vel_robot = (int) (Math.ceil(vel*sens*k));
 		if(vel_robot > MAX_RANGE)
 		{
 			vel_robot = MAX_RANGE;
@@ -131,10 +148,18 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 		return vel_robot;
 				
 	}
-	public void trans_vels_a_robot()
+	public void speeds_to_robot()
 	{
 		//Transforma los ejes x e y en velocidades por motor
 		//Sacado del codigo de minddroids
+		boolean direccion = true; //true == arriba acostado; false == derecho
+		if (!direccion)
+		{
+			double temp_x = vel_x;
+			double temp_y = vel_y;
+			vel_x = temp_y;
+			vel_y = temp_x;
+		}
 		if (vel_x > MAX_VEL){
 			vel_x = (double) MAX_VEL;
 		}else if (vel_x < -MAX_VEL){
@@ -147,8 +172,8 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 		}
 		double k = (double)MAX_RANGE/MAX_VEL;
 		if (Math.abs(vel_x) > 1) {
-			vel_robot_x = (int) Math.round(k * vel_y * (1.0 + vel_x / 60.0));
-			vel_robot_y = (int) Math.round(k * vel_y * (1.0 - vel_x / 60.0));
+			vel_robot_x = (int) Math.round(k * vel_x * (1.0 + vel_y / 60.0));
+			vel_robot_y = (int) Math.round(k * vel_x * (1.0 - vel_y / 60.0));
 		} else {
 			vel_robot_x = (int) Math.round(k * vel_y - Math.signum(vel_y) * k * Math.abs(vel_x));
 			vel_robot_y = -vel_robot_x;
@@ -169,9 +194,9 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 		{
 			vel_robot_y = -MAX_RANGE;
 		}
-		Log.d("vel",Integer.toString(vel_robot_x));
+		
 	}
-	public void obtener_velocidades()
+	public void get_speed()
 	{
 		//A partir de la aceleracion obtiene la velocidad a mover
 		vel_x = accel_x;
@@ -182,7 +207,7 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 //		vel_robot_x = this.trans_vel_a_robot(vel_x);
 //		vel_robot_y = this.trans_vel_a_robot(vel_y);
 //		vel_robot_z = this.trans_vel_a_robot(vel_z);
-		trans_vels_a_robot();
+		speeds_to_robot();
 	}
 	public int bar_percentage(int bar_range, double max_vel, double vel)
 	{
@@ -190,7 +215,13 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 		int percentage = (int)Math.ceil((50.0*vel)/max_vel) + 50;
 		return percentage;
 	}
-	public void resetear_velocidades()
+	public int bar_percentage(int bar_range, int center, double max_vel, double vel)
+	{
+		//Ve el porcentaje que se tiene que mover, esta vez con un centro explicito
+		int percentage = (int)Math.ceil(((bar_range-center)*vel)/max_vel) + center;
+		return percentage;
+	}
+	public void reset_speeds()
 	{
 		vel_x = 0;
 		vel_y = 0;
@@ -206,11 +237,14 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 	    y_view.setProgress(bar_percentage(100,MAX_VEL,this.vel_y));
 	    
 	}
-	public void enviar_velocidades()
+	public void send_speeds()
 	{
+		
 		//Envia los datos obtenidos al robot.
 		if(thisActivity.isConnected())
 		{
+			
+				
 			//Asumiendo que motor b y c sean los motores de las ruedas.
 			int motorActionb = BTCommunicator.MOTOR_B;
 		    int motorActionc = BTCommunicator.MOTOR_C;
@@ -219,7 +253,7 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 			thisActivity.sendBTCmessage(1000, motorActionb, 0, 0);
 			thisActivity.sendBTCmessage(BTCommunicator.NO_DELAY, motorActionc, vel_robot_y, 0);
 			thisActivity.sendBTCmessage(1000, motorActionc, 0, 0);
-			Log.d("Enviando","Enviando");
+			
 		}
 		else
 		{
@@ -240,18 +274,20 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 	    raw_accel_x = event.values[0];
 	    raw_accel_y = event.values[1];
 	    raw_accel_z = event.values[2];
-	    // Do something with this sensor value.
-	    procesar_aceleraciones();
-	    obtener_velocidades();
 	    
-	    mostrar_velocidades_debug();
+	    process_aceleration();
+	    get_speed();
+	    canvas.update_coordinates(this.vel_x, this.vel_y);
+	    //mostrar_velocidades_debug();
+	    
 	    
 	    
 	}
 	@Override
 	public void onResume() {
 		super.onResume();
-		manager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_NORMAL);
+		running=true;
+		manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 		if(!thMesseger.isAlive())
 		{
 			thMesseger.start();
@@ -262,6 +298,13 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 	public void onPause() {
 		super.onPause();
 		manager.unregisterListener(this);
+		running=false;
+	}
+        @Override
+	public void onDetach(){
+		super.onDetach();
+		manager.unregisterListener(this);
+		running = false;
 	}
 	public int getMAX_RANGE() {
 		return MAX_RANGE;
@@ -276,7 +319,7 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 		MAX_VEL = mAX_VEL;
 	}
 	public void setAcelerometro(Sensor acelerometro) {
-		this.acelerometro = acelerometro;
+		this.accelerometer = acelerometro;
 	}
 	public void setManager(SensorManager manager) {
 		this.manager = manager;
@@ -285,5 +328,105 @@ public class ControlRemoto extends Fragment implements SensorEventListener{
 	{
 		this.thMesseger.start();
 	}
+	private class DrawJoystick extends SurfaceView implements SurfaceHolder.Callback, Runnable
+	{
+		//Clase que maneja el dibujo del joystick. Tiene un thread que llama a que
+		//se dibuje en el canvas
+		Double vel_x;
+		Double vel_y;
+		Paint color;
+		Paint color_center;
+		SurfaceHolder hold;
+		Canvas can;
+		Thread drawthread;
+		Boolean running;
+		public DrawJoystick(Context context) {
+			
+			super(context);
+			color = new Paint();
+			getHolder().addCallback(this);
+			color.setColor(Color.GREEN);
+			color_center = new Paint();
+			color_center.setColor(Color.GRAY);
+			vel_x = 0.0;
+			vel_y = 0.0;
+			running = false;
+			// TODO Auto-generated constructor stub
+		}
 
+		@Override
+		public void surfaceChanged(SurfaceHolder holder, int format, int width,
+				int height) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void surfaceCreated(SurfaceHolder holder) {
+			// TODO Auto-generated method stub
+			
+			hold = canvas.getHolder();
+			running = true;
+			drawthread = new Thread(this);
+			drawthread.start();
+		}
+
+		@Override
+		public void surfaceDestroyed(SurfaceHolder holder) {
+			// TODO Auto-generated method stub
+			running = false;
+			Boolean retry = true;
+			while(retry)
+			{
+				try {
+					
+					drawthread.join();
+					retry = false;
+					
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		public void Draw(Canvas canvas)
+		{
+			
+			float center_x = canvas.getWidth()/2;
+			float center_y = canvas.getHeight()/2;
+			int size = 30;
+			int x = bar_percentage(canvas.getWidth() - size, (int)center_x, -MAX_VEL, vel_x);
+			int y = bar_percentage(canvas.getHeight() - size, (int)center_y,MAX_VEL, vel_y);
+			canvas.drawARGB(255, 255, 255, 255);
+			canvas.drawCircle(canvas.getWidth()/2,canvas.getHeight()/2,100, color_center);
+			canvas.drawCircle(x, y , size, color);
+			
+		}
+		public void update_coordinates(Double x, Double y)
+		{
+			vel_x = x;
+			vel_y = y;
+			
+		}
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			
+			while(running){
+				if(hold.getSurface().isValid())
+				{
+					can = hold.lockCanvas();
+				
+					
+						canvas.Draw(can);
+					
+					hold.unlockCanvasAndPost(can);
+				}
+			}
+		}
+	}
 }
+
