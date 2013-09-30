@@ -1,4 +1,4 @@
-package com.Phyrex.proyecto;
+package com.Phyrex.VIPeR;
 /**
  *   (Changes from original are) Copyright 2010 Guenther Hoelzl, Shawn Brown
  * 
@@ -13,3 +13,4 @@ public interface BTConnectable {
     public boolean isPairing();
 
 }
+

@@ -1,6 +1,7 @@
+package com.Phyrex.VIPeR;
 
-package com.Phyrex.proyecto;
-
+import java.util.ArrayList;
+import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,10 +16,27 @@ public class Database_Helper {
 	public static final String Key_color = "color";
 	public static final String Key_date = "birthdate";
 	private static final String Key_mac = "mac_adress";
+	private static final String Key_death = "death";
 	private static final String DB_name = "BD_1";
 	private static final String DB_table = "Pet_data";
 
 	private static final int DB_version= 1;
+	
+	//Elementos Achievement
+	private static final String DB_table_ach = "Achievement_data";
+	
+	private static final String Key_id_ach = "_id";
+	public static final String Key_name_ach = "name";
+	public static final String Key_desc_ach = "desc";
+	public static final String Key_done = "done";			
+	
+	//Elementos Estadisticas
+	private static final String DB_table_est = "Statistics_data";
+	
+	public static final String Key_id_est = "_id";
+	public static final String Key_name_est = "name";
+	public static final String Key_desc_est = "desc";
+	public static final String Key_cant_est = "amount";
 	
 	private DBhelper helper;
 	private final Context context;
@@ -33,11 +51,25 @@ public class Database_Helper {
 		@Override
 		public void onCreate(SQLiteDatabase db) {		//creacion de la base de datos
 														//SQLITE
-			db.execSQL("DROP TABLE IF EXISTS " + DB_table);
+			//db.execSQL("DROP TABLE IF EXISTS " + DB_table);
 			db.execSQL("CREATE TABLE " + DB_table + " (" 
 					+ Key_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 					+ Key_name + " TEXT NOT NULL," + Key_raza + " VARCHAR(15),"+ Key_color + " VARCHAR(15),"
-					+ Key_date + " DATETIME, " + Key_mac + " VARCHAR(18));");
+					+ Key_date + " DATETIME, " + Key_mac + " VARCHAR(18), "+ Key_death +" INTEGER NOT NULL);");
+			
+			//db.execSQL("DROP TABLE IF EXISTS " + DB_table_ach);
+			db.execSQL("CREATE TABLE " + DB_table_ach + " (" 
+					+ Key_id_ach + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
+					+ Key_name_ach + " TEXT NOT NULL, " 
+					+ Key_desc_ach + " TEXT NOT NULL, "
+					+ Key_done + " INTEGER NOT NULL);");	
+			
+			//db.execSQL("DROP TABLE IF EXISTS " + DB_table_est);
+			db.execSQL("CREATE TABLE " + DB_table_est + " (" 
+					+ Key_id_est + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
+					+ Key_name_est + " TEXT NOT NULL," 
+					+ Key_desc_est + " TEXT NOT NULL,"
+					+ Key_cant_est + " INTEGER NOT NULL);");
 		}
 
 		@Override
@@ -84,13 +116,14 @@ public class Database_Helper {
 	    helper.close();
 	}
 	//agregar entrada nueva
-	public void createEntry(String nombre, String datetime, String raza, String color, String mac_adress) {
+	public void createEntry(String nombre, String datetime, String raza, String color, String mac_adress, int death) {
 		ContentValues cv = new ContentValues();
 		cv.put(Key_name, nombre);
 		cv.put(Key_date, datetime);
 		cv.put(Key_raza, raza);
 		cv.put(Key_color, color);
 		cv.put(Key_mac, mac_adress);
+		cv.put(Key_death, death);
 		Database.insert(DB_table, null, cv);
 	}
 	//obtener datos por el nombre
@@ -106,8 +139,112 @@ public class Database_Helper {
     	Cursor c = Database.rawQuery(select, null);
 		return c;
 	}
+	
+
+	public List<Pet> getPets() {
+		List<Pet> listamascotas = new ArrayList<Pet>();
+		// Select All Query
+		String selectQuery = "SELECT * FROM " + DB_table + " WHERE " + Key_death + " = 0  ORDER BY " + Key_id + " DESC";
+
+		helper = new DBhelper(context);
+		Database = helper.getWritableDatabase();
+		Cursor cursor = Database.rawQuery(selectQuery, null);
+
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			do {
+				Pet pet = new Pet();
+				pet.set_id(Integer.parseInt(cursor.getString(0)));
+				pet.set_name(cursor.getString(1));
+				pet.set_raza(cursor.getString(2));
+				pet.set_color(cursor.getString(3));
+				pet.set_birthdate(cursor.getString(4));
+				pet.set_mac(cursor.getString(5));
+				pet.set_death(Integer.parseInt(cursor.getString(6)));
+				// agregar mascota a lista
+				listamascotas.add(pet);
+			} while (cursor.moveToNext());
+		}
+		
+		Database.close();
+		
+		return listamascotas;
+	}
 	//borrar por nombre
 	public void delete(String query) {
 		Database.delete(DB_table, Key_name + " = '"+query+"'", null);
 	}
+	
+	//Agregar Logro
+	public void createAchievement(String name, String desc, int done) {
+		ContentValues cv = new ContentValues();
+		cv.put(Key_name_ach, name);
+		cv.put(Key_desc_ach, desc);
+		cv.put(Key_done, done);
+		Database.insert(DB_table_ach, null, cv);
+	}	
+
+	//Agregar Indicador en estadística
+	public void createStatistics(String nombre, String desc, int amount) {
+		ContentValues cv = new ContentValues();
+		cv.put(Key_name_est, nombre);
+		cv.put(Key_desc_est, desc);
+		cv.put(Key_cant_est, amount);
+		Database.insert(DB_table_est, null, cv);
+	}
+	
+	//Obtener Achievement por nombre
+	public Cursor getAchievement(String name) {
+		String select = "Select * From "+DB_table_ach+" Where "+Key_name_ach+" = '"+name+"'";
+    	Cursor c = Database.rawQuery(select, null);
+		return c;
+	}	
+	
+	//Obtener Indicador Estadístico por nombre
+	public Cursor getStatistics(String name) {
+		String select = "Select * From "+DB_table_est+" Where "+Key_name_est+" = '"+name+"'";
+    	Cursor c = Database.rawQuery(select, null);
+		return c;
+	}
+	
+	//Obtener todas los achievements existentes
+	public Cursor getAllAchievements() {
+		String select = "Select * From "+DB_table_ach;
+		select = select + " ORDER BY "+Key_id+" ASC";
+    	Cursor c = Database.rawQuery(select, null);
+		return c;
+	}
+	
+	
+	//Obtener todas las estadísticas existentes
+	public Cursor getAllStatistics() {
+		String select = "Select * From "+DB_table_est;
+		select = select + " ORDER BY "+Key_id+" ASC";
+    	Cursor c = Database.rawQuery(select, null);
+		return c;
+	}
+	
+	//Confirma Realización de achievement.
+	//Cambios esperados: 
+	//Inicial: Hecho = 0
+	//Final: Hecho = 1
+	public void confirmAchievement(int id, String name, String desc, int done){
+	    ContentValues cv = new ContentValues();
+	    cv.put("_id", id);
+		cv.put(Key_name_ach, name);
+		cv.put(Key_desc_ach, desc);
+		cv.put(Key_done, done);
+	    Database.update(DB_table_ach, cv, "_id=" + id, null);   
+	}
+	
+	//Modifica Estadísticas Actuales
+	public void modifyStatistics(int id, String name, String desc, int amount){
+	    ContentValues cv = new ContentValues();
+	    cv.put("_id", id);
+		cv.put(Key_name_est, name);
+		cv.put(Key_desc_est, desc);
+		cv.put(Key_cant_est, amount);
+	    Database.update(DB_table_est, cv, "_id=" + id, null);   
+	}
+	
 }

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.Phyrex.proyecto"
+    package="com.Phyrex.VIPeR"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="7"
         android:targetSdkVersion="17" />
-
+	
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
-
+    
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock.NoActionBar" >
         <activity
-            android:name="com.Phyrex.proyecto.MainActivity"
+            android:name="com.Phyrex.VIPeR.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -27,47 +27,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.Phyrex.proyecto.CreateActivity"
-            android:label="@string/title_activity_create" >
-        </activity>
-        <activity
-            android:name="com.Phyrex.proyecto.Database_Helper"
-            android:label="@string/title_database_helper" >
-        </activity>
-        <activity
-            android:name="com.Phyrex.proyecto.Cursor_Adapter"
-            android:label="@string/title_activity_cursor__adapter" >
-        </activity>
-        <activity
-            android:name="com.Phyrex.proyecto.StatesActivity"
-            android:label="@string/title_activity_states" >
-        </activity>
-        <activity
-            android:name="com.Phyrex.proyecto.BTCommunicator"
-            android:label="@string/title_activity_btcommunicator" >
-        </activity>
-        <activity
-            android:name="com.Phyrex.proyecto.BTConnectable"
-            android:label="@string/title_activity_btconnectable" >
-        </activity>
-        <activity
-            android:name="com.Phyrex.proyecto.LCPMessage"
-            android:label="@string/title_activity_lcpmessage" >
-        </activity>
-        <activity
-            android:name="com.Phyrex.proyecto.DeviceListActivity"
+            android:name="com.Phyrex.VIPeR.DeviceListActivity"
             android:label="@string/title_activity_device_list"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
-        <activity
-            android:name="com.Phyrex.proyecto.RBTConnection"
-            android:label="@string/title_activity_rbtconnection" >
-        </activity>
-        <activity
-            android:name="com.Phyrex.proyecto.MainPetActivity"
-            android:label="@string/title_activity_main_pet" >
-        </activity>
-		<service android:name=".BTService" />
+
+        <service android:name="com.Phyrex.VIPeR.BTService" />
     </application>
 
 </manifest>

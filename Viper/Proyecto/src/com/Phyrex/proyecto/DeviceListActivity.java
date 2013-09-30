@@ -1,4 +1,4 @@
-package com.Phyrex.proyecto;
+package com.Phyrex.VIPeR;
 
 /**
  *   (Changes from original are) Copyright 2010 Guenther Hoelzl, Shawn Brown
@@ -10,7 +10,6 @@ package com.Phyrex.proyecto;
 import java.util.Set;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;

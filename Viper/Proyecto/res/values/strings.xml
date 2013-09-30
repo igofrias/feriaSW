@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Proyecto</string>
+    <string name="app_name">VIPeR</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_create">CreateActivity</string>
     <string name="title_database_helper">Database Helper</string>
     <string name="title_activity_cursor__adapter">Cursor_Adapter</string>
@@ -38,6 +37,7 @@
     <string name="bt_error_dialog_title">Error de BlueTooth</string>
     <string name="bt_error_dialog_message">Parece que el robot NXT no esta prendido. Favor asegurarse que el robot NXT esta encendido 
         y tiene Bluetooth encendido e intente conectarse otra vez.</string>
+    <string name="bt_error_dialog_message2">Conexión con el Robot perdida</string>
     <string name="bt_needs_to_be_enabled"> Bluetooth debe estar activo!</string>
 
     <!-- DeviceListActivity -->
@@ -67,11 +67,21 @@
     <!-- Sensor/bluetooth problem -->
     <string name="sensor_initialization_failure">       Sensor apropiado no encontrado.</string>
     <string name="bt_initialization_failure">        Bluetooth no soportsado.</string>
-    <string name="title_activity_dialog">DialogActivity</string>
-    <string name="title_activity_rbtconnection">RBTConnection</string>
-    <string name="title_activity_main_per">MainPerActivity</string>
     <string name="title_activity_main_pet">MainPetActivity</string>
-    <string name="title_activity_fullfragment">FullfragmentActivity</string>
     <string name="title_activity_btservice">BTService</string>
+    <string name="about">About</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="start">Start Program</string>
+    <string name="quit">Quit</string>
+    <string name="action">Action!</string>
+    <string name="title_activity_control_remoto">ControlRemoto</string>
+    <string name="hora">Hora</string>
+    <string name="horas">Horas</string>
+    <string name="minuto">Minuto</string>
+    <string name="minutos">Minutos</string>
+    <string name="dia">Día</string>
+    <string name="dias">Días</string>
+    <string name="hello_world">Hola mundo</string>
 
 </resources>

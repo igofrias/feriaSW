@@ -1,13 +1,20 @@
-package com.Phyrex.proyecto;
+package com.Phyrex.VIPeR;
 
+import com.Phyrex.VIPeR.BTConnectable;
+import com.Phyrex.VIPeR.BTCommunicator;
+import com.Phyrex.VIPeR.DeviceListActivity;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-import com.Phyrex.proyecto.BTConnectable;
-import com.Phyrex.proyecto.BTCommunicator;
+import android.support.v4.app.FragmentTransaction;
+
 import android.os.BatteryManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Service;
@@ -15,23 +22,18 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 import android.app.ProgressDialog;
-import android.content.Intent;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class BTService extends Service implements BTConnectable{
-	
-
-	//Toast ara mensajes
+    
+	//Toast para mensajes
 	private Toast reusableToast;
-	///////////////////////
 	///////////////////Variables Conexión Bluetooth////////////////////////////////////////
-	private boolean pairing;
 	private static boolean btOnByUs = false;
 	private BTCommunicator myBTCommunicator = null;
 	private Handler btcHandler;
@@ -41,58 +43,66 @@ public class BTService extends Service implements BTConnectable{
     private ProgressDialog connectingProgressDialog;
     private Activity thisActivity;
     private boolean btErrorPending = false;
-    private FrameLayout frame;
-    private FrameLayout frame1;
-    private FrameLayout frame2;
-    MainActivity main = new MainActivity();
-    
-    //////////////////////////////////
-	
-    
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        // TODO Auto-generated method stub
-    	Toast.makeText(this, "Servicio en Ejecucion", Toast.LENGTH_SHORT).show();
-        Log.e("in onStartCommand", "onStartCommand");
-        if(isPairing()==false){
-			Log.d("pepe", "pepe2");
-			if (BluetoothAdapter.getDefaultAdapter()==null) {
-				Log.d("pepe", "pepe3");
-		            showToast(R.string.bt_initialization_failure, Toast.LENGTH_LONG);
-		            destroyBTCommunicator();
-		            onDestroy();
-		            return 0;
-		        }            
-				//si existe blublu y no esta activado lo activa
-		        if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-		        	Log.d("pepe", "pepe4");
-		        	//intent
-		           // Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-		           // startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-		        } else {//si esta activado busca dispositivos para conectarse
-		        	Log.d("pepe", "pepe5");
-		           //selectNXT();
-		        }
-		        
-		}else if(isPairing()==true){
-			//si esta conectado desconecta
-			Log.d("pepe", "pepe6");
-			destroyBTCommunicator();
-		}
-        
-        return START_STICKY;
-    }
-
-    //***********Botones y texview*************////
-    Button bncnt;
+    private String programToStart;
+	private ThreadClass thread;
+	private String connectionType= null;
+    String mac_nxt="";
     
     /////*********Valores de motores*********//////
-    private int motorActiona;
+   /* private int motorActiona;
     private int motorActionb;
     private int motorActionc;
     private int directionAction;
-  
+  */
     ///////////////////////////////////
+	
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+    	//bncnt.setOnClickListener(listener);
+    			reusableToast = Toast.makeText(thisActivity, "", Toast.LENGTH_SHORT);
+    			thread = new ThreadClass(new Handler() {
+    				@Override
+    				public void handleMessage(Message m) {
+
+    				}
+    			});
+    			thread.setRunning(true);
+    			thread.start();
+    			
+    	
+    	return startId;
+        // TODO Auto-generated method stub
+    	
+    }
+
+	@Override
+	public IBinder onBind(Intent intent) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isPairing() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+    
+	/*private void Reload() {
+	db = new Database_Helper(this);
+    db.open_read();
+    Cursor c = db.getAll();		//llenando el cursor con datos 
+    adapter =  new ArrayAdapter(this, 0, c);		//creando el adapter
+    lista.setAdapter(adapter);		//entregandole el adapter a la lista
+    db.close();
+	} */
+    //retorna true si la bd esta vacia
+    private boolean checkBD(){
+    	Database_Helper db = new Database_Helper(thisActivity);
+		List<Pet> pets = db.getPets(); //lista de mascotas
+		db.close();
+		return pets.isEmpty();
+    }
     
     /////Detecta si el Bluetooth esta activado////////////
     public static boolean isBtOnByUs() {
@@ -101,7 +111,7 @@ public class BTService extends Service implements BTConnectable{
 	
     ///detecta si se activo el bluetooth////////
     public static void setBtOnByUs(boolean btOnByUs) {
-       BTService.btOnByUs = btOnByUs;
+        btOnByUs = btOnByUs;
     }
     
     ///Crea un nuevo objeto para realizar la conexion///////////
@@ -110,10 +120,10 @@ public class BTService extends Service implements BTConnectable{
         myBTCommunicator = new BTCommunicator(this, myHandler, BluetoothAdapter.getDefaultAdapter(), getResources());
         btcHandler = myBTCommunicator.getHandler();
     }
-    //crea y arranca un thread para la conexion bluetooth/////////////77
+    //crea y arranca un thread para la conexion bluetooth/////////////
     //recibe la mac del robot/////////////
-    private void startBTCommunicator(String mac_address) {
-        connected = false;        
+    public void startBTCommunicator(String mac_address) {
+        mac_nxt= mac_address;
         connectingProgressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.connecting_please_wait), true);
 
         if (myBTCommunicator != null) {
@@ -125,6 +135,7 @@ public class BTService extends Service implements BTConnectable{
         createBTCommunicator();
         myBTCommunicator.setMACAddress(mac_address);
         myBTCommunicator.start();
+        connected=true;
     }
     
     ////Termina la conexion bluetooth (destruye el thread)//////////
@@ -136,6 +147,7 @@ public class BTService extends Service implements BTConnectable{
         }
 
         connected = false;
+        //updateButtonsAndMenu();
     }
 
    ///muestra el Toast///
@@ -148,70 +160,134 @@ public class BTService extends Service implements BTConnectable{
 
     ///muestra el Toast///
     ////recive el mensaje  (int - ID) y la duracion del Toast///////////
-    void showToast(int resID, int length) {
+    private void showToast(int resID, int length) {
         reusableToast.setText(resID);
         reusableToast.setDuration(length);
         reusableToast.show();
     }
     
+    public String return_mac(){
+    		return mac_nxt;
+    }
     
-    public float getBatteryLevel() {
-  	    Intent batteryIntent = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-  	    int level = batteryIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-  	    int scale = batteryIntent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-
-  	    // Error checking that probably isn't needed but I added just in case.
-  	    if(level == -1 || scale == -1) {
-  	        return 50.0f;
-  	    }
-
-  	    return ((float)level / (float)scale) * 100.0f; 
-  	}
-
-	/*/////listener  para los botones////////////
-	public void conectar(){
-					
-		//si no esta conectado verifica presencia de bluetooth 
+    public void selectTypeCnt(){
+    	if(connectionType!=null){//si contiene una mac conecta
+    		connect(connectionType);
+    	}else{//si no parea
+    		pairing();
+    	}
+    }
+   
+    public void connect(String mac){
+    	if (BluetoothAdapter.getDefaultAdapter()==null) {
+            showToast(R.string.bt_initialization_failure, Toast.LENGTH_LONG);
+            destroyBTCommunicator();
+            //finish();
+            return;
+        }
+    	connectionType = mac;
+    	if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            //startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+        } else {//si esta activado busca dispositivos para conectarse
+        	startBTCommunicator(mac);
+        }
+    	
+    }
+    
+    //conexion intent a dispositivo
+	public void pairing(){
+    	//si no esta conectado verifica presencia de bluetooth 
 		if(connected==false){
-			Log.d("pepe", "pepe2");
+			///inicia el adaptador
 			if (BluetoothAdapter.getDefaultAdapter()==null) {
-				Log.d("pepe", "pepe3");
 		            showToast(R.string.bt_initialization_failure, Toast.LENGTH_LONG);
 		            destroyBTCommunicator();
-		            finish();
+		            //finish();
 		            return;
 		        }            
 				//si existe blublu y no esta activado lo activa
+				connectionType=null;
 		        if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-		        	Log.d("pepe", "pepe4");
-		        	launch_devicelist();
-		           // Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-		           // startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+		            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		            //startActivityForResult(enableIntent, REQUEST_ENABLE_BT);		     
 		        } else {//si esta activado busca dispositivos para conectarse
-		        	Log.d("pepe", "pepe5");
 		           selectNXT();
 		        }
 		        
 		}else if(connected==true){
 			//si esta conectado desconecta
-			Log.d("pepe", "pepe6");
 			destroyBTCommunicator();
 		}
-
-	}*/
 	
-    @Override
-    public void onDestroy() {
-        // TODO Auto-generated method stub
+
+	}
+    
+	@Override
+	public void onDestroy() {
         super.onDestroy();
         destroyBTCommunicator();
         if (btOnByUs){
             showToast(R.string.bt_off_message, Toast.LENGTH_SHORT);
             BluetoothAdapter.getDefaultAdapter().disable();
         }
-        Toast.makeText(this, "Servicio destruido", Toast.LENGTH_SHORT).show();
+         
     }
 
+  /*  @Override
+    public void onPause() {
+        destroyBTCommunicator();
+        super.onStop();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle icicle) {
+        super.onSaveInstanceState(icicle);
+    }*/
+	 
+    /**
+     * Starts a program on the NXT robot.
+     * @param name The program name to start. Has to end with .rxe on the LEGO firmware and with .nxj on the 
+     *             leJOS NXJ firmware.
+     */   
+    public void startProgram(String name) {
+        // for .rxe programs: get program name, eventually stop this and start the new one delayed
+        // is handled in startRXEprogram()
+        if (name.endsWith(".rxe")) {
+        	Log.d("pepe", "rxe");
+            programToStart = name;        
+            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.GET_PROGRAM_NAME, 0, 0);
+            Log.d("pepe", "startprogram fin D:");
+            //return;
+        }
+              
+       /// for .nxj programs: stop bluetooth communication after starting the program
+        /*if (name.endsWith(".nxj")) {
+            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name);
+            destroyBTCommunicator();
+            return;
+        } */      
+        Log.d("pepe", "start!!!!!!!!!!!!!!!");
+        // for all other programs: just start the program
+        sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name);
+    }
+    
+    /**
+     * Depending on the status (whether the program runs already) we stop it, wait and restart it again.
+     * @param status The current status, 0x00 means that the program is already running.
+     */   
+    public void startRXEprogram(byte status) {
+        if (status == 0x00) {
+        	 Log.d("pepe", "status 0x00");
+            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.STOP_PROGRAM, 0, 0);
+            sendBTCmessage(1000, BTCommunicator.START_PROGRAM, programToStart);
+        }    
+        else {
+        	 Log.d("pepe", "no status 0x00");
+            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, programToStart);
+        }
+    }   
+    
     ///envia al bthandler los mensajes via blublu   (enteros)
     void sendBTCmessage(int delay, int message, int value1, int value2) {
         Bundle myBundle = new Bundle();
@@ -242,93 +318,10 @@ public class BTService extends Service implements BTConnectable{
             btcHandler.sendMessageDelayed(myMessage, delay);
     }
     //llama a la actividad que  busca dispositivos
-   /* void selectNXT() {
+    void selectNXT() {
         Intent serverIntent = new Intent(this, DeviceListActivity.class);
-        startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
-    }*/
-    
-    //ejecuta la accion del boton 1, toca mozart y mueve el motor A
-   /* private void boton1() {
-    		motorActiona = BTCommunicator.MOTOR_A;
-    		directionAction = 1;
-            // Wolfgang Amadeus Mozart 
-            // "Zauberfloete - Der Vogelfaenger bin ich ja"
-            sendBTCmessage(BTCommunicator.NO_DELAY, 
-                BTCommunicator.DO_BEEP, 392, 100);
-            sendBTCmessage(200, BTCommunicator.DO_BEEP, 440, 100);
-            sendBTCmessage(400, BTCommunicator.DO_BEEP, 494, 100);
-            sendBTCmessage(600, BTCommunicator.DO_BEEP, 523, 100);
-            sendBTCmessage(800, BTCommunicator.DO_BEEP, 587, 300);
-            sendBTCmessage(1200, BTCommunicator.DO_BEEP, 523, 300);
-            sendBTCmessage(1600, BTCommunicator.DO_BEEP, 494, 300);
-            
-            int direction =  1;                
-		    sendBTCmessage(BTCommunicator.NO_DELAY, motorActiona, 
-		        30*direction*directionAction, 0);
-		    sendBTCmessage(500, motorActiona, 
-		        -30*direction*directionAction, 0);
-		    sendBTCmessage(1000, motorActiona, 0, 0);
-
-
-    }       
-    */
-    //ejecuta la accion del boton 1, toca musica y mueve el motor A
-   /* private void boton2() {
-		motorActiona = BTCommunicator.MOTOR_A;
-		directionAction = 1;
-        // G-F-E-D-C
-        sendBTCmessage(BTCommunicator.NO_DELAY, 
-            BTCommunicator.DO_BEEP, 392, 100);
-        sendBTCmessage(200, BTCommunicator.DO_BEEP, 349, 100);
-        sendBTCmessage(400, BTCommunicator.DO_BEEP, 330, 100);
-        sendBTCmessage(600, BTCommunicator.DO_BEEP, 294, 100);
-        sendBTCmessage(800, BTCommunicator.DO_BEEP, 262, 300);
-
-        int direction =  -1;                
-        sendBTCmessage(BTCommunicator.NO_DELAY, motorActiona, 
-            30*direction*directionAction, 0);
-        sendBTCmessage(500, motorActiona, 
-            -30*direction*directionAction, 0);
-        sendBTCmessage(1000, motorActiona, 0, 0);
-
-    }*/
-	
-    ///ejecuta funciones para caminar
-    /*private void caminar(int direccion) {
-		motorActionb = BTCommunicator.MOTOR_B;
-		motorActionc = BTCommunicator.MOTOR_C;
-		directionAction = 1;
-	    int direction1 =  1;
-	    int direction2 =  -1;
-	    int potencia1=0;
-	    int potencia2=0;
-	    if(direccion == 1){
-	    	potencia1=75;
-	    	potencia2=75;
-	    	direction1=-1;
-	    	direction2=-1;
-	    }else if(direccion == 2){
-	    	potencia1=15;
-	    	potencia2=55;
-	    	direction1=-1;
-	    	direction2=-1;
-	    }else if(direccion == 3){
-	    	potencia1=75;
-	    	potencia2=75;
-	    	direction1=1;
-	    	direction2=1;
-	    }else if(direccion == 4){
-	    	potencia1=55;
-	    	potencia2=15;
-	    	direction1=-1;
-	    	direction2=-1;
-	    }
-	    sendBTCmessage(BTCommunicator.NO_DELAY, motorActionb, potencia1*direction1*directionAction, 0);
-	    sendBTCmessage(1000, motorActionb, 0, 0);
-		sendBTCmessage(BTCommunicator.NO_DELAY, motorActionc, potencia2*direction2*directionAction, 0);
-		sendBTCmessage(1000, motorActionc, 0, 0);
-
-}*/
+        //startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+    }
     
     private int byteToInt(byte byteValue) {
         int intValue = (byteValue & (byte) 0x7f);
@@ -339,13 +332,11 @@ public class BTService extends Service implements BTConnectable{
         return intValue;
     }
     
-    //retorna si esta pareado 
-    @Override
-    public boolean isPairing() {
-        return pairing;
+    public boolean isConnected(){
+    	return connected;
     }
-    /*
-    //recibe datos de dispositivo e inicia la conexion
+    
+   /* //recibe datos de dispositivo e inicia la conexion
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -367,15 +358,14 @@ public class BTService extends Service implements BTConnectable{
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         btOnByUs = true;
-                        selectNXT();
+                        selectTypeCnt();
                         break;
                     case Activity.RESULT_CANCELED:
                         showToast(R.string.bt_needs_to_be_enabled, Toast.LENGTH_SHORT);
-                        onDestroy();
                         break;
                     default:
                         showToast(R.string.problem_at_connecting, Toast.LENGTH_SHORT);
-                        onDestroy();
+                        //finish();
                         break;
                 }
                 
@@ -409,6 +399,15 @@ public class BTService extends Service implements BTConnectable{
                     }
 
                     break;
+                    
+                case BTCommunicator.PROGRAM_NAME:
+                    if (myBTCommunicator != null) {
+                        byte[] returnMessage = myBTCommunicator.getReturnMessage();
+                        Log.d("pepe", "handler bsdgns");
+                        startRXEprogram(returnMessage[2]);
+                    }
+                    
+                    break;
 
                 case BTCommunicator.STATE_CONNECTERROR_PAIRING:
                     connectingProgressDialog.dismiss();
@@ -426,8 +425,8 @@ public class BTService extends Service implements BTConnectable{
                         // inform the user of the error with an AlertDialog
                         AlertDialog.Builder builder = new AlertDialog.Builder(thisActivity);
                         builder.setTitle(getResources().getString(R.string.bt_error_dialog_title))
-                        .setMessage(getResources().getString(R.string.bt_error_dialog_message)).setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setMessage(getResources().getString(R.string.bt_error_dialog_message2)).setCancelable(false)
+                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 btErrorPending = false;
@@ -459,11 +458,5 @@ public class BTService extends Service implements BTConnectable{
             }
         }
     };
-
-	@Override
-	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
-		return null;
-	}
     
 }

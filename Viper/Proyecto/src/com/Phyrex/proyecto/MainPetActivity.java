@@ -1,15 +1,22 @@
-package com.Phyrex.proyecto;
+package com.Phyrex.VIPeR;
 
-
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
  
 public class MainPetActivity extends SherlockFragment {
+	private Button action;
+	private Button calibrate;
+	private Button shake;
+	private static Activity thisActivity;
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);        
@@ -21,12 +28,41 @@ public class MainPetActivity extends SherlockFragment {
 		
 		View v = inflater.inflate(R.layout.activity_mainpet, container, false);
 		return v;
+		
 	}	
 	
 	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
-		 super.onActivityCreated(savedInstanceState);    
-		
+		 super.onActivityCreated(savedInstanceState); 
+		 thisActivity = getActivity();
+		 action = (Button)thisActivity.findViewById(R.id.action);
+		 calibrate = (Button)thisActivity.findViewById(R.id.calibrar);
+		 shake = (Button)thisActivity.findViewById(R.id.shake);
+		 
+		 action.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					Toast.makeText(thisActivity, "No hay acciones disponibles", Toast.LENGTH_SHORT).show();
+				}});
+		 calibrate.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					if(((MainActivity)thisActivity).isConnected()){
+						((MainActivity)thisActivity).startProgram("Calibration.rxe");
+					}else{
+						Toast.makeText(thisActivity, "No hay robot conectado", Toast.LENGTH_SHORT).show();
+					}
+				}});
+		 shake.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					if(((MainActivity)thisActivity).isConnected()){
+						((MainActivity)thisActivity).startProgram("Shake.rxe");
+					}else{
+						Toast.makeText(thisActivity, "No hay robot conectado", Toast.LENGTH_SHORT).show();
+					}
+				}});
+		 
 	}
  
 }

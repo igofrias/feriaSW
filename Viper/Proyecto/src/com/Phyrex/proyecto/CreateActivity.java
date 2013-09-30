@@ -1,53 +1,39 @@
-package com.Phyrex.proyecto;
+package com.Phyrex.VIPeR;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.content.Intent;
-import android.graphics.Color;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.database.Cursor;
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
+/*******Create Activity
+ * se encarga de crear una mascota nueva en la base de datos
+ * obtiene algunos datos y recibe otros por parte de el usuario
+ * @author Neko-sama
+ *
+ */
 @SuppressLint("SimpleDateFormat")
 public class CreateActivity extends SherlockFragment{
 
-	/*"from" contiene los nombres de las columnas de la tabla correspondiente
-	 * "to" contiene los los id de los recursos (textview, imageview, etc...)
-	 * en este ejemplo se emplea un xml perteneciente al SO.
-	 * "android.R.layout.simple_list_item_2" que corresponde a un LinearLayout con 2 TextViews
-	 * */
-	private String[] from = new String[]{Database_Helper.Key_name,Database_Helper.Key_name};
-	private int[] to = new int[] {android.R.id.text1,android.R.id.text2}; 
-	private Database_Helper db;
-	private Cursor_Adapter adapter;
-	private ExpandableListView lista;
+	////////declaración de variables///////
 	private EditText name;
 	private Button btn;
-	private TextView nametext;
 	private static Activity thisActivity;
 	private Button bncnt;
 	MainActivity blublu = new MainActivity();
-	
+	///////////////////////////
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);        
@@ -78,7 +64,6 @@ public class CreateActivity extends SherlockFragment{
         color.setAdapter(adapter2);
 		name = (EditText)thisActivity.findViewById(R.id.name);
 		btn = (Button)thisActivity.findViewById(R.id.crear);
-		nametext = (TextView)thisActivity.findViewById(R.id.nametext);
 		
 		bncnt = (Button)thisActivity.findViewById(R.id.bncnt);
 		//Reload();	//cargar datos de la BD
@@ -86,49 +71,67 @@ public class CreateActivity extends SherlockFragment{
 		bncnt.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				((MainActivity)thisActivity).conectar();
-				nametext.setText(((MainActivity)thisActivity).return_mac());
+				((MainActivity)thisActivity).pairing();
 			}});
 
-
+		/************bnt listener
+		 *  boton para crear mascota
+		 *  muestra un dialog para confirmacion y se encarga de validar datos minimos
+		 *  y luego los guarda en la BD como una nueva mascota
+		 *  
+		 */
         btn.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {	
 				//nametext.setText(raza.getSelectedItemId().toString());
-				if(name.getText()!=null){
+				if(!isEmpty(name)){
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					String currentDateandTime = sdf.format(new Date());//si hay nombre crea el bicho en la base de datos
+					final String currentDateandTime = sdf.format(new Date());//si hay nombre crea el bicho en la base de datos
 					if(((MainActivity)thisActivity).return_mac()!=""){	
-						Database_Helper entry = new Database_Helper(CreateActivity.thisActivity);
-						entry.open_write();            	
-				    	entry.createEntry(name.getText().toString(), currentDateandTime, raza.getSelectedItem().toString(), color.getSelectedItem().toString(), ((MainActivity)thisActivity).return_mac());
-				    	entry.close();
-				    	((MainActivity)thisActivity).detach_create();
-				    	((MainActivity)thisActivity).launch_states();
-				    	((MainActivity)thisActivity).launch_mainpet();
+						final Database_Helper entry = new Database_Helper(CreateActivity.thisActivity);
+						final DB_Updater updater = new DB_Updater(CreateActivity.thisActivity);
+						final Init initialize = new Init(CreateActivity.thisActivity);
+					 /*ESTE DIALOG MUESTRA COMO SE LE CARGAN COSAS PREDEFINIDAS (no alterables)
+						 * */
+						AlertDialog.Builder dialog = new AlertDialog.Builder(thisActivity);  
+				        dialog.setTitle("Confirmación de datos");		//titulo (opcional)
+				        dialog.setIcon(R.drawable.ic_launcher);		//icono  (opcional)
+				        dialog.setMessage("¿Desea Crear la mascota con los siguientes datos?\n" + 
+				        "Nombre: "+ name.getText().toString() +  "\n"+
+				        "Fecha de Nacimiento: " + currentDateandTime+ "\n"+
+				        "Raza: "+ raza.getSelectedItem().toString() + "\n"+
+				        "Color: "+ color.getSelectedItem().toString() + "\n"+
+				        "MAC: "+((MainActivity)thisActivity).return_mac()); 
+				        
+				        
+				        dialog.setNegativeButton("Salir", null);  //boton de salida  (opcional)
+				        dialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {  //boton positivo (opcional)
+				            public void onClick(DialogInterface dialogo1, int id) {  
+				            	entry.open_write();            	
+						    	entry.createEntry(name.getText().toString(), currentDateandTime, raza.getSelectedItem().toString(), color.getSelectedItem().toString(), ((MainActivity)thisActivity).return_mac(), 0);
+						    	initialize.AchievementsList(entry);
+						    	initialize.StatisticsList(entry);
+						    	updater.achievement_first_pet(entry);
+						    	entry.close();
+						    	((MainActivity)thisActivity).detach_create();
+						    	((MainActivity)thisActivity).launch_states();
+						    	((MainActivity)thisActivity).launch_mainpet();
+				            }  
+				        });
+				        dialog.show();
+						
 					}else{
-						nametext.setText("error no hay mac :c");
+						Toast.makeText(thisActivity, "No hay Robot pareado", Toast.LENGTH_SHORT).show();
 					}
+			  }else{
+				  Toast.makeText(thisActivity, "Ingresar nombre de Mascota", Toast.LENGTH_SHORT).show();
 			  }  	
 			}});
         
-      //Evento de click para un item
-        /*lista.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-			
-			}
-  		});
-		*/
 	}
 	
-	
-	/*private void Reload() {
-		db = new Database_Helper(this);
-	    db.open_read();
-	    Cursor c = db.getAll();		//llenando el cursor con datos 
-	    adapter =  new ArrayAdapter(this, 0, c);		//creando el adapter
-	    lista.setAdapter(adapter);		//entregandole el adapter a la lista
-	    db.close();
-	} */
+	 private boolean isEmpty(EditText etText) {
+         return etText.getText().toString().trim().length() == 0;
+     }
 
 }
