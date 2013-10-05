@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2013.10.4)  4 OCT 2013 23:34
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2013.10.4)  4 OCT 2013 23:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2537,11 +2537,11 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 278.
 
-<./pic/caso3.png, id=599, 604.50844pt x 322.20375pt>
+<./pic/caso3.png, id=599, 563.10374pt x 304.13625pt>
 File: ./pic/caso3.png Graphic file (type png)
  <use ./pic/caso3.png>
 Package pdftex.def Info: ./pic/caso3.png used on input line 284.
-(pdftex.def)             Requested size: 362.70786pt x 193.32373pt.
+(pdftex.def)             Requested size: 337.86485pt x 182.48315pt.
 
 Underfull \hbox (badness 5189) in paragraph at lines 347--347
 []|\OT1/cmr/m/n/12 Dispositivo An-droid con ace-
@@ -2654,7 +2654,7 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 373.
 
-<./pic/caso4.png, id=617, 532.99126pt x 255.95625pt>
+<./pic/caso4.png, id=616, 532.99126pt x 255.95625pt>
 File: ./pic/caso4.png Graphic file (type png)
  <use ./pic/caso4.png>
 Package pdftex.def Info: ./pic/caso4.png used on input line 379.
@@ -3042,7 +3042,7 @@ Package epstopdf Info: Source file: <./pic/gantt1.eps>
 (epstopdf)             \includegraphics on input line 65.
 Package epstopdf Info: Output file is already uptodate.
 
-<./pic/gantt1-eps-converted-to.pdf, id=660, 723.70375pt x 543.02875pt>
+<./pic/gantt1-eps-converted-to.pdf, id=659, 723.70375pt x 543.02875pt>
 File: ./pic/gantt1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./pic/gantt1-eps-converted-to.pdf>
@@ -3060,7 +3060,7 @@ Package epstopdf Info: Source file: <./pic/gantt2.eps>
 (epstopdf)             \includegraphics on input line 71.
 Package epstopdf Info: Output file is already uptodate.
 
-<./pic/gantt2-eps-converted-to.pdf, id=661, 723.70375pt x 543.02875pt>
+<./pic/gantt2-eps-converted-to.pdf, id=660, 723.70375pt x 543.02875pt>
 File: ./pic/gantt2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./pic/gantt2-eps-converted-to.pdf>
@@ -3078,7 +3078,7 @@ Package epstopdf Info: Source file: <./pic/gantt3.eps>
 (epstopdf)             \includegraphics on input line 77.
 Package epstopdf Info: Output file is already uptodate.
 
-<./pic/gantt3-eps-converted-to.pdf, id=662, 723.70375pt x 543.02875pt>
+<./pic/gantt3-eps-converted-to.pdf, id=661, 723.70375pt x 543.02875pt>
 File: ./pic/gantt3-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./pic/gantt3-eps-converted-to.pdf>
@@ -3283,9 +3283,9 @@ nts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type
 ic/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmtt12.pfb>
-Output written on PlanDeProyecto.pdf (58 pages, 1237703 bytes).
+Output written on PlanDeProyecto.pdf (58 pages, 1231910 bytes).
 PDF statistics:
- 1059 PDF objects out of 1200 (max. 8388607)
+ 1058 PDF objects out of 1200 (max. 8388607)
  951 compressed objects within 10 object streams
  213 named destinations out of 1000 (max. 500000)
  402 words of extra memory for PDF output out of 10000 (max. 10000000)
