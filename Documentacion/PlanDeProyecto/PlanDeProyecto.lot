@@ -14,8 +14,27 @@
 \contentsline {table}{\numberline {4.2.9}{\ignorespaces ~RN1}}{25}{table.caption.19}
 \contentsline {table}{\numberline {4.2.10}{\ignorespaces ~~RN2}}{26}{table.caption.20}
 \addvspace {10\p@ }
+\contentsline {table}{\numberline {5.2.1}{\ignorespaces ~Caso de Uso: Crear Mascota}}{30}{table.caption.22}
+\contentsline {table}{\numberline {5.2.2}{\ignorespaces ~Caso de Uso: Conectar con Robot}}{31}{table.caption.23}
+\contentsline {table}{\numberline {5.2.3}{\ignorespaces ~Caso de Uso: Controlar Robot}}{31}{table.caption.24}
+\contentsline {table}{\numberline {5.2.4}{\ignorespaces ~Caso de Uso: Caminar}}{31}{table.caption.25}
+\contentsline {table}{\numberline {5.2.5}{\ignorespaces ~Caso de Uso: Calibrar Robot}}{32}{table.caption.26}
+\contentsline {table}{\numberline {5.2.6}{\ignorespaces ~Caso de Uso: Actualizar Estad\'isticas}}{33}{table.caption.28}
+\contentsline {table}{\numberline {5.2.7}{\ignorespaces ~Caso de Uso: Ver Estad\'isticas}}{33}{table.caption.29}
+\contentsline {table}{\numberline {5.2.8}{\ignorespaces ~Caso de Uso: Ver Achievements}}{33}{table.caption.30}
+\contentsline {table}{\numberline {5.2.9}{\ignorespaces ~Caso de Uso: Dar de Comer}}{34}{table.caption.31}
+\contentsline {table}{\numberline {5.2.10}{\ignorespaces ~~Caso de Uso: Comer}}{34}{table.caption.32}
+\contentsline {table}{\numberline {5.2.11}{\ignorespaces ~~Caso de Uso: Mandar a Dormir}}{34}{table.caption.33}
+\contentsline {table}{\numberline {5.2.12}{\ignorespaces ~~Caso de Uso: Dormir}}{35}{table.caption.34}
+\contentsline {table}{\numberline {5.2.13}{\ignorespaces ~~Caso de Uso: Recoger Pelota}}{36}{table.caption.36}
+\contentsline {table}{\numberline {5.2.14}{\ignorespaces ~~Caso de Uso: Jugar a la Pelota (Sin Robot)}}{36}{table.caption.37}
+\contentsline {table}{\numberline {5.2.15}{\ignorespaces ~~Caso de Uso: Jugar a la Pelota (Con Robot)}}{37}{table.caption.38}
+\contentsline {table}{\numberline {5.2.16}{\ignorespaces ~~Caso de Uso: Lavar}}{37}{table.caption.39}
+\contentsline {table}{\numberline {5.2.17}{\ignorespaces ~~Caso de Uso: Ir al Ba\~no}}{38}{table.caption.40}
+\contentsline {table}{\numberline {5.2.18}{\ignorespaces ~~Caso de Uso: Sacudirse}}{38}{table.caption.42}
+\contentsline {table}{\numberline {5.2.19}{\ignorespaces ~~Caso de Uso: Sacar Pulgas}}{39}{table.caption.43}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {6.1.1}{\ignorespaces ~Tiempo Disponible para Entregables}}{32}{table.caption.21}
+\contentsline {table}{\numberline {6.1.1}{\ignorespaces ~Tiempo Disponible para Entregables}}{42}{table.caption.44}
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {A.1.1}{\ignorespaces ~Tabla WBS}}{36}{table.caption.23}
-\contentsline {table}{\numberline {A.1.2}{\ignorespaces ~Distribuci\'on de horas para cada Fase}}{36}{table.caption.24}
+\contentsline {table}{\numberline {A.1.1}{\ignorespaces ~Tabla WBS}}{46}{table.caption.46}
+\contentsline {table}{\numberline {A.1.2}{\ignorespaces ~Distribuci\'on de horas para cada Fase}}{46}{table.caption.47}
