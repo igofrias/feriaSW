@@ -1,7 +1,11 @@
 package com.Phyrex.VIPeR;
 
+import java.util.concurrent.ExecutionException;
+
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +46,12 @@ public class MainPetActivity extends SherlockFragment {
 		 action.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
-					Toast.makeText(thisActivity, "No hay acciones disponibles", Toast.LENGTH_SHORT).show();
+					Handler handler = new Handler();
+					EatTask eatTask = new EatTask(thisActivity, handler);
+					Log.d("MainPetActivity","Ejecutando acciones");
+					
+					handler.post(eatTask);
+					
 				}});
 		 calibrate.setOnClickListener(new OnClickListener(){
 				@Override
