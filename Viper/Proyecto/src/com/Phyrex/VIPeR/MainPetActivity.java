@@ -46,11 +46,10 @@ public class MainPetActivity extends SherlockFragment {
 		 action.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
-					Handler handler = new Handler();
-					EatTask eatTask = new EatTask(thisActivity, handler);
+					PetActionManager petman = new PetActionManager(thisActivity);
 					Log.d("MainPetActivity","Ejecutando acciones");
+					petman.execute();
 					
-					handler.post(eatTask);
 					
 				}});
 		 calibrate.setOnClickListener(new OnClickListener(){

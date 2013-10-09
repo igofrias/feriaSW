@@ -30,15 +30,16 @@ public class EatTask implements SensorEventListener, Runnable {
 	Boolean action;
 	static double ACCEL_MIN = 1;
 	static long MIN_TIME = 1000; //en milisegundos
+	static boolean running;
 	Activity parent;
 	EatTask thisTask = this;
-	Handler ext_handler;
-
-	  public EatTask(Activity activity, Handler handler) {
+	//Handler ext_handler;
+	PetActionManager pet_manager;
+	  public EatTask(Activity activity, PetActionManager petman) {
 		  //Sets view and sensor
 		
 		parent = activity;
-		ext_handler = handler; //Handler que se comunica con la ui
+		pet_manager = petman;
 	    manager =(SensorManager) parent.getSystemService(Context.SENSOR_SERVICE);
 		accelerometer = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		gravity = new double[3];
@@ -124,6 +125,10 @@ public class EatTask implements SensorEventListener, Runnable {
 		
 		manager.registerListener(thisTask, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 		timer.start();
+		while(running)
+		{
+		}
+		this.doTaskAction();
 		
 		
 		
@@ -145,7 +150,7 @@ public class EatTask implements SensorEventListener, Runnable {
 		}
 		action = false;
 		manager.unregisterListener(thisTask);
-		ext_handler.removeCallbacksAndMessages(thisTask);
+		pet_manager.stop_everything();
 		
 	}
 }
