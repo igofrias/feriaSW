@@ -30,7 +30,7 @@ public class Achievement_Activity extends SherlockFragment {
 	//Adaptación del ejemplo de Taller de Android 
 	//Fusión entre BaseAdapter (Row.xml) y Cursor_Adapter 
 	//(para dinamicidad en caso q se agreguen mas cosas a la BD)
-	private String[] from = new String[]{Database_Helper.Key_name_ach,Database_Helper.Key_desc_ach,Database_Helper.Key_done,Database_Helper.Key_id};
+	private String[] from = new String[]{Database_Helper.Key_name_ach,Database_Helper.Key_desc_ach,Database_Helper.Key_done,Database_Helper.Key_img,Database_Helper.Key_id};
 	private Database_Helper db;
 	private Achievement_CursorAdapter adapter;
 	private GridView lista;	
@@ -64,7 +64,7 @@ public class Achievement_Activity extends SherlockFragment {
 		thisActivity = (MainActivity) getActivity();
 
 
-		lista = (GridView)thisActivity.findViewById(R.id.GridView1);		
+		lista = (GridView)thisActivity.findViewById(R.id.logros);		
 		Reload();	//cargar datos de la BD
 		lista.setCacheColorHint(Color.TRANSPARENT);
 
@@ -77,12 +77,13 @@ public class Achievement_Activity extends SherlockFragment {
 				LinearLayout linearLayot= (LinearLayout) l.getChildAt(position);
 		     	TextView name = (TextView) linearLayot.getChildAt(1);
 		     	TextView archdesc = (TextView) linearLayot.getChildAt(2);
+		     	TextView imgach = (TextView) linearLayot.getChildAt(3);
 			
-				if(name.getText().toString() == "void"){
+				if(!name.getText().equals("void")){
 					AlertDialog.Builder dialog = new AlertDialog.Builder((MainActivity)thisActivity);  
 			        dialog.setTitle("Logro Desbloqueado");		//titulo (opcional)
-			        dialog.setIcon(R.drawable.ic_launcher);		//icono  (opcional)
-			        dialog.setMessage("Titulo: " + name.getText() + "\n"
+			        dialog.setIcon(Integer.valueOf(imgach.getText().toString()));		//icono  (opcional)
+			        dialog.setMessage("Titulo: " + name.getText() + "\n\n"
 			        		+ "Descripción:\n"
 			        		+ archdesc.getText()); 
 			        

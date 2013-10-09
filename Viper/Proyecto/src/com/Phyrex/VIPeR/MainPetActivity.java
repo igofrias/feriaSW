@@ -2,20 +2,25 @@ package com.Phyrex.VIPeR;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
  
 public class MainPetActivity extends SherlockFragment {
-	private Button action;
 	private Button calibrate;
 	private Button shake;
+	private ImageButton eat;
+	private ImageButton sleep;
+	private ImageButton play;
 	private static Activity thisActivity;
+	private MainActivity main = new MainActivity();
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,21 +34,23 @@ public class MainPetActivity extends SherlockFragment {
 		View v = inflater.inflate(R.layout.activity_mainpet, container, false);
 		return v;
 		
-	}	
+	}
 	
 	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
 		 super.onActivityCreated(savedInstanceState); 
 		 thisActivity = getActivity();
-		 action = (Button)thisActivity.findViewById(R.id.action);
 		 calibrate = (Button)thisActivity.findViewById(R.id.calibrar);
 		 shake = (Button)thisActivity.findViewById(R.id.shake);
+		 eat = (ImageButton)thisActivity.findViewById(R.id.eati);
+		 sleep = (ImageButton)thisActivity.findViewById(R.id.sleepi);
+		 play = (ImageButton)thisActivity.findViewById(R.id.playimg);
+		 eat.setOnClickListener(listener);
+		 sleep.setOnClickListener(listener);
+		 play.setOnClickListener(listener);
 		 
-		 action.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View v) {
-					Toast.makeText(thisActivity, "No hay acciones disponibles", Toast.LENGTH_SHORT).show();
-				}});
+		 
+
 		 calibrate.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
@@ -64,6 +71,51 @@ public class MainPetActivity extends SherlockFragment {
 				}});
 		 
 	}
+	
+	OnClickListener listener= new OnClickListener(){
+
+         @Override
+         public void onClick(View v)
+         {
+         	final DB_Updater updater = new DB_Updater(thisActivity);
+         	final Database_Helper entry = new Database_Helper(thisActivity);
+         	SherlockFragment fragment1 = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
+         	switch(v.getId()){
+         		case R.id.eati:
+				    	if(updater.eat(entry)){
+				    		Toast.makeText(thisActivity, "Logro Desbloqueado Primeras mordidas", Toast.LENGTH_LONG).show();
+				    	}
+				
+				 		if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
+				 			((StatesActivity)fragment1).eating();
+				        }
+				    	Toast.makeText(thisActivity, "Om nom nom nom", Toast.LENGTH_SHORT).show();
+				    /*	if(((MainActivity)main).isConnected())
+				    		main.startProgram("");*/
+			    	break;
+			    	
+         		case R.id.sleepi:
+ 			    		if(updater.sleep(entry))
+ 			    			Toast.makeText(thisActivity, "Logro Desbloqueado Perezoso", Toast.LENGTH_LONG).show();
+ 			    		Toast.makeText(thisActivity, ". . z z Z Z", Toast.LENGTH_SHORT).show();
+			    	break;
+			    	
+         		case R.id.playimg:
+         			if(updater.play(entry))
+         				Toast.makeText(thisActivity, "Logro Desbloqueado Jugeton", Toast.LENGTH_LONG).show();
+         			if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
+			 			((StatesActivity)fragment1).playing();
+			        }
+ 			    	Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
+			    	break;
+			    	
+			    	default:
+			    		
+			    	break;
+         	}
+         	
+         }
+    };
  
 }
 

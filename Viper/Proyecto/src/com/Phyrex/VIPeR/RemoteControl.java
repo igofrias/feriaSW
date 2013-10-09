@@ -1,6 +1,5 @@
 package com.Phyrex.VIPeR;
 
-
 import com.actionbarsherlock.app.SherlockFragment;
 
 import android.annotation.TargetApi;
@@ -31,7 +30,7 @@ import android.widget.SeekBar;
 public class RemoteControl extends SherlockFragment implements SensorEventListener{
 	private int MAX_RANGE;
 	private double MAX_VEL;
-	private Sensor accelerometer;
+	private Sensor acelerometro;
 	SensorManager manager;
 	double raw_accel_x = 0;
 	double raw_accel_y = 0;
@@ -47,13 +46,21 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	int vel_robot_x = 0;
 	int vel_robot_y = 0;
 	int vel_robot_z = 0;
-	double sens;
+	double sensibilidad;
 	Thread thMesseger;
 	
 	DrawJoystick canvas;
 	Activity parent_activity;
 	MainActivity thisActivity;
-	
+	public void initControlRemoto(Sensor accel, SensorManager senman)
+	{
+		//Inicializador en caso de necesitar inicializar estas cosas desde afuera
+		acelerometro = accel;
+		manager = senman;
+		gravity = new double[3];
+		MAX_RANGE = 127;
+		MAX_VEL = 1;
+	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,19 +75,19 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	@Override
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	      Bundle savedInstanceState) {
-		  //Creates fragment
+		  //Crea el fragmento con el acelerometr listo
 		canvas = new DrawJoystick(getActivity());
-	    //View view = inflater.inflate(R.layout.control_remoto_debug_layout,
-	        //container, false);
+	    View view = inflater.inflate(R.layout.control_remoto_debug_layout,
+	        container, false);
 	    
 	    manager =(SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
-		accelerometer = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		acelerometro = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		gravity = new double[3];
 		MAX_RANGE = 100;
 		MAX_VEL = 10;
-		sens = 0.8;
+		sensibilidad = 0.8;
 		canvas.setWillNotDraw(false);
-	    return canvas;
+	    return view;
 	  }	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -93,8 +100,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	        	{
 	        		if(thisActivity.isConnected())
 	        		{
-	        			send_speeds();
-	        			
+	        			enviar_velocidades();
+	        			canvas.update_coordinates(vel_robot_x, vel_robot_y);
 	        			//SurfaceHolder hold = canvas.getHolder();
 	        			//Canvas can = hold.lockCanvas();
 	        			
@@ -110,7 +117,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	    });
 		
 	}
-	public void process_aceleration()
+	public void procesar_aceleraciones()
 	{
 		//Ocupa los filtros indicados en el tutorial para dejar una aceleracion
 		//pura sin influencia de la gravedad.
@@ -136,7 +143,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		//Transforma una velocidad de celular a perro
 		//Velocidad del robot proporcional a rango de movimiento 
 		double k =(double)MAX_RANGE/MAX_VEL;
-		int vel_robot = (int) (Math.ceil(vel*sens*k));
+		int vel_robot = (int) (Math.ceil(vel*sensibilidad*k));
 		if(vel_robot > MAX_RANGE)
 		{
 			vel_robot = MAX_RANGE;
@@ -148,7 +155,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		return vel_robot;
 				
 	}
-	public void speeds_to_robot()
+	public void trans_vels_a_robot()
 	{
 		//Transforma los ejes x e y en velocidades por motor
 		//Sacado del codigo de minddroids
@@ -196,7 +203,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		}
 		
 	}
-	public void get_speed()
+	public void obtener_velocidades()
 	{
 		//A partir de la aceleracion obtiene la velocidad a mover
 		vel_x = accel_x;
@@ -207,7 +214,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 //		vel_robot_x = this.trans_vel_a_robot(vel_x);
 //		vel_robot_y = this.trans_vel_a_robot(vel_y);
 //		vel_robot_z = this.trans_vel_a_robot(vel_z);
-		speeds_to_robot();
+		trans_vels_a_robot();
 	}
 	public int bar_percentage(int bar_range, double max_vel, double vel)
 	{
@@ -215,13 +222,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		int percentage = (int)Math.ceil((50.0*vel)/max_vel) + 50;
 		return percentage;
 	}
-	public int bar_percentage(int bar_range, int center, double max_vel, double vel)
-	{
-		//Ve el porcentaje que se tiene que mover, esta vez con un centro explicito
-		int percentage = (int)Math.ceil(((bar_range-center)*vel)/max_vel) + center;
-		return percentage;
-	}
-	public void reset_speeds()
+	public void resetear_velocidades()
 	{
 		vel_x = 0;
 		vel_y = 0;
@@ -237,7 +238,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	    y_view.setProgress(bar_percentage(100,MAX_VEL,this.vel_y));
 	    
 	}
-	public void send_speeds()
+	public void enviar_velocidades()
 	{
 		
 		//Envia los datos obtenidos al robot.
@@ -274,11 +275,11 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	    raw_accel_x = event.values[0];
 	    raw_accel_y = event.values[1];
 	    raw_accel_z = event.values[2];
+	    // Do something with this sensor value.
+	    procesar_aceleraciones();
+	    obtener_velocidades();
 	    
-	    process_aceleration();
-	    get_speed();
-	    canvas.update_coordinates(this.vel_x, this.vel_y);
-	    //mostrar_velocidades_debug();
+	    mostrar_velocidades_debug();
 	    
 	    
 	    
@@ -287,7 +288,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	public void onResume() {
 		super.onResume();
 		running=true;
-		manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+		manager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_NORMAL);
 		if(!thMesseger.isAlive())
 		{
 			thMesseger.start();
@@ -319,7 +320,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		MAX_VEL = mAX_VEL;
 	}
 	public void setAcelerometro(Sensor acelerometro) {
-		this.accelerometer = acelerometro;
+		this.acelerometro = acelerometro;
 	}
 	public void setManager(SensorManager manager) {
 		this.manager = manager;
@@ -328,29 +329,20 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	{
 		this.thMesseger.start();
 	}
-	private class DrawJoystick extends SurfaceView implements SurfaceHolder.Callback, Runnable
+	private class DrawJoystick extends SurfaceView implements SurfaceHolder.Callback
 	{
-		//Clase que maneja el dibujo del joystick. Tiene un thread que llama a que
-		//se dibuje en el canvas
-		Double vel_x;
-		Double vel_y;
+		
+		int vel_x;
+		int vel_y;
 		Paint color;
-		Paint color_center;
-		SurfaceHolder hold;
-		Canvas can;
-		Thread drawthread;
-		Boolean running;
 		public DrawJoystick(Context context) {
 			
 			super(context);
 			color = new Paint();
 			getHolder().addCallback(this);
 			color.setColor(Color.GREEN);
-			color_center = new Paint();
-			color_center.setColor(Color.GRAY);
-			vel_x = 0.0;
-			vel_y = 0.0;
-			running = false;
+			vel_x = 0;
+			vel_y = 0;
 			// TODO Auto-generated constructor stub
 		}
 
@@ -358,74 +350,51 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		public void surfaceChanged(SurfaceHolder holder, int format, int width,
 				int height) {
 			// TODO Auto-generated method stub
-			
+			canvas.update_coordinates(vel_robot_x, vel_robot_y);
+			SurfaceHolder hold = canvas.getHolder();
+			Canvas can = hold.lockCanvas();
+			synchronized(hold)
+			{
+				canvas.draw(can);
+			}
+			hold.unlockCanvasAndPost(can);
 		}
 
 		@Override
 		public void surfaceCreated(SurfaceHolder holder) {
 			// TODO Auto-generated method stub
-			
-			hold = canvas.getHolder();
-			running = true;
-			drawthread = new Thread(this);
-			drawthread.start();
+			canvas.update_coordinates(vel_robot_x, vel_robot_y);
+			SurfaceHolder hold = canvas.getHolder();
+			Canvas can = hold.lockCanvas();
+			synchronized(hold)
+			{
+				canvas.draw(can);
+			}
+			hold.unlockCanvasAndPost(can);
 		}
 
 		@Override
 		public void surfaceDestroyed(SurfaceHolder holder) {
 			// TODO Auto-generated method stub
-			running = false;
-			Boolean retry = true;
-			while(retry)
-			{
-				try {
-					
-					drawthread.join();
-					retry = false;
-					
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			
 		}
 		
-		
-		public void Draw(Canvas canvas)
+		@Override
+		public void onDraw(Canvas canvas)
 		{
-			
-			float center_x = canvas.getWidth()/2;
-			float center_y = canvas.getHeight()/2;
-			int size = 30;
-			int x = bar_percentage(canvas.getWidth() - size, (int)center_x, -MAX_VEL, vel_x);
-			int y = bar_percentage(canvas.getHeight() - size, (int)center_y,MAX_VEL, vel_y);
+			float centro_x = canvas.getHeight()/2;
+			float centro_y = canvas.getWidth()/2;
+			canvas.save();
 			canvas.drawARGB(255, 255, 255, 255);
-			canvas.drawCircle(canvas.getWidth()/2,canvas.getHeight()/2,100, color_center);
-			canvas.drawCircle(x, y , size, color);
-			
+			canvas.drawCircle(vel_y + centro_y, vel_x + centro_x, 10, color);
+			//canvas.drawCircle(canvas.getHeight()/2,canvas.getWidth()/2,100, color);
+			canvas.restore();
 		}
-		public void update_coordinates(Double x, Double y)
+		public void update_coordinates(int x, int y)
 		{
 			vel_x = x;
 			vel_y = y;
 			
-		}
-
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			
-			while(running){
-				if(hold.getSurface().isValid())
-				{
-					can = hold.lockCanvas();
-				
-					
-						canvas.Draw(can);
-					
-					hold.unlockCanvasAndPost(can);
-				}
-			}
 		}
 	}
 }

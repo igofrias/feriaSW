@@ -24,31 +24,31 @@
     <string name="title_activity_btcommunicator">BTCommunicator</string>
     <string name="title_activity_btconnectable">BTConnectable</string>
     <string name="title_activity_lcpmessage">LCPMessage</string>
-    <string name="title_activity_device_list">DeviceListActivity</string>
+    <string name="title_activity_device_list">Seleccionar Dispositivo</string>
 
     <!-- bluetooth messages -->
     <string name="connecting_please_wait">Conectando, por favor espere.</string>
-    <string name="no_paired_nxt">No hay robot pareado!</string>
-    <string name="problem_at_connecting">Problema creando la conexion!</string>
-    <string name="problem_at_closing">Problema cerrando la conexion!</string>
-    <string name="problem_at_sending">Problema enviando mensaje!</string>
-    <string name="problem_at_receiving">Problema recibiendo mensaje!</string>
+    <string name="no_paired_nxt">¡No hay robot vinculado!</string>
+    <string name="problem_at_connecting">¡Problema creando la conexion!</string>
+    <string name="problem_at_closing">¡Problema cerrando la conexion!</string>
+    <string name="problem_at_sending">¡Problema enviando mensaje!</string>
+    <string name="problem_at_receiving">¡Problema recibiendo mensaje!</string>
     <string name="current_position">Posicion Actual: </string>
-    <string name="bt_error_dialog_title">Error de BlueTooth</string>
+    <string name="bt_error_dialog_title">Error BlueTooth</string>
     <string name="bt_error_dialog_message">Parece que el robot NXT no esta prendido. Favor asegurarse que el robot NXT esta encendido 
         y tiene Bluetooth encendido e intente conectarse otra vez.</string>
-    <string name="bt_error_dialog_message2">Conexión con el Robot perdida</string>
-    <string name="bt_needs_to_be_enabled"> Bluetooth debe estar activo!</string>
+    <string name="bt_error_dialog_message2">Se ha perdido la conexión.</string>
+    <string name="bt_needs_to_be_enabled"> ¡Bluetooth debe estar activo!</string>
 
     <!-- DeviceListActivity -->
-    <string name="scanning">Escaneando robots NXT...</string>
+    <string name="scanning">Escaneando dispositivos.</string>
     <string name="select_device">Por favor, seleccione el robot.</string>
-    <string name="none_paired">Ningun robot ha sido pareado.</string>
-    <string name="none_found">no se han encontrado dispositivos.</string>
-    <string name="title_paired_devices">Robots pareados</string>
+    <string name="none_paired">No tiene robots vinculados.</string>
+    <string name="none_found">No se han encontrado dispositivos.</string>
+    <string name="title_paired_devices">Robots vinculados</string>
     <string name="title_other_devices">Otros dispositivos</string>
     <string name="button_scan">Buscar dispositivos</string>
-    <string name="pairing_message">Despues de parear, presionar <b>conectar</b>.</string>
+    <string name="pairing_message">Despues de vincular, presionar <b>conectar</b>.</string>
     <string name="wait_till_bt_on">Encendiendo Bluetooth para conectar su robot.</string>
     <string name="bt_off_message">Se ha apagado el Bluetooth.</string>
     <string name="action_1">Ejecutada Accion 1</string>
@@ -66,14 +66,14 @@
 
     <!-- Sensor/bluetooth problem -->
     <string name="sensor_initialization_failure">       Sensor apropiado no encontrado.</string>
-    <string name="bt_initialization_failure">        Bluetooth no soportsado.</string>
+    <string name="bt_initialization_failure">Bluetooth no soportsado.</string>
     <string name="title_activity_main_pet">MainPetActivity</string>
     <string name="title_activity_btservice">BTService</string>
-    <string name="about">About</string>
-    <string name="connect">Connect</string>
-    <string name="disconnect">Disconnect</string>
+    <string name="about">Acerca de</string>
+    <string name="connect">Conectar</string>
+    <string name="disconnect">Desconectar</string>
     <string name="start">Start Program</string>
-    <string name="quit">Quit</string>
+    <string name="quit">Salir</string>
     <string name="action">Action!</string>
     <string name="title_activity_control_remoto">ControlRemoto</string>
     <string name="hora">Hora</string>
@@ -82,6 +82,5 @@
     <string name="minutos">Minutos</string>
     <string name="dia">Día</string>
     <string name="dias">Días</string>
-    <string name="hello_world">Hola mundo</string>
 
 </resources>

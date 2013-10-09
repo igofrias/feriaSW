@@ -1,6 +1,5 @@
 package com.Phyrex.VIPeR;
 
-
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -36,45 +35,36 @@ public class Statistics_CursorAdapter extends SimpleCursorAdapter{
 		if(convertView==null){
 			@SuppressWarnings("static-access")
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.row, null);
+			convertView = inflater.inflate(R.layout.rowlist, null);
 		}
 
 		cursor.moveToPosition(position);
 
 		/*declaración e identificación de cada elemento que ira dentro del item
 		 * */
-		final TextView name = (TextView)convertView.findViewById(R.id.name);
-		final TextView subtitle = (TextView)convertView.findViewById(R.id.title);	    
-		LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.layout);
+		//final TextView name = (TextView)convertView.findViewById(R.id.desc);
+		//final TextView subtitle = (TextView)convertView.findViewById(R.id.titlelista);
+		final TextView title = (TextView)convertView.findViewById(R.id.titlelist);
+		final TextView number = (TextView)convertView.findViewById(R.id.listnumber);
+		LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.layoutrowlista);
 
 		/*Asignacion de valores.
 		 * */
-		name.setText(cursor.getString(cursor.getColumnIndex(from[1])));
-		subtitle.setText(cursor.getString(cursor.getColumnIndex(from[0])));
+		//name.setText(cursor.getString(cursor.getColumnIndex(from[1])));
+		//subtitle.setText(cursor.getString(cursor.getColumnIndex(from[0])));
+		title.setText(cursor.getString(cursor.getColumnIndex(from[0])));
+		number.setText(cursor.getString(cursor.getColumnIndex(from[2])));
+		layout.setBackgroundResource(Integer.valueOf(cursor.getString(cursor.getColumnIndex(from[3]))));
 
-		/*switch(Integer.valueOf(cursor.getString(cursor.getColumnIndex(from[3])))){
-		case 1:
-			layout.setBackgroundResource(R.drawable.est1);
-			break;
-		case 2:
-			layout.setBackgroundResource(R.drawable.est2);
-			break;
-		case 3:
-			layout.setBackgroundResource(R.drawable.est3);
-			break;
-			/*
-		case 4:
-			layout.setBackgroundResource(R.drawable.est4);
-			break;
-		case 5:
-			layout.setBackgroundResource(R.drawable.est5);
-			break;
-			
-		}*/
 
 		/*El evento de click tambien se lo pueden dar al convertvews
 		 * EJ: convertView.setOnClickListener(listener);
 		 */
 		return convertView;
+	}
+	
+	@Override
+	public boolean isEnabled(int position) {
+	    return false;
 	}
 }
