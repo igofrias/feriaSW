@@ -54,9 +54,9 @@ public class DeviceListActivity extends Activity {
         setContentView(R.layout.device_list);
         // Set result CANCELLED in case the user backs out
         setResult(Activity.RESULT_CANCELED);
-
         // Initialize the button to perform device discovery
         Button scanButton = (Button) findViewById(R.id.button_scan);
+        //findViewById(R.id.title_devicelistactivity).setVisibility(View.VISIBLE);
         scanButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 doDiscovery();

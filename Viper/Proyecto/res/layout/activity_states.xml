@@ -2,23 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
+    android:background="#033600"
     android:orientation="vertical"
     tools:context=".StatesActivity" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="2dp" >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3" >
+            android:layout_weight="4" >
 
             <ImageView
                 android:id="@+id/avatar"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="43dp"
+                android:layout_gravity="right|center_horizontal"
                 android:src="@drawable/tentosaurioava" />
 
             <LinearLayout
@@ -39,13 +43,6 @@
                         android:layout_weight="3"
                         android:text="Pepe"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <ImageView
-                        android:id="@+id/btstate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:src="@android:drawable/stat_sys_data_bluetooth" />
                 </LinearLayout>
 
                 <TextView
@@ -56,6 +53,13 @@
                     android:text="2 Días"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btstate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:src="@android:drawable/stat_sys_data_bluetooth" />
 
         </LinearLayout>
 
@@ -86,7 +90,7 @@
                     android:layout_weight="2" />
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/im"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/energy" />
@@ -107,7 +111,7 @@
                 android:layout_weight="1" >
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/eat1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -122,7 +126,7 @@
                     android:layout_weight="2" />
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/playimg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/health" />

@@ -1,6 +1,8 @@
 package com.Phyrex.VIPeR;
 
 
+import java.util.List;
+
 import com.actionbarsherlock.app.SherlockFragment;
 
 import android.app.Activity;
@@ -11,7 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.GridView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class Statistics_Activity extends SherlockFragment {
 
@@ -20,11 +23,14 @@ public class Statistics_Activity extends SherlockFragment {
 	 * en este ejemplo se emplea un xml perteneciente al SO.
 	 * "android.R.layout.simple_list_item_2" que corresponde a un LinearLayout con 2 TextViews
 	 * */
-	private String[] from = new String[]{Database_Helper.Key_name_est,Database_Helper.Key_desc_est,Database_Helper.Key_cant_est,Database_Helper.Key_id_est}; 
+	private String[] from = new String[]{Database_Helper.Key_name_est,Database_Helper.Key_desc_est,Database_Helper.Key_cant_est, Database_Helper.Key_imgstat ,Database_Helper.Key_id_est}; 
 	private Database_Helper db;
 	private Statistics_CursorAdapter adapter;
-	private GridView lista;
-	
+	private ListView lista;
+	private TextView statsname;
+	private TextView statscolor;
+	private TextView statsrace;
+	private TextView statsbirthdate;
 	private static Activity thisActivity;
 	Activity parent_activity;
 	
@@ -46,7 +52,7 @@ public class Statistics_Activity extends SherlockFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		View v = inflater.inflate(R.layout.activity_cursor_adapter, container, false);
+		View v = inflater.inflate(R.layout.fragmento_ranking, container, false);
 		return v;
 	}
 
@@ -56,11 +62,23 @@ public class Statistics_Activity extends SherlockFragment {
 		thisActivity = (MainActivity) getActivity();
 		
 		
-		lista = (GridView)thisActivity.findViewById(R.id.logros);		
+		lista = (ListView)thisActivity.findViewById(R.id.lst_1);		
 		Reload();	//cargar datos de la BD
         lista.setCacheColorHint(Color.TRANSPARENT);
-        
-      //Evento de click para un item
+        lista.setItemsCanFocus(false);
+        Database_Helper db = new Database_Helper(thisActivity);
+		List<Pet> mascotas = db.getPets(); //lista de mascotas
+		db.close();
+		Pet petto = mascotas.get(0);
+		statsname= (TextView)thisActivity.findViewById(R.id.statname);
+		statscolor= (TextView)thisActivity.findViewById(R.id.statscolor);
+		statsrace = (TextView)thisActivity.findViewById(R.id.statrace);
+		statsbirthdate = (TextView)thisActivity.findViewById(R.id.statsbirthdate);
+		statsname.setText(petto._name);
+		statscolor.setText(petto._color);
+		statsrace.setText(petto._raza);
+		statsbirthdate.setText(petto._birthdate);
+		//Evento de click para un item
         /*lista.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 			
@@ -74,7 +92,7 @@ public class Statistics_Activity extends SherlockFragment {
 		db = new Database_Helper(thisActivity);
 	    db.open_read();
 	    Cursor c = db.getAllStatistics();		//llenando el cursor con datos 
-	    adapter = new Statistics_CursorAdapter(thisActivity, R.layout.row, c, from);		//creando el adapter
+	    adapter = new Statistics_CursorAdapter(thisActivity, R.layout.rowlist, c, from);		//creando el adapter
 	    lista.setAdapter(adapter);		//entregandole el adapter a la lista
 	    db.close();
 	} 

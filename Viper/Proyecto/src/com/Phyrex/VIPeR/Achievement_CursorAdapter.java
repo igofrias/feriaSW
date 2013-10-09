@@ -1,23 +1,13 @@
 package com.Phyrex.VIPeR;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class Achievement_CursorAdapter extends SimpleCursorAdapter{
@@ -53,10 +43,11 @@ public class Achievement_CursorAdapter extends SimpleCursorAdapter{
 	    LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.layout);
 	    final TextView archtext = (TextView)convertView.findViewById(R.id.archname);	
 	    final TextView description = (TextView)convertView.findViewById(R.id.description);	
+	    final TextView imgint = (TextView)convertView.findViewById(R.id.imgint);	
 	    
 	    /*Asignacion de valores.
 	     * */
-	    subtitle.setText(cursor.getString(cursor.getColumnIndex(from[0])));
+	   // subtitle.setText(cursor.getString(cursor.getColumnIndex(from[0])));
 	    
 	    //Si la condición de encontrar un 1 ("hecho") en achievement satisface, muestra todos los datos
 	    //respectivos de ese achievement.
@@ -68,7 +59,8 @@ public class Achievement_CursorAdapter extends SimpleCursorAdapter{
 	    	subtitle.setText("Ver");
 	    	archtext.setText(cursor.getString(cursor.getColumnIndex(from[0])));
 	    	description.setText(cursor.getString(cursor.getColumnIndex(from[1])));
-	    	layout.setBackgroundResource(R.drawable.firstpetarch);
+	    	layout.setBackgroundResource(Integer.valueOf(cursor.getString(cursor.getColumnIndex(from[3]))));
+	    	imgint.setText(cursor.getString(cursor.getColumnIndex(from[3])));
 	    }
 	    else{
 	    	subtitle.setText("No disponible");

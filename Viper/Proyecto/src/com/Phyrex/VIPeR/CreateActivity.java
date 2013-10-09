@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +86,7 @@ public class CreateActivity extends SherlockFragment{
 			public void onClick(View v) {	
 				//nametext.setText(raza.getSelectedItemId().toString());
 				if(!isEmpty(name)){
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
 					final String currentDateandTime = sdf.format(new Date());//si hay nombre crea el bicho en la base de datos
 					if(((MainActivity)thisActivity).return_mac()!=""){	
 						final Database_Helper entry = new Database_Helper(CreateActivity.thisActivity);
@@ -111,7 +112,13 @@ public class CreateActivity extends SherlockFragment{
 						    	entry.createEntry(name.getText().toString(), currentDateandTime, raza.getSelectedItem().toString(), color.getSelectedItem().toString(), ((MainActivity)thisActivity).return_mac(), 0);
 						    	initialize.AchievementsList(entry);
 						    	initialize.StatisticsList(entry);
-						    	updater.achievement_first_pet(entry);
+						    	if(DB_Updater.achievement_first_pet(entry))
+						    		Toast.makeText(thisActivity, "Logro Primera Mascota Desbloqueado", Toast.LENGTH_LONG).show();
+						    	if(name.getText().toString().equals("Pepe") || name.getText().toString().equals("pepe")){
+						    		Log.d("pepe", "es pepe");
+						    		if(DB_Updater.achievement_6_pepe(entry))
+						    			Toast.makeText(thisActivity, "Logro Pepe Debloqueado", Toast.LENGTH_LONG).show();
+						    	}
 						    	entry.close();
 						    	((MainActivity)thisActivity).detach_create();
 						    	((MainActivity)thisActivity).launch_states();
