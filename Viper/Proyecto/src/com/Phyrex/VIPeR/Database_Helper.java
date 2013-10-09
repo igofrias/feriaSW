@@ -29,6 +29,7 @@ public class Database_Helper {
 	public static final String Key_name_ach = "name";
 	public static final String Key_desc_ach = "desc";
 	public static final String Key_done = "done";			
+	public static final String Key_img = "img";	
 	
 	//Elementos Estadisticas
 	private static final String DB_table_est = "Statistics_data";
@@ -37,6 +38,7 @@ public class Database_Helper {
 	public static final String Key_name_est = "name";
 	public static final String Key_desc_est = "desc";
 	public static final String Key_cant_est = "amount";
+	public static final String Key_imgstat = "imgstat";
 	
 	private DBhelper helper;
 	private final Context context;
@@ -54,22 +56,28 @@ public class Database_Helper {
 			//db.execSQL("DROP TABLE IF EXISTS " + DB_table);
 			db.execSQL("CREATE TABLE " + DB_table + " (" 
 					+ Key_id + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
-					+ Key_name + " TEXT NOT NULL," + Key_raza + " VARCHAR(15),"+ Key_color + " VARCHAR(15),"
-					+ Key_date + " DATETIME, " + Key_mac + " VARCHAR(18), "+ Key_death +" INTEGER NOT NULL);");
+					+ Key_name + " TEXT NOT NULL," 
+					+ Key_raza + " VARCHAR(15),"
+					+ Key_color + " VARCHAR(15),"
+					+ Key_date + " DATETIME, " 
+					+ Key_mac + " VARCHAR(18), "
+					+ Key_death +" INTEGER NOT NULL);");
 			
 			//db.execSQL("DROP TABLE IF EXISTS " + DB_table_ach);
 			db.execSQL("CREATE TABLE " + DB_table_ach + " (" 
 					+ Key_id_ach + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 					+ Key_name_ach + " TEXT NOT NULL, " 
 					+ Key_desc_ach + " TEXT NOT NULL, "
-					+ Key_done + " INTEGER NOT NULL);");	
+					+ Key_done + " INTEGER NOT NULL, "
+					+ Key_img + " INTEGER NOT NULL);");	
 			
 			//db.execSQL("DROP TABLE IF EXISTS " + DB_table_est);
 			db.execSQL("CREATE TABLE " + DB_table_est + " (" 
-					+ Key_id_est + " INTEGER PRIMARY KEY AUTOINCREMENT, " 
+					+ Key_id_est + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ Key_name_est + " TEXT NOT NULL," 
 					+ Key_desc_est + " TEXT NOT NULL,"
-					+ Key_cant_est + " INTEGER NOT NULL);");
+					+ Key_cant_est + " INTEGER NOT NULL,"
+					+ Key_imgstat + " INTEGER NOT NULL);");
 		}
 
 		@Override
@@ -132,6 +140,14 @@ public class Database_Helper {
     	Cursor c = Database.rawQuery(select, null);
 		return c;
 	}
+	
+	//obtener datos por el nombre
+	public Cursor updatePetMac(String nombre, String Mac) {
+		String select = "Update " + DB_table + " SET  "+ Key_mac + " = '" + Mac +"' WHERE " + Key_name + "= '" + nombre + "';";
+    	Cursor c = Database.rawQuery(select, null);
+		return c;
+	}
+
 	//obtener todo
 	public Cursor getAll() {
 		String select = "Select *From "+DB_table;
@@ -140,11 +156,19 @@ public class Database_Helper {
 		return c;
 	}
 	
+	//obtener todo
+	public Cursor getPetByName(String name) {
+			String select = "Select * From "+DB_table + "where" + Key_name +"=" + name;
+			select = select + " ORDER BY "+Key_id+" DESC";
+	    	Cursor c = Database.rawQuery(select, null);
+			return c;
+	}
+	
 
 	public List<Pet> getPets() {
 		List<Pet> listamascotas = new ArrayList<Pet>();
 		// Select All Query
-		String selectQuery = "SELECT * FROM " + DB_table + " WHERE " + Key_death + " = 0  ORDER BY " + Key_id + " DESC";
+		String selectQuery = "SELECT * FROM " + DB_table + " WHERE " + Key_death + " = 0  ORDER BY " + Key_id + " ASC";
 
 		helper = new DBhelper(context);
 		Database = helper.getWritableDatabase();
@@ -166,7 +190,7 @@ public class Database_Helper {
 			} while (cursor.moveToNext());
 		}
 		
-		Database.close();
+		//Database.close();
 		
 		return listamascotas;
 	}
@@ -176,20 +200,22 @@ public class Database_Helper {
 	}
 	
 	//Agregar Logro
-	public void createAchievement(String name, String desc, int done) {
+	public void createAchievement(String name, String desc, int done, int img) {
 		ContentValues cv = new ContentValues();
 		cv.put(Key_name_ach, name);
 		cv.put(Key_desc_ach, desc);
 		cv.put(Key_done, done);
+		cv.put(Key_img, img);
 		Database.insert(DB_table_ach, null, cv);
 	}	
 
 	//Agregar Indicador en estadística
-	public void createStatistics(String nombre, String desc, int amount) {
+	public void createStatistics(String nombre, String desc, int amount, int imgstat) {
 		ContentValues cv = new ContentValues();
 		cv.put(Key_name_est, nombre);
 		cv.put(Key_desc_est, desc);
 		cv.put(Key_cant_est, amount);
+		cv.put(Key_imgstat, imgstat);
 		Database.insert(DB_table_est, null, cv);
 	}
 	
