@@ -1,10 +1,8 @@
 package com.Phyrex.VIPeR;
 
 import java.util.concurrent.BlockingQueue;
-<<<<<<< HEAD
 import java.util.concurrent.Future;
-=======
->>>>>>> 48c9e7b9fded8f2b2368ed0159abe291b9f60d30
+
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +12,7 @@ import android.os.Handler;
 import android.os.Message;
 
 //Clase que instancia las acciones del robot que se accesan a traves de "accion"
+
 public class PetActionManager  {
 	//static PetActionManager instance;
 	public static int CORE_NUM = Runtime.getRuntime().availableProcessors(); 
@@ -23,11 +22,10 @@ public class PetActionManager  {
     private Handler handler;
     private ThreadPoolExecutor executor;
     private Activity currentActivity;
-<<<<<<< HEAD
+
     Future<?> futuretask;
     boolean running;
-=======
->>>>>>> 48c9e7b9fded8f2b2368ed0159abe291b9f60d30
+
 	public PetActionManager(Activity activity)
 	{
 		currentActivity = activity;
@@ -43,24 +41,22 @@ public class PetActionManager  {
 				
             }
 		};
-<<<<<<< HEAD
-	
-		
-=======
->>>>>>> 48c9e7b9fded8f2b2368ed0159abe291b9f60d30
-		
+
 	}
 	
 	public void execute()
 	{
 		//Aqui se ejecutan todas las tareas.
 		EatTask eatTask = new EatTask(currentActivity, this);
-<<<<<<< HEAD
+		SleepTask sleepTask = new SleepTask(currentActivity, this);
+		
 		running = true;
-		futuretask = executor.submit(eatTask);
-=======
+		
+		//futuretask = executor.submit(eatTask);
+		//futuretask = executor.submit(sleepTask);
+		
 		executor.execute(eatTask);
->>>>>>> 48c9e7b9fded8f2b2368ed0159abe291b9f60d30
+		executor.execute(sleepTask);
 		
 	}
 	public void stop_everything()

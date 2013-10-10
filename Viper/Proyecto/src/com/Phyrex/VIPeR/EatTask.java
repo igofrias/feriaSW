@@ -1,7 +1,4 @@
 package com.Phyrex.VIPeR;
-
-
-
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -127,19 +124,12 @@ public class EatTask implements SensorEventListener, Runnable {
 		timer.start();
 		while(running)
 		{
-<<<<<<< HEAD
 			if(!running || action)
 			{
 				break;
 			}
 		}
 		this.doTaskAction();
-=======
-		}
-		this.doTaskAction();
-		
-		
->>>>>>> 48c9e7b9fded8f2b2368ed0159abe291b9f60d30
 		
 	}
 	public boolean actionDone(){
