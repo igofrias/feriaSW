@@ -28,7 +28,7 @@ public class EatTask implements SensorEventListener, Runnable {
 	double mAccelCurrent;
 	double mAccel;
 	Boolean action;
-	static double ACCEL_MIN = 1;
+	static double ACCEL_MIN = 3;
 	static long MIN_TIME = 1000; //en milisegundos
 	static boolean running;
 	Activity parent;
@@ -127,10 +127,12 @@ public class EatTask implements SensorEventListener, Runnable {
 		timer.start();
 		while(running)
 		{
+			if(!running || action)
+			{
+				break;
+			}
 		}
 		this.doTaskAction();
-		
-		
 		
 	}
 	public boolean actionDone(){
@@ -142,7 +144,7 @@ public class EatTask implements SensorEventListener, Runnable {
 		//Accion que debe ejecutar la task, incluido detener todo;
 		if (this.actionDone())
 		{
-			Toast.makeText(parent.getBaseContext(), "Se ejecuto accion", Toast.LENGTH_SHORT).show();
+			Toast.makeText(parent.getBaseContext(), "Comio", Toast.LENGTH_SHORT).show();
 		}
 		else
 		{

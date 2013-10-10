@@ -1,6 +1,7 @@
 package com.Phyrex.VIPeR;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -19,6 +20,8 @@ public class PetActionManager  {
     private Handler handler;
     private ThreadPoolExecutor executor;
     private Activity currentActivity;
+    Future<?> futuretask;
+    boolean running;
 	public PetActionManager(Activity activity)
 	{
 		currentActivity = activity;
@@ -34,6 +37,8 @@ public class PetActionManager  {
 				
             }
 		};
+	
+		
 		
 	}
 	
@@ -41,7 +46,8 @@ public class PetActionManager  {
 	{
 		//Aqui se ejecutan todas las tareas.
 		EatTask eatTask = new EatTask(currentActivity, this);
-		executor.execute(eatTask);
+		running = true;
+		futuretask = executor.submit(eatTask);
 		
 	}
 	public void stop_everything()
