@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Vibrator;
+
 
 public class EatTask implements SensorEventListener, Runnable {
 
@@ -106,6 +108,9 @@ public class EatTask implements SensorEventListener, Runnable {
 	    	  action = true;
 	    	  timer.cancel();
 	    	  doTaskAction();
+	    	  //para que vibre al realizar accion
+	    	  Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
+	    	  vibe.vibrate(100); 
 	    	  Log.d("EatTask","End of task - Action");
 				
 	    	  
