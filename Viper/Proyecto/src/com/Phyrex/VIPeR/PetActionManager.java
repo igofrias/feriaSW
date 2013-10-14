@@ -52,11 +52,13 @@ public class PetActionManager  {
 		
 		running = true;
 		
-		//futuretask = executor.submit(eatTask);
-		//futuretask = executor.submit(sleepTask);
+		futuretask = executor.submit(eatTask);
+		futuretask = executor.submit(sleepTask);
 		
-		executor.execute(eatTask);
-		executor.execute(sleepTask);
+		
+		// ESTA LINEA HACIA QUE SE CAIGA EL PROGRAMA!!!
+		//executor.execute(eatTask);
+		//executor.execute(sleepTask);
 		
 	}
 	public void stop_everything()

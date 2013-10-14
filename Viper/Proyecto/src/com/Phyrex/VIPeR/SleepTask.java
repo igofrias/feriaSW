@@ -78,6 +78,7 @@ public class SleepTask implements SensorEventListener, Runnable {
 			//Toast.makeText(thisActivity, "Luz apagada es valor " + valor, Toast.LENGTH_SHORT).show();
 			Log.d("SleepTask","Accion ejecutada");
 			//valSensor = Double.parseDouble(valor);
+			action = true;
 			timer.cancel();
 	    	doTaskAction();
 	    	Log.d("SleepTask","End of task - Action");
