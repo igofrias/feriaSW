@@ -104,7 +104,6 @@ public class EatTask implements SensorEventListener, Runnable {
 	      {
 	    	  Log.d("EatTask","Accion ejecutada");
 	    	  action = true;
-	    	  timer.cancel();
 	    	  doTaskAction();
 	    	  Log.d("EatTask","End of task - Action");
 				
@@ -120,17 +119,17 @@ public class EatTask implements SensorEventListener, Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		
+		running = true;
 		manager.registerListener(thisTask, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-		timer.start();
-		while(running)
+		while(running || Thread.currentThread().isInterrupted())
 		{
+			running = pet_manager.running;
 			if(!running || action)
 			{
 				break;
 			}
 		}
-		this.doTaskAction();
-		
+		this.cleanup();
 	}
 	public boolean actionDone(){
 		//Retorna si ha sido ejecutada la accion
@@ -143,13 +142,15 @@ public class EatTask implements SensorEventListener, Runnable {
 		{
 			Toast.makeText(parent.getBaseContext(), "Comio", Toast.LENGTH_SHORT).show();
 		}
-		else
-		{
-			Toast.makeText(parent.getBaseContext(), "No hay acciones disponibles", Toast.LENGTH_SHORT).show();
-		}
 		action = false;
 		manager.unregisterListener(thisTask);
 		pet_manager.stop_everything();
 		
+	}
+	public void cleanup()
+	{
+		//Se ocupa cuando se termina desde afuera este task.
+		action = false;
+		manager.unregisterListener(thisTask);
 	}
 }
