@@ -27,7 +27,7 @@ public class EatTask implements SensorEventListener, Runnable {
 	double mAccelCurrent;
 	double mAccel;
 	Boolean action;
-	static double ACCEL_MIN = 3;
+	static double ACCEL_MIN = 2;
 	static long MIN_TIME = 1000; //en milisegundos
 	static boolean running;
 	Activity parent;
@@ -53,14 +53,13 @@ public class EatTask implements SensorEventListener, Runnable {
 			public void onFinish() {
 				//Hace la accion apenas termina
 				doTaskAction();
-				Log.d("EatTask","End of task");
+		    	
+		    	Log.d("EatTask","End of task - Action");
 			}
 
 			@Override
 			public void onTick(long millisUntilFinished) {
 				//Revisa que la accion se haya ejecutado dentro de este tick.
-				Log.d("EatTask","It's Ticking");
-				
 			}
 			
 		};
@@ -102,21 +101,29 @@ public class EatTask implements SensorEventListener, Runnable {
 	      double delta = mAccelCurrent - mAccelLast;
 	      mAccel = mAccel * 0.9f + delta*0.1f; // perform low-cut filter
 	      //After shaking does the action and ends
-	      if (delta > ACCEL_MIN)
+	      if (mAccelCurrent > ACCEL_MIN)
 	      {
 	    	  Log.d("EatTask","Accion ejecutada");
-	    	  action = true;
-	    	  doTaskAction();
-	    	  //para que vibre al realizar accion
-	    	  Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
-	    	  vibe.vibrate(100); 
-	    	  Log.d("EatTask","End of task - Action");
+	    	  //Si la inclincacion se mantiene durante el tiempo dado
+	    	  //inicia la accion
+	    	  if(action == false)
+	    	  {
+	    		  
+	    		  action = true;
+	    		  timer.start();
+	    	  }
 				
 	    	  
 	      }
 	      else 
 	      {
-	    	  action = false;
+	    	  if(action == true)
+	    	  {
+	    		  //Si pasa de esperar a que se mantenga inclinado a desinclinarse
+	    		  action = false;
+	    		  timer.cancel();
+	    		  cleanup();
+	    	  }
 	      }
 	}
 	
@@ -129,7 +136,7 @@ public class EatTask implements SensorEventListener, Runnable {
 		while(running || Thread.currentThread().isInterrupted())
 		{
 			running = pet_manager.running;
-			if(!running || action)
+			if(!running)
 			{
 				break;
 			}
@@ -146,6 +153,9 @@ public class EatTask implements SensorEventListener, Runnable {
 		if (this.actionDone())
 		{
 			Toast.makeText(parent.getBaseContext(), "Comio", Toast.LENGTH_SHORT).show();
+			//para que vibre al realizar accion
+			Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
+			vibe.vibrate(100); 
 		}
 		action = false;
 		manager.unregisterListener(thisTask);
