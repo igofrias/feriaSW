@@ -15,8 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Vibrator;
-
 
 public class SleepTask implements SensorEventListener, Runnable {
 
@@ -78,11 +76,10 @@ public class SleepTask implements SensorEventListener, Runnable {
 		
 		if (valorNum==0){
 			//Toast.makeText(thisActivity, "Luz apagada es valor " + valor, Toast.LENGTH_SHORT).show();
-			Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
-			vibe.vibrate(100); 
 			Log.d("SleepTask","Accion ejecutada");
 			//valSensor = Double.parseDouble(valor);
 			action = true;
+			timer.cancel();
 	    	doTaskAction();
 	    	Log.d("SleepTask","End of task - Action");
 		}
@@ -113,18 +110,16 @@ public class SleepTask implements SensorEventListener, Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		Log.d("SleepTask","Running");
-		running = true;
 		manager.registerListener(thisTask,proxSensor,SensorManager.SENSOR_DELAY_NORMAL);
-		while(running||Thread.currentThread().isInterrupted())
+		timer.start();
+		while(running)
 		{
-			running = pet_manager.running;
 			if(!running || action)
 			{
 				break;
 			}
 		}
-		this.cleanup();
+		this.doTaskAction();
 		
 	}
 	public boolean actionDone(){
@@ -138,15 +133,13 @@ public class SleepTask implements SensorEventListener, Runnable {
 		{
 			Toast.makeText(parent.getBaseContext(), "Durmio", Toast.LENGTH_SHORT).show();
 		}
+		else
+		{
+			Toast.makeText(parent.getBaseContext(), "No hay acciones disponibles", Toast.LENGTH_SHORT).show();
+		}
 		action = false;
 		manager.unregisterListener(thisTask);
 		pet_manager.stop_everything();
 		
-	}
-	public void cleanup()
-	{
-		//Se ocupa cuando se termina desde afuera este task.
-		action = false;
-		manager.unregisterListener(thisTask);
 	}
 }

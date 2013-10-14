@@ -15,8 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Vibrator;
-
 
 public class SleepTask implements SensorEventListener, Runnable {
 
@@ -78,8 +76,6 @@ public class SleepTask implements SensorEventListener, Runnable {
 		
 		if (valorNum==0){
 			//Toast.makeText(thisActivity, "Luz apagada es valor " + valor, Toast.LENGTH_SHORT).show();
-			Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
-			vibe.vibrate(100); 
 			Log.d("SleepTask","Accion ejecutada");
 			//valSensor = Double.parseDouble(valor);
 			action = true;

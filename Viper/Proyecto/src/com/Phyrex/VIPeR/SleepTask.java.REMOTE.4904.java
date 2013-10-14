@@ -83,6 +83,7 @@ public class SleepTask implements SensorEventListener, Runnable {
 			Log.d("SleepTask","Accion ejecutada");
 			//valSensor = Double.parseDouble(valor);
 			action = true;
+			timer.cancel();
 	    	doTaskAction();
 	    	Log.d("SleepTask","End of task - Action");
 		}
@@ -113,18 +114,16 @@ public class SleepTask implements SensorEventListener, Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		Log.d("SleepTask","Running");
-		running = true;
 		manager.registerListener(thisTask,proxSensor,SensorManager.SENSOR_DELAY_NORMAL);
-		while(running||Thread.currentThread().isInterrupted())
+		timer.start();
+		while(running)
 		{
-			running = pet_manager.running;
 			if(!running || action)
 			{
 				break;
 			}
 		}
-		this.cleanup();
+		this.doTaskAction();
 		
 	}
 	public boolean actionDone(){
@@ -138,15 +137,13 @@ public class SleepTask implements SensorEventListener, Runnable {
 		{
 			Toast.makeText(parent.getBaseContext(), "Durmio", Toast.LENGTH_SHORT).show();
 		}
+		else
+		{
+			Toast.makeText(parent.getBaseContext(), "No hay acciones disponibles", Toast.LENGTH_SHORT).show();
+		}
 		action = false;
 		manager.unregisterListener(thisTask);
 		pet_manager.stop_everything();
 		
-	}
-	public void cleanup()
-	{
-		//Se ocupa cuando se termina desde afuera este task.
-		action = false;
-		manager.unregisterListener(thisTask);
 	}
 }
