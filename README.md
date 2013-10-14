@@ -7,4 +7,8 @@ Se enmarca en el ámbito de [Feria de Software](http://www.feriadesoftware.cl/),
 
 ## Qué es `VIPeR`?
 
-`VIPeR` es...
+`VIPeR` es
+
+## Contacto
+
+Es posible comunicarse con nosotros a través de nuestra página web (por medio de [Phyrex](http://www.phyrex.cl/)), o por nuestro mail de contacto [contacto@phyrex.cl](mailto:contacto@phyrex.cl)
