@@ -78,8 +78,7 @@ public class SleepTask implements SensorEventListener, Runnable {
 		
 		if (valorNum==0){
 			//Toast.makeText(thisActivity, "Luz apagada es valor " + valor, Toast.LENGTH_SHORT).show();
-			Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
-			vibe.vibrate(100); 
+			
 			Log.d("SleepTask","Accion ejecutada");
 			//valSensor = Double.parseDouble(valor);
 			action = true;
@@ -119,7 +118,7 @@ public class SleepTask implements SensorEventListener, Runnable {
 		while(running||Thread.currentThread().isInterrupted())
 		{
 			running = pet_manager.running;
-			if(!running || action)
+			if(!running)
 			{
 				break;
 			}
@@ -133,14 +132,21 @@ public class SleepTask implements SensorEventListener, Runnable {
 	}
 	public void doTaskAction()
 	{
-		//Accion que debe ejecutar la task, incluido detener todo;
-		if (this.actionDone())
+		//Accion que debe ejecutar la task. Pide antes de ejecutar la task
+		//que haya mandado el mensaje para detener todo y que haya detenido todo
+
+		if (this.actionDone() && pet_manager.stop_everything())
 		{
+		
 			Toast.makeText(parent.getBaseContext(), "Durmio", Toast.LENGTH_SHORT).show();
+			Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
+			vibe.vibrate(100); 
+			pet_manager.updater.sleep(pet_manager.entry);
+			
 		}
 		action = false;
 		manager.unregisterListener(thisTask);
-		pet_manager.stop_everything();
+		
 		
 	}
 	public void cleanup()

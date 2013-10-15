@@ -71,8 +71,6 @@ public class MainPetActivity extends SherlockFragment {
 				public void onClick(View v) {
 					if(((MainActivity)thisActivity).isConnected()){
 						((MainActivity)thisActivity).startProgram("Shake.rxe");
-					}else{
-						Toast.makeText(thisActivity, "No hay robot conectado", Toast.LENGTH_SHORT).show();
 					}
 					//Agregue aqui el manager 
 					PetActionManager petman = new PetActionManager(thisActivity);

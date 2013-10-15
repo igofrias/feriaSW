@@ -19,7 +19,8 @@ import android.widget.Toast;
 
 public class PetActionManager  {
 	//static PetActionManager instance;
-	public static int CORE_NUM = Runtime.getRuntime().availableProcessors(); 
+	final DB_Updater updater;
+ 	final Database_Helper entry;
     private Handler handler;
     private Activity currentActivity;
     static long MIN_TIME = 3000; //en milisegundos
@@ -54,7 +55,8 @@ public class PetActionManager  {
             }
 		};
 		futuretasklist = new LinkedList<Future<?>>();
-
+		updater = new DB_Updater(currentActivity);
+     	entry = new Database_Helper(currentActivity);
 	}
 	
 	public void execute()
@@ -71,12 +73,18 @@ public class PetActionManager  {
 		new Thread(sleepTask).start();
 		timer.start();
 	}
-	public void stop_everything()
+	public boolean stop_everything()
 	{
+		//Si logra detener todo retorna true. Retorna false si ya se mando la
+		//señal para detenerse
+		if(running == true)
+		{
+			running = false;
+			timer.cancel();
+			return true;
+		}
+		return false;
 		
-		running = false;
-		timer.cancel();
-	    
 		
 		
 	}

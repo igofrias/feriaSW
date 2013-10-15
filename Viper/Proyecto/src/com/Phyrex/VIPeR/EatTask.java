@@ -149,17 +149,21 @@ public class EatTask implements SensorEventListener, Runnable {
 	}
 	public void doTaskAction()
 	{
-		//Accion que debe ejecutar la task, incluido detener todo;
-		if (this.actionDone())
+		//Accion que debe ejecutar la task. Pide antes de ejecutar la task
+		//que haya mandado el mensaje para detener todo y que haya detenido todo
+		
+		if (this.actionDone() && pet_manager.stop_everything())
 		{
+			
 			Toast.makeText(parent.getBaseContext(), "Comio", Toast.LENGTH_SHORT).show();
 			//para que vibre al realizar accion
 			Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
 			vibe.vibrate(100); 
+			pet_manager.updater.eat(pet_manager.entry);
 		}
 		action = false;
 		manager.unregisterListener(thisTask);
-		pet_manager.stop_everything();
+		
 		
 	}
 	public void cleanup()
