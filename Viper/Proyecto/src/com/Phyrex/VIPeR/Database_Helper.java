@@ -125,6 +125,7 @@ public class Database_Helper {
 		cv.put(Key_mac, mac_adress);
 		cv.put(Key_death, death);
 		Database.insert(DB_table, null, cv);
+		Database.close(); //ESTA LINEA FALTABA!!!!!!
 	}
 	//obtener datos por el nombre
 	public Cursor getEntry(String nombre) {
