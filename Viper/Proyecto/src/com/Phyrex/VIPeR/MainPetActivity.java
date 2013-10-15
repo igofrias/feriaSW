@@ -1,7 +1,10 @@
 package com.Phyrex.VIPeR;
 
+import java.util.concurrent.ExecutionException;
+
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +54,9 @@ public class MainPetActivity extends SherlockFragment {
 		 
 		 
 
+					
+					
+					
 		 calibrate.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
@@ -68,6 +74,12 @@ public class MainPetActivity extends SherlockFragment {
 					}else{
 						Toast.makeText(thisActivity, "No hay robot conectado", Toast.LENGTH_SHORT).show();
 					}
+					//Agregue aqui el manager 
+					PetActionManager petman = new PetActionManager(thisActivity);
+					Log.d("MainPetActivity","Ejecutando acciones");
+					petman.execute();
+					
+
 				}});
 		 
 	}

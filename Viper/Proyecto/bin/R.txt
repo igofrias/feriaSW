@@ -466,6 +466,7 @@ int string current_position 0x7f09001e
 int string dia 0x7f090046
 int string dias 0x7f090047
 int string disconnect 0x7f09003d
+int string hello_world 0x7f090048
 int string hora 0x7f090042
 int string horas 0x7f090043
 int string minuto 0x7f090044

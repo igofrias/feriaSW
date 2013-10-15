@@ -1175,6 +1175,7 @@ containing a value of this type.
         public static final int dia=0x7f090046;
         public static final int dias=0x7f090047;
         public static final int disconnect=0x7f09003d;
+        public static final int hello_world=0x7f090048;
         public static final int hora=0x7f090042;
         public static final int horas=0x7f090043;
         public static final int minuto=0x7f090044;
