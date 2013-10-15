@@ -138,10 +138,7 @@ public class SleepTask implements SensorEventListener, Runnable {
 		if (this.actionDone() && pet_manager.stop_everything())
 		{
 		
-			Toast.makeText(parent.getBaseContext(), "Durmio", Toast.LENGTH_SHORT).show();
-			Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
-			vibe.vibrate(100); 
-			pet_manager.updater.sleep(pet_manager.entry);
+			SleepTask.petAction(parent, pet_manager.updater, pet_manager.entry);
 			
 		}
 		action = false;
@@ -154,5 +151,11 @@ public class SleepTask implements SensorEventListener, Runnable {
 		//Se ocupa cuando se termina desde afuera este task.
 		action = false;
 		manager.unregisterListener(thisTask);
+	}
+	public static void petAction(Activity parent, DB_Updater updater, Database_Helper helper){
+		Toast.makeText(parent.getBaseContext(), "Durmio", Toast.LENGTH_SHORT).show();
+		Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
+		vibe.vibrate(100); 
+		updater.sleep(helper);
 	}
 }

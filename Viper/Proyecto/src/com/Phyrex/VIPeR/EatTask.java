@@ -155,11 +155,7 @@ public class EatTask implements SensorEventListener, Runnable {
 		if (this.actionDone() && pet_manager.stop_everything())
 		{
 			
-			Toast.makeText(parent.getBaseContext(), "Comio", Toast.LENGTH_SHORT).show();
-			//para que vibre al realizar accion
-			Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
-			vibe.vibrate(100); 
-			pet_manager.updater.eat(pet_manager.entry);
+			EatTask.petAction(parent, pet_manager.updater, pet_manager.entry);
 		}
 		action = false;
 		manager.unregisterListener(thisTask);
@@ -171,5 +167,12 @@ public class EatTask implements SensorEventListener, Runnable {
 		//Se ocupa cuando se termina desde afuera este task.
 		action = false;
 		manager.unregisterListener(thisTask);
+	}
+	public static void petAction(Activity parent, DB_Updater updater, Database_Helper helper){
+		Toast.makeText(parent.getBaseContext(), "Comio", Toast.LENGTH_SHORT).show();
+		//para que vibre al realizar accion
+		Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
+		vibe.vibrate(100); 
+		updater.eat(helper);
 	}
 }
