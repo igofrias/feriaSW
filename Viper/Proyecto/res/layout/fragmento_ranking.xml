@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#033600"
     android:orientation="vertical" >
 
     <TextView
@@ -13,68 +14,48 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
-        android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal" >
+        android:background="#000000"
+        android:orientation="vertical" >
 
         <LinearLayout
             android:id="@+id/LinearLayout1"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:orientation="vertical" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1" >
-
-                <TextView
-                    android:id="@+id/statsnametext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nombre: "
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/statname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="pepe"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
+                android:id="@+id/LinearLayout1"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_weight="1" >
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/statbirthdatetext"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nacido: "
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="18sp" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
 
-                <TextView
-                    android:id="@+id/statsbirthdate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="fecha"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/statsnametext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre: "
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#FFF"
+                        android:textColorHint="#FFF"
+                        android:textSize="18sp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1" >
+                    <TextView
+                        android:id="@+id/statname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="pepe"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="18sp" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -82,58 +63,88 @@
                     android:layout_weight="1" >
 
                     <TextView
-                        android:id="@+id/statscolortext"
+                        android:id="@+id/statbirthdatetext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Color: "
+                        android:text="Nacido: "
                         android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#FFF"
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/statscolor"
+                        android:id="@+id/statsbirthdate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="color1"
+                        android:text="fecha"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textSize="18sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp" >
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
 
-                    <TextView
-                        android:id="@+id/statsracetext"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Raza: "
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="18sp" />
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1" >
 
-                    <TextView
-                        android:id="@+id/statrace"
+                        <TextView
+                            android:id="@+id/statscolortext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Color: "
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="#FFF"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/statscolor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="color1"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="tentosaurio"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="18sp" />
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1" >
 
+                        <TextView
+                            android:id="@+id/statsracetext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Raza: "
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="#FFF"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/statrace"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="tentosaurio"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textSize="18sp" />
+                    </LinearLayout>
                 </LinearLayout>
-
             </LinearLayout>
         </LinearLayout>
 
+        <ListView
+            android:id="@+id/lst_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:longClickable="false" >
+        </ListView>
+
     </LinearLayout>
-
-    <ListView
-        android:id="@+id/lst_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:longClickable="false" >
-    </ListView>
-
 </LinearLayout>

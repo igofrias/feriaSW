@@ -61,7 +61,7 @@ public class Statistics_Activity extends SherlockFragment {
 		super.onActivityCreated(savedInstanceState);
 		thisActivity = (MainActivity) getActivity();
 		
-		
+		String birthdate[] = new String [2];
 		lista = (ListView)thisActivity.findViewById(R.id.lst_1);		
 		Reload();	//cargar datos de la BD
         lista.setCacheColorHint(Color.TRANSPARENT);
@@ -77,7 +77,9 @@ public class Statistics_Activity extends SherlockFragment {
 		statsname.setText(petto._name);
 		statscolor.setText(petto._color);
 		statsrace.setText(petto._raza);
-		statsbirthdate.setText(petto._birthdate);
+		birthdate = petto._birthdate.split(" ");
+		statsbirthdate.setText(birthdate[1]);
+		
 		//Evento de click para un item
         /*lista.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> l, View v, int position, long id) {

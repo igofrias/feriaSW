@@ -37,6 +37,9 @@ public class Init {
 	public static final String ach6 = "Tentosaurio";	
 	public static final String ach6_desc = "Has creado una mascota de raza Tentosaurio";
 	public static final int img6 = R.drawable.firstpetarch;
+	public static final String ach7 = "Perezoso";	
+	public static final String ach7_desc = "Tu mascota ha dormido 5 veces";
+	public static final int img7 = R.drawable.logropepe;
 
 	public static final int done = 0;
 	
@@ -47,7 +50,7 @@ public class Init {
 	public static final String est2 = "Ha Dormido";
 	public static final String est2_desc = "¿Cuantas veces ha dormido?";
 	public static final int imgstat2 = R.drawable.sleep;
-	public static final String est3 = "Ha Jugago";
+	public static final String est3 = "Ha Jugado";
 	public static final String est3_desc = "¿Cuantas veces ha jugado?";
 	public static final int imgstat3 = R.drawable.play;
 	public static final String est4 = "Mascotas Creadas";
@@ -85,6 +88,7 @@ public class Init {
 		helper.createAchievement(ach4, ach4_desc, done, img4);
 		helper.createAchievement(ach5, ach5_desc, done, img5);
 		helper.createAchievement(ach6, ach6_desc, done, img6);
+		helper.createAchievement(ach7, ach7_desc, done, img7);
 		helper.close();    	
 	}
 

@@ -190,7 +190,7 @@ public class Database_Helper {
 			} while (cursor.moveToNext());
 		}
 		
-		Database.close();
+		//Database.close();
 		
 		return listamascotas;
 	}

@@ -21,7 +21,7 @@ public class MainPetActivity extends SherlockFragment {
 	private Button shake;
 	private ImageButton eat;
 	private ImageButton sleep;
-	//private ImageButton play;
+	private ImageButton play;
 	private static Activity thisActivity;
 	StatesActivity states= new StatesActivity();
 	
@@ -47,16 +47,16 @@ public class MainPetActivity extends SherlockFragment {
 		 shake = (Button)thisActivity.findViewById(R.id.shake);
 		 eat = (ImageButton)thisActivity.findViewById(R.id.eati);
 		 sleep = (ImageButton)thisActivity.findViewById(R.id.sleepi);
-		 //play = (ImageButton)thisActivity.findViewById(R.id.playimg);
+		 play = (ImageButton)thisActivity.findViewById(R.id.playimg);
 		 eat.setOnClickListener(listener);
 		 sleep.setOnClickListener(listener);
-		 //play.setOnClickListener(listener);
+		 play.setOnClickListener(listener);
 		 
 		 
 
 					
 					
-					
+
 		 calibrate.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
@@ -89,23 +89,31 @@ public class MainPetActivity extends SherlockFragment {
          {
          	final DB_Updater updater = new DB_Updater(thisActivity);
          	final Database_Helper entry = new Database_Helper(thisActivity);
-
+         	SherlockFragment fragment1 = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
          	switch(v.getId()){
          		case R.id.eati:
 				    	if(updater.eat(entry)){
 				    		Toast.makeText(thisActivity, "Logro Desbloqueado Primeras mordidas", Toast.LENGTH_LONG).show();
 				    	}
-				    	states.eating();
+				
+				 		if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
+				 			((StatesActivity)fragment1).eating();
+				        }
 				    	Toast.makeText(thisActivity, "Om nom nom nom", Toast.LENGTH_SHORT).show();
 			    	break;
 			    	
          		case R.id.sleepi:
- 			    	updater.sleep(entry);
- 			    	Toast.makeText(thisActivity, ". . z z Z Z", Toast.LENGTH_SHORT).show();
+ 			    		if(updater.sleep(entry))
+ 			    			Toast.makeText(thisActivity, "Logro Desbloqueado Perezoso", Toast.LENGTH_LONG).show();
+ 			    		Toast.makeText(thisActivity, ". . z z Z Z", Toast.LENGTH_SHORT).show();
 			    	break;
 			    	
          		case R.id.playimg:
-         			updater.play(entry);
+         			if(updater.play(entry))
+         				Toast.makeText(thisActivity, "Logro Desbloqueado Jugeton", Toast.LENGTH_LONG).show();
+         			if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
+			 			((StatesActivity)fragment1).playing();
+			        }
  			    	Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
 			    	break;
 			    	

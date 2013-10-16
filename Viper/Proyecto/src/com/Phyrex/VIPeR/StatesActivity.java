@@ -113,13 +113,13 @@ public class StatesActivity extends SherlockFragment{
 		petava = (ImageView)thisActivity.findViewById(R.id.avatar);
 		name = (TextView)thisActivity.findViewById(R.id.name);
 		lifetime = (TextView)thisActivity.findViewById(R.id.lifetime);
-		hapiness.setMax(100);
-		hungry.setMax(100);
-		health.setMax(100);
-		energy.setMax(100);
-		hapiness.setProgress(50);
-		hungry.setProgress(50);
-		health.setProgress(50);
+		hapiness.setMax(1000);
+		hungry.setMax(1000);
+		health.setMax(1000);
+		energy.setMax(1000);
+		hapiness.setProgress(500);
+		hungry.setProgress(500);
+		health.setProgress(500);
 		///obtiene los datos de la BD/////////
 		Database_Helper db = new Database_Helper(thisActivity);
 		List<Pet> mascotas = db.getPets(); //lista de mascotas
@@ -215,11 +215,20 @@ public class StatesActivity extends SherlockFragment{
 	}
 	
 	public void eating(){
-		hungry.setProgress(hungry.getProgress()+10);
+		hungry.setProgress(hungry.getProgress()+100);
+	}
+	public void playing(){
+		hapiness.setProgress(hapiness.getProgress()+100);
+		hungry.setProgress(hungry.getProgress()-50);
 	}
 	
 	public void hungrypet(){
-		hungry.setProgress(hungry.getProgress()-1);
+		if(hungry.getProgress()!=0){
+			hungry.setProgress(hungry.getProgress()-1);
+		}else{
+			health.setProgress(health.getProgress()-1);
+			hapiness.setProgress(hapiness.getProgress()-1);
+		}
 	}
 	
 	private void read_db() {
@@ -306,7 +315,7 @@ public class StatesActivity extends SherlockFragment{
 			Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
 			setlifetime(petto._birthdate);
 			Log.d("task", "task!");
-	    	energy.setProgress((int) ((MainActivity)thisActivity).getBatteryLevel());
+	    	energy.setProgress((int) ((MainActivity)thisActivity).getBatteryLevel()*10);
 	    	hungrypet();
 			if(((MainActivity)thisActivity).isConnected()){
 				btstate.setVisibility(View.VISIBLE);

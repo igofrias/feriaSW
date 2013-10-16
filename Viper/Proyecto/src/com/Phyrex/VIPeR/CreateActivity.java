@@ -110,16 +110,16 @@ public class CreateActivity extends SherlockFragment{
 				            public void onClick(DialogInterface dialogo1, int id) {  
 				            	entry.open_write();            	
 						    	entry.createEntry(name.getText().toString(), currentDateandTime, raza.getSelectedItem().toString(), color.getSelectedItem().toString(), ((MainActivity)thisActivity).return_mac(), 0);
+						    	entry.close();
 						    	initialize.AchievementsList(entry);
 						    	initialize.StatisticsList(entry);
-						    	if(DB_Updater.achievement_first_pet(entry))
+						    	if(updater.achievement_unlock(entry, "Primera Mascota"))
 						    		Toast.makeText(thisActivity, "Logro Primera Mascota Desbloqueado", Toast.LENGTH_LONG).show();
 						    	if(name.getText().toString().equals("Pepe") || name.getText().toString().equals("pepe")){
 						    		Log.d("pepe", "es pepe");
-						    		if(DB_Updater.achievement_6_pepe(entry))
+						    		if(updater.achievement_unlock(entry, "Pepe"))
 						    			Toast.makeText(thisActivity, "Logro Pepe Debloqueado", Toast.LENGTH_LONG).show();
 						    	}
-						    	entry.close();
 						    	((MainActivity)thisActivity).detach_create();
 						    	((MainActivity)thisActivity).launch_states();
 						    	((MainActivity)thisActivity).launch_mainpet();
