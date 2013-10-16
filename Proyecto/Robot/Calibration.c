@@ -1,137 +1,90 @@
-#pragma config(Sensor, S1, lightSensor, sensorLightInactive)
-#pragma config(Sensor, S2, soundSensor, sensorSoundDB)
-#pragma config(Sensor, S3, sonarSensor, sensorSONAR)
-#pragma config(Motor, motorB, rightMotor, tmotorNXT, PIDControl)
-#pragma config(Motor, motorC, leftMotor, tmotorNXT, PIDControl)
-#define MAX_DIST 15	//Max Distance
-#define MIN_DIST 10	//Min Distance
+#pragma config(Sensor, S1, lightRSensor, sensorLightInactive)
+#pragma config(Sensor, S2, lightLSensor, sensorLightInactive)
+#pragma config(Sensor, S3, soundSensor, sensorSoundDB)
 
 //Global Variables
-int SonarValue;
-int LightValue;
-//int SoundValue;
+int LightRValue;
+int LightLValue;
 
-//Light level monitoring
-task MonitorLight(){
-	while(true){
-		LightValue = SensorValue[lightSensor];
-	}
-}
-
-//Distance monitoring (with Sonar)
-task MonitorSonar(){
-	while(true){
-		SonarValue = SensorValue[sonarSensor];
-	}
-}
-/*
-//Sound level monitoring
-task MonitorSound(){
-	while(true){
-		SoundValue = SensorValue[soundSensor];
-	}
-}
-*/
+//TASK
+task MonitorRLight();
+task MonitorLLight();
 
 //
 //MAIN
 //
 task main(){
 	//Variables definitions
-	TFileHandle calFile;         				// create a file handle variable 'calFile'
-	TFileIOResult IOResult;           	// create an IO result variable 'IOResult'
-	string lightFile = "lightCal.dat";	// create and initialize a string variable 'lightCal'
-//	string soundFile = "soundCal.dat";	// create and initialize a string variable 'soundCal'
-	int myFileSize = 10;              	// create and initialize an integer variable 'myFileSize'
-	int LightData[10];									// create an array 'LightData' for data of light sensor
-//	int SoundData[10];									// create an array 'SoundData' for data of light sensor
-	float averLight = 0, devLight = 0;	// create two float variables 'averLight' & 'devLight'
-//	float averSound = 0, devSound = 0;	// create two float variables 'averSound' & 'devSound'
+	TFileHandle calFile;           				// create a file handle variable 'calFile'
+	TFileIOResult IOResult;           	  // create an IO result variable 'IOResult'
+	string lightRFile = "lightRCal.dat";	// create and initialize a string variable 'lightCal'
+	string lightLFile = "lightLCal.dat";	// create and initialize a string variable 'soundCal'
+	int myFileSize = 10;                	// create and initialize an integer variable 'myFileSize'
+	int LightRData[10];					  				// create an array 'LightData' for data of light sensor
+	int LightLData[10];						  			// create an array 'LightLData' for data of light sensor
+	float averRLight = 0, devRLight = 0;	// create two float variables 'averLight' & 'devLight'
+	float averLLight = 0, devLLight = 0; 	// create two float variables 'averLLight' & 'devLLight'
 
-	//Start MonitorSonar & MonitorLight
-	StartTask(MonitorSonar);
-	StartTask(MonitorLight);
-//	StartTask(MonitorSound);
-
-	//Synch Motors
-	nSyncedMotors = synchBC;	//Left motor slaved to Right motor
-	nSyncedTurnRatio = -100;	//Left motor turns -100% of right motor
+	//Start MonitorRLight & MonitorLLight
+	StartTask(MonitorRLight);
+	StartTask(MonitorLLight);
 
 	//Display message
-	nxtDisplayTextLine(2, "Para iniciar,");
-	nxtDisplayTextLine(3, "coloque su mano");
-	nxtDisplayTextLine(4, "entre 10 y 5cm");
-	nxtDisplayTextLine(5, "del sonar.");
+	nxtDisplayCenteredTextLine(3, "Calibrando...");
+	nxtDisplayTextLine(4, "Espere unos");
+	nxtDisplayTextLine(5, "momentos");
 
-	//Wait condition
-/*ELIMINAR PARA USAR SONAR!
-	while(true){
-		//Detect distance range
-		if( (SonarValue<=MAX_DIST)&&(SonarValue>=MIN_DIST) ){
-*/
-			eraseDisplay();
-//			motor[rightMotor] = 15;				//Right motor moves at 50% power
-																		//Left motor automatically moves at -50%
-																		//because of synch and synch ratio.
+	//Light medition
+	for(int i = 0;i<10; i++){
+		LightRData[i] = LightRValue;
+		LightLData[i] = LightLValue;
+		eraseDisplay();
+		nxtDisplayString(4, "Obteniendo Datos");
 
-			//Display message
-			nxtDisplayCenteredTextLine(3, "Calibrando...");
-			nxtDisplayTextLine(4, "Espere unos");
-			nxtDisplayTextLine(5, "momentos");
+		//Obtain Average
+		averRLight += (LightRData[i]/10.0);
+		averLLight += (LightLData[i]/10.0);
 
-			//Light medition
-			for(int i = 0;i<10; i++){
-				LightData[i] = LightValue;
-//				SoundData[i] = SoundValue;
-				eraseDisplay();
-				nxtDisplayString(4, "Obteniendo Datos");
-
-				//Obtain Average
-				averLight += (LightData[i]/10.0);
-//				averSound += (SoundData[i]/10);
-
-				//wait time
-				wait1Msec(500);
-			}
-
-			//Stop motors
-			motor[rightMotor] = 0;
-/*ELIMINAR PARA USAR SONAR!!!!!!!
-			break;
-		}
+		//wait time
+		wait1Msec(500);
 	}
-*/
 
 	//Obtain Standard Deviation
 	for(int i = 0;i<10;i++){
-		devLight = pow( (LightData[i]-averLight), 2);
-//		devSound = pow( (SoundData[i]-averSound), 2);
+		devRLight = pow( (LightRData[i]-averRLight), 2);
+		devLLight = pow( (LightLData[i]-averLLight), 2);
 	}
-	devLight = sqrt(devLight/9);
-//	debSound = sqrt(devSound/9);
+	devRLight = sqrt(devRLight/9);
+	devLLight = sqrt(devLLight/9);
 
 	//Delete Previous Data & Save New Data
 	eraseDisplay();
-	Delete("lightCal.dat", IOResult);
-//	Delete("soundCal.dat", IOResult);
+	Delete("lightRCal.dat", IOResult);
+	Delete("lightLCal.dat", IOResult);
 	nxtDisplayTextLine(2, "Guardando Datos");
-	//Save Light Calibration
-	OpenWrite(calFile, IOResult, lightFile, myFileSize);	// open for write: "myFile.txt"
-	WriteFloat(calFile, IOResult, averLight);							// writes "average" value to the file handled by 'calFile'
-	WriteFloat(calFile, IOResult, devLight);							// writes "deviation" value to the file handled by 'calFile'
+	//Save Light Calibration (Right)
+	OpenWrite(calFile, IOResult, lightRFile, myFileSize);	// open for write: "myFile.txt"
+	WriteFloat(calFile, IOResult, averRLight);							// writes "average" value to the file handled by 'calFile'
+	WriteFloat(calFile, IOResult, devRLight);							// writes "deviation" value to the file handled by 'calFile'
 	Close(calFile, IOResult);															// close the file (DON'T FORGET THIS STEP!)
-/*
-	//Save Sound Calibration
-	OpenWrite(calFile, IOResult, soundFile, myFileSize);	// open for write: "myFile.txt"
-	WriteFloat(calFile, IOResult, averSound);							// writes "average" value to the file handled by 'calFile'
-	WriteFloat(calFile, IOResult, devSound);							// writes "deviation" value to the file handled by 'calFile'
+
+	//Save Light Calibration (Left)
+	OpenWrite(calFile, IOResult, lightLFile, myFileSize);	// open for write: "myFile.txt"
+	WriteFloat(calFile, IOResult, averLLight);							// writes "average" value to the file handled by 'calFile'
+	WriteFloat(calFile, IOResult, devLLight);							// writes "deviation" value to the file handled by 'calFile'
 	Close(calFile, IOResult);															// close the file (DON'T FORGET THIS STEP!)
-*/	wait1Msec(1000);
+	wait1Msec(1000);
 
 	//Exit Message
 	eraseDisplay();
-	nxtDisplayTextLine(2, "Nivel Luz: %3d", averLight);
-	nxtDisplayTextLine(3, "Error Luz: %3d", devLight);
+	nxtDisplayTextLine(2, "Sensor Derecho");
+	nxtDisplayTextLine(3, "Nivel Luz: %3d", averRLight);
+	nxtDisplayTextLine(4, "Error Luz: %3d", devRLight);
+	wait10Msec(500);
+
+	nxtDisplayTextLine(2, "Sensor Izquierdo");
+	nxtDisplayTextLine(3, "Nivel Luz: %3d", averLLight);
+	nxtDisplayTextLine(4, "Error Luz: %3d", devLLight);
 	wait10Msec(500);
 
 	eraseDisplay();
@@ -142,5 +95,18 @@ task main(){
 
 	//Finish Running Task
 	StopAllTasks();
+}
 
+//Light level monitoring (Right)
+task MonitorRLight(){
+	while(true){
+		LightRValue = SensorValue[lightRSensor];
+	}
+}
+
+//Light level monitoring (Left)
+task MonitorLLight(){
+	while(true){
+		LightLValue = SensorValue[lightLSensor];
+	}
 }
