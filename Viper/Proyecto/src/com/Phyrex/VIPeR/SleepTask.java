@@ -138,7 +138,7 @@ public class SleepTask implements SensorEventListener, Runnable {
 		if (this.actionDone() && pet_manager.stop_everything())
 		{
 		
-			SleepTask.petAction(parent, pet_manager.updater, pet_manager.entry);
+			SleepTask.petAction(parent, pet_manager.updater, pet_manager.entry,pet_manager.states);
 			
 		}
 		action = false;
@@ -152,10 +152,13 @@ public class SleepTask implements SensorEventListener, Runnable {
 		action = false;
 		manager.unregisterListener(thisTask);
 	}
-	public static void petAction(Activity parent, DB_Updater updater, Database_Helper helper){
-		Toast.makeText(parent.getBaseContext(), "Durmio", Toast.LENGTH_SHORT).show();
+	public static void petAction(Activity parent, DB_Updater updater, Database_Helper helper, StatesActivity states){
+		//para que vibre al realizar accion
 		Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
 		vibe.vibrate(100); 
-		updater.sleep(helper);
+		if(updater.sleep(helper))
+ 			Toast.makeText(parent, "Logro Desbloqueado Perezoso", Toast.LENGTH_LONG).show();
+ 		Toast.makeText(parent, ". . z z Z Z", Toast.LENGTH_SHORT).show();
+    	
 	}
 }

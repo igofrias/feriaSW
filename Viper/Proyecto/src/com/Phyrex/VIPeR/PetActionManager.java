@@ -8,10 +8,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragment;
+
 import android.app.Activity;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,6 +27,7 @@ public class PetActionManager  {
  	final Database_Helper entry;
     private Handler handler;
     private Activity currentActivity;
+    StatesActivity states;
     static long MIN_TIME = 3000; //en milisegundos
 	CountDownTimer timer = new CountDownTimer(MIN_TIME, MIN_TIME/100)
 	{
@@ -45,7 +50,7 @@ public class PetActionManager  {
     LinkedList<Future<?>> futuretasklist; //almacena los futuretasks de las actividades
     boolean running;
 
-	public PetActionManager(Activity activity)
+	public PetActionManager(Activity activity, StatesActivity currstates)
 	{
 		currentActivity = activity;
 		handler = new Handler(){
@@ -57,6 +62,7 @@ public class PetActionManager  {
 		futuretasklist = new LinkedList<Future<?>>();
 		updater = new DB_Updater(currentActivity);
      	entry = new Database_Helper(currentActivity);
+     	states = currstates;
 	}
 	
 	public void execute()

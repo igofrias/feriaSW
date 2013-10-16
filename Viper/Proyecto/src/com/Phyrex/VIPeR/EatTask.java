@@ -1,4 +1,6 @@
 package com.Phyrex.VIPeR;
+import com.actionbarsherlock.app.SherlockFragment;
+
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -155,7 +157,8 @@ public class EatTask implements SensorEventListener, Runnable {
 		if (this.actionDone() && pet_manager.stop_everything())
 		{
 			
-			EatTask.petAction(parent, pet_manager.updater, pet_manager.entry);
+			EatTask.petAction(parent, pet_manager.updater, pet_manager.entry, pet_manager.states);
+			cleanup();
 		}
 		action = false;
 		manager.unregisterListener(thisTask);
@@ -168,11 +171,18 @@ public class EatTask implements SensorEventListener, Runnable {
 		action = false;
 		manager.unregisterListener(thisTask);
 	}
-	public static void petAction(Activity parent, DB_Updater updater, Database_Helper helper){
-		Toast.makeText(parent.getBaseContext(), "Comio", Toast.LENGTH_SHORT).show();
+	public static void petAction(Activity parent, DB_Updater updater, Database_Helper helper, StatesActivity states){
 		//para que vibre al realizar accion
 		Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
 		vibe.vibrate(100); 
 		updater.eat(helper);
+		if(updater.eat(helper)){
+    		Toast.makeText(parent, "Logro Desbloqueado Primeras mordidas", Toast.LENGTH_LONG).show();
+    	}
+
+ 		if(states!=null && !states.isDetached()){//si el fragmento esta activo
+ 			states.eating();
+        }
+    	Toast.makeText(parent.getBaseContext(), "Om nom nom nom", Toast.LENGTH_SHORT).show();
 	}
 }

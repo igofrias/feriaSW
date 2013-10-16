@@ -73,7 +73,8 @@ public class MainPetActivity extends SherlockFragment {
 						((MainActivity)thisActivity).startProgram("Shake.rxe");
 					}
 					//Agregue aqui el manager 
-					PetActionManager petman = new PetActionManager(thisActivity);
+					SherlockFragment fragment1 = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
+					PetActionManager petman = new PetActionManager(thisActivity,(StatesActivity)fragment1);
 					Log.d("MainPetActivity","Ejecutando acciones");
 					petman.execute();
 					
