@@ -1,4 +1,4 @@
-task SendMessages();
+void SendMessages(int nData);
 void checkConnection();
 
 task main(){
@@ -6,19 +6,15 @@ task main(){
 	eraseDisplay();
 	bNxtLCDStatusDisplay = true;
 	wait1Msec(500);
-	StartTask(SendMessages);
+	SendMessages(3);
 	powerOff();
 }
 
 /*
  * Task SendMessages
  */
-task SendMessages(){
-//	while (true){
-	int nButton = 3; //Shutdown Slave Brick
-//		if(nButton > -1)
-			sendMessageWithParm(nButton);
-//	}
+void SendMessages(int nData){
+	sendMessageWithParm(nData);
 	return;
 }
 
