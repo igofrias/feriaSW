@@ -1,10 +1,11 @@
 #pragma config(Motor, motorB,  tailMotor, tmotorNXT, PIDControl)
 
-int nMessage;
+int nMessage = 0;
 int nAction;
 
 void ReadMessages();
 void checkConnection();
+task MoveTail();
 
 task main(){
 	checkConnection();
@@ -28,7 +29,7 @@ void checkConnection(){
 }
 
 /*
- * Task ReadMessages
+ * void ReadMessages
  *
  */
 void ReadMessages(){
@@ -38,25 +39,28 @@ void ReadMessages(){
 			nAction = messageParm[0];
 			switch(nAction){
 				case 1:	//Move Tail
-					for (int i=0;i<3;i++){
-						nMotorEncoder[tailMotor] = 0;
-						nMotorEncoderTarget[tailMotor] = 50;
-						motor[tailMotor] = 75;
-						while(nMotorRunState[tailMotor] != runStateIdle){
-						}
-						nMotorEncoder[tailMotor] = 0;
-						nMotorEncoderTarget[tailMotor] = -50;
-						motor[tailMotor] = -75;
-						while(nMotorRunState[tailMotor] != runStateIdle){
-						}
-					}
+					StartTask(MoveTail);
 					break;
 				case 2: //Stop Tail
+					StopTask(MoveTail);
+					motor[tailMotor] = 0;
 					break;
 				case 3: //Shutdown
 					powerOff();
 					break;
 			}
+			ClearMessage();
 		}
+	}
+}
+
+task MoveTail(){
+	while(true){
+		nMotorEncoder[tailMotor] = 0;
+		nMotorEncoderTarget[tailMotor] = 40;
+		motor[tailMotor] = 60;
+		wait1Msec(150);
+		motor[tailMotor] = -60;
+		wait1Msec(150);
 	}
 }
