@@ -5,9 +5,11 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -340,6 +342,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		Canvas can;
 		Thread drawthread;
 		Boolean running;
+		Bitmap centro;
+		Bitmap circulo;
 		public DrawJoystick(Context context) {
 			
 			super(context);
@@ -351,6 +355,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			vel_x = 0.0;
 			vel_y = 0.0;
 			running = false;
+			centro = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.remotecontrolbackground);
+			circulo = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.pointremotecontrol);
 			// TODO Auto-generated constructor stub
 		}
 
@@ -399,9 +407,14 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			int size = 30;
 			int x = bar_percentage(canvas.getWidth() - size, (int)center_x, -MAX_VEL, vel_x);
 			int y = bar_percentage(canvas.getHeight() - size, (int)center_y,MAX_VEL, vel_y);
-			canvas.drawARGB(255, 255, 255, 255);
-			canvas.drawCircle(canvas.getWidth()/2,canvas.getHeight()/2,100, color_center);
-			canvas.drawCircle(x, y , size, color);
+			canvas.drawARGB(255, 0, 0, 0);
+			//canvas.drawCircle(canvas.getWidth()/2,canvas.getHeight()/2,100, color_center);
+			//canvas.drawCircle(x, y , size, color);
+			canvas.drawBitmap(centro, center_x-centro.getWidth()/2, 
+					center_y - centro.getHeight()/2, color);
+			canvas.drawBitmap(circulo, x-circulo.getWidth()/2,
+					y-circulo.getHeight()/2, color);
+			
 			
 		}
 		public void update_coordinates(Double x, Double y)

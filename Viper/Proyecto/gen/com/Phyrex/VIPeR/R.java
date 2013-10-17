@@ -929,13 +929,15 @@ containing a value of this type.
         public static final int logropromerasmordidas=0x7f02007c;
         public static final int petsegg=0x7f02007d;
         public static final int play=0x7f02007e;
-        public static final int poopstat=0x7f02007f;
-        public static final int sleep=0x7f020080;
-        public static final int soapstat=0x7f020081;
-        public static final int tento=0x7f020082;
-        public static final int tentogrande=0x7f020083;
-        public static final int tentosaurioava=0x7f020084;
-        public static final int toiletpaper=0x7f020085;
+        public static final int pointremotecontrol=0x7f02007f;
+        public static final int poopstat=0x7f020080;
+        public static final int remotecontrolbackground=0x7f020081;
+        public static final int sleep=0x7f020082;
+        public static final int soapstat=0x7f020083;
+        public static final int tento=0x7f020084;
+        public static final int tentogrande=0x7f020085;
+        public static final int tentosaurioava=0x7f020086;
+        public static final int toiletpaper=0x7f020087;
     }
     public static final class id {
         public static final int Colortext=0x7f04003b;

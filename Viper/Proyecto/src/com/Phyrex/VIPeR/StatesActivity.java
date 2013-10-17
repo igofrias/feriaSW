@@ -81,7 +81,7 @@ public class StatesActivity extends SherlockFragment{
 		if(task!=null){
 			if(task.getStatus()== AsyncTask.Status.FINISHED){
 				Log.d("task", "on start say i'm finished");
-				task.execute();
+				//task.execute();
 			}else if(task.getStatus()== AsyncTask.Status.PENDING){
 				task.execute();
 				Log.d("task", "on start say i'm pending");
