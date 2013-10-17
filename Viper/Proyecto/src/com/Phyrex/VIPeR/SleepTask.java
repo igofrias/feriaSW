@@ -174,7 +174,7 @@ public class SleepTask implements SensorEventListener, Runnable {
 				states.wake();
 				Toast.makeText(parent, "O.O", Toast.LENGTH_SHORT).show();
 				if(((MainActivity)parent).isConnected())
-					((MainActivity)parent).startProgram("Vader.rxe");
+					((MainActivity)parent).startProgram("Wake.rxe");
 				
 			}
         }
