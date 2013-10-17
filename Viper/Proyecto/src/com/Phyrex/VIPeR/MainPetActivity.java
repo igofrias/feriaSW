@@ -106,14 +106,15 @@ public class MainPetActivity extends SherlockFragment {
 			    	break;
 			    	
          		case R.id.sleepi:
- 			    		if(updater.sleep(entry))
- 			    			Toast.makeText(thisActivity, "Logro Desbloqueado Perezoso", Toast.LENGTH_LONG).show();
- 			    		if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
-				 			((StatesActivity)fragment1).sleep();
-				        }
- 			    		Toast.makeText(thisActivity, ". . z z Z Z", Toast.LENGTH_SHORT).show();
+// 			    		if(updater.sleep(entry))
+// 			    			Toast.makeText(thisActivity, "Logro Desbloqueado Perezoso", Toast.LENGTH_LONG).show();
+// 			    		if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
+//				 			((StatesActivity)fragment1).sleep();
+//				        }
+// 			    		Toast.makeText(thisActivity, ". . z z Z Z", Toast.LENGTH_SHORT).show();
  			    		 /*	if(((MainActivity)main).isConnected())
 			    				main.startProgram("");*/
+         			SleepTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
 			    	break;
 			    	
          		case R.id.playimg:

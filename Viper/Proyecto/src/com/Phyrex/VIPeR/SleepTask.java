@@ -158,6 +158,9 @@ public class SleepTask implements SensorEventListener, Runnable {
 		vibe.vibrate(100); 
 		if(updater.sleep(helper))
  			Toast.makeText(parent, "Logro Desbloqueado Perezoso", Toast.LENGTH_LONG).show();
+		if(states!=null && !states.isDetached()){//si el fragmento esta activo
+ 			((StatesActivity)states).sleep();
+        }
  		Toast.makeText(parent, ". . z z Z Z", Toast.LENGTH_SHORT).show();
     	
 	}
