@@ -248,7 +248,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			
 				
 			//Asumiendo que motor b y c sean los motores de las ruedas.
-			int motorActionb = BTCommunicator.MOTOR_B;
+			int motorActionb = BTCommunicator.MOTOR_A;
 		    int motorActionc = BTCommunicator.MOTOR_C;
 			
 			thisActivity.sendBTCmessage(BTCommunicator.NO_DELAY, motorActionb,vel_robot_x , 0);
