@@ -69,9 +69,6 @@ public class MainPetActivity extends SherlockFragment {
 		 accion.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
-					if(((MainActivity)thisActivity).isConnected()){
-						((MainActivity)thisActivity).startProgram("Shake.rxe");
-					}
 					//Agregue aqui el manager 
 					SherlockFragment fragment1 = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
 					PetActionManager petman = new PetActionManager(thisActivity,(StatesActivity)fragment1);
@@ -93,27 +90,11 @@ public class MainPetActivity extends SherlockFragment {
          	SherlockFragment fragment1 = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
          	switch(v.getId()){
          		case R.id.eati:
-				    	if(updater.eat(entry)){
-				    		Toast.makeText(thisActivity, "Logro Desbloqueado Primeras mordidas", Toast.LENGTH_LONG).show();
-				    	}
-				
-				 		if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
-				 			((StatesActivity)fragment1).eating();
-				        }
-				    	Toast.makeText(thisActivity, "Om nom nom nom", Toast.LENGTH_SHORT).show();
-				    /*	if(((MainActivity)main).isConnected())
-				    		main.startProgram("");*/
+         			EatTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
+
 			    	break;
 			    	
          		case R.id.sleepi:
-// 			    		if(updater.sleep(entry))
-// 			    			Toast.makeText(thisActivity, "Logro Desbloqueado Perezoso", Toast.LENGTH_LONG).show();
-// 			    		if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
-//				 			((StatesActivity)fragment1).sleep();
-//				        }
-// 			    		Toast.makeText(thisActivity, ". . z z Z Z", Toast.LENGTH_SHORT).show();
- 			    		 /*	if(((MainActivity)main).isConnected())
-			    				main.startProgram("");*/
          			SleepTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
 			    	break;
 			    	
@@ -124,8 +105,8 @@ public class MainPetActivity extends SherlockFragment {
 			 			((StatesActivity)fragment1).playing();
 			        }
  			    	Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
- 			    	 /*	if(((MainActivity)main).isConnected())
-		    				main.startProgram("");*/
+ 			    	 if(((MainActivity)thisActivity).isConnected())
+		    				((MainActivity)thisActivity).startProgram("Shake.rxe");
 			    	break;
 			    	
 			    	default:

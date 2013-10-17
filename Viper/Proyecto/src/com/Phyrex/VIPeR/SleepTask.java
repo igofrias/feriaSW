@@ -161,6 +161,8 @@ public class SleepTask implements SensorEventListener, Runnable {
 		if(states!=null && !states.isDetached()){//si el fragmento esta activo
  			((StatesActivity)states).sleep();
         }
+		 if(((MainActivity)parent).isConnected())
+				((MainActivity)parent).startProgram("Sleep.rxe");
  		Toast.makeText(parent, ". . z z Z Z", Toast.LENGTH_SHORT).show();
     	
 	}
