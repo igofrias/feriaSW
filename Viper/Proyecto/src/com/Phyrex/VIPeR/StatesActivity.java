@@ -221,6 +221,11 @@ public class StatesActivity extends SherlockFragment{
 		hapiness.setProgress(hapiness.getProgress()+100);
 		hungry.setProgress(hungry.getProgress()-50);
 	}
+	public void sleep(){
+		health.setProgress(health.getProgress()+100);
+		hapiness.setProgress(hapiness.getProgress()+100);
+		hungry.setProgress(hungry.getProgress()-50);
+	}
 	
 	public void hungrypet(){
 		if(hungry.getProgress()!=0){

@@ -61,7 +61,6 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     public static final int MENU_REMOTE_CONTROL = com.actionbarsherlock.view.Menu.FIRST + 2;
     public static final int MENU_PAIRING = com.actionbarsherlock.view.Menu.FIRST + 3;
     public static final int ACHIEVEMENTS = com.actionbarsherlock.view.Menu.FIRST + 4;
-    public static final int MENU_QUIT = com.actionbarsherlock.view.Menu.FIRST + 5;
     private com.actionbarsherlock.view.Menu myMenu;
     //////////////////////////////////
     
@@ -286,7 +285,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 		ft.commit();
 	}
     
-    private void changeLayoutVisibility(){
+    void changeLayoutVisibility(){
     	frame1 = (FrameLayout)this.findViewById(R.id.frame1);
 		frame2 = (FrameLayout)this.findViewById(R.id.frame2);
 		frame1.setVisibility(View.VISIBLE);
@@ -702,7 +701,6 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         myMenu.add(0, MENU_REMOTE_CONTROL, 3, "Control Remoto")/*.setIcon(R.drawable.ic_menu_start)*/;
         myMenu.add(0, MENU_PAIRING, 4, "Parear")/*.setIcon(R.drawable.ic_menu_start)*/;
         myMenu.add(0, ACHIEVEMENTS, 5, "Logros")/*.setIcon(R.drawable.ic_menu_start)*/;
-        myMenu.add(0, MENU_QUIT, 6, "Salir")/*.setIcon(R.drawable.ic_menu_exit)*/;
         updateButtonsAndMenu();
         return true;
     }
@@ -747,6 +745,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
                 
             case MENU_REMOTE_CONTROL:
                 	if (isConnected()){
+                		detachAll();
     	        		launch_remotecontrol();
     	        	}else{
     	        		Toast.makeText(this, "Debe estar conectado para usar esta función", Toast.LENGTH_SHORT).show();
@@ -754,6 +753,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
                 return true;
                 
             case ACHIEVEMENTS:
+            	detachAll();
             	launch_achievementlist(); 
                
         		return true;
@@ -764,15 +764,8 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
                 return true;
             
             case MENU_MAIN:
+            	detachAll();
             	launch_mainpet();
-                return true;
-                
-            case MENU_QUIT:
-                destroyBTCommunicator();
-                finish();
-
-                if (btOnByUs)
-                    showToast(R.string.bt_off_message, Toast.LENGTH_SHORT);
                 return true;
         }
 
