@@ -175,7 +175,6 @@ public class EatTask implements SensorEventListener, Runnable {
 		//para que vibre al realizar accion
 		Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
 		vibe.vibrate(100); 
-		updater.eat(helper);
 		if(updater.eat(helper)){
     		Toast.makeText(parent, "Logro Desbloqueado Primeras mordidas", Toast.LENGTH_LONG).show();
     	}
