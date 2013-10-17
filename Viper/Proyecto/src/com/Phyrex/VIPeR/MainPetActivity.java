@@ -18,7 +18,7 @@ import com.actionbarsherlock.app.SherlockFragment;
  
 public class MainPetActivity extends SherlockFragment {
 	private Button calibrate;
-	private Button shake;
+	private Button accion;
 	private ImageButton eat;
 	private ImageButton sleep;
 	private ImageButton play;
@@ -44,7 +44,7 @@ public class MainPetActivity extends SherlockFragment {
 		 super.onActivityCreated(savedInstanceState); 
 		 thisActivity = getActivity();
 		 calibrate = (Button)thisActivity.findViewById(R.id.calibrar);
-		 shake = (Button)thisActivity.findViewById(R.id.shake);
+		 accion = (Button)thisActivity.findViewById(R.id.accion);
 		 eat = (ImageButton)thisActivity.findViewById(R.id.eati);
 		 sleep = (ImageButton)thisActivity.findViewById(R.id.sleepi);
 		 play = (ImageButton)thisActivity.findViewById(R.id.playimg);
@@ -66,7 +66,7 @@ public class MainPetActivity extends SherlockFragment {
 						Toast.makeText(thisActivity, "No hay robot conectado", Toast.LENGTH_SHORT).show();
 					}
 				}});
-		 shake.setOnClickListener(new OnClickListener(){
+		 accion.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
 					if(((MainActivity)thisActivity).isConnected()){

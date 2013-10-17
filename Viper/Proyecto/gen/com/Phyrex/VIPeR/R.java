@@ -976,6 +976,7 @@ containing a value of this type.
         public static final int abs__textButton=0x7f040013;
         public static final int abs__title=0x7f04001b;
         public static final int abs__up=0x7f04000b;
+        public static final int accion=0x7f040049;
         public static final int action_settings=0x7f04006d;
         public static final int archname=0x7f040033;
         public static final int avatar=0x7f04004a;
@@ -1022,7 +1023,6 @@ containing a value of this type.
         public static final int salud=0x7f040053;
         public static final int seekBarX=0x7f040055;
         public static final int seekBarY=0x7f040056;
-        public static final int shake=0x7f040049;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;

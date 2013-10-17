@@ -303,6 +303,7 @@ int id abs__submit_area 0x7f04002f
 int id abs__textButton 0x7f040013
 int id abs__title 0x7f04001b
 int id abs__up 0x7f04000b
+int id accion 0x7f040049
 int id action_settings 0x7f04006d
 int id archname 0x7f040033
 int id avatar 0x7f04004a
@@ -349,7 +350,6 @@ int id raza 0x7f04003a
 int id salud 0x7f040053
 int id seekBarX 0x7f040055
 int id seekBarY 0x7f040056
-int id shake 0x7f040049
 int id showCustom 0x7f040008
 int id showHome 0x7f040005
 int id showTitle 0x7f040007
