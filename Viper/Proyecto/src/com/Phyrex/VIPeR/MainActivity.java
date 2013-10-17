@@ -353,6 +353,8 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         myBTCommunicator.setMACAddress(mac_address);
         myBTCommunicator.start();
         updateButtonsAndMenu();
+        if(isConnected())
+        	startProgram("SuccessConnection.rxe");
     }
     
     ////Termina la conexion bluetooth (destruye el thread)//////////
@@ -448,6 +450,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
             BluetoothAdapter.getDefaultAdapter().disable();
         }
         super.onDestroy();
+        finish();
          
     }
 
