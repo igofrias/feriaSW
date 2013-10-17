@@ -4,6 +4,7 @@ public class Achievement {
 	int _id;
 	String _name;
 	String _desc;
+	int _img;
 	int _done;
 
 	public Achievement() {
@@ -11,52 +12,51 @@ public class Achievement {
 	}
 
 	//constructor con id
-	public Achievement(int id, String name, String desc, int done){
-		this._id=id;
+	public Achievement(String name, String desc, int img, int done){
 		this._name=name;
 		this._desc=desc;
+		this._img=img;
 		this._done=done;
 	}
 
-	// get ID
-	public int getID(){
-		return this._id;
-
-	}
-	//set ID
-	public void setID(int id){
-		this._id=id;
+	public int get_img() {
+		return _img;
 	}
 
-	// get name
-	public String getName(){
-		return this._name;
+	public void set_img(int _img) {
+		this._img = _img;
 	}
 
-	// set name
-	public void setName(String name){
-		this._name = name;
+	public int get_id() {
+		return _id;
 	}
 
-	//get descripcion
-	public String getDesc(){
-		return this._desc;
+	public void set_id(int _id) {
+		this._id = _id;
 	}
 
-	//set descripcion
-	public void setDesc(String desc){
-		this._desc=desc;
-
+	public String get_name() {
+		return _name;
 	}
 
-	// get Hecho
-	public int getDone(){
-		return this._done;
-
+	public void set_name(String _name) {
+		this._name = _name;
 	}
-	//set Hecho
-	public void setDone(int done){
-		this._done=done;
+
+	public String get_desc() {
+		return _desc;
+	}
+
+	public void set_desc(String _desc) {
+		this._desc = _desc;
+	}
+
+	public int get_done() {
+		return _done;
+	}
+
+	public void set_done(int _done) {
+		this._done = _done;
 	}
 
 	@Override

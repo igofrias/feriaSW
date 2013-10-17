@@ -20,7 +20,6 @@ public class MainPetActivity extends SherlockFragment {
 	private ImageButton sleep;
 	private ImageButton play;
 	private static Activity thisActivity;
-	private MainActivity main = new MainActivity();
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,15 +97,19 @@ public class MainPetActivity extends SherlockFragment {
  			    		if(updater.sleep(entry))
  			    			Toast.makeText(thisActivity, "Logro Desbloqueado Perezoso", Toast.LENGTH_LONG).show();
  			    		Toast.makeText(thisActivity, ". . z z Z Z", Toast.LENGTH_SHORT).show();
+ 			    		 /*	if(((MainActivity)main).isConnected())
+			    				main.startProgram("");*/
 			    	break;
 			    	
          		case R.id.playimg:
          			if(updater.play(entry))
-         				Toast.makeText(thisActivity, "Logro Desbloqueado Jugeton", Toast.LENGTH_LONG).show();
+         				Toast.makeText(thisActivity, "Logro Desbloqueado Jugueton", Toast.LENGTH_LONG).show();
          			if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
 			 			((StatesActivity)fragment1).playing();
 			        }
  			    	Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
+ 			    	 /*	if(((MainActivity)main).isConnected())
+		    				main.startProgram("");*/
 			    	break;
 			    	
 			    	default:
