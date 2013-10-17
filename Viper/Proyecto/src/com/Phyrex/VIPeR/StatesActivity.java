@@ -219,6 +219,14 @@ public class StatesActivity extends SherlockFragment{
 	public void eating(){
 		hungry.setProgress(hungry.getProgress()+100);
 	}
+	public boolean isFull()
+	{
+		if(hungry.getMax() == hungry.getProgress())
+		{
+			return true;
+		}
+		return false;
+	}
 	public void playing(){
 		hapiness.setProgress(hapiness.getProgress()+100);
 		hungry.setProgress(hungry.getProgress()-50);

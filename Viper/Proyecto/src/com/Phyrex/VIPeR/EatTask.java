@@ -175,15 +175,25 @@ public class EatTask implements SensorEventListener, Runnable {
 		//para que vibre al realizar accion
 		Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
 		vibe.vibrate(100); 
-		if(updater.eat(helper)){
-    		Toast.makeText(parent, "Logro Desbloqueado Primeras mordidas", Toast.LENGTH_LONG).show();
-    	}
+		
+    	if(!states.isFull())
+    	{
+    		if(updater.eat(helper)){
+        		Toast.makeText(parent, "Logro Desbloqueado Primeras mordidas", Toast.LENGTH_LONG).show();
+        	}
 
- 		if(states!=null && !states.isDetached()){//si el fragmento esta activo
- 			states.eating();
-        }
- 		 if(((MainActivity)parent).isConnected())
-				((MainActivity)parent).startProgram("Eat.rxe");
-    	Toast.makeText(parent.getBaseContext(), "Om nom nom nom", Toast.LENGTH_SHORT).show();
+     		if(states!=null && !states.isDetached()){//si el fragmento esta activo
+     			states.eating();
+            }
+     		 if(((MainActivity)parent).isConnected())
+    				((MainActivity)parent).startProgram("Eat.rxe");
+        	Toast.makeText(parent.getBaseContext(), "Om nom nom nom", Toast.LENGTH_SHORT).show();
+    	}
+    	else
+    	{
+    		if(((MainActivity)parent).isConnected())
+				((MainActivity)parent).startProgram("Angry.rxe");
+    		Toast.makeText(parent.getBaseContext(), ">:(", Toast.LENGTH_SHORT).show();
+    	}
 	}
 }
