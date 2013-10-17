@@ -156,14 +156,27 @@ public class SleepTask implements SensorEventListener, Runnable {
 		//para que vibre al realizar accion
 		Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
 		vibe.vibrate(100); 
-		if(updater.sleep(helper))
- 			Toast.makeText(parent, "Logro Desbloqueado Perezoso", Toast.LENGTH_LONG).show();
+		
 		if(states!=null && !states.isDetached()){//si el fragmento esta activo
- 			((StatesActivity)states).sleep();
+			if(!states.isSleeping())
+			{
+				states.sleep();
+				if(updater.sleep(helper)){
+		 			Toast.makeText(parent, "Logro Desbloqueado Perezoso", 
+		 					Toast.LENGTH_LONG).show();
+				}
+				Toast.makeText(parent, ". . z z Z Z", Toast.LENGTH_SHORT).show();
+			}
+			else
+			{
+				states.wake();
+				Toast.makeText(parent, "O.O", Toast.LENGTH_SHORT).show();
+				
+			}
         }
 		 if(((MainActivity)parent).isConnected())
 				((MainActivity)parent).startProgram("Sleep.rxe");
- 		Toast.makeText(parent, ". . z z Z Z", Toast.LENGTH_SHORT).show();
+ 		
     	
 	}
 }

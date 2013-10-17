@@ -57,6 +57,7 @@ public class StatesActivity extends SherlockFragment{
 	private ProgressBar hapiness;
 	private ImageView btstate;
 	private ImageView petava;
+	private boolean sleeping;
 	Task task = new Task(this);
 
 	private String[] from = new String[]{Database_Helper.Key_name,Database_Helper.Key_name};
@@ -66,7 +67,8 @@ public class StatesActivity extends SherlockFragment{
 	/////////////////////////////////
 	@Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);        
+        super.onCreate(savedInstanceState);
+        sleeping = false;
         setRetainInstance(true);	
     }
 
@@ -225,8 +227,16 @@ public class StatesActivity extends SherlockFragment{
 		health.setProgress(health.getProgress()+100);
 		hapiness.setProgress(hapiness.getProgress()+100);
 		hungry.setProgress(hungry.getProgress()-50);
+		sleeping = true;
 	}
-	
+	public boolean isSleeping()
+	{
+		return sleeping;
+	}
+	public void wake()
+	{
+		sleeping = false;
+	}
 	public void hungrypet(){
 		if(hungry.getProgress()!=0){
 			hungry.setProgress(hungry.getProgress()-1);
