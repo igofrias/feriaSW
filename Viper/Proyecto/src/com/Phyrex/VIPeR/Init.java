@@ -1,5 +1,8 @@
 package com.Phyrex.VIPeR;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.database.Cursor;
 
@@ -40,8 +43,8 @@ public class Init {
 	public static final String ach7 = "Perezoso";	
 	public static final String ach7_desc = "Tu mascota ha dormido 5 veces";
 	public static final int img7 = R.drawable.logropepe;
-
-	public static final int done = 0;
+	int done =0;
+	
 	
 
 	public static final String est1 = "Ha Comido";
@@ -55,16 +58,16 @@ public class Init {
 	public static final int imgstat3 = R.drawable.play;
 	public static final String est4 = "Mascotas Creadas";
 	public static final String est4_desc = "¿Cuantas mascotas ha tenido?";
-	public static final int imgstat4 = R.drawable.logrobloq;
+	public static final int imgstat4 = R.drawable.petsegg;
 	public static final String est5 = "Desechos Generados";
 	public static final String est5_desc = "¿Cuantas veces ha hecho sus necesidades?";
-	public static final int imgstat5 = R.drawable.logrobloq;
+	public static final int imgstat5 = R.drawable.poopstat;
 	public static final String est6 = "Desechos Limpiados";
 	public static final String est6_desc = "¿Cuantas veces ha limpiado a sus mascotas?";
-	public static final int imgstat6 = R.drawable.logrobloq;
+	public static final int imgstat6 = R.drawable.toiletpaper;
 	public static final String est7= "Ha sido Lavada";
 	public static final String est7_desc = "¿Cuantas veces ha limpiado a sus mascotas?";
-	public static final int imgstat7 = R.drawable.logrobloq;
+	public static final int imgstat7 = R.drawable.soapstat;
 
 	public static final int amount = 0;
 

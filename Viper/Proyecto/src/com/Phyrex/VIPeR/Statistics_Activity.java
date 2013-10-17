@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,9 +32,9 @@ public class Statistics_Activity extends SherlockFragment {
 	private TextView statscolor;
 	private TextView statsrace;
 	private TextView statsbirthdate;
+	private ImageButton statsback;
 	private static Activity thisActivity;
 	Activity parent_activity;
-	
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class Statistics_Activity extends SherlockFragment {
 		statscolor= (TextView)thisActivity.findViewById(R.id.statscolor);
 		statsrace = (TextView)thisActivity.findViewById(R.id.statrace);
 		statsbirthdate = (TextView)thisActivity.findViewById(R.id.statsbirthdate);
+		statsback = (ImageButton)thisActivity.findViewById(R.id.statsback);
 		statsname.setText(petto._name);
 		statscolor.setText(petto._color);
 		statsrace.setText(petto._raza);
@@ -81,12 +83,14 @@ public class Statistics_Activity extends SherlockFragment {
 		statsbirthdate.setText(birthdate[1]);
 		
 		//Evento de click para un item
-        /*lista.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-			
+        statsback.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((MainActivity)thisActivity).launch_mainpet();
+				((MainActivity)thisActivity).launch_states();
 			}
   		});
-		*/
+		
 	}
 	
 	

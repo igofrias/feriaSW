@@ -44,7 +44,7 @@ public class DB_Updater {
 		if(aux_amount == 4){
 			flag = 1;
 			helper.close();
-			achievement_unlock(helper, "Jugeton");
+			achievement_unlock(helper, "Jugueton");
 			achiviement = true;
 		}
 		
@@ -182,5 +182,30 @@ public class DB_Updater {
 			helper.confirmAchievement(newAch._id, newAch._name, newAch._desc, newAch._done);
 			helper.close();
 			return true;
+		}
+		
+		//Aumenta cantidad de veces de jugar
+		public void newpet(Database_Helper helper){
+			
+			int aux_amount;
+			Statistics aux_st = new Statistics();
+			helper.open_read();
+			Cursor aux_cursor  = helper.getStatistics("Mascotas Creadas");
+
+			if (aux_cursor.moveToFirst() == false){
+				return;
+			} 
+
+			aux_amount = up(Integer.parseInt(aux_cursor.getString(3)));
+
+			helper.close();
+			
+			aux_st._id = Integer.parseInt(aux_cursor.getString(0));
+			aux_st._name = aux_cursor.getString(1);
+			aux_st._desc = aux_cursor.getString(2);		
+			
+			helper.open_write();
+			helper.modifyStatistics(aux_st._id, aux_st._name, aux_st._desc, aux_amount);           	          	    	
+			helper.close();
 		}
 }

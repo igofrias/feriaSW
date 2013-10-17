@@ -6,6 +6,7 @@
     android:layout_gravity="center"
     android:layout_marginEnd="5dp"
     android:layout_marginStart="5dp"
+    android:background="#033600"
     android:gravity="center"
     android:orientation="vertical" >
 
@@ -13,19 +14,24 @@
         android:id="@+id/archname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="Logros"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-<GridView
-    android:id="@+id/logros"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:layout_weight="5"
-    android:gravity="center"
-    android:numColumns="3" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000"
+        android:orientation="vertical" >
 
-</GridView>
+        <GridView
+            android:id="@+id/logros"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:numColumns="3" >
+        </GridView>
+
+    </LinearLayout>
 
 </LinearLayout>

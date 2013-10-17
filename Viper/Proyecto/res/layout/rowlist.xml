@@ -9,7 +9,7 @@
 
         <LinearLayout
             android:id="@+id/layoutrowlista"
-            android:layout_width="40dp"
+            android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:gravity="bottom"
