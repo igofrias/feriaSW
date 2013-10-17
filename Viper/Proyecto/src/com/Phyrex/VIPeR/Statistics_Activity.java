@@ -35,7 +35,6 @@ public class Statistics_Activity extends SherlockFragment {
 	private ImageButton statsback;
 	private static Activity thisActivity;
 	Activity parent_activity;
-	MainActivity main = new MainActivity();
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,8 +86,8 @@ public class Statistics_Activity extends SherlockFragment {
         statsback.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//((MainActivity)main).launch_mainpet();
-				//((MainActivity)main).launch_states();
+				((MainActivity)thisActivity).launch_mainpet();
+				((MainActivity)thisActivity).launch_states();
 			}
   		});
 		
