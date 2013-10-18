@@ -175,7 +175,7 @@ public class EatTask implements SensorEventListener, Runnable {
 		//para que vibre al realizar accion
 		Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
 		vibe.vibrate(100); 
-		if(states.isSleeping()){
+		if(!states.isSleeping()){
 	    	if(!states.isFull())
 	    	{
 	    		if(updater.eat(helper)){
