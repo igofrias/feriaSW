@@ -95,7 +95,8 @@
             android:id="@+id/calibrar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Calibrar" />
+            android:text="Calibrar"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/accion"
