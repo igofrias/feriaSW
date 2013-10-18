@@ -1,13 +1,12 @@
 #pragma config(Motor, motorB,  headMotor, tmotorNXT, PIDControl)
-#define VELOCITY 25
 
 /*
  * Move Head for indicate success connection
  */
 task main(){
 	PlaySoundFile("Woops.rso");
-	motor[headMotor]=VELOCITY;
+	motor[headMotor]=25;
 	wait10Msec(40);
-	motor[headMotor]=-VELOCITY;
+	motor[headMotor]=-25;
 	wait10Msec(40);
 }
