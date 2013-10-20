@@ -99,11 +99,11 @@ public class MainPetActivity extends SherlockFragment {
 			    	break;
 			    	
          		case R.id.playimg:
-         			if(updater.play(entry))
-	         			Toast.makeText(thisActivity, "Logro Desbloqueado Jugueton", Toast.LENGTH_LONG).show();
+         			
          			if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
 			 			if(!((StatesActivity)fragment1).isSleeping()){
-	         				((StatesActivity)fragment1).playing();
+			 				if(updater.play(entry))
+			         			Toast.makeText(thisActivity, "Logro Desbloqueado Jugueton", Toast.LENGTH_LONG).show();((StatesActivity)fragment1).playing();
 				 			Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
 		 			    	if(((MainActivity)thisActivity).isConnected())
 				    				((MainActivity)thisActivity).startProgram("Shake.rxe");
