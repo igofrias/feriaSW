@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import android.os.BatteryManager;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -55,7 +56,18 @@ public class BTService extends Service implements BTConnectable{
     private int directionAction;
   */
     ///////////////////////////////////
-	
+	public void setCurrentActivity(Activity main)
+	{
+		thisActivity = main;
+		
+	}
+	public class BTBinder extends Binder {
+         BTService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return BTService.this;
+        }
+    }
+	public final BTBinder btbinder = new BTBinder();
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
     	//bncnt.setOnClickListener(listener);
@@ -78,7 +90,7 @@ public class BTService extends Service implements BTConnectable{
 	@Override
 	public IBinder onBind(Intent intent) {
 		// TODO Auto-generated method stub
-		return null;
+		return btbinder;
 	}
 
 	@Override
@@ -124,7 +136,7 @@ public class BTService extends Service implements BTConnectable{
     //recibe la mac del robot/////////////
     public void startBTCommunicator(String mac_address) {
         mac_nxt= mac_address;
-        connectingProgressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.connecting_please_wait), true);
+        connectingProgressDialog = ProgressDialog.show(thisActivity, "", getResources().getString(R.string.connecting_please_wait), true);
 
         if (myBTCommunicator != null) {
             try {
@@ -188,7 +200,7 @@ public class BTService extends Service implements BTConnectable{
     	connectionType = mac;
     	if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            //startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+            thisActivity.startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
         } else {//si esta activado busca dispositivos para conectarse
         	startBTCommunicator(mac);
         }
@@ -210,7 +222,7 @@ public class BTService extends Service implements BTConnectable{
 				connectionType=null;
 		        if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
 		            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-		            //startActivityForResult(enableIntent, REQUEST_ENABLE_BT);		     
+		            thisActivity.startActivityForResult(enableIntent, REQUEST_ENABLE_BT);		     
 		        } else {//si esta activado busca dispositivos para conectarse
 		           selectNXT();
 		        }
@@ -320,7 +332,7 @@ public class BTService extends Service implements BTConnectable{
     //llama a la actividad que  busca dispositivos
     void selectNXT() {
         Intent serverIntent = new Intent(this, DeviceListActivity.class);
-        //startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
+        thisActivity.startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
     }
     
     private int byteToInt(byte byteValue) {

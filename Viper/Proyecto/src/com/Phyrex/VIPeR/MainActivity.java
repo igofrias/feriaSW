@@ -2,6 +2,7 @@ package com.Phyrex.VIPeR;
 
 import com.Phyrex.VIPeR.BTConnectable;
 import com.Phyrex.VIPeR.BTCommunicator;
+import com.Phyrex.VIPeR.BTService.BTBinder;
 import com.Phyrex.VIPeR.DeviceListActivity;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -13,13 +14,17 @@ import android.os.BatteryManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -48,7 +53,8 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 	private ThreadClass thread;
 	private String connectionType= null;
     String mac_nxt="";
-    
+    private BTService btservice;
+    private boolean mBound;
     ///******** Variables del layout main activity //////////
     private Layout linear;
     private FrameLayout frame1;
@@ -74,6 +80,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     
     @Override
     protected void onStart() {
+    	bindService(new Intent(thisActivity,BTService.class),btconnection,Context.BIND_AUTO_CREATE);
         super.onStart();
     }
     
@@ -82,6 +89,23 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         super.onResume();
     }
     
+    private ServiceConnection btconnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            BTBinder binder = (BTBinder) service;
+            btservice =  binder.getService();
+            btservice.setCurrentActivity(thisActivity);
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
     ///Creacion de la actividad, inicializacion de botoes y texto.
     @SuppressLint("ShowToast")
 	@Override
@@ -106,7 +130,6 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 			launch_states();
 			launch_mainpet();
 		}
-		
 		
 	}
     
@@ -456,8 +479,12 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 
     @Override
     public void onPause() {
-        destroyBTCommunicator();
-        super.onStop();
+        btservice.destroyBTCommunicator();
+        if (mBound) {
+            unbindService(btconnection);
+            mBound = false;
+        }
+        super.onStop(); //WHY IS CALLING STOP ON PAUSE;
     }
 
     @Override
@@ -739,15 +766,15 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 					List<Pet> mascotas = db.getPets(); //lista de mascotas
 					db.close();
 					Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
-					connect(petto.get_mac());
+					btservice.connect(petto.get_mac());
                 } else if(isConnected()){
-                    destroyBTCommunicator();
+                    btservice.destroyBTCommunicator();
                 }
 
                 return true;
                 
             case MENU_REMOTE_CONTROL:
-                	if (isConnected()){
+                	if (btservice.isConnected()){
                 		detachAll();
     	        		launch_remotecontrol();
     	        	}else{
@@ -762,7 +789,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         		return true;
         		
             case MENU_PAIRING:
-                pairing();
+                btservice.pairing();
                 ///guardar nueva mac en BD
                 return true;
             
