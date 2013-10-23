@@ -29,21 +29,39 @@ public class WashTask implements SensorEventListener, Runnable {
 	double mAccelCurrent;
 	double mAccel;
 	Boolean action;
-	static double ACCEL_MIN = 2;
+	
 	static long MIN_TIME = 1000; //en milisegundos
 	static boolean running;
 	Activity parent;
 	WashTask thisTask = this;
 	//Handler ext_handler;
 	PetActionManager pet_manager;
+	
+	float xAccel ; //= arg0.values[0];
+	float yAccel; //= arg0.values[1];
+	float zAccel; //= arg0.values[2];
+  
+	/* And here the previous ones */
+	float xPreviousAccel;
+  	float yPreviousAccel;
+  	float zPreviousAccel;
+      
+  	/* Used to suppress the first shaking */
+  	boolean firstUpdate = true;
+
+  	/*What acceleration difference would we assume as a rapid movement? */
+  	float shakeThreshold = 0.5f; //sensibilidad del shake
+  	
+	/* Has a shaking motion been started (one direction) */
+	boolean shakeInitiated = false;
+	
+	
 	  public WashTask(Activity activity, PetActionManager petman) {
 		  //Sets view and sensor
-		
 		parent = activity;
 		pet_manager = petman;
 	    manager =(SensorManager) parent.getSystemService(Context.SENSOR_SERVICE);
 		accelerometer = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		gravity = new double[3];
 		action = false;
 		
 	    return;
@@ -71,63 +89,76 @@ public class WashTask implements SensorEventListener, Runnable {
 
 	}
 
-	public double setGravity(double raw_accel_x, double raw_accel_y, 
-			double raw_accel_z)
-	{
-		//Calcula la gravedad para despues quitar su influencia
-		//alpha  = t/(dt + t) t=constante del filtro dt=event delivery rate
-		double alpha = 0.8;
-		for (int i = 0; i < 3; i++)
-		{
-			gravity[i] = 0;
+	private void updateAccelParameters(float xNewAccel, float yNewAccel,
+			float zNewAccel) {
+                /* we have to suppress the first change of acceleration, it results from first values being initialized with 0 */
+		if (firstUpdate) {  
+			xPreviousAccel = xNewAccel;
+			yPreviousAccel = yNewAccel;
+			zPreviousAccel = zNewAccel;
+			firstUpdate = false;
+		} else {
+			xPreviousAccel = xAccel;
+			yPreviousAccel = yAccel;
+			zPreviousAccel = zAccel;
 		}
-		  // Isolate the force of gravity with the low-pass filter.
-		  gravity[0] = alpha * gravity[0] + (1 - alpha) * raw_accel_x;
-		  gravity[1] = alpha * gravity[1] + (1 - alpha) * raw_accel_y;
-		  gravity[2] = alpha * gravity[2] + (1 - alpha) * raw_accel_z;
-		  
-		  double x = raw_accel_x - gravity[0];
-		  double y = raw_accel_y - gravity[1];
-		  double z = raw_accel_z - gravity[2];
-		double gravitymod = Math.sqrt(x*x + y*y);
-		return gravitymod;
+		xAccel = xNewAccel;
+		yAccel = yNewAccel;
+		zAccel = zNewAccel;
 	}
+	
+	/* If the values of acceleration have changed on at least two axises, we are probably in a shake motion */
+	private boolean isAccelerationChanged() {
+		float deltaX = Math.abs(xPreviousAccel - xAccel);
+		float deltaY = Math.abs(yPreviousAccel - yAccel);
+		float deltaZ = Math.abs(zPreviousAccel - zAccel);
+		return (deltaX > shakeThreshold && deltaY > shakeThreshold)
+				|| (deltaX > shakeThreshold && deltaZ > shakeThreshold)
+				|| (deltaY > shakeThreshold && deltaZ > shakeThreshold);
+	}
+	
+	private void executeShakeAction() {
+		Log.d("WashTask","Accion ejecutada");
+		
+  	  //si hay shake...
+  	  //inicia la accion
+		if(action == false)
+  	  {
+  		  action = true;
+  		  timer.start();
+  	  }  
+		
+	}
+	
 	@Override
-	public void onSensorChanged(SensorEvent arg0) {
+	public void onSensorChanged(SensorEvent se) {
 		// Gets information from sensors and processes it
-		float x = arg0.values[0];
-	      float y = arg0.values[1];
-	      float z = arg0.values[2];
-	      mAccelLast = mAccelCurrent;
-	      mAccelCurrent = setGravity(x,y,z); 
-	      double delta = mAccelCurrent - mAccelLast;
-	      mAccel = mAccel * 0.9f + delta*0.1f; // perform low-cut filter
-	      //After shaking does the action and ends
-	      if (mAccelCurrent > ACCEL_MIN)
-	      {
-	    	  Log.d("WashTask","Accion ejecutada");
-	    	  //Si la inclincacion se mantiene durante el tiempo dado
-	    	  //inicia la accion
-	    	  if(action == false)
-	    	  {
-	    		  
-	    		  action = true;
-	    		  timer.start();
-	    	  }
-				
-	    	  
-	      }
-	      else 
-	      {
-	    	  if(action == true)
-	    	  {
-	    		  //Si pasa de esperar a que se mantenga inclinado a desinclinarse
-	    		  action = false;
-	    		  timer.cancel();
-	    		  cleanup();
-	    	  }
-	      }
+		
+	updateAccelParameters(se.values[0], se.values[1], se.values[2]);   // (1)
+    if ((!shakeInitiated) && isAccelerationChanged()) {                                      // (2) 
+	    shakeInitiated = true; 
+  	  if(action == true)
+  	  {
+  		  //Si pasa de esperar a que se mantenga inclinado a desinclinarse
+  		  action = false;
+  		  timer.cancel();
+  		  cleanup();
+  	  }
+	} 
+    else if ((shakeInitiated) && isAccelerationChanged()) {                              // (3)
+	    executeShakeAction();
+	} 
+    else if ((shakeInitiated) && (!isAccelerationChanged())) {                           // (4)
+	    shakeInitiated = false;
+  	  if(action == true)
+  	  {
+  		  //Si pasa de esperar a que se mantenga inclinado a desinclinarse
+  		  action = false;
+  		  timer.cancel();
+  		  cleanup();
+  	  }
 	}
+}
 	
 	@Override
 	public void run() {

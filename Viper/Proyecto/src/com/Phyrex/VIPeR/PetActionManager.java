@@ -70,6 +70,7 @@ public class PetActionManager  {
 		//Aqui se ejecutan todas las tareas.
 		EatTask eatTask = new EatTask(currentActivity, this);
 		SleepTask sleepTask = new SleepTask(currentActivity, this);
+		WashTask washTask = new WashTask(currentActivity, this);
 		
 		running = true;
 		
@@ -77,6 +78,7 @@ public class PetActionManager  {
 		
 		new Thread(eatTask).start();
 		new Thread(sleepTask).start();
+		new Thread(washTask).start();
 		timer.start();
 	}
 	public boolean stop_everything()
