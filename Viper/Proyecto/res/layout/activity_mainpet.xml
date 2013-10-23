@@ -91,6 +91,20 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <ImageButton
+                android:id="@+id/washi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.63"
+                android:src="@drawable/abs__ic_voice_search_api_holo_light" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/calibrar"
             android:layout_width="wrap_content"
