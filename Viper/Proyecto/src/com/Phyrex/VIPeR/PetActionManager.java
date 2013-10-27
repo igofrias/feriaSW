@@ -76,9 +76,9 @@ public class PetActionManager  {
 		
 		Log.d("PetActionManager", "Ejecutando acciones");
 		
+		new Thread(washTask).start(); //cuidad con conflicto entre wash y eat
 		new Thread(eatTask).start();
 		new Thread(sleepTask).start();
-		new Thread(washTask).start();
 		timer.start();
 	}
 	public boolean stop_everything()

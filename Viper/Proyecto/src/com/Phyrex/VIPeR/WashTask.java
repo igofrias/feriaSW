@@ -37,9 +37,9 @@ public class WashTask implements SensorEventListener, Runnable {
 	//Handler ext_handler;
 	PetActionManager pet_manager;
 	
-	float xAccel ; //= arg0.values[0];
-	float yAccel; //= arg0.values[1];
-	float zAccel; //= arg0.values[2];
+	float xAccel ; 
+	float yAccel; 
+	float zAccel; 
   
 	/* And here the previous ones */
 	float xPreviousAccel;
@@ -118,15 +118,14 @@ public class WashTask implements SensorEventListener, Runnable {
 	}
 	
 	private void executeShakeAction() {
-		Log.d("WashTask","Accion ejecutada");
 		
-  	  //si hay shake...
-  	  //inicia la accion
+  	  //si hay shake, inicia la accion
 		if(action == false)
-  	  {
+  	  	{
   		  action = true;
   		  timer.start();
-  	  }  
+  		  Log.d("WashTask","Accion ejecutada");
+  	  	}  
 		
 	}
 	
@@ -217,8 +216,8 @@ public class WashTask implements SensorEventListener, Runnable {
 	     			states.washing();
 	            }
 	     		 if(((MainActivity)parent).isConnected())
-	    				((MainActivity)parent).startProgram("Eat.rxe"); //cambiar a accion de lavado
-	        	Toast.makeText(parent.getBaseContext(), "lavando lavando", Toast.LENGTH_SHORT).show();
+	    				((MainActivity)parent).startProgram("Wash.rxe"); //ver que sea el mismo nombre de programa
+	        	Toast.makeText(parent.getBaseContext(), "Lavando  :3", Toast.LENGTH_SHORT).show();
 	    	}
 	    	else
 	    	{

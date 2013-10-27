@@ -23,6 +23,7 @@ public class MainPetActivity extends SherlockFragment {
 	private ImageButton sleep;
 	private ImageButton play;
 	private ImageButton wash;
+	private ImageButton poo;
 	private static Activity thisActivity;
 	StatesActivity states= new StatesActivity();
 	
@@ -50,10 +51,12 @@ public class MainPetActivity extends SherlockFragment {
 		 sleep = (ImageButton)thisActivity.findViewById(R.id.sleepi);
 		 play = (ImageButton)thisActivity.findViewById(R.id.playimg);
 		 wash = (ImageButton)thisActivity.findViewById(R.id.washi);
+		 poo = (ImageButton)thisActivity.findViewById(R.id.poopi);
 		 eat.setOnClickListener(listener);
 		 sleep.setOnClickListener(listener);
 		 play.setOnClickListener(listener);
 		 wash.setOnClickListener(listener);
+		 poo.setOnClickListener(listener);
 		 
 
 					
@@ -117,6 +120,10 @@ public class MainPetActivity extends SherlockFragment {
 			    	
          			case R.id.washi:
          				WashTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
+    			    	break;
+    			    	
+         			case R.id.poopi:
+         				PooTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
     			    	break;
          			
 			    	default:
