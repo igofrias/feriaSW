@@ -39,7 +39,7 @@ public class BTService extends Service implements BTConnectable{
 	private BTCommunicator myBTCommunicator = null;
 	private Handler btcHandler;
 	private boolean connected = false;
-    private static final int REQUEST_CONNECT_DEVICE = 1000;
+    private static final int REQUEST_CONNECT_DEVICE = 500;
     static final int REQUEST_ENABLE_BT = 2000;
     private ProgressDialog connectingProgressDialog;
     private Activity thisActivity;
@@ -122,7 +122,7 @@ public class BTService extends Service implements BTConnectable{
     }
 	
     ///detecta si se activo el bluetooth////////
-    public static void setBtOnByUs(boolean btOnByUs) {
+    public static void setBtOnByUs(boolean btOn) {
         btOnByUs = btOnByUs;
     }
     
@@ -331,7 +331,7 @@ public class BTService extends Service implements BTConnectable{
     }
     //llama a la actividad que  busca dispositivos
     void selectNXT() {
-        Intent serverIntent = new Intent(this, DeviceListActivity.class);
+        Intent serverIntent = new Intent(thisActivity, DeviceListActivity.class);
         thisActivity.startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
     }
     
@@ -470,5 +470,8 @@ public class BTService extends Service implements BTConnectable{
             }
         }
     };
-    
+    public BTCommunicator getCommunicator()
+    {
+    	return myBTCommunicator;
+    }
 }
