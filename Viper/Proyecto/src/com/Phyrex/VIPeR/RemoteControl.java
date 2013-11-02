@@ -97,13 +97,11 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	        		{
 	        			send_speeds();
 	        			
-	        			//SurfaceHolder hold = canvas.getHolder();
-	        			//Canvas can = hold.lockCanvas();
 	        			
-	        			//	canvas.draw(can);
-	       
-	        			//hold.unlockCanvasAndPost(can);
-	        			
+	        		}
+	        		else
+	        		{
+	        			running = false;
 	        		}
 	        		SystemClock.sleep(wait_time);
 	        		
@@ -259,6 +257,9 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		}
 		else
 		{
+			//Sale del control remoto. TODO
+			thisActivity.detachAll();
+        	thisActivity.launch_mainpet();
 			return;
 		}
 		
@@ -429,7 +430,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			// TODO Auto-generated method stub
 			
 			while(running){
-				if(hold.getSurface().isValid())
+				if(hold.getSurface().isValid() && thisActivity.isConnected())
 				{
 					can = hold.lockCanvas();
 				
@@ -437,6 +438,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 						canvas.Draw(can);
 					
 					hold.unlockCanvasAndPost(can);
+				}
+				else
+				{
+					running = false;
 				}
 			}
 		}

@@ -315,7 +315,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 		detach_statisticslist();
     }
     
-    private void detachAll(){
+    void detachAll(){
     	detach_achievementlist();
     	detach_mainpet();
     	detach_remotecontrol();
@@ -633,7 +633,11 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 
 	public boolean isConnected() {
 		// TODO Auto-generated method stub
-		return btservice.isConnected();
+		if(btservice != null)
+		{
+			return btservice.isConnected();
+		}
+		else return false;
 	}
 
 	public void sendBTCmessage(int delay, int message, int value1,
