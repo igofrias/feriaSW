@@ -412,27 +412,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
      * @param name The program name to start. Has to end with .rxe on the LEGO firmware and with .nxj on the 
      *             leJOS NXJ firmware.
      */   
-    public void startProgram(String name) {
-        // for .rxe programs: get program name, eventually stop this and start the new one delayed
-        // is handled in startRXEprogram()
-        if (name.endsWith(".rxe")) {
-        	Log.d("pepe", "rxe");
-            programToStart = name;        
-            btservice.sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.GET_PROGRAM_NAME, 0, 0);
-            Log.d("pepe", "startprogram fin D:");
-            //return;
-        }
-              
-       /// for .nxj programs: stop bluetooth communication after starting the program
-        /*if (name.endsWith(".nxj")) {
-            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name);
-            destroyBTCommunicator();
-            return;
-        } */      
-        Log.d("pepe", "start!!!!!!!!!!!!!!!");
-        // for all other programs: just start the program
-        btservice.sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name);
-    }
+    
     
     /**
      * Depending on the status (whether the program runs already) we stop it, wait and restart it again.
@@ -648,5 +628,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 	public String return_mac(){
 		return btservice.return_mac();
 }
-    
+	public void startProgram(String name) {
+	       btservice.startProgram(name);
+	    }
 }
