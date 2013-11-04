@@ -209,16 +209,16 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 //		vel_robot_z = this.trans_vel_a_robot(vel_z);
 		speeds_to_robot();
 	}
-	public int bar_percentage(int bar_range, double max_vel, double vel)
+	public float bar_percentage(int bar_range, double max_vel, double vel)
 	{
 		//Ve cual es el porcentaje de barra que debe tener un valor dado
-		int percentage = (int)Math.ceil((50.0*vel)/max_vel) + 50;
+		float percentage = (float) Math.ceil((50.0*vel)/max_vel) + 50;
 		return percentage;
 	}
-	public int bar_percentage(int bar_range, int center, double max_vel, double vel)
+	public float bar_percentage(int bar_range, float center, double max_vel, double vel)
 	{
 		//Ve el porcentaje que se tiene que mover, esta vez con un centro explicito
-		int percentage = (int)Math.ceil(((bar_range-center)*vel)/max_vel) + center;
+		float percentage = (float)Math.ceil(((bar_range-center)*vel)/max_vel) + center;
 		return percentage;
 	}
 	public void reset_speeds()
@@ -227,16 +227,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		vel_y = 0;
 		vel_z = 0;
 	}
-	public void mostrar_velocidades_debug()
-	{
-		//Muestra las velocidades actuales por debug
-		SeekBar x_view = (SeekBar) getView().findViewById(R.id.seekBarX);
-		SeekBar y_view = (SeekBar) getView().findViewById(R.id.seekBarY);
-		
-	    x_view.setProgress(bar_percentage(100,MAX_VEL,this.vel_x));
-	    y_view.setProgress(bar_percentage(100,MAX_VEL,this.vel_y));
-	    
-	}
+	
 	public void send_speeds()
 	{
 		
@@ -406,8 +397,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			float center_x = canvas.getWidth()/2;
 			float center_y = canvas.getHeight()/2;
 			int size = 30;
-			int x = bar_percentage(canvas.getWidth() - size, (int)center_x, -MAX_VEL, vel_x);
-			int y = bar_percentage(canvas.getHeight() - size, (int)center_y,MAX_VEL, vel_y);
+			float x = bar_percentage(canvas.getWidth() - size, center_x, -MAX_VEL, vel_x);
+			float y = bar_percentage(canvas.getHeight() - size, center_y,MAX_VEL, vel_y);
 			canvas.drawARGB(255, 0, 0, 0);
 			//canvas.drawCircle(canvas.getWidth()/2,canvas.getHeight()/2,100, color_center);
 			//canvas.drawCircle(x, y , size, color);

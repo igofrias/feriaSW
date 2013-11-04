@@ -385,21 +385,21 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 	}
 	@Override
 	public void onStop() {
-		btservice.destroyBTCommunicator();
-		if (mBound) {
-			unbindService(btconnection);
-			mBound = false;
-		}
+		//btservice.destroyBTCommunicator();
+//		if (mBound) {
+//			unbindService(btconnection);
+//			mBound = false;
+//		}
 		super.onStop(); 
 	}
     @Override
     public void onPause() {
-        btservice.destroyBTCommunicator();
-        if (mBound) {
-            unbindService(btconnection);
-            mBound = false;
-        }
-        super.onStop(); //WHY IS CALLING STOP ON PAUSE;
+        //btservice.destroyBTCommunicator();
+//        if (mBound) {
+//            unbindService(btconnection);
+//            mBound = false;
+//        }
+        super.onPause(); //WHY IS CALLING STOP ON PAUSE;
     }
 
     @Override
