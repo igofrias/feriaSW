@@ -5,6 +5,7 @@ import com.Phyrex.VIPeR.BTCommunicator;
 import com.Phyrex.VIPeR.DeviceListActivity;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Window;
 
 import android.support.v4.app.FragmentTransaction;
 import android.text.Layout;
@@ -22,6 +23,7 @@ import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 import android.app.ProgressDialog;
@@ -87,6 +89,10 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		 requestWindowFeature(Window.FEATURE_NO_TITLE);
+	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+	                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 		thisActivity = this;
 		setContentView(R.layout.activity_main);
 		//bncnt.setOnClickListener(listener);
@@ -142,10 +148,10 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     //llama al supa framento
     void launch_mainpet() {//identificamos y cargamos el fragmento menu
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		SherlockFragment fragment = ((MainPetActivity)getSupportFragmentManager().findFragmentByTag("mainpet"));
+		SherlockFragment fragment = ((MainPetAnimated)getSupportFragmentManager().findFragmentByTag("mainpet"));
 		
 		if(fragment==null){
-			fragment = new MainPetActivity();
+			fragment = new MainPetAnimated();
 			ft.replace(R.id.frame2, fragment,"mainpet");
 		}
 		else{
@@ -160,7 +166,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     //llama al supa framento
     void detach_mainpet() {//identificamos y cargamos el fragmento menu
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		SherlockFragment fragment = ((MainPetActivity)getSupportFragmentManager().findFragmentByTag("mainpet"));
+		SherlockFragment fragment = ((MainPetAnimated)getSupportFragmentManager().findFragmentByTag("mainpet"));
 		
 		if(fragment!=null){
 			if(!fragment.isDetached()){

@@ -163,7 +163,7 @@ public class BTCommunicator extends Thread {
                     if (uiHandler != null) {
                         sendToast(mResources.getString(R.string.pairing_message));
                         sendState(STATE_CONNECTERROR_PAIRING);
-                        run();
+                        //run();
                     }
                     else
                         throw e;
