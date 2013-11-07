@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:background="#033600"
+        android:gravity="center"
         android:orientation="vertical" >
 
         <TextView
@@ -27,7 +29,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
+        android:layout_weight="7"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -45,47 +47,47 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:maxLength="10"
-            android:ems="10" />
+            android:imeOptions="actionDone"
+            android:inputType="textUri"
+            android:lines="1"
+            android:maxLength="10" />
 
         <TextView
             android:id="@+id/Razatext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Raza"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
 
         <Spinner
             android:id="@+id/raza"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/Colortext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Color"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:text="Color"/>
 
         <Spinner
             android:id="@+id/color"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/bncnt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Parear con Robot" />
+            android:text="Vincular con Robot" />
 
         <Button
             android:id="@+id/crear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="Crear Mascota" />
 
     </LinearLayout>

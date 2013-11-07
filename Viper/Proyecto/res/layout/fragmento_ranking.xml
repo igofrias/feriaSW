@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#033600"
     android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#033600"
         android:orientation="horizontal" >
 
         <ImageButton
@@ -48,6 +49,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="8"
         android:background="#000000"
         android:orientation="vertical" >
 
@@ -57,18 +59,27 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
 
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="84dp"
-                android:layout_height="96dp"
-                android:src="@drawable/tento" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="57dp"
+                    android:layout_height="118dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/tentosaurioshot" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/LinearLayout1"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:orientation="vertical" >
 
                 <LinearLayout

@@ -99,12 +99,21 @@ public class MainPetAnimated extends SherlockFragment{
 		Canvas can;
 		Thread drawthread;
 		Boolean running;
+		//tentosaurio
 		Bitmap tento;
+		Bitmap tentosleeping;
+		Bitmap tentoeating;
+		//objetos
 		Bitmap food;
 		Bitmap bowl;
 		Bitmap clock;
+		//ojos
 		Bitmap eyesnormal;
 		Bitmap eyespooping;
+		Bitmap eyesclose;
+		Bitmap eyeshappy;
+		Bitmap dirt[]=new Bitmap[10];
+		//cola ? xD
 		Bitmap tail;
 		float corx, cory =0;
 		boolean foodFingerMove = false;
@@ -115,6 +124,10 @@ public class MainPetAnimated extends SherlockFragment{
 	    long timePrevFrame = 0;
 	    long timeDelta;
 	    int tailposition=0;
+		int timetail=0;
+		int eyesposition=0;
+		int timeeyes=0;
+		int petstate=0; //0 normal //1 eating // 2 sleeping etc...
 		
 		public DrawJoystick(Context context) {
 			
@@ -127,6 +140,10 @@ public class MainPetAnimated extends SherlockFragment{
 			running = false;
 			tento = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.tentosaurio);
+			tentosleeping=BitmapFactory.decodeResource(getResources(), 
+					R.drawable.tentosauriosleeping);
+			tentoeating=BitmapFactory.decodeResource(getResources(),
+					R.drawable.tentosaurioeating);
 			food = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.food);
 			clock = BitmapFactory.decodeResource(getResources(), 
@@ -137,6 +154,10 @@ public class MainPetAnimated extends SherlockFragment{
 					R.drawable.eyesnormal);
 			eyespooping = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.eyespooping);
+			eyesclose = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.eyesclose);
+			eyeshappy = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.eyeshappy);
 			tail = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.tentosauriotail);
 		}
@@ -159,13 +180,9 @@ public class MainPetAnimated extends SherlockFragment{
 				case MotionEvent.ACTION_DOWN:
 					if(touchX>0 && touchX<food.getWidth() && touchY>height*5/6 && touchY<height*5/6+food.getHeight()){
 						update_coordinates(touchX, touchY);
-					//	can.drawBitmap(eyespooping, width/2-eyespooping.getWidth()*1/3, 
-						//		height/2 - eyespooping.getHeight()*4/7, color);
 						foodFingerMove = true;
 					}else if(!foodFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()*4/7){
 						update_coordinates(touchX, touchY);
-						//	can.drawBitmap(eyespooping, width/2-eyespooping.getWidth()*1/3, 
-							//		height/2 - eyespooping.getHeight()*4/7, color);
 						petFingerMove = true;
 					}
 			      break;
@@ -187,6 +204,11 @@ public class MainPetAnimated extends SherlockFragment{
 			if(touchX>width/4 && touchX<width/4+clock.getWidth() && touchY>height*5/6 && touchY<height*5/6+clock.getHeight()){
 				switch (e.getAction()) {
 				case MotionEvent.ACTION_DOWN:
+					if(petstate==2){
+						petstate=0;
+					}else{
+						petstate=2;
+					}
 					Toast.makeText(thisActivity, "-.- zzZZ", Toast.LENGTH_SHORT).show();
 			      break;
 			    }
@@ -232,52 +254,111 @@ public class MainPetAnimated extends SherlockFragment{
 			float x = corx;
 			float y = cory;
 			canvas.drawARGB(255, 50, 50, 255);
-			canvas.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
-			canvas.drawBitmap(tento, center_x-tento.getWidth()*1/3, 
-					center_y - tento.getHeight()*4/7, color);
-			canvas.drawBitmap(bowl, width/16, height*4/6, color);
-			
-			//si se toca la mascota
+			canvas.drawBitmap(bowl, width/16, height*4/6, color);//bowl
+			if(petstate==0){//si la mascta en estado normal
+				Drawtail(center_x, center_y, width, height);
+				canvas.drawBitmap(tento, center_x-tento.getWidth()*1/3, 
+						center_y - tento.getHeight()*4/7, color);
+				Drawtouchingpet(center_x,center_y);
+			}else if(petstate==2){
+				Drawsleeping(center_x,center_y);
+			}else if(petstate==1){
+				Draweating(width, height, center_x, center_y);
+			}	
+		
+			canvas.drawBitmap(clock, width/4, height*5/6, color);
+			//si se arrastra la comida
+	        Drawfood(x,y,width,height);
+		}
+		
+		public void Drawsleeping(float center_x, float center_y){
+			can.drawBitmap(tentosleeping, center_x-tentosleeping.getWidth()/2, 
+					center_y - tentosleeping.getHeight()*2/7, color);
+		}
+		
+		public void Drawtail(float center_x, float center_y, float width, float height){
 			if(!petFingerMove){
-				canvas.drawBitmap(eyesnormal, center_x-eyesnormal.getWidth()*1/3, 
-						center_y - eyesnormal.getHeight()*4/7, color);
+				can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
 			}else{
-				canvas.drawBitmap(eyespooping, center_x-eyespooping.getWidth()*1/3, 
-						center_y - eyespooping.getHeight()*4/7, color);
-				
 				if(tailposition==0 || tailposition==-2 || tailposition==2){
-					canvas.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
-					if(tailposition==-2){
-						tailposition=1;
-					}else{
-						tailposition=-1;
+					can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
+					if(timetail==5){
+						if(tailposition==-2){
+							tailposition=1;
+							timetail =0;
+						}else{
+							tailposition=-1;
+							timetail=0;
+						}
 					}
+					timetail++;
 				}else if(tailposition==1){
-//					canvas.rotate(10, width*3/16, height*4/7);
-//					canvas.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
-//					tailposition=0;
+					can.rotate(5, width*10/16, height*4/9);
+					can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
+					if(timetail==5){
+						tailposition=2;
+						timetail=0;
+					}
+					timetail++;
+					can.restore();
 				}else if(tailposition==-1){
-//					canvas.rotate(-20, width*3/16, height*4/7);
-//					canvas.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
-//					tailposition=0;
+					can.rotate(-5, width*10/16, height*4/9);
+					can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
+					if(timetail==5){
+						tailposition=-2;
+						timetail=0;
+					}
+					timetail++;
+					can.restore();
 				}
 						
 			}
-			canvas.drawBitmap(clock, width/4, height*5/6, color);
-			//si se arrastra la comida
-	        if (foodFingerMove) {
+		}
+		
+		public void Draweating(float width, float height, float center_x, float center_y){
+			can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
+					center_y - tentoeating.getHeight()*4/7, color);
+		}
+		
+		public void Drawfood(float x, float y, float width, float height){
+			if (foodFingerMove) {
 	        	if(x>width*2/16 && x<width*2/16+bowl.getWidth() &&y>height*5/8 && y<height*5/8+bowl.getHeight()){
-					canvas.rotate(-40, width*3/16, height*4/7);
-					canvas.drawBitmap(food, width*2/16, height*5/8, color);
+					can.rotate(-40, width*3/16, height*4/7);
+					can.drawBitmap(food, width*2/16, height*5/8, color);
+					can.restore();
+					petstate=1;
 				}else{
-					canvas.drawBitmap(food, x-food.getWidth()/2, y-food.getHeight()/2, color);
+					can.drawBitmap(food, x-food.getWidth()/2, y-food.getHeight()/2, color);
 				}
 	        	
 	        }else{
-	        	canvas.drawBitmap(food, 0, height*5/6, color);
+	        	can.drawBitmap(food, 0, height*5/6, color);
 	        }
-		}
+		} 
 		
+		public void Drawtouchingpet(float center_x, float center_y){
+			if(!petFingerMove){
+				if(eyesposition==0){
+						can.drawBitmap(eyesnormal, center_x-eyesnormal.getWidth()*1/3, 
+								center_y - eyesnormal.getHeight()*4/7, color);
+						if(timeeyes==140){
+							eyesposition=1;
+							timeeyes =0;
+						}
+						timeeyes++;
+					}else if(eyesposition==1){
+						can.drawBitmap(eyesclose, center_x-eyesclose.getWidth()*1/3, center_y - eyesclose.getHeight()*4/7, color);
+						if(timeeyes==8){
+							eyesposition=0;
+							timeeyes=0;
+						}
+						timeeyes++;
+					}
+				}else{
+					can.drawBitmap(eyeshappy, center_x-eyeshappy.getWidth()*1/3, 
+							center_y - eyeshappy.getHeight()*4/7, color);		
+				}
+		}
 		
 		public void update_coordinates(float x, float y)
 		{
