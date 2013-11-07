@@ -73,8 +73,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	      Bundle savedInstanceState) {
 		  //Creates fragment
 		canvas = new DrawJoystick(getActivity());
-	    View view = inflater.inflate(R.layout.control_remoto_debug_layout,
-	        container, false);
+	    
 	    
 	    manager =(SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
 		accelerometer = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -251,8 +250,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		else
 		{
 			//Sale del control remoto. TODO
-			thisActivity.detachAll();
-        	thisActivity.launch_mainpet();
+//			thisActivity.detachAll();
+//        	thisActivity.launch_mainpet();
 			return;
 		}
 		
@@ -295,6 +294,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		else
 		{
 			thMesseger = new Thread(messegerRunnable);
+			canvas.startCanvas();
 		}
 		//getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.control_remoto_debug)).commit();
 	}
@@ -312,7 +312,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.control_remoto_debug)).commit();
+		//thisActivity.detach_remotecontrol();
+		//thisActivity.launch_mainpet();
 	}
         @Override
 	public void onDetach(){
@@ -393,10 +394,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		public void surfaceCreated(SurfaceHolder holder) {
 			// TODO Auto-generated method stub
 			
-			hold = canvas.getHolder();
-			running = true;
-			drawthread = new Thread(this);
-			drawthread.start();
+			startCanvas();
 		}
 
 		@Override
@@ -451,6 +449,13 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 				}
 			}
 		}
+		public void startCanvas()
+		{
+			hold = canvas.getHolder();
+			running = true;
+			drawthread = new Thread(this);
+			drawthread.start();
+		}
 		public void stopCanvas()
 		{
 			running = false;
@@ -459,10 +464,13 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			{
 				try {
 					
-					drawthread.join();
+					if(drawthread != null)
+					{
+						drawthread.join();
+						
+					}
 					retry = false;
 					drawthread = null;
-					
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
