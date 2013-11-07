@@ -954,14 +954,16 @@ containing a value of this type.
         public static final int poopstat=0x7f020085;
         public static final int remotecontrolbackground=0x7f020086;
         public static final int sleep=0x7f020087;
-        public static final int soapstat=0x7f020088;
-        public static final int tentosaurio=0x7f020089;
-        public static final int tentosaurioava=0x7f02008a;
-        public static final int tentosaurioeating=0x7f02008b;
-        public static final int tentosaurioshot=0x7f02008c;
-        public static final int tentosauriosleeping=0x7f02008d;
-        public static final int tentosauriotail=0x7f02008e;
-        public static final int toiletpaper=0x7f02008f;
+        public static final int soap=0x7f020088;
+        public static final int soappet=0x7f020089;
+        public static final int soapstat=0x7f02008a;
+        public static final int tentosaurio=0x7f02008b;
+        public static final int tentosaurioava=0x7f02008c;
+        public static final int tentosaurioeating=0x7f02008d;
+        public static final int tentosaurioshot=0x7f02008e;
+        public static final int tentosauriosleeping=0x7f02008f;
+        public static final int tentosauriotail=0x7f020090;
+        public static final int toiletpaper=0x7f020091;
     }
     public static final class id {
         public static final int Colortext=0x7f04003c;

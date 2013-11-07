@@ -107,6 +107,7 @@ public class MainPetAnimated extends SherlockFragment{
 		Bitmap food;
 		Bitmap bowl;
 		Bitmap clock;
+		Bitmap soap;
 		//ojos
 		Bitmap eyesnormal;
 		Bitmap eyespooping;
@@ -118,6 +119,7 @@ public class MainPetAnimated extends SherlockFragment{
 		float corx, cory =0;
 		boolean foodFingerMove = false;
 		boolean petFingerMove = false;
+		boolean soapFingerMove = false;
 	    //Frame speed
 	    long timeNow;
 	    long timePrev = 0;
@@ -150,6 +152,8 @@ public class MainPetAnimated extends SherlockFragment{
 					R.drawable.clock);
 			bowl = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.bowl);
+			soap = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.soappet);
 			eyesnormal = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.eyesnormal);
 			eyespooping = BitmapFactory.decodeResource(getResources(), 
@@ -181,9 +185,12 @@ public class MainPetAnimated extends SherlockFragment{
 					if(touchX>0 && touchX<food.getWidth() && touchY>height*5/6 && touchY<height*5/6+food.getHeight()){
 						update_coordinates(touchX, touchY);
 						foodFingerMove = true;
-					}else if(!foodFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()*4/7){
+					}else if(!foodFingerMove && !soapFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()*4/7){
 						update_coordinates(touchX, touchY);
 						petFingerMove = true;
+					}else if(!foodFingerMove && !foodFingerMove && touchX>width/2-soap.getWidth()/2 && touchX>width/2+soap.getWidth()/2 && touchX>height*5/6-soap.getHeight()/2 && touchX>height*5/6+soap.getHeight()/2){
+						update_coordinates(touchX, touchY);
+						soapFingerMove = true;
 					}
 			      break;
 			    case MotionEvent.ACTION_MOVE:
@@ -267,8 +274,10 @@ public class MainPetAnimated extends SherlockFragment{
 			}	
 		
 			canvas.drawBitmap(clock, width/4, height*5/6, color);
+			//canvas.drawBitmap(soap, width/2, height*5/6, color);
 			//si se arrastra la comida
 	        Drawfood(x,y,width,height);
+	        Drawsoap(x,y,width,height);
 		}
 		
 		public void Drawsleeping(float center_x, float center_y){
@@ -333,6 +342,19 @@ public class MainPetAnimated extends SherlockFragment{
 	        	
 	        }else{
 	        	can.drawBitmap(food, 0, height*5/6, color);
+	        }
+		}
+		
+		public void Drawsoap(float x, float y, float height, float width){
+			if (soapFingerMove) {
+	        	if(x>width/2-tento.getWidth()/2 && x<width/2+tento.getWidth()/2 &&y>height/2-tento.getHeight()/2 && y<height/2+tento.getHeight()/2){
+	        		can.drawBitmap(soap, x-soap.getWidth()/2, y-soap.getHeight()/2, color);
+				}else{
+					can.drawBitmap(soap, x-soap.getWidth()/2, y-soap.getHeight()/2, color);
+				}
+	        	
+	        }else{
+	        	can.drawBitmap(soap, width*4/6, height, color);
 	        }
 		} 
 		
