@@ -50,6 +50,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	int vel_robot_y = 0;
 	int vel_robot_z = 0;
 	double sens;
+	Runnable messegerRunnable;
 	Thread thMesseger;
 	
 	DrawJoystick canvas;
@@ -88,27 +89,28 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		thisActivity = (MainActivity) getActivity();
-		thMesseger = new Thread(new Runnable() {
-	        public void run() {
-	        	long wait_time = 100;
-	        	while(running)
-	        	{
-	        		if(thisActivity.isConnected())
-	        		{
-	        			send_speeds();
-	        			
-	        			
-	        		}
-	        		else
-	        		{
-	        			running = false;
-	        		}
-	        		SystemClock.sleep(wait_time);
-	        		
-	        	}
-	        }
-	    });
-		
+		messegerRunnable = new Runnable() {
+			public void run() {
+				long wait_time = 100;
+				while(running)
+				{
+					if(thisActivity.isConnected())
+					{
+						send_speeds();
+
+					}
+					else
+					{
+						running = false;
+					}
+					SystemClock.sleep(wait_time);
+
+				}
+				
+			}
+		};
+		thMesseger = new Thread(messegerRunnable);
+
 	}
 	public void process_aceleration()
 	{
@@ -281,11 +283,20 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	public void onResume() {
 		super.onResume();
 		running=true;
-		manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-		if(!thMesseger.isAlive())
+		manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+		if(thMesseger != null)
 		{
-			thMesseger.start();
+			if(!thMesseger.isAlive())
+		
+			{
+				thMesseger.start();
+			}
 		}
+		else
+		{
+			thMesseger = new Thread(messegerRunnable);
+		}
+		//getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.control_remoto_debug)).commit();
 	}
 
 	@Override
@@ -293,12 +304,29 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		super.onPause();
 		manager.unregisterListener(this);
 		running=false;
+		try {
+			thMesseger.join();
+			canvas.stopCanvas();
+			thMesseger = null;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.control_remoto_debug)).commit();
 	}
         @Override
 	public void onDetach(){
 		super.onDetach();
 		manager.unregisterListener(this);
 		running = false;
+		try {
+			thMesseger.join();
+			canvas.stopCanvas();
+			thMesseger = null;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public int getMAX_RANGE() {
 		return MAX_RANGE;
@@ -374,20 +402,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		@Override
 		public void surfaceDestroyed(SurfaceHolder holder) {
 			// TODO Auto-generated method stub
-			running = false;
-			Boolean retry = true;
-			while(retry)
-			{
-				try {
-					
-					drawthread.join();
-					retry = false;
-					
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			stopCanvas();
 		}
 		
 		
@@ -433,6 +448,24 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 				else
 				{
 					running = false;
+				}
+			}
+		}
+		public void stopCanvas()
+		{
+			running = false;
+			Boolean retry = true;
+			while(retry)
+			{
+				try {
+					
+					drawthread.join();
+					retry = false;
+					drawthread = null;
+					
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		}
