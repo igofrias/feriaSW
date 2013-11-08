@@ -121,18 +121,22 @@ public class MainPetAnimated extends SherlockFragment{
 		boolean petFingerMove = false;
 		boolean soapFingerMove = false;
 		boolean cleanning = false;
+		boolean sleeping = false;
 	    //Frame speed
 	    long timeNow;
 	    long timePrev = 0;
 	    long timePrevFrame = 0;
 	    long timeDelta;
-	    int tailposition=0;
+	    //tiempos de movimientos
 		int timetail=0;
 		int timefood=0;
 		int timeeat=0;
-		int bowlstate=0;
-		int eyesposition=0;
+		int cleantime=0;
 		int timeeyes=0;
+		//posiciones y estados
+		int tailposition=0;
+		int bowlstate=0;
+		int eyesposition=0;	
 		int petstate=0;//0 normal //1 eating // 2 sleeping etc...
 		int dirtstate=0; //de 0 a el numero de mugre D:
 				
@@ -212,25 +216,30 @@ public class MainPetAnimated extends SherlockFragment{
 			
 				switch (e.getAction()) {
 					case MotionEvent.ACTION_DOWN:
-						if(!soapFingerMove && touchX>0 && touchX<food.getWidth() && touchY>height*5/6 && touchY<height*5/6+food.getHeight()){
-							update_coordinates(touchX, touchY);
-							foodFingerMove = true;
-						}else if(!foodFingerMove && !soapFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()/7){
-							update_coordinates(touchX, touchY);
-							petFingerMove = true;
-						}else if(!foodFingerMove && touchX>width/2-soap.getWidth() && touchX<width/2+soap.getWidth() && touchY>height*5/6 && touchY<height*5/6+soap.getHeight()){
-							update_coordinates(touchX, touchY);
-							soapFingerMove = true;
+						if(!sleeping){
+							if(!soapFingerMove && touchX>0 && touchX<food.getWidth() && touchY>height*5/6 && touchY<height*5/6+food.getHeight()){
+								update_coordinates(touchX, touchY);
+								foodFingerMove = true;
+							}else if(!foodFingerMove && !soapFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()/7){
+								update_coordinates(touchX, touchY);
+								petFingerMove = true;
+							}else if(!foodFingerMove && touchX>width/2-soap.getWidth() && touchX<width/2+soap.getWidth() && touchY>height*5/6 && touchY<height*5/6+soap.getHeight()){
+								update_coordinates(touchX, touchY);
+								soapFingerMove = true;
+							}
 						}
 				      break;
 				    case MotionEvent.ACTION_MOVE:
-				    	if(foodFingerMove){
-				    		update_coordinates(touchX, touchY);
+			    		if(foodFingerMove){
+			    		update_coordinates(touchX, touchY);
 				    	}else if(soapFingerMove){
 				    		update_coordinates(touchX, touchY);
 				    	}
 				    	if(!soapFingerMove && !foodFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()*4/7){
 				    		petFingerMove = true;
+				    		if(dirtstate<9){
+				    			dirtstate++;
+				    		}
 				    	}else{
 				    		petFingerMove = false;
 				    	}
@@ -247,10 +256,11 @@ public class MainPetAnimated extends SherlockFragment{
 				case MotionEvent.ACTION_DOWN:
 					if(petstate==2){
 						petstate=0;
+						sleeping=false;
 					}else{
 						petstate=2;
+						sleeping=true;
 					}
-					Toast.makeText(thisActivity, "-.- zzZZ", Toast.LENGTH_SHORT).show();
 			      break;
 			    }
 			}
@@ -296,13 +306,13 @@ public class MainPetAnimated extends SherlockFragment{
 			float y = cory;
 			canvas.drawARGB(255, 50, 50, 255);
 			if(bowlstate==0){
-				can.drawBitmap(bowl[0], width*2/16, height*5/8, color);
+				can.drawBitmap(bowl[0], width*1/16, height*5/8, color);
 			}else if(bowlstate==1){
-				can.drawBitmap(bowl[1], width*2/16, height*5/8, color);
+				can.drawBitmap(bowl[1], width*1/16, height*5/8, color);
 			}else if(bowlstate==2){
-				can.drawBitmap(bowl[2], width*2/16, height*5/8, color);
+				can.drawBitmap(bowl[2], width*1/16, height*5/8, color);
 			}else if(bowlstate==3){
-				can.drawBitmap(bowl[3], width*2/16, height*5/8, color);
+				can.drawBitmap(bowl[3], width*1/16, height*5/8, color);
 			}
 			if(petstate==0){//si la mascta en estado normal
 				Drawtail(center_x, center_y, width, height);
@@ -331,13 +341,20 @@ public class MainPetAnimated extends SherlockFragment{
 		
 		public void Drawdirt(float center_x, float center_y){
 			if(dirtstate>0){
+				Log.e("Draw","Dirt "+ dirtstate);
 				int i=0;
 				do{
+					can.drawBitmap(dirt[i], center_x-dirt[i].getWidth()*1/3, 
+							center_y - dirt[i].getHeight()*4/7, color);
+					
 					i++;
-					can.drawBitmap(dirt[i-1], center_x-dirt[i-1].getWidth()*1/3, 
-							center_y - dirt[i-1].getHeight()*4/7, color);
-					Log.e("Draw","Dirt");
-				}while(i<9/*dirtstate*/);
+				}while(i<dirtstate && i>0);
+			}
+		}
+		
+		public void Drawclean(float center_x, float center_y){
+			if(dirtstate>0){
+				dirtstate--;
 			}
 		}
 		
@@ -357,7 +374,6 @@ public class MainPetAnimated extends SherlockFragment{
 						}
 					}
 					timetail++;
-					dirtstate++;
 				}else if(tailposition==1){
 					can.rotate(5, width*10/16, height*4/9);
 					can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
@@ -415,9 +431,9 @@ public class MainPetAnimated extends SherlockFragment{
 		
 		public void Drawfood(float x, float y, float width, float height){
 			if (foodFingerMove) {
-	        	if(timeeat==0 && x>width*2/16 && x<width*2/16+bowl[0].getWidth() &&y>height*5/8 && y<height*5/8+bowl[0].getHeight()){
+	        	if(bowlstate<3 && timeeat==0 && x>width*2/16 && x<width*2/16+bowl[0].getWidth() &&y>height*6/11 && y<height*6/11+bowl[0].getHeight()){
 					can.rotate(-40, width*3/16, height*4/7);
-					can.drawBitmap(food, width*2/16, height*5/8, color);
+					can.drawBitmap(food, width*1/16, height*6/11, color);
 					can.restore();
 					if(timefood<60){
 						timefood++;
@@ -426,11 +442,13 @@ public class MainPetAnimated extends SherlockFragment{
 						bowlstate=2;
 						timefood++;
 					}else if(timefood==120){
+						bowlstate=3;
 						petstate=1;
 						timefood=0;
 						timeeat=300;
-						//agregar eating y disminuir el timefood hasta 0
 					}
+				}else if(bowlstate==3){
+					can.drawBitmap(food, 0, height*5/6, color);
 				}else{
 					can.drawBitmap(food, x-food.getWidth()/2, y-food.getHeight()/2, color);
 				}
@@ -445,7 +463,6 @@ public class MainPetAnimated extends SherlockFragment{
 			if (soapFingerMove) {
 	        	if(x>width/2-tento.getWidth()*1/3 && x<width/2+tento.getWidth()*2/3 && y>height/2 - tento.getHeight()*4/7 && y<height/2 + tento.getHeight()*4/7){
 	        		can.drawBitmap(soap, x-soap.getWidth()/2, y-soap.getHeight()/2, color);
-	        		Log.e("Draw", "clean");
 	        		cleanning=true;
 				}else{
 					can.drawBitmap(soap, x-soap.getWidth()/2, y-soap.getHeight()/2, color);
@@ -460,7 +477,11 @@ public class MainPetAnimated extends SherlockFragment{
 		public void Drawtouchingpet(float center_x, float center_y){
 			if(cleanning){
 				can.drawBitmap(eyespooping, center_x-eyespooping.getWidth()*1/3, 
-						center_y - eyespooping.getHeight()*4/7, color);	
+						center_y - eyespooping.getHeight()*4/7, color);
+				if(cleantime%30==0){
+					Drawclean(center_x, center_y);
+				}
+				cleantime++;
 			}else if(petFingerMove){
 				can.drawBitmap(eyeshappy, center_x-eyeshappy.getWidth()*1/3, 
 						center_y - eyeshappy.getHeight()*4/7, color);
