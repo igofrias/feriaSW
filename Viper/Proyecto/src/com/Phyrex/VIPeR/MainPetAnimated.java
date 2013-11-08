@@ -105,7 +105,7 @@ public class MainPetAnimated extends SherlockFragment{
 		Bitmap tentoeating;
 		//objetos
 		Bitmap food;
-		Bitmap bowl;
+		Bitmap bowl[] = new Bitmap[4];
 		Bitmap clock;
 		Bitmap soap;
 		//ojos
@@ -113,7 +113,7 @@ public class MainPetAnimated extends SherlockFragment{
 		Bitmap eyespooping;
 		Bitmap eyesclose;
 		Bitmap eyeshappy;
-		Bitmap dirt[]=new Bitmap[10];
+		Bitmap dirt[]=new Bitmap[9];
 		//cola ? xD
 		Bitmap tail;
 		float corx, cory =0;
@@ -128,10 +128,15 @@ public class MainPetAnimated extends SherlockFragment{
 	    long timeDelta;
 	    int tailposition=0;
 		int timetail=0;
+		int timefood=0;
+		int timeeat=0;
+		int bowlstate=0;
 		int eyesposition=0;
 		int timeeyes=0;
-		int petstate=0; //0 normal //1 eating // 2 sleeping etc...
-		
+		int petstate=0;//0 normal //1 eating // 2 sleeping etc...
+		int dirtstate=0; //de 0 a el numero de mugre D:
+				
+				
 		public DrawJoystick(Context context) {
 			
 			super(context);
@@ -151,8 +156,14 @@ public class MainPetAnimated extends SherlockFragment{
 					R.drawable.food);
 			clock = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.clock);
-			bowl = BitmapFactory.decodeResource(getResources(), 
+			bowl[0] = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.bowl);
+			bowl[1] = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.bowl);
+			bowl[2] = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.bowl1);
+			bowl[3] = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.bowl2);
 			soap = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.soappet);
 			eyesnormal = BitmapFactory.decodeResource(getResources(), 
@@ -165,6 +176,24 @@ public class MainPetAnimated extends SherlockFragment{
 					R.drawable.eyeshappy);
 			tail = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.tentosauriotail);
+			dirt[0]= BitmapFactory.decodeResource(getResources(), 
+					R.drawable.dirt1);
+			dirt[1]= BitmapFactory.decodeResource(getResources(), 
+					R.drawable.dirt2);
+			dirt[2]= BitmapFactory.decodeResource(getResources(), 
+					R.drawable.dirt3);
+			dirt[3]= BitmapFactory.decodeResource(getResources(), 
+					R.drawable.dirt4);
+			dirt[4]= BitmapFactory.decodeResource(getResources(), 
+					R.drawable.dirt5);
+			dirt[5]= BitmapFactory.decodeResource(getResources(), 
+					R.drawable.dirt6);
+			dirt[6]= BitmapFactory.decodeResource(getResources(), 
+					R.drawable.dirt7);
+			dirt[7]= BitmapFactory.decodeResource(getResources(), 
+					R.drawable.dirt8);
+			dirt[8]= BitmapFactory.decodeResource(getResources(), 
+					R.drawable.dirt9);
 		}
 
 		@Override
@@ -266,12 +295,21 @@ public class MainPetAnimated extends SherlockFragment{
 			float x = corx;
 			float y = cory;
 			canvas.drawARGB(255, 50, 50, 255);
-			canvas.drawBitmap(bowl, width/16, height*4/6, color);//bowl
+			if(bowlstate==0){
+				can.drawBitmap(bowl[0], width*2/16, height*5/8, color);
+			}else if(bowlstate==1){
+				can.drawBitmap(bowl[1], width*2/16, height*5/8, color);
+			}else if(bowlstate==2){
+				can.drawBitmap(bowl[2], width*2/16, height*5/8, color);
+			}else if(bowlstate==3){
+				can.drawBitmap(bowl[3], width*2/16, height*5/8, color);
+			}
 			if(petstate==0){//si la mascta en estado normal
 				Drawtail(center_x, center_y, width, height);
 				canvas.drawBitmap(tento, center_x-tento.getWidth()*1/3, 
 						center_y - tento.getHeight()*4/7, color);
 				Drawtouchingpet(center_x,center_y);
+				Drawdirt(center_x,center_y);
 			}else if(petstate==2){
 				Drawsleeping(center_x,center_y);
 			}else if(petstate==1){
@@ -288,6 +326,19 @@ public class MainPetAnimated extends SherlockFragment{
 		public void Drawsleeping(float center_x, float center_y){
 			can.drawBitmap(tentosleeping, center_x-tentosleeping.getWidth()/2, 
 					center_y - tentosleeping.getHeight()*2/7, color);
+			can.drawARGB(200, 0, 0, 0);
+		}
+		
+		public void Drawdirt(float center_x, float center_y){
+			if(dirtstate>0){
+				int i=0;
+				do{
+					i++;
+					can.drawBitmap(dirt[i-1], center_x-dirt[i-1].getWidth()*1/3, 
+							center_y - dirt[i-1].getHeight()*4/7, color);
+					Log.e("Draw","Dirt");
+				}while(i<9/*dirtstate*/);
+			}
 		}
 		
 		public void Drawtail(float center_x, float center_y, float width, float height){
@@ -306,6 +357,7 @@ public class MainPetAnimated extends SherlockFragment{
 						}
 					}
 					timetail++;
+					dirtstate++;
 				}else if(tailposition==1){
 					can.rotate(5, width*10/16, height*4/9);
 					can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
@@ -330,17 +382,55 @@ public class MainPetAnimated extends SherlockFragment{
 		}
 		
 		public void Draweating(float width, float height, float center_x, float center_y){
-			can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
-					center_y - tentoeating.getHeight()*4/7, color);
+			
+			/*if(timefood>0){
+				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
+						center_y - tentoeating.getHeight()*4/7, color);
+			}else if(timefood<0){
+				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
+						center_y - tentoeating.getHeight()*4/7, color);
+			}*///masticar aca y mover cola aca
+				//masticando
+			if(timeeat>240){
+				bowlstate=3;
+				timeeat--;
+				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
+						center_y - tentoeating.getHeight()*4/7, color);
+			}else if(timeeat>120){
+				bowlstate=2;
+				timeeat--;
+				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
+						center_y - tentoeating.getHeight()*4/7, color);
+			}else if(timeeat>0){
+				bowlstate=1;
+				timeeat--;
+				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
+						center_y - tentoeating.getHeight()*4/7, color);
+			}else if(timeeat==0){
+				Log.e("Draw","bowl vacio :D");
+				bowlstate=0;
+				petstate=0;
+			}
 		}
 		
 		public void Drawfood(float x, float y, float width, float height){
 			if (foodFingerMove) {
-	        	if(x>width*2/16 && x<width*2/16+bowl.getWidth() &&y>height*5/8 && y<height*5/8+bowl.getHeight()){
+	        	if(timeeat==0 && x>width*2/16 && x<width*2/16+bowl[0].getWidth() &&y>height*5/8 && y<height*5/8+bowl[0].getHeight()){
 					can.rotate(-40, width*3/16, height*4/7);
 					can.drawBitmap(food, width*2/16, height*5/8, color);
 					can.restore();
-					petstate=1;
+					if(timefood<60){
+						timefood++;
+						bowlstate=1;
+					}else if(timefood<120){
+						bowlstate=2;
+						timefood++;
+					}else if(timefood==120){
+						petstate=1;
+						timefood=0;
+						timeeat=300;
+						//agregar eating y disminuir el timefood hasta 0
+					}
 				}else{
 					can.drawBitmap(food, x-food.getWidth()/2, y-food.getHeight()/2, color);
 				}
@@ -350,15 +440,15 @@ public class MainPetAnimated extends SherlockFragment{
 	        }
 		}
 		
+		
 		public void Drawsoap(float x, float y, float width, float height){
 			if (soapFingerMove) {
 	        	if(x>width/2-tento.getWidth()*1/3 && x<width/2+tento.getWidth()*2/3 && y>height/2 - tento.getHeight()*4/7 && y<height/2 + tento.getHeight()*4/7){
-	        		
 	        		can.drawBitmap(soap, x-soap.getWidth()/2, y-soap.getHeight()/2, color);
 	        		Log.e("Draw", "clean");
 	        		cleanning=true;
 				}else{
-					can.drawBitmap(soap, x, y, color);
+					can.drawBitmap(soap, x-soap.getWidth()/2, y-soap.getHeight()/2, color);
 					cleanning=false;
 				}
 	        	
