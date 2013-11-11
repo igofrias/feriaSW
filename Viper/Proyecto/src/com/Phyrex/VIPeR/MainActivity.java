@@ -48,6 +48,8 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 	private ThreadClass thread;
 	private String connectionType= null;
     String mac_nxt="";
+	String list_array[]={"Control Remoto","Jugar","Estadisticas","Logros"};
+
     
     ///******** Variables del layout main activity //////////
     private Layout linear;
@@ -89,6 +91,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 		super.onCreate(savedInstanceState);
 		thisActivity = this;
 		setContentView(R.layout.activity_main);
+		//setLayoutIds(R.layout.sliding_menu, R.layout.activity_main);
 		//bncnt.setOnClickListener(listener);
 		reusableToast = Toast.makeText(thisActivity, "", Toast.LENGTH_SHORT);
 		thread = new ThreadClass(new Handler() {
