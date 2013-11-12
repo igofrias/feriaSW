@@ -3,6 +3,7 @@ package com.Phyrex.VIPeR;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Log;
@@ -38,7 +39,11 @@ public class MainPetActivity extends SherlockFragment {
 		return v;
 		
 	}
-	
+	public void startBallGame()
+	{
+		Intent intent = new Intent(thisActivity, BallGame.class);
+	    startActivity(intent);
+	}
 	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
 		 super.onActivityCreated(savedInstanceState); 
@@ -107,6 +112,7 @@ public class MainPetActivity extends SherlockFragment {
 				 			Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
 		 			    	if(((MainActivity)thisActivity).isConnected())
 				    				((MainActivity)thisActivity).startProgram("Shake.rxe");
+		 			    	startBallGame();
 			 			}else{
 			 				Toast.makeText(thisActivity, "no puedes molestar a la mascota mientras duerme", Toast.LENGTH_SHORT).show();
 			 			}

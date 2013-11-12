@@ -1206,6 +1206,7 @@ containing a value of this type.
          */
         public static final int sensor_initialization_failure=0x7f090037;
         public static final int start=0x7f09003e;
+        public static final int title_activity_ballgame=0x7f090049;
         public static final int title_activity_base__adapter=0x7f090012;
         public static final int title_activity_btcommunicator=0x7f090014;
         public static final int title_activity_btconnectable=0x7f090015;

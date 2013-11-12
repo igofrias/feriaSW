@@ -36,6 +36,7 @@
         </activity>
 
         <service android:name="com.Phyrex.VIPeR.BTService" />
+        <activity android:label="@string/title_activity_ballgame" android:name="com.Phyrex.VIPeR.BallGame" android:configChanges="orientation|screenSize"></activity>
     </application>
 
 </manifest>
