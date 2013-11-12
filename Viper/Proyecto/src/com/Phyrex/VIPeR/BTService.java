@@ -39,7 +39,7 @@ public class BTService extends Service implements BTConnectable{
 	private BTCommunicator myBTCommunicator = null;
 	private Handler btcHandler;
 	private boolean connected = false;
-    private static final int REQUEST_CONNECT_DEVICE = 500;
+    static final int REQUEST_CONNECT_DEVICE = 500;
     static final int REQUEST_ENABLE_BT = 2000;
     private ProgressDialog connectingProgressDialog;
     private Activity thisActivity;

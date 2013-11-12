@@ -86,6 +86,10 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     @Override
     public void onResume() {
         super.onResume();
+        if(mBound || btservice != null)
+        {
+        	btservice.setCurrentActivity(thisActivity);
+        }
     }
     
     private ServiceConnection btconnection = new ServiceConnection() {
