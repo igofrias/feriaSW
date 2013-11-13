@@ -87,6 +87,46 @@ public class MainPetAnimated extends SherlockFragment{
 		running = false;
 	}
         
+        public void Actions(int action){
+			final DB_Updater updater = new DB_Updater(thisActivity);
+         	final Database_Helper entry = new Database_Helper(thisActivity);
+         	SherlockFragment fragment1 = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
+			
+			switch(action){
+				case 1://comer
+					EatTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
+				break;
+				case 2://dormir
+					SleepTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
+				break;
+				case 3://lavar
+					//lavar
+				break;
+				case 4://limpiar caca
+					//limpiar caca
+				break;
+				case 5://jugar
+					if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
+			 			if(!((StatesActivity)fragment1).isSleeping()){
+			 				if(updater.play(entry))
+			         			Toast.makeText(thisActivity, "Logro Desbloqueado Jugueton", Toast.LENGTH_LONG).show();((StatesActivity)fragment1).playing();
+				 			Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
+		 			    	if(((MainActivity)thisActivity).isConnected())
+				    				((MainActivity)thisActivity).startProgram("Shake.rxe");
+			 			}else{
+			 				Toast.makeText(thisActivity, "no puedes molestar a la mascota mientras duerme", Toast.LENGTH_SHORT).show();
+			 			}
+         			}	
+				break;
+				case 6://boton accion
+					fragment1 = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
+					PetActionManager petman = new PetActionManager(thisActivity,(StatesActivity)fragment1);
+					Log.d("MainPetActivity","Ejecutando acciones");
+					petman.execute();
+				break;
+			}
+		}
+        
    /////////////////////////////clase draw joytick////////////////////////////////////
 	
 	private class DrawJoystick extends SurfaceView implements SurfaceHolder.Callback, Runnable
@@ -108,6 +148,9 @@ public class MainPetAnimated extends SherlockFragment{
 		Bitmap bowl[] = new Bitmap[4];
 		Bitmap clock;
 		Bitmap soap;
+		Bitmap poo;
+		Bitmap play;
+		Bitmap action;
 		//ojos
 		Bitmap eyesnormal;
 		Bitmap eyespooping;
@@ -122,6 +165,7 @@ public class MainPetAnimated extends SherlockFragment{
 		boolean soapFingerMove = false;
 		boolean cleanning = false;
 		boolean sleeping = false;
+		boolean poop =false;
 	    //Frame speed
 	    long timeNow;
 	    long timePrev = 0;
@@ -129,7 +173,6 @@ public class MainPetAnimated extends SherlockFragment{
 	    long timeDelta;
 	    //tiempos de movimientos
 		int timetail=0;
-		int timefood=0;
 		int timeeat=0;
 		int cleantime=0;
 		int timeeyes=0;
@@ -139,7 +182,12 @@ public class MainPetAnimated extends SherlockFragment{
 		int eyesposition=0;	
 		int petstate=0;//0 normal //1 eating // 2 sleeping etc...
 		int dirtstate=0; //de 0 a el numero de mugre D:
-				
+		//Measure frames per second.
+	    long now;
+	    int framesCount=0;
+	    int framesCountAvg=0;
+	    long framesTimer=0;
+	    Paint fpsPaint=new Paint();	
 				
 		public DrawJoystick(Context context) {
 			
@@ -163,13 +211,19 @@ public class MainPetAnimated extends SherlockFragment{
 			bowl[0] = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.bowl);
 			bowl[1] = BitmapFactory.decodeResource(getResources(), 
-					R.drawable.bowl);
+					R.drawable.bowl0);
 			bowl[2] = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.bowl1);
 			bowl[3] = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.bowl2);
 			soap = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.soappet);
+			poo = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.poo);
+			play = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.playpet);
+			action = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.action);
 			eyesnormal = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.eyesnormal);
 			eyespooping = BitmapFactory.decodeResource(getResources(), 
@@ -216,15 +270,15 @@ public class MainPetAnimated extends SherlockFragment{
 			
 				switch (e.getAction()) {
 					case MotionEvent.ACTION_DOWN:
-						if(!sleeping){
+						if(!sleeping && timeeat==0){
 							if(!soapFingerMove && touchX>0 && touchX<food.getWidth() && touchY>height*5/6 && touchY<height*5/6+food.getHeight()){
-								update_coordinates(touchX, touchY);
+								update_coordinates(touchX, touchY);//comida
 								foodFingerMove = true;
 							}else if(!foodFingerMove && !soapFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()/7){
-								update_coordinates(touchX, touchY);
+								update_coordinates(touchX, touchY);//tocar mascota
 								petFingerMove = true;
 							}else if(!foodFingerMove && touchX>width/2-soap.getWidth() && touchX<width/2+soap.getWidth() && touchY>height*5/6 && touchY<height*5/6+soap.getHeight()){
-								update_coordinates(touchX, touchY);
+								update_coordinates(touchX, touchY);//arrastrar soap
 								soapFingerMove = true;
 							}
 						}
@@ -240,6 +294,7 @@ public class MainPetAnimated extends SherlockFragment{
 				    		if(dirtstate<9){
 				    			dirtstate++;
 				    		}
+				    		poop=true;
 				    	}else{
 				    		petFingerMove = false;
 				    	}
@@ -251,16 +306,32 @@ public class MainPetAnimated extends SherlockFragment{
 				    	cleanning=false;
 				      break;
 				}
-			if(touchX>width/4 && touchX<width/4+clock.getWidth() && touchY>height*5/6 && touchY<height*5/6+clock.getHeight()){
+			if(timeeat==0 && touchX>width/4 && touchX<width/4+clock.getWidth() && touchY>height*5/6 && touchY<height*5/6+clock.getHeight()){
 				switch (e.getAction()) {
 				case MotionEvent.ACTION_DOWN:
 					if(petstate==2){
 						petstate=0;
 						sleeping=false;
+						Actions(2);//accion dormir
 					}else{
 						petstate=2;
 						sleeping=true;
+						Actions(2);//accion dormir
 					}
+			      break;
+			    }
+			}
+			if(timeeat==0 && touchX>width*14/16-poo.getWidth()/2 && touchX<width*14/16+poo.getWidth()/2 && touchY>height*9/12- poo.getHeight()/2 && touchY<height*9/12+ poo.getHeight()/2){
+				switch (e.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					poop= false;
+			      break;
+			    }
+			}
+			if(timeeat==0 && !sleeping && touchX>width*3/4 && touchX<width*3/4+play.getWidth() && touchY>height*5/6 && touchY<height*5/6+play.getHeight()){
+				switch (e.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					Actions(5);//accion de jugar
 			      break;
 			    }
 			}
@@ -325,12 +396,32 @@ public class MainPetAnimated extends SherlockFragment{
 			}else if(petstate==1){
 				Draweating(width, height, center_x, center_y);
 			}	
-		
+			//Measure frame rate (unit: frames per second).
+	         now=System.currentTimeMillis();
+	         canvas.drawText(framesCountAvg+" fps", 40, 70, fpsPaint);
+	         framesCount++;
+	         if(now-framesTimer>1000) {
+	                 framesTimer=now;
+	                 framesCountAvg=framesCount;
+	                 framesCount=0;
+	         }
 			canvas.drawBitmap(clock, width/4, height*5/6, color);
-			//canvas.drawBitmap(soap, width/2, height*5/6, color);
+			canvas.drawBitmap(play, width*3/4, height*5/6, color);
+		
+			if(poop){
+				can.drawBitmap(poo, center_x*28/16-poo.getWidth()/2, 
+					center_y*9/6- poo.getHeight()/2, color);
+			}
 			//si se arrastra la comida
-	        Drawfood(x,y,width,height);
-	        Drawsoap(x,y,width,height);
+			if(foodFingerMove){
+				Drawsoap(x,y,width,height);
+				Drawfood(x,y,width,height);
+			}else{
+				Drawfood(x,y,width,height);
+				Drawsoap(x,y,width,height);
+			}
+	       
+	       
 		}
 		
 		public void Drawsleeping(float center_x, float center_y){
@@ -364,7 +455,7 @@ public class MainPetAnimated extends SherlockFragment{
 			}else{
 				if(tailposition==0 || tailposition==-2 || tailposition==2){
 					can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
-					if(timetail==5){
+					if(timetail==4){
 						if(tailposition==-2){
 							tailposition=1;
 							timetail =0;
@@ -377,7 +468,7 @@ public class MainPetAnimated extends SherlockFragment{
 				}else if(tailposition==1){
 					can.rotate(5, width*10/16, height*4/9);
 					can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
-					if(timetail==5){
+					if(timetail==4){
 						tailposition=2;
 						timetail=0;
 					}
@@ -386,7 +477,7 @@ public class MainPetAnimated extends SherlockFragment{
 				}else if(tailposition==-1){
 					can.rotate(-5, width*10/16, height*4/9);
 					can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
-					if(timetail==5){
+					if(timetail==4){
 						tailposition=-2;
 						timetail=0;
 					}
@@ -398,21 +489,13 @@ public class MainPetAnimated extends SherlockFragment{
 		}
 		
 		public void Draweating(float width, float height, float center_x, float center_y){
-			
-			/*if(timefood>0){
-				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
-						center_y - tentoeating.getHeight()*4/7, color);
-			}else if(timefood<0){
-				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
-						center_y - tentoeating.getHeight()*4/7, color);
-			}*///masticar aca y mover cola aca
-				//masticando
-			if(timeeat>240){
+			//masticando
+			if(timeeat>150){
 				bowlstate=3;
 				timeeat--;
 				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
 						center_y - tentoeating.getHeight()*4/7, color);
-			}else if(timeeat>120){
+			}else if(timeeat>70){
 				bowlstate=2;
 				timeeat--;
 				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
@@ -426,6 +509,7 @@ public class MainPetAnimated extends SherlockFragment{
 				Log.e("Draw","bowl vacio :D");
 				bowlstate=0;
 				petstate=0;
+				Actions(1);//uno para comer
 			}
 		}
 		
@@ -435,18 +519,9 @@ public class MainPetAnimated extends SherlockFragment{
 					can.rotate(-40, width*3/16, height*4/7);
 					can.drawBitmap(food, width*1/16, height*6/11, color);
 					can.restore();
-					if(timefood<60){
-						timefood++;
-						bowlstate=1;
-					}else if(timefood<120){
-						bowlstate=2;
-						timefood++;
-					}else if(timefood==120){
-						bowlstate=3;
-						petstate=1;
-						timefood=0;
-						timeeat=300;
-					}
+					bowlstate=3;
+					petstate=1;
+					timeeat=240;
 				}else if(bowlstate==3){
 					can.drawBitmap(food, 0, height*5/6, color);
 				}else{
@@ -455,7 +530,7 @@ public class MainPetAnimated extends SherlockFragment{
 	        	
 	        }else{
 	        	can.drawBitmap(food, 0, height*5/6, color);
-	        }
+	        }	
 		}
 		
 		
@@ -478,7 +553,7 @@ public class MainPetAnimated extends SherlockFragment{
 			if(cleanning){
 				can.drawBitmap(eyespooping, center_x-eyespooping.getWidth()*1/3, 
 						center_y - eyespooping.getHeight()*4/7, color);
-				if(cleantime%30==0){
+				if(cleantime%20==0){
 					Drawclean(center_x, center_y);
 				}
 				cleantime++;
@@ -489,14 +564,14 @@ public class MainPetAnimated extends SherlockFragment{
 				if(eyesposition==0){
 					can.drawBitmap(eyesnormal, center_x-eyesnormal.getWidth()*1/3, 
 							center_y - eyesnormal.getHeight()*4/7, color);
-					if(timeeyes==140){
+					if(timeeyes==70){
 						eyesposition=1;
 						timeeyes =0;
 					}
 					timeeyes++;
 				}else if(eyesposition==1){
 					can.drawBitmap(eyesclose, center_x-eyesclose.getWidth()*1/3, center_y - eyesclose.getHeight()*4/7, color);
-					if(timeeyes==8){
+					if(timeeyes==4){
 						eyesposition=0;
 						timeeyes=0;
 					}
@@ -519,18 +594,17 @@ public class MainPetAnimated extends SherlockFragment{
 			while(running){
 				can= null;
 				//limit frame rate to max 60fps
-                timeNow = System.currentTimeMillis();
+				timeNow = System.currentTimeMillis();
                 timeDelta = timeNow - timePrevFrame;
-                if ( timeDelta < 16) {
+                if ( timeDelta < 32) {
                     try {
-                        Thread.sleep(16 - timeDelta);
+                        Thread.sleep(32 - timeDelta);
                     }
                     catch(InterruptedException e) {
 
                     }
                 }
                 timePrevFrame = System.currentTimeMillis();
-
                 try {
                 	can = hold.lockCanvas();
                     synchronized (hold.getSurface()) {

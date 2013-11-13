@@ -148,10 +148,10 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     //llama al supa framento
     void launch_mainpet() {//identificamos y cargamos el fragmento menu
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		SherlockFragment fragment = ((MainPetAnimated)getSupportFragmentManager().findFragmentByTag("mainpet"));
+		SherlockFragment fragment = ((MainPetActivity)getSupportFragmentManager().findFragmentByTag("mainpet"));
 		
 		if(fragment==null){
-			fragment = new MainPetAnimated();
+			fragment = new MainPetActivity();
 			ft.replace(R.id.frame2, fragment,"mainpet");
 		}
 		else{
@@ -166,7 +166,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     //llama al supa framento
     void detach_mainpet() {//identificamos y cargamos el fragmento menu
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		SherlockFragment fragment = ((MainPetAnimated)getSupportFragmentManager().findFragmentByTag("mainpet"));
+		SherlockFragment fragment = ((MainPetActivity)getSupportFragmentManager().findFragmentByTag("mainpet"));
 		
 		if(fragment!=null){
 			if(!fragment.isDetached()){

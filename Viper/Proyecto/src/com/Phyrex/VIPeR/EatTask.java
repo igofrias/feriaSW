@@ -187,7 +187,6 @@ public class EatTask implements SensorEventListener, Runnable {
 	            }
 	     		 if(((MainActivity)parent).isConnected())
 	    				((MainActivity)parent).startProgram("Eat.rxe");
-	        	Toast.makeText(parent.getBaseContext(), "Om nom nom nom", Toast.LENGTH_SHORT).show();
 	    	}
 	    	else
 	    	{
@@ -195,8 +194,6 @@ public class EatTask implements SensorEventListener, Runnable {
 					((MainActivity)parent).startProgram("Angry.rxe");
 	    		Toast.makeText(parent.getBaseContext(), ">:(", Toast.LENGTH_SHORT).show();
 	    	}
-		}else{
-			Toast.makeText(parent.getBaseContext(), "no puedes molestar a la mascota mientras duerme", Toast.LENGTH_SHORT).show();
 		}
 	}
 }
