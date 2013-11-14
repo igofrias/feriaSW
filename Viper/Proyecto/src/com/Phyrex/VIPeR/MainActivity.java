@@ -2,6 +2,7 @@ package com.Phyrex.VIPeR;
 
 import com.Phyrex.VIPeR.BTConnectable;
 import com.Phyrex.VIPeR.BTCommunicator;
+import com.Phyrex.VIPeR.BTService.BTBinder;
 import com.Phyrex.VIPeR.DeviceListActivity;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -14,13 +15,17 @@ import android.os.BatteryManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -38,7 +43,6 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 	///////////////////Variables Conexión Bluetooth////////////////////////////////////////
 	private boolean pairing;
 	private static boolean btOnByUs = false;
-	private BTCommunicator myBTCommunicator = null;
 	private Handler btcHandler;
 	private boolean connected = false;
     private static final int REQUEST_CONNECT_DEVICE = 500;
@@ -50,7 +54,8 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 	private ThreadClass thread;
 	private String connectionType= null;
     String mac_nxt="";
-    
+    private BTService btservice;
+    private boolean mBound;
     ///******** Variables del layout main activity //////////
     private Layout linear;
     private FrameLayout frame1;
@@ -76,14 +81,36 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     
     @Override
     protected void onStart() {
+    	bindService(new Intent(thisActivity,BTService.class),btconnection,Context.BIND_AUTO_CREATE);
         super.onStart();
     }
     
     @Override
     public void onResume() {
         super.onResume();
+        if(mBound || btservice != null)
+        {
+        	btservice.setCurrentActivity(thisActivity);
+        }
     }
     
+    private ServiceConnection btconnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            BTBinder binder = (BTBinder) service;
+            btservice =  binder.getService();
+            btservice.setCurrentActivity(thisActivity);
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
     ///Creacion de la actividad, inicializacion de botoes y texto.
     @SuppressLint("ShowToast")
 	@Override
@@ -112,7 +139,6 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 			launch_states();
 			launch_mainpet();
 		}
-		
 		
 	}
     
@@ -299,7 +325,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 		detach_statisticslist();
     }
     
-    private void detachAll(){
+    void detachAll(){
     	detach_achievementlist();
     	detach_mainpet();
     	detach_remotecontrol();
@@ -327,52 +353,11 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 	    return ((float)level / (float)scale) * 100.0f; 
 	}
 
-    /////Detecta si el Bluetooth esta activado////////////
-    public static boolean isBtOnByUs() {
-        return btOnByUs;
-    }
-	
-    ///detecta si se activo el bluetooth////////
-    public static void setBtOnByUs(boolean btOnByUs) {
-        MainActivity.btOnByUs = btOnByUs;
-    }
     
-    ///Crea un nuevo objeto para realizar la conexion///////////
-    private void createBTCommunicator() {
-        // interestingly BT adapter needs to be obtained by the UI thread - so we pass it in in the constructor
-        myBTCommunicator = new BTCommunicator(this, myHandler, BluetoothAdapter.getDefaultAdapter(), getResources());
-        btcHandler = myBTCommunicator.getHandler();
-    }
-    //crea y arranca un thread para la conexion bluetooth/////////////
-    //recibe la mac del robot/////////////
-    public void startBTCommunicator(String mac_address) {
-        mac_nxt= mac_address;
-        connectingProgressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.connecting_please_wait), true);
-
-        if (myBTCommunicator != null) {
-            try {
-                myBTCommunicator.destroyNXTconnection();
-            }
-            catch (IOException e) { }
-        }
-        createBTCommunicator();
-        myBTCommunicator.setMACAddress(mac_address);
-        myBTCommunicator.start();
-        updateButtonsAndMenu();
-        if(isConnected())
-        	startProgram("SuccessConnection.rxe");
-    }
     
-    ////Termina la conexion bluetooth (destruye el thread)//////////
-    public void destroyBTCommunicator() {
-
-        if (myBTCommunicator != null) {
-            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.DISCONNECT, 0, 0);
-            myBTCommunicator = null;
-        }
-
-        updateButtonsAndMenu();
-    }
+    
+    
+   
 
    ///muestra el Toast///
     ////recive el mensaje y la duracion del Toast///////////
@@ -390,67 +375,16 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         reusableToast.show();
     }
     
-    public String return_mac(){
-    		return mac_nxt;
-    }
     
-    public void selectTypeCnt(){
-    	if(connectionType!=null){//si contiene una mac conecta
-    		connect(connectionType);
-    	}else{//si no parea
-    		pairing();
-    	}
-    }
-   
-    public void connect(String mac){
-    	if (BluetoothAdapter.getDefaultAdapter()==null) {
-            showToast(R.string.bt_initialization_failure, Toast.LENGTH_LONG);
-            destroyBTCommunicator();
-            finish();
-            return;
-        }
-    	connectionType = mac;
-    	if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-        } else {//si esta activado busca dispositivos para conectarse
-        	startBTCommunicator(mac);
-        }
-    	
-    }
     
-    //conexion intent a dispositivo
-	public void pairing(){
-    	//si no esta conectado verifica presencia de bluetooth 
-		if(!isConnected()){
-			///inicia el adaptador
-			if (BluetoothAdapter.getDefaultAdapter()==null) {
-		            showToast(R.string.bt_initialization_failure, Toast.LENGTH_LONG);
-		            destroyBTCommunicator();
-		            finish();
-		            return;
-		        }            
-				//si existe blublu y no esta activado lo activa
-				connectionType=null;
-		        if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
-		            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-		            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);		     
-		        } else {//si esta activado busca dispositivos para conectarse
-		           selectNXT();
-		        }
-		        
-		}else if(isConnected()){
-			//si esta conectado desconecta
-			destroyBTCommunicator();
-		}
-	
-
-	}
-	
     
 	@Override
     protected void onDestroy() {
-        destroyBTCommunicator();
+        btservice.destroyBTCommunicator();
+        if (mBound) {
+            unbindService(btconnection);
+            mBound = false;
+        }
         if (btOnByUs){
             showToast(R.string.bt_off_message, Toast.LENGTH_SHORT);
             BluetoothAdapter.getDefaultAdapter().disable();
@@ -458,12 +392,24 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         super.onDestroy();
         finish();
          
-    }
-
+	}
+	@Override
+	public void onStop() {
+		//btservice.destroyBTCommunicator();
+//		if (mBound) {
+//			unbindService(btconnection);
+//			mBound = false;
+//		}
+		super.onStop(); 
+	}
     @Override
     public void onPause() {
-        destroyBTCommunicator();
-        super.onStop();
+        //btservice.destroyBTCommunicator();
+//        if (mBound) {
+//            unbindService(btconnection);
+//            mBound = false;
+//        }
+        super.onPause(); //WHY IS CALLING STOP ON PAUSE;
     }
 
     @Override
@@ -476,81 +422,12 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
      * @param name The program name to start. Has to end with .rxe on the LEGO firmware and with .nxj on the 
      *             leJOS NXJ firmware.
      */   
-    public void startProgram(String name) {
-        // for .rxe programs: get program name, eventually stop this and start the new one delayed
-        // is handled in startRXEprogram()
-        if (name.endsWith(".rxe")) {
-        	Log.d("pepe", "rxe");
-            programToStart = name;        
-            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.GET_PROGRAM_NAME, 0, 0);
-            Log.d("pepe", "startprogram fin D:");
-            //return;
-        }
-              
-       /// for .nxj programs: stop bluetooth communication after starting the program
-        /*if (name.endsWith(".nxj")) {
-            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name);
-            destroyBTCommunicator();
-            return;
-        } */      
-        Log.d("pepe", "start!!!!!!!!!!!!!!!");
-        // for all other programs: just start the program
-        sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name);
-    }
+    
     
     /**
      * Depending on the status (whether the program runs already) we stop it, wait and restart it again.
      * @param status The current status, 0x00 means that the program is already running.
      */   
-    public void startRXEprogram(byte status) {
-        if (status == 0x00) {
-        	 Log.d("pepe", "status 0x00");
-            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.STOP_PROGRAM, 0, 0);
-            sendBTCmessage(1000, BTCommunicator.START_PROGRAM, programToStart);
-        }    
-        else {
-        	 Log.d("pepe", "no status 0x00");
-            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, programToStart);
-        }
-    }   
-    
-    ///envia al bthandler los mensajes via blublu   (enteros)
-    void sendBTCmessage(int delay, int message, int value1, int value2) {
-        Bundle myBundle = new Bundle();
-        myBundle.putInt("message", message);
-        myBundle.putInt("value1", value1);
-        myBundle.putInt("value2", value2);
-        Message myMessage = myHandler.obtainMessage();
-        myMessage.setData(myBundle);
-
-        if (delay == 0)
-            btcHandler.sendMessage(myMessage);
-
-        else
-            btcHandler.sendMessageDelayed(myMessage, delay);
-    }
-
-  ///envia al bthandler los mensajes via blublu   (string)  
-    void sendBTCmessage(int delay, int message, String name) {
-        Bundle myBundle = new Bundle();
-        myBundle.putInt("message", message);
-        myBundle.putString("name", name);
-        Message myMessage = myHandler.obtainMessage();
-        myMessage.setData(myBundle);
-
-        if (delay == 0)
-            btcHandler.sendMessage(myMessage);
-        else
-            btcHandler.sendMessageDelayed(myMessage, delay);
-    }
-    //llama a la actividad que  busca dispositivos
-    void selectNXT() {
-        Intent serverIntent = new Intent(this, DeviceListActivity.class);
-        startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
-        
-    }
-    
-    
     private int byteToInt(byte byteValue) {
         int intValue = (byteValue & (byte) 0x7f);
 
@@ -560,20 +437,6 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         return intValue;
     }
     
-    //retorna si esta pareado 
-    @Override
-    public boolean isPairing() {
-        return pairing;
-    }
-    
-    public boolean isConnected(){
-    	if (myBTCommunicator != null){
-    		connected = myBTCommunicator.isConnected();
-    	}else{
-    		connected =false;
-    	}
-    	return connected;
-    }
     
     //recibe datos de dispositivo e inicia la conexion
     @Override
@@ -585,7 +448,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
                 if (resultCode == Activity.RESULT_OK) {
                     String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
                     pairing = data.getExtras().getBoolean(DeviceListActivity.PAIRING);
-                    startBTCommunicator(address);
+                    btservice.startBTCommunicator(address);
                     
 	 		        
                 }
@@ -598,7 +461,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         btOnByUs = true;
-                        selectTypeCnt();
+                        btservice.selectTypeCnt();
                         break;
                     case Activity.RESULT_CANCELED:
                         showToast(R.string.bt_needs_to_be_enabled, Toast.LENGTH_SHORT);
@@ -615,89 +478,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     }
     
     
-    //administra los errores que pueden suceder antes y durante la conexion.
-    final Handler myHandler = new Handler() {
-        @Override
-        public void handleMessage(Message myMessage) {
-            switch (myMessage.getData().getInt("message")) {
-                case BTCommunicator.DISPLAY_TOAST:
-                    showToast(myMessage.getData().getString("toastText"), Toast.LENGTH_SHORT);
-                    break;
-                case BTCommunicator.STATE_CONNECTED:
-                    connectingProgressDialog.dismiss();
-                    sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.GET_FIRMWARE_VERSION, 0, 0);
-                	updateButtonsAndMenu();
-                    break;
-                    
-                case BTCommunicator.MOTOR_STATE:
-
-                    if (myBTCommunicator != null) {
-                        byte[] motorMessage = myBTCommunicator.getReturnMessage();
-                        int position = byteToInt(motorMessage[21]) + (byteToInt(motorMessage[22]) << 8) + (byteToInt(motorMessage[23]) << 16)
-                                       + (byteToInt(motorMessage[24]) << 24);
-                        showToast(getResources().getString(R.string.current_position) + position, Toast.LENGTH_SHORT);
-                    }
-
-                    break;
-                    
-                case BTCommunicator.PROGRAM_NAME:
-                    if (myBTCommunicator != null) {
-                        byte[] returnMessage = myBTCommunicator.getReturnMessage();
-                        Log.d("pepe", "handler bsdgns");
-                        startRXEprogram(returnMessage[2]);
-                    }
-                    
-                    break;
-
-                case BTCommunicator.STATE_CONNECTERROR_PAIRING:
-                    connectingProgressDialog.dismiss();
-                    destroyBTCommunicator();
-                    break;
-
-                case BTCommunicator.STATE_CONNECTERROR:
-                    connectingProgressDialog.dismiss();
-                case BTCommunicator.STATE_RECEIVEERROR:
-                case BTCommunicator.STATE_SENDERROR:
-
-                    destroyBTCommunicator();
-                    if (btErrorPending == false) {
-                        btErrorPending = true;
-                        // inform the user of the error with an AlertDialog
-                        AlertDialog.Builder builder = new AlertDialog.Builder(thisActivity);
-                        builder.setTitle(getResources().getString(R.string.bt_error_dialog_title))
-                        .setMessage(getResources().getString(R.string.bt_error_dialog_message2)).setCancelable(false)
-                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                btErrorPending = false;
-                                dialog.cancel();
-                                //agregar re conexion
-                                //selectNXT();
-                            }
-                        });
-                        builder.create().show();
-                    }
-
-                    break;
-
-                	case BTCommunicator.FIRMWARE_VERSION:
-
-                    if (myBTCommunicator != null) {
-                        byte[] firmwareMessage = myBTCommunicator.getReturnMessage();
-                        // check if we know the firmware
-                        for (int pos=0; pos<4; pos++) {
-                            if (firmwareMessage[pos + 3] != LCPMessage.FIRMWARE_VERSION_LEJOSMINDDROID[pos]) {
-                                break;
-                            }
-                        }
-                    }
-
-                    break;
-                
-             
-            }
-        }
-    };
+    
     
     /**
      * Creates the menu items
@@ -724,8 +505,8 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         if (displayMenu) {
         	updateButtonsAndMenu();
             boolean startEnabled = false;
-            if (myBTCommunicator != null) 
-                startEnabled = myBTCommunicator.isConnected();
+            if (btservice.getCommunicator() != null) 
+                startEnabled = btservice.getCommunicator().isConnected();
             if(menu.findItem(MENU_REMOTE_CONTROL)!=null)
             		menu.findItem(MENU_REMOTE_CONTROL).setEnabled(startEnabled);
         }
@@ -740,20 +521,20 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         switch (item.getItemId()) {
             case MENU_TOGGLE_CONNECT:
 
-                if (myBTCommunicator == null || !isConnected()) {
+                if (btservice.getCommunicator() == null || !btservice.isConnected()) {
                 	Database_Helper db = new Database_Helper(thisActivity);
 					List<Pet> mascotas = db.getPets(); //lista de mascotas
 					db.close();
 					Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
-					connect(petto.get_mac());
-                } else if(isConnected()){
-                    destroyBTCommunicator();
+					btservice.connect(petto.get_mac());
+                } else if(btservice.isConnected()){
+                    btservice.destroyBTCommunicator();
                 }
 
                 return true;
                 
             case MENU_REMOTE_CONTROL:
-                	if (isConnected()){
+                	if (btservice.isConnected()){
                 		detachAll();
     	        		launch_remotecontrol();
     	        	}else{
@@ -768,7 +549,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
         		return true;
         		
             case MENU_PAIRING:
-                pairing();
+                btservice.pairing();
                 ///guardar nueva mac en BD
                 return true;
             
@@ -791,7 +572,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 
         myMenu.removeItem(MENU_TOGGLE_CONNECT);
 
-        if (isConnected()) {
+        if (btservice.isConnected()) {
             myMenu.add(0, MENU_TOGGLE_CONNECT, 1, getResources().getString(R.string.disconnect))/*.setIcon(R.drawable.ic_menu_connected)*/;
 
         } else {
@@ -817,10 +598,47 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
        
 		 myMenu.removeItem(MENU_PAIRING);
 
-	        if (!isConnected())
+	        if (!btservice.isConnected())
 	            myMenu.add(0, MENU_PAIRING, 4, "Parear")/*.setIcon(R.drawable.ic_menu_connected)*/;
 	        
 
     }
-    
+
+	@Override
+	public boolean isPairing() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	public BTService getCurrentBTService()
+	{
+		return btservice;
+	}
+	
+	//Funciones para que clases viejas no se quejen por el cambio a service
+	public void pairing() {
+		// TODO Auto-generated method stub
+		btservice.pairing();
+	}
+
+	public boolean isConnected() {
+		// TODO Auto-generated method stub
+		if(btservice != null)
+		{
+			return btservice.isConnected();
+		}
+		else return false;
+	}
+
+	public void sendBTCmessage(int delay, int message, int value1,
+			int value2) {
+		// TODO Auto-generated method stub
+		btservice.sendBTCmessage(delay, message, value1, value2);
+	}
+	public String return_mac(){
+		return btservice.return_mac();
+}
+	public void startProgram(String name) {
+	       btservice.startProgram(name);
+	    }
 }

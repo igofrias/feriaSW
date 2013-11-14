@@ -58,6 +58,11 @@ public class MainPetActivity extends SherlockFragment{
 		canvas.setWillNotDraw(false);
 	    return canvas;
 	  }	
+	public void startBallGame()
+	{
+		Intent intent = new Intent(thisActivity, BallGame.class);
+	    startActivity(intent);
+	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -123,6 +128,7 @@ public class MainPetActivity extends SherlockFragment{
 			 			Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
 	 			    	if(((MainActivity)thisActivity).isConnected())
 			    				((MainActivity)thisActivity).startProgram("Shake.rxe");
+		 			    	startBallGame();
 		 			}else{
 		 				Toast.makeText(thisActivity, "no puedes molestar a la mascota mientras duerme", Toast.LENGTH_SHORT).show();
 		 			}
