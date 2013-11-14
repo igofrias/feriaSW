@@ -305,7 +305,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		manager.unregisterListener(this);
 		running=false;
 		try {
-			thMesseger.join();
+			if(thMesseger != null)
+			{
+				thMesseger.join();
+			}
 			canvas.stopCanvas();
 			thMesseger = null;
 		} catch (InterruptedException e) {
@@ -321,7 +324,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		manager.unregisterListener(this);
 		running = false;
 		try {
-			thMesseger.join();
+			if(thMesseger != null)
+			{
+				thMesseger.join();
+			}
 			canvas.stopCanvas();
 			thMesseger = null;
 		} catch (InterruptedException e) {
