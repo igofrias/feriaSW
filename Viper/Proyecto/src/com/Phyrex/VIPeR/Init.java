@@ -43,9 +43,18 @@ public class Init {
 	public static final String ach7 = "Perezoso";	
 	public static final String ach7_desc = "Tu mascota ha dormido 5 veces";
 	public static final int img7 = R.drawable.logropepe;
+	public static final String ach8 = "Reluciente";	
+	public static final String ach8_desc = "Tu mascota ha sido lavada 5 veces";
+	public static final int img8 = R.drawable.logropepe;
+	/*public static final String ach9 = "Buena Digestion";	
+	public static final String ach9_desc = "Tu mascota ha hecho desechos 5 veces";
+	public static final int img9 = R.drawable.logropepe;*/
+	public static final String ach10 = "Cajita de Arena";	
+	public static final String ach10_desc = "Tu mascota ha sido limpiada 5 veces";
+	public static final int img10 = R.drawable.logropepe;
+	
 	int done =0;
-	
-	
+		
 
 	public static final String est1 = "Ha Comido";
 	public static final String est1_desc = "¿Cuantas veces la ha alimentado?";
@@ -66,7 +75,7 @@ public class Init {
 	public static final String est6_desc = "¿Cuantas veces ha limpiado a sus mascotas?";
 	public static final int imgstat6 = R.drawable.toiletpaper;
 	public static final String est7= "Ha sido Lavada";
-	public static final String est7_desc = "¿Cuantas veces ha limpiado a sus mascotas?";
+	public static final String est7_desc = "¿Cuantas veces ha lavado a sus mascotas?"; //limpiado por lavado
 	public static final int imgstat7 = R.drawable.soapstat;
 
 	public static final int amount = 0;
@@ -92,6 +101,10 @@ public class Init {
 		helper.createAchievement(ach5, ach5_desc, done, img5);
 		helper.createAchievement(ach6, ach6_desc, done, img6);
 		helper.createAchievement(ach7, ach7_desc, done, img7);
+		helper.createAchievement(ach8, ach8_desc, done, img8);
+		//helper.createAchievement(ach9, ach9_desc, done, img9);
+		helper.createAchievement(ach10, ach10_desc, done, img10);
+
 		helper.close();    	
 	}
 
@@ -115,7 +128,7 @@ public class Init {
 		helper.createStatistics(est4, est4_desc, amount, imgstat4);
 		helper.createStatistics(est5, est5_desc, amount, imgstat5);
 		helper.createStatistics(est6, est6_desc, amount, imgstat6);
-		helper.createStatistics(est7, est7_desc, amount, imgstat7);
+		helper.createStatistics(est7, est7_desc, amount, imgstat7); //lavado
 		helper.close();    	
 	}
 	

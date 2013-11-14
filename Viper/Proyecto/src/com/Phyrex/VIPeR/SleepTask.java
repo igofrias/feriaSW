@@ -162,8 +162,8 @@ public class SleepTask implements SensorEventListener, Runnable {
 			{
 				states.sleep();
 				if(updater.sleep(helper)){
-		 			Toast.makeText(parent, "Logro Desbloqueado Perezoso", 
-		 					Toast.LENGTH_LONG).show();
+		 			//Toast.makeText(parent, "Logro Desbloqueado Perezoso", 
+		 				//	Toast.LENGTH_LONG).show();
 				}
 				if(((MainActivity)parent).isConnected())
 					((MainActivity)parent).startProgram("Sleep.rxe");

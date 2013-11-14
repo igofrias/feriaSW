@@ -237,7 +237,22 @@ public class StatesActivity extends SherlockFragment{
 		hungry.setProgress(hungry.getProgress()-50);
 		sleeping = true;
 	}
-	public boolean isSleeping()
+	
+	public void washing(){
+		health.setProgress(health.getProgress()+100);
+		hapiness.setProgress(hapiness.getProgress()+50);
+	}
+	
+	public void pooing(){
+		health.setProgress(health.getProgress()-100); //digamos que se pone menos sano porque esta sucio el ambiente, que suba salud cuando se limpia
+		hapiness.setProgress(hapiness.getProgress()+10);
+	} 
+	
+	public void cleaning(){
+		health.setProgress(health.getProgress()+100); //digamos que se pone menos sano porque esta sucio el ambiente, que suba salud cuando se limpia
+	} 
+	
+	boolean isSleeping()
 	{
 		return sleeping;
 	}
