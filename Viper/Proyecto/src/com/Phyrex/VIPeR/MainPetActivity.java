@@ -29,8 +29,6 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-//Maneja el control remoto usando acelerometro
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MainPetActivity extends SherlockFragment{
 	double gravity[];
     boolean running=true;
@@ -72,60 +70,72 @@ public class MainPetActivity extends SherlockFragment{
 	public void onResume() {
 		super.onResume();
 		running=true;
+		
 	}
-	
-	
 	
 	@Override
 	public void onPause() {
 		super.onPause();
 		running=false;
 	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		running=false;
+	}
+	
         @Override
 	public void onDetach(){
 		super.onDetach();
 		running = false;
 	}
         
-        public void Actions(int action){
-			final DB_Updater updater = new DB_Updater(thisActivity);
-         	final Database_Helper entry = new Database_Helper(thisActivity);
-         	SherlockFragment fragment1 = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
-			
-			switch(action){
-				case 1://comer
-					EatTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
-				break;
-				case 2://dormir
-					SleepTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
-				break;
-				case 3://lavar
-					//lavar
-				break;
-				case 4://limpiar caca
-					//limpiar caca
-				break;
-				case 5://jugar
-					if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
-			 			if(!((StatesActivity)fragment1).isSleeping()){
-			 				if(updater.play(entry))
-			         			Toast.makeText(thisActivity, "Logro Desbloqueado Jugueton", Toast.LENGTH_LONG).show();((StatesActivity)fragment1).playing();
-				 			Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
-		 			    	if(((MainActivity)thisActivity).isConnected())
-				    				((MainActivity)thisActivity).startProgram("Shake.rxe");
-			 			}else{
-			 				Toast.makeText(thisActivity, "no puedes molestar a la mascota mientras duerme", Toast.LENGTH_SHORT).show();
-			 			}
-         			}	
-				break;
-				case 6://boton accion
-					fragment1 = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
-					PetActionManager petman = new PetActionManager(thisActivity,(StatesActivity)fragment1);
-					Log.d("MainPetActivity","Ejecutando acciones");
-					petman.execute();
-				break;
-			}
+    @Override
+	public void onDestroy(){
+		super.onDestroy();
+		running = false;
+	}
+        
+    public void Actions(int action){
+		final DB_Updater updater = new DB_Updater(thisActivity);
+     	final Database_Helper entry = new Database_Helper(thisActivity);
+     	SherlockFragment fragment1 = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
+		
+		switch(action){
+			case 1://comer
+				EatTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
+			break;
+			case 2://dormir
+				SleepTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
+			break;
+			case 3://lavar
+				//lavar
+			break;
+			case 4://limpiar caca
+				//limpiar caca
+			break;
+			case 5://jugar
+				if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
+		 			if(!((StatesActivity)fragment1).isSleeping()){
+		 				if(updater.play(entry))
+		         			Toast.makeText(thisActivity, "Logro Desbloqueado Jugueton", Toast.LENGTH_LONG).show();((StatesActivity)fragment1).playing();
+			 			Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
+	 			    	if(((MainActivity)thisActivity).isConnected())
+			    				((MainActivity)thisActivity).startProgram("Shake.rxe");
+		 			}else{
+		 				Toast.makeText(thisActivity, "no puedes molestar a la mascota mientras duerme", Toast.LENGTH_SHORT).show();
+		 			}
+     			}	
+			break;
+			case 6://boton accion
+				fragment1 = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
+				PetActionManager petman = new PetActionManager(thisActivity,(StatesActivity)fragment1);
+				Log.d("MainPetActivity","Ejecutando acciones");
+				petman.execute();
+			break;
 		}
+	}
         
    /////////////////////////////clase draw joytick////////////////////////////////////
 	
@@ -138,7 +148,6 @@ public class MainPetActivity extends SherlockFragment{
 		SurfaceHolder hold;
 		Canvas can;
 		Thread drawthread;
-		Boolean running;
 		//tentosaurio
 		Bitmap tento;
 		Bitmap tentosleeping;
@@ -367,6 +376,8 @@ public class MainPetActivity extends SherlockFragment{
 			}
 		}
 		
+		
+		
 		public void Draw(Canvas canvas)
 		{
 			float width = canvas.getWidth();
@@ -390,7 +401,7 @@ public class MainPetActivity extends SherlockFragment{
 				canvas.drawBitmap(tento, center_x-tento.getWidth()*1/3, 
 						center_y - tento.getHeight()*4/7, color);
 				Drawtouchingpet(center_x,center_y);
-				Drawdirt(center_x,center_y);
+				Drawdirt(center_x,center_y, canvas);
 			}else if(petstate==2){
 				Drawsleeping(center_x,center_y);
 			}else if(petstate==1){
@@ -430,16 +441,26 @@ public class MainPetActivity extends SherlockFragment{
 			can.drawARGB(200, 0, 0, 0);
 		}
 		
-		public void Drawdirt(float center_x, float center_y){
+		public void Drawdirt(float center_x, float center_y, Canvas canvas){
 			if(dirtstate>0){
 				Log.e("Draw","Dirt "+ dirtstate);
-				int i=0;
+				/*int i=0;
 				do{
-					can.drawBitmap(dirt[i], center_x-dirt[i].getWidth()*1/3, 
+					canvas.drawBitmap(dirt[i], center_x-dirt[i].getWidth()*1/3, 
 							center_y - dirt[i].getHeight()*4/7, color);
 					
 					i++;
-				}while(i<dirtstate && i>0);
+				}while(i<dirtstate && i>0);*/
+				canvas.drawBitmap(dirt[0], center_x-dirt[0].getWidth()*1/3, 
+						center_y - dirt[0].getHeight()*4/7, color);
+				canvas.drawBitmap(dirt[1], center_x-dirt[1].getWidth()*1/3, 
+						center_y - dirt[1].getHeight()*4/7, color);
+				canvas.drawBitmap(dirt[2], center_x-dirt[2].getWidth()*1/3, 
+						center_y - dirt[2].getHeight()*4/7, color);
+				canvas.drawBitmap(dirt[3], center_x-dirt[3].getWidth()*1/3, 
+						center_y - dirt[3].getHeight()*4/7, color);
+				canvas.drawBitmap(dirt[4], center_x-dirt[4].getWidth()*1/3, 
+						center_y - dirt[4].getHeight()*4/7, color);
 			}
 		}
 		
@@ -592,7 +613,6 @@ public class MainPetActivity extends SherlockFragment{
 			// TODO Auto-generated method stub
 
 			while(running){
-				can= null;
 				//limit frame rate to max 60fps
 				timeNow = System.currentTimeMillis();
                 timeDelta = timeNow - timePrevFrame;
@@ -605,17 +625,15 @@ public class MainPetActivity extends SherlockFragment{
                     }
                 }
                 timePrevFrame = System.currentTimeMillis();
-                try {
-                	can = hold.lockCanvas();
-                    synchronized (hold.getSurface()) {
-                       //call methods to draw and process next fame
-                    	canvas.Draw(can);
-                    }
-                } finally {
-                    if (can != null) {
-                    	hold.unlockCanvasAndPost(can);
-                    }
-                }
+                if(hold.getSurface().isValid())
+				{
+					can = hold.lockCanvas();
+				
+					
+						canvas.Draw(can);
+					
+					hold.unlockCanvasAndPost(can);
+				}
 			}
 		}
 	}
