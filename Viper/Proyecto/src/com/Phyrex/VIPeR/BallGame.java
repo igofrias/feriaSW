@@ -1,12 +1,17 @@
 package com.Phyrex.VIPeR;
 
 import org.andengine.engine.camera.Camera;
+import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
+import org.andengine.util.color.Color;
 
 import com.Phyrex.VIPeR.BTService.BTBinder;
 
@@ -25,6 +30,8 @@ public class BallGame extends SimpleBaseGameActivity{
 	private static final int CAMERA_WIDTH = 800;
 	private static final int CAMERA_HEIGHT = 480;
 	
+	
+	VertexBufferObjectManager vbo;
 	BTService btservice;
 	Activity thisActivity = this;
 	protected boolean mBound;
@@ -105,11 +112,47 @@ public class BallGame extends SimpleBaseGameActivity{
 		// TODO Auto-generated method stub
 		
 	}
+	protected void registerButtons()
+	{
+		//Inicializa botones del juego
+		HUD  hud = new HUD();
+		final Rectangle left_arrow = new Rectangle(20, 100, 60, 60, vbo)
+	    {
+	        public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
+	        {
+	            if (touchEvent.isActionUp())
+	            {
+	                // move player left
+	            }
+	            return true;
+	        };
+	    };
+	    left_arrow.setColor(new Color(0.3333f, 0.3f, 0.3f));
+	    final Rectangle right_arrow = new Rectangle(730, 100, 60, 60, vbo)
+	    {
+	        public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
+	        {
+	            if (touchEvent.isActionUp())
+	            {
+	                // move player left
+	            }
+	            return true;
+	        };
+	    };
 
+	    hud.registerTouchArea(left_arrow);
+	    hud.registerTouchArea(right_arrow);
+	    hud.attachChild(left_arrow);
+	    hud.attachChild(right_arrow);
+	    
+	    camera.setHUD(hud);
+	}
 	@Override
 	protected Scene onCreateScene() {
 		// TODO Auto-generated method stub
 		Scene scene = new Scene();
+		vbo = mEngine.getVertexBufferObjectManager();
+		registerButtons();
 	     scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
 	     if(btservice != null)
 	    	 if(btservice.isConnected())
