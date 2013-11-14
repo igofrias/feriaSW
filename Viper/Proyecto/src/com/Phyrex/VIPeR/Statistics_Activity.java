@@ -103,4 +103,10 @@ public class Statistics_Activity extends SherlockFragment {
 	    db.close();
 	} 
 	
+	public void onBackPressed()
+	{
+		((MainActivity)thisActivity).launch_mainpet();
+		((MainActivity)thisActivity).launch_states();
+	}
+	
 }

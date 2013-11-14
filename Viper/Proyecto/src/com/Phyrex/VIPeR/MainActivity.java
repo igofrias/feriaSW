@@ -34,6 +34,7 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 	//Toast para mensajes
 	private Toast reusableToast;
 	///////////////////Variables Conexión Bluetooth////////////////////////////////////////
+	private boolean doubleBackToExitPressedOnce = false;
 	private boolean pairing;
 	private static boolean btOnByUs = false;
 	private BTCommunicator myBTCommunicator = null;
@@ -82,6 +83,8 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     @Override
     public void onResume() {
         super.onResume();
+        this.doubleBackToExitPressedOnce = false;
+        
     }
     
     ///Creacion de la actividad, inicializacion de botoes y texto.
@@ -818,6 +821,28 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 	            myMenu.add(0, MENU_PAIRING, 4, "Parear")/*.setIcon(R.drawable.ic_menu_connected)*/;
 	        
 
+    }
+    @Override
+    public void onBackPressed(){
+    	
+    	SherlockFragment fragment1 = ((MainPetActivity)getSupportFragmentManager().findFragmentByTag("mainpet")); //busca el fragmento
+    	 if(fragment1==null || (fragment1!=null && fragment1.isDetached())){ //ve si esxiste, en caso de que exista verifica si esta pegado a algo 
+    	    	launch_mainpet();   	
+    	     }
+    	 else{
+    		 Log.d("MainPetActivity","en fragmento mainPetActivity");
+
+    		    if (doubleBackToExitPressedOnce) {
+    		        super.onBackPressed();
+    		        return;
+    		    }
+    		    this.doubleBackToExitPressedOnce = true;
+    		    Toast.makeText(this, R.string.exit2, Toast.LENGTH_SHORT).show();
+
+    		 Log.d("MainPetActivity","en fragmento mainPetActivity");
+    		 
+    	 }
+    	 
     }
     
 }

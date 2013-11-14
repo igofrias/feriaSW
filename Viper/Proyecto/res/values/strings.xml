@@ -83,5 +83,7 @@
     <string name="dia">Día</string>
     <string name="dias">Días</string>
     <string name="hello_world">HOLA!!!</string>
+    <string name="exit2">Presiones atras de nuevo para salir</string>
+    
 
 </resources>
