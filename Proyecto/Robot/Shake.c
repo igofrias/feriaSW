@@ -17,9 +17,3 @@ task main(){
 			wait1Msec(waitTime);
 	}
 }
-/*
- * motorA -> PIERNA DERECHA
- * motorB -> CABEZA
- * motorC -> PIERNA IZQUIERDA
- *
- */

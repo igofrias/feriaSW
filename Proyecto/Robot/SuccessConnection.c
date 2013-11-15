@@ -1,3 +1,4 @@
+#pragma platform(NXT)
 #pragma config(Motor, motorB,  headMotor, tmotorNXT, PIDControl)
 
 /*

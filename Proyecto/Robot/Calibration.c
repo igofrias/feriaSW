@@ -1,10 +1,10 @@
 #pragma config(Sensor, S1, lightRSensor, sensorLightInactive)
 #pragma config(Sensor, S2, lightLSensor, sensorLightInactive)
-#pragma config(Sensor, S3, soundSensor, sensorSoundDB)
+//#pragma config(Sensor, S3, soundSensor, sensorSoundDB)
 
 //Global Variables
-int LightRValue;
-int LightLValue;
+int LightRVal;
+int LightLVal;
 
 //TASK
 task MonitorRLight();
@@ -36,8 +36,8 @@ task main(){
 
 	//Light medition
 	for(int i = 0;i<10; i++){
-		LightRData[i] = LightRValue;
-		LightLData[i] = LightLValue;
+		LightRData[i] = LightRVal;
+		LightLData[i] = LightLVal;
 		eraseDisplay();
 		nxtDisplayString(4, "Obteniendo Datos");
 
@@ -100,13 +100,13 @@ task main(){
 //Light level monitoring (Right)
 task MonitorRLight(){
 	while(true){
-		LightRValue = SensorValue[lightRSensor];
+		LightRVal = SensorValue[lightRSensor];
 	}
 }
 
 //Light level monitoring (Left)
 task MonitorLLight(){
 	while(true){
-		LightLValue = SensorValue[lightLSensor];
+		LightLVal = SensorValue[lightLSensor];
 	}
 }
