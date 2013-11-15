@@ -927,6 +927,9 @@ containing a value of this type.
          */
         public static final int activity_horizontal_margin=0x7f070011;
         public static final int activity_vertical_margin=0x7f070012;
+        public static final int list_padding=0x7f070014;
+        public static final int shadow_width=0x7f070015;
+        public static final int slidingmenu_offset=0x7f070013;
     }
     public static final class drawable {
         public static final int abs__ab_bottom_solid_dark_holo=0x7f020000;

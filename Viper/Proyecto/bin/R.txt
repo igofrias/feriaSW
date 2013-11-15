@@ -149,6 +149,9 @@ int dimen abs__search_view_text_min_width 0x7f07000e
 int dimen action_button_min_width 0x7f070010
 int dimen activity_horizontal_margin 0x7f070011
 int dimen activity_vertical_margin 0x7f070012
+int dimen list_padding 0x7f070014
+int dimen shadow_width 0x7f070015
+int dimen slidingmenu_offset 0x7f070013
 int drawable abs__ab_bottom_solid_dark_holo 0x7f020000
 int drawable abs__ab_bottom_solid_inverse_holo 0x7f020001
 int drawable abs__ab_bottom_solid_light_holo 0x7f020002

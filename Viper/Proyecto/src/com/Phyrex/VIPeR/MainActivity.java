@@ -145,7 +145,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 
 		slimenu.setShadowWidthRes(R.dimen.shadow_width);
 		slimenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		slimenu.setFadeDegree(0.35f);
+		slimenu.setFadeDegree(0.60f);
 		slimenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 		slimenu.setTouchModeBehind(SlidingMenu.TOUCHMODE_NONE);
 ////////////////////////////////////////////////////////
