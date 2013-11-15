@@ -35,9 +35,10 @@ import android.app.ProgressDialog;
 
 import java.io.IOException;
 import java.util.List;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
-
-public class MainActivity extends SherlockFragmentActivity implements BTConnectable{
+public class MainActivity extends SlidingFragmentActivity implements BTConnectable{
 	//Toast para mensajes
 	private Toast reusableToast;
 	///////////////////Variables Conexión Bluetooth////////////////////////////////////////
@@ -114,15 +115,39 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
     ///Creacion de la actividad, inicializacion de botoes y texto.
     @SuppressLint("ShowToast")
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		 requestWindowFeature(Window.FEATURE_NO_TITLE);
 	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 	                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		thisActivity = this;
-		setContentView(R.layout.activity_main);
+		//setContentView(R.layout.activity_main);
 		//bncnt.setOnClickListener(listener);
+		//////////////sliding
+		setContentView(R.layout.activity_main);
+
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+		ft.replace(R.id.frame2, new MainPetActivity());
+		ft.commit();
+
+		setBehindContentView(R.layout.menu_frame);
+
+		ft = getSupportFragmentManager().beginTransaction();
+
+		ft.replace(R.id.menu_frame, new FragmentList());
+		ft.commit();
+
+		SlidingMenu slimenu = new SlidingMenu(this);
+		slimenu.setMode(SlidingMenu.LEFT);
+
+		slimenu.setShadowWidthRes(R.dimen.shadow_width);
+		slimenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		slimenu.setFadeDegree(0.35f);
+		slimenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+		slimenu.setTouchModeBehind(SlidingMenu.TOUCHMODE_NONE);
+////////////////////////////////////////////////////////
 		reusableToast = Toast.makeText(thisActivity, "", Toast.LENGTH_SHORT);
 		thread = new ThreadClass(new Handler() {
 			@Override
@@ -141,6 +166,15 @@ public class MainActivity extends SherlockFragmentActivity implements BTConnecta
 		}
 		
 	}
+    
+    public void switchContent(Fragment fragment) {
+  		// TODO Auto-generated method stub
+  		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+  		ft.replace(R.id.linear0, fragment);
+  		ft.commit();
+  		getSlidingMenu().showContent();
+
+  	}
     
     //llama al supa framento
     void launch_create() {//identificamos y cargamos el fragmento menu
