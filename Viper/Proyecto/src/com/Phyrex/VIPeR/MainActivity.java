@@ -154,6 +154,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     	
     	if(menuitem==1){
     		if (btservice.isConnected()){
+    			detachAll();
     			detach_achievementlist();
        		 	detach_statisticslist();
         		launch_remotecontrol();

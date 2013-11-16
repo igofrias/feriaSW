@@ -5,10 +5,12 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -28,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.Toast;
 //Maneja el control remoto usando acelerometro
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class RemoteControl extends SherlockFragment implements SensorEventListener{
@@ -370,6 +373,14 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		Bitmap centro;
 		Bitmap circulo;
 		Boolean playmode;
+		
+		///////////Play Mode ///////////
+		Bitmap ballb;
+		Bitmap ballr;
+		Bitmap ballnext;
+		Bitmap buttonclose;
+		Bitmap buttonopen;
+		int pincersstate;
 		public DrawJoystick(Context context) {
 			
 			super(context);
@@ -381,12 +392,21 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			vel_x = 0.0;
 			vel_y = 0.0;
 			running = false;
-			playmode=false;
+			playmode=true;
 			centro = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.remotecontrolbackground);
 			circulo = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.pointremotecontrol);
-			
+			///////////Modo play /////////////////
+			ballb = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.ballblue);
+			ballr = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.ballred);
+			buttonclose = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.closepincers);
+			buttonopen = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.openpincers);
+			pincersstate=0;
 			// TODO Auto-generated constructor stub
 		}
 
@@ -402,6 +422,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			// TODO Auto-generated method stub
 			
 			startCanvas();
+			if(playmode)
+				playmodedialog();
 		}
 
 		@Override
@@ -427,14 +449,66 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			canvas.drawBitmap(circulo, x-circulo.getWidth()/2,
 					y-circulo.getHeight()/2, color);
 			if(playmode){
-				//seleccion de pelotas
-				//cerrar pinzas 
-				//tiempo
-				//puntaje
+				//seleccion de pelotas en funcion next ball
+				//cerrar llamar a start program
+				//tiempo llevar el tiempo y resetearlo
+				//puntaje contar puntaje y sumarle extra por buen tiempo
+				if(pincersstate==0){//cargar boton de las pinzas
+					canvas.drawBitmap(buttonclose, center_x*4/16-buttonclose.getWidth()/2,
+							center_y*2*13/16-buttonclose.getHeight()/2, color);
+				}else{
+					canvas.drawBitmap(buttonopen, center_x*4/16-buttonopen.getWidth()/2,
+							center_y*2*13/16-buttonopen.getHeight()/2, color);
+				}
 				//TODO
 			}
 			
 		}
+		
+		public void playmodedialog(){
+			AlertDialog.Builder dialog = new AlertDialog.Builder(thisActivity);  
+	        dialog.setTitle("Tento pelota (?)");		//titulo (opcional)
+	        dialog.setIcon(R.drawable.ic_launcher);		//icono  (opcional)
+	        dialog.setMessage("Debes encontrar la pelota que te piden dentro del tiempo" +
+	        		"utilizando el robot y sus pinzas.\n" +
+	        		"¡Cuidado! debes encontrar las pelotas dentro del tiempo, entre mas" +
+	        		" rapido las recojas, mas puntaje tendras!\n\n"
+	        		); 
+	        
+	        
+	        dialog.setNegativeButton("Salir", new DialogInterface.OnClickListener() {  //boton positivo (opcional)
+	            public void onClick(DialogInterface dialogo1, int id) {  
+	            	running=false;
+	            	thisActivity.detach_remotecontrol();
+	    			thisActivity.launch_mainpet();
+			    }
+	        }); 
+	        dialog.setPositiveButton("Comenzar", new DialogInterface.OnClickListener() {  //boton positivo (opcional)
+	            public void onClick(DialogInterface dialogo1, int id) {  
+	            	//start game
+			    }
+	        });
+	        dialog.show();
+		}
+		
+		public void closepincers(){//llama a cerrar las pinzas
+			//thisActivity.startProgram("");
+			if(pincersstate==0){
+				pincersstate=1;
+			}else{
+				pincersstate=0;
+			}
+		}
+		
+		public void nextball(){//excoje una pelota al azar
+			int rand = (int) (Math.random() * 2);
+			if(rand==0){
+				Bitmap ballnext = ballr;
+			}else{
+				Bitmap ballnext = ballb;
+			}
+		}
+		
 		public void update_coordinates(Double x, Double y)
 		{
 			vel_x = x;
