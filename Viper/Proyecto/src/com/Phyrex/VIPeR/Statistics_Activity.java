@@ -32,7 +32,6 @@ public class Statistics_Activity extends SherlockFragment {
 	private TextView statscolor;
 	private TextView statsrace;
 	private TextView statsbirthdate;
-	private ImageButton statsback;
 	private static Activity thisActivity;
 	Activity parent_activity;
 
@@ -75,22 +74,11 @@ public class Statistics_Activity extends SherlockFragment {
 		statscolor= (TextView)thisActivity.findViewById(R.id.statscolor);
 		statsrace = (TextView)thisActivity.findViewById(R.id.statrace);
 		statsbirthdate = (TextView)thisActivity.findViewById(R.id.statsbirthdate);
-		statsback = (ImageButton)thisActivity.findViewById(R.id.statsback);
 		statsname.setText(petto._name);
 		statscolor.setText(petto._color);
 		statsrace.setText(petto._raza);
 		birthdate = petto._birthdate.split(" ");
 		statsbirthdate.setText(birthdate[1]);
-		
-		//Evento de click para un item
-        statsback.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				((MainActivity)thisActivity).launch_mainpet();
-				((MainActivity)thisActivity).launch_states();
-			}
-  		});
-		
 	}
 	
 	

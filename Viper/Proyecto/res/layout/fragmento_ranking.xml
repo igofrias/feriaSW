@@ -2,48 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/LinearLayout1"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="40dp"
+        android:layout_gravity="center"
         android:layout_weight="3"
         android:background="#033600"
         android:gravity="center"
         android:orientation="horizontal" >
 
-        <ImageButton
-            android:id="@+id/statsback"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:src="@drawable/abs__ic_ab_back_holo_light" />
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/logrostext"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="20"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/logrostext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Estadisticas"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:src="@drawable/abs__ic_clear_search_api_holo_light"
-            android:visibility="invisible" />
+            android:text="Estadisticas"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
 

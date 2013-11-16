@@ -162,15 +162,20 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
   		// TODO Auto-generated method stub
     	
     	if(menuitem==1){
-    		launch_remotecontrol();
-    	}else if(menuitem!=0){
-    		//modificar los pegados =)
-	  		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-	  		ft.replace(R.id.linear0, fragment);
-	  		ft.commit();
+    		if (btservice.isConnected()){
+        		detachAll();
+        		launch_remotecontrol();
+        		getSlidingMenu().showContent();
+        	}else{
+        		Toast.makeText(this, "Debe estar conectado para usar esta función", Toast.LENGTH_SHORT).show();
+        	}
+    	}else if(menuitem==2){
+    		launch_achievementlist();
+    		getSlidingMenu().showContent();
     	}
-  		getSlidingMenu().showContent();
+    	
   		if (menuitem==0){
+  			getSlidingMenu().showContent();
 			if (btservice.getCommunicator() == null || !btservice.isConnected()) {
 				Database_Helper db = new Database_Helper(thisActivity);
 		    	List<Pet> mascotas = db.getPets(); //lista de mascotas
@@ -201,7 +206,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		ft.commit();
 	}
     //llama al supa framento
-    void detach_create() {//identificamos y cargamos el fragmento menu
+   void detach_create() {//identificamos y cargamos el fragmento menu
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		SherlockFragment fragment = ((CreateActivity)getSupportFragmentManager().findFragmentByTag("create"));
 		
@@ -300,15 +305,19 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		
 		if(fragment==null){
 			fragment = new Achievement_Activity();
-			ft.replace(R.id.frame2, fragment,"achievementlist");
+			ft.replace(R.id.linear, fragment,"achievementlist");
 		}
 		else{
 			if(fragment.isDetached()){
 				ft.attach(fragment);
 			}
 		}
+		frame1 = (FrameLayout)this.findViewById(R.id.frame1);
+		frame2 = (FrameLayout)this.findViewById(R.id.frame2);
+		frame1.setVisibility(View.GONE);
+		frame2.setVisibility(View.GONE);
+		detachAll();
 		ft.commit();
-		changeLayoutVisibility();
 	}
     //llama al supa framento
     void detach_achievementlist() {//identificamos y cargamos el fragmento menu
@@ -368,7 +377,6 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     }
     
     void detachAll(){
-    	detach_achievementlist();
     	detach_mainpet();
     	detach_remotecontrol();
     }
@@ -521,26 +529,22 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     
     
     
-    
+
     /**
      * Creates the menu items
      */
-    @Override
+       /* @Override
     public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
         myMenu = menu;
-        myMenu.add(0, MENU_TOGGLE_CONNECT, 1, "Conectar")/*.setIcon(R.drawable.ic_menu_connect)*/;
-        myMenu.add(0, MENU_MAIN, 2, "Mascota")/*.setIcon(R.drawable.ic_menu_start)*/;
-        myMenu.add(0, MENU_REMOTE_CONTROL, 3, "Control Remoto")/*.setIcon(R.drawable.ic_menu_start)*/;
-        myMenu.add(0, MENU_PAIRING, 4, "Parear")/*.setIcon(R.drawable.ic_menu_start)*/;
-        myMenu.add(0, ACHIEVEMENTS, 5, "Logros")/*.setIcon(R.drawable.ic_menu_start)*/;
+        myMenu.add(0, MENU_PAIRING, 4, "Parear")/*.setIcon(R.drawable.ic_menu_start);
         updateButtonsAndMenu();
         return true;
-    }
+    }*/
     
     /**
      * Enables/disables the menu items
      */
-    @Override
+  /*  @Override
     public boolean onPrepareOptionsMenu(com.actionbarsherlock.view.Menu menu) {
         boolean displayMenu;
         displayMenu = super.onPrepareOptionsMenu(menu);
@@ -558,46 +562,12 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     /**
      * Handles item selections
      */
-    @Override
+  /*  @Override
     public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
         switch (item.getItemId()) {
-            case MENU_TOGGLE_CONNECT:
-
-                if (btservice.getCommunicator() == null || !btservice.isConnected()) {
-                	Database_Helper db = new Database_Helper(thisActivity);
-					List<Pet> mascotas = db.getPets(); //lista de mascotas
-					db.close();
-					Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
-					btservice.connect(petto.get_mac());
-                } else if(btservice.isConnected()){
-                    btservice.destroyBTCommunicator();
-                }
-
-                return true;
-                
-            case MENU_REMOTE_CONTROL:
-                	if (btservice.isConnected()){
-                		detachAll();
-    	        		launch_remotecontrol();
-    	        	}else{
-    	        		Toast.makeText(this, "Debe estar conectado para usar esta función", Toast.LENGTH_SHORT).show();
-    	        	}
-                return true;
-                
-            case ACHIEVEMENTS:
-            	detachAll();
-            	launch_achievementlist(); 
-               
-        		return true;
-        		
             case MENU_PAIRING:
                 btservice.pairing();
                 ///guardar nueva mac en BD
-                return true;
-            
-            case MENU_MAIN:
-            	detachAll();
-            	launch_mainpet();
                 return true;
         }
 
@@ -607,7 +577,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     /**
      * Updates the menus and possible buttons when connection status changed.
      */
-    void updateButtonsAndMenu() {
+  /*  void updateButtonsAndMenu() {
     	
         if (myMenu == null)
             return;
@@ -615,36 +585,36 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
         myMenu.removeItem(MENU_TOGGLE_CONNECT);
 
         if (btservice.isConnected()) {
-            myMenu.add(0, MENU_TOGGLE_CONNECT, 1, getResources().getString(R.string.disconnect))/*.setIcon(R.drawable.ic_menu_connected)*/;
+            myMenu.add(0, MENU_TOGGLE_CONNECT, 1, getResources().getString(R.string.disconnect))/*.setIcon(R.drawable.ic_menu_connected);
 
         } else {
-            myMenu.add(0, MENU_TOGGLE_CONNECT, 1, getResources().getString(R.string.connect))/*.setIcon(R.drawable.ic_menu_connect)*/;
+            myMenu.add(0, MENU_TOGGLE_CONNECT, 1, getResources().getString(R.string.connect))/*.setIcon(R.drawable.ic_menu_connect);
         }
         
         SherlockFragment fragment1 = ((RemoteControl)getSupportFragmentManager().findFragmentByTag("remotecontrol"));
 		myMenu.removeItem(MENU_REMOTE_CONTROL);
 		if(fragment1==null || (fragment1!=null && fragment1.isDetached())){//si no estoy en el control remoto
-			myMenu.add(0, MENU_REMOTE_CONTROL,3, "Control Remoto")/*.setIcon(R.drawable.ic_menu_connect)*/;
+			myMenu.add(0, MENU_REMOTE_CONTROL,3, "Control Remoto")/*.setIcon(R.drawable.ic_menu_connect);
         }
 		
 		fragment1 = ((Achievement_Activity)getSupportFragmentManager().findFragmentByTag("achievementlist"));
 		myMenu.removeItem(ACHIEVEMENTS);
 		if(fragment1==null || (fragment1!=null && fragment1.isDetached())){
-			myMenu.add(0, ACHIEVEMENTS, 5, "Logros")/*.setIcon(R.drawable.ic_menu_connect)*/;
+			myMenu.add(0, ACHIEVEMENTS, 5, "Logros")/*.setIcon(R.drawable.ic_menu_connect);
 	    }
 		fragment1 = ((MainPetActivity)getSupportFragmentManager().findFragmentByTag("mainpet"));
 		myMenu.removeItem(MENU_MAIN);
 		if(fragment1==null || (fragment1!=null && fragment1.isDetached())){
-			myMenu.add(0, MENU_MAIN, 2, "Mascota")/*.setIcon(R.drawable.ic_menu_connect)*/;
+			myMenu.add(0, MENU_MAIN, 2, "Mascota")/*.setIcon(R.drawable.ic_menu_connect);
 	    }
        
 		 myMenu.removeItem(MENU_PAIRING);
 
 	        if (!btservice.isConnected())
-	            myMenu.add(0, MENU_PAIRING, 4, "Parear")/*.setIcon(R.drawable.ic_menu_connected)*/;
+	            myMenu.add(0, MENU_PAIRING, 4, "Parear")/*.setIcon(R.drawable.ic_menu_connected);
 	        
 
-    }
+    }*/
     
     @Override
     public void onBackPressed(){
@@ -652,6 +622,8 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     	SherlockFragment fragment1 = ((MainPetActivity)getSupportFragmentManager().findFragmentByTag("mainpet")); //busca el fragmento
     	 if(fragment1==null || (fragment1!=null && fragment1.isDetached())){ //ve si esxiste, en caso de que exista verifica si esta pegado a algo 
     		 detachAll();
+    		 detach_achievementlist();
+    		 detach_statisticslist();
     		 launch_states();
     		 launch_mainpet();	
     	 }else{
