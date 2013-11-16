@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 
@@ -30,7 +31,7 @@ public class FragmentList extends SherlockListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		String[] frags = { "Logros", "Estadisticas", "Control Remoto" };
+		String[] frags = { "Mascota", "Conectar", "Control Remoto", "Logros", "Estadisticas", "About" };
 		ArrayAdapter<String> fragAdapter = new ArrayAdapter<String>(
 				getActivity(), android.R.layout.simple_list_item_1,
 				android.R.id.text1, frags);
@@ -42,14 +43,24 @@ public class FragmentList extends SherlockListFragment {
 		Fragment newContent = null;
 		switch (position) {
 		case 0:
-			newContent = new Achievement_Activity();
+			//mascota, mostrar mascota, o hacer atras y siembre volver a la mascota D: 
 			break;
 		case 1:
-			newContent = new Statistics_Activity();
+			//conectar (la idea seria habilitar y deshabilitar el boton D:
 			break;
 		case 2:
 			newContent = new RemoteControl();
 			break;
+		case 3:
+			newContent = new Achievement_Activity();
+			break;
+		case 4:
+			newContent = new Statistics_Activity();
+			break;
+		case 5:
+			//about?
+			break;
+		
 		}
 		if (newContent != null)
 			switchFragment(newContent);

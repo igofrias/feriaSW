@@ -140,14 +140,11 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		ft.replace(R.id.menu_frame, new FragmentList());
 		ft.commit();
 
-		SlidingMenu slimenu = new SlidingMenu(this);
-		slimenu.setMode(SlidingMenu.LEFT);
-
-		slimenu.setShadowWidthRes(R.dimen.shadow_width);
-		slimenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-		slimenu.setFadeDegree(0.60f);
-		slimenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-		slimenu.setTouchModeBehind(SlidingMenu.TOUCHMODE_NONE);
+		SlidingMenu sm = getSlidingMenu();
+		sm.setShadowWidthRes(R.dimen.shadow_width);
+		sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		sm.setFadeDegree(0.35f);
+		sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 ////////////////////////////////////////////////////////
 		reusableToast = Toast.makeText(thisActivity, "", Toast.LENGTH_SHORT);
 		thread = new ThreadClass(new Handler() {
@@ -170,6 +167,8 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     
     public void switchContent(Fragment fragment) {
   		// TODO Auto-generated method stub
+    	
+    	//modificar los pegados =)
   		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
   		ft.replace(R.id.linear0, fragment);
   		ft.commit();

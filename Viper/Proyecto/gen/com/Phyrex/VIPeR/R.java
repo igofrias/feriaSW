@@ -1138,7 +1138,7 @@ containing a value of this type.
         public static final int abs__title=0x7f040020;
         public static final int abs__titleDivider=0x7f040021;
         public static final int abs__up=0x7f04000b;
-        public static final int action_settings=0x7f040072;
+        public static final int action_settings=0x7f040073;
         public static final int archname=0x7f040039;
         public static final int avatar=0x7f04004a;
         public static final int bncnt=0x7f040043;
@@ -1147,7 +1147,7 @@ containing a value of this type.
         public static final int color=0x7f040042;
         public static final int control_remoto_debug=0x7f040055;
         public static final int crear=0x7f040044;
-        public static final int description=0x7f04006c;
+        public static final int description=0x7f04006d;
         public static final int disableHome=0x7f040009;
         public static final int eat1=0x7f040051;
         public static final int edit_query=0x7f04002c;
@@ -1161,16 +1161,16 @@ containing a value of this type.
         public static final int im=0x7f04004f;
         public static final int imageButton2=0x7f04005f;
         public static final int imageView1=0x7f04004d;
-        public static final int imgint=0x7f04006d;
-        public static final int layout=0x7f04006a;
-        public static final int layoutrowlista=0x7f04006e;
+        public static final int imgint=0x7f04006e;
+        public static final int layout=0x7f04006b;
+        public static final int layoutrowlista=0x7f04006f;
         public static final int left=0x7f040010;
         public static final int lienararchivements=0x7f040038;
         public static final int lifetime=0x7f04004b;
         public static final int linear=0x7f040047;
         public static final int linear0=0x7f040046;
         public static final int listMode=0x7f040002;
-        public static final int listnumber=0x7f040070;
+        public static final int listnumber=0x7f040071;
         public static final int logros=0x7f04003a;
         public static final int logrostext=0x7f04005e;
         public static final int lst_1=0x7f040068;
@@ -1191,7 +1191,7 @@ containing a value of this type.
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
-        public static final int slidingmenumain=0x7f040071;
+        public static final int slidingmenumain=0x7f040072;
         public static final int statbirthdatetext=0x7f040062;
         public static final int statname=0x7f040061;
         public static final int statrace=0x7f040065;
@@ -1203,10 +1203,11 @@ containing a value of this type.
         public static final int statsracetext=0x7f040064;
         public static final int status_text1=0x7f040045;
         public static final int tabMode=0x7f040003;
-        public static final int title=0x7f04006b;
+        public static final int textlist=0x7f04006a;
+        public static final int title=0x7f04006c;
         public static final int title_new_devices=0x7f04005a;
         public static final int title_paired_devices=0x7f040058;
-        public static final int titlelist=0x7f04006f;
+        public static final int titlelist=0x7f040070;
         public static final int tittletext=0x7f04003c;
         public static final int useLogo=0x7f040004;
         public static final int wrap_content=0x7f040000;
@@ -1256,6 +1257,7 @@ containing a value of this type.
         public static final int sherlock_spinner_dropdown_item=0x7f030026;
         public static final int sherlock_spinner_item=0x7f030027;
         public static final int slidingmenumain=0x7f030028;
+        public static final int textsviews=0x7f030029;
     }
     public static final class menu {
         public static final int base__adapter=0x7f0c0000;
