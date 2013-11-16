@@ -96,11 +96,13 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					if(thisActivity.isConnected())
 					{
 						send_speeds();
-
+						Log.e("RemoteControl", "thread corriendo");
 					}
 					else
 					{
 						running = false;
+						thisActivity.detach_remotecontrol();
+						thisActivity.launch_mainpet();
 					}
 					SystemClock.sleep(wait_time);
 
@@ -250,8 +252,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		else
 		{
 			//Sale del control remoto. TODO
-//			thisActivity.detachAll();
-//        	thisActivity.launch_mainpet();
+			//thisActivity.detach_remotecontrol();
+			//thisActivity.launch_mainpet();
 			return;
 		}
 		
@@ -312,11 +314,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			canvas.stopCanvas();
 			thMesseger = null;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//thisActivity.detach_remotecontrol();
-		//thisActivity.launch_mainpet();
 	}
         @Override
 	public void onDetach(){
@@ -331,7 +330,6 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			canvas.stopCanvas();
 			thMesseger = null;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -371,6 +369,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		Boolean running;
 		Bitmap centro;
 		Bitmap circulo;
+		Boolean playmode;
 		public DrawJoystick(Context context) {
 			
 			super(context);
@@ -382,10 +381,17 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			vel_x = 0.0;
 			vel_y = 0.0;
 			running = false;
+			playmode=false;
 			centro = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.remotecontrolbackground);
 			circulo = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.pointremotecontrol);
+			if(playmode){
+				//seleccion de pelotas
+				//cerrar pinzas 
+				//tiempo
+				//puntaje
+			}
 			// TODO Auto-generated constructor stub
 		}
 

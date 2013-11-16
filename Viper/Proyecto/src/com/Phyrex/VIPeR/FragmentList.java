@@ -1,5 +1,6 @@
 package com.Phyrex.VIPeR;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 
@@ -21,7 +23,8 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockListFragment;
 
 public class FragmentList extends SherlockListFragment {
-
+	ListView list;
+	Activity thisActivity;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -31,11 +34,14 @@ public class FragmentList extends SherlockListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		thisActivity = getActivity();
+		list= (ListView) thisActivity.findViewById(R.layout.list);
 		String[] frags = { "Mascota", "Conectar", "Control Remoto", "Logros", "Estadisticas", "About" };
 		ArrayAdapter<String> fragAdapter = new ArrayAdapter<String>(
 				getActivity(), android.R.layout.simple_list_item_1,
 				android.R.id.text1, frags);
 		setListAdapter(fragAdapter);
+		//list.getChildAt(0).setEnabled(false);
 	}
 
 	@Override
