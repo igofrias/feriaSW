@@ -530,7 +530,7 @@ int string current_position 0x7f090020
 int string dia 0x7f090048
 int string dias 0x7f090049
 int string disconnect 0x7f09003f
-int string hello_world 0x7f09004a
+int string exit2 0x7f09004b
 int string hora 0x7f090044
 int string horas 0x7f090045
 int string minuto 0x7f090046
@@ -548,7 +548,7 @@ int string scanning 0x7f090025
 int string select_device 0x7f090026
 int string sensor_initialization_failure 0x7f090039
 int string start 0x7f090040
-int string title_activity_ballgame 0x7f09004b
+int string title_activity_ballgame 0x7f09004a
 int string title_activity_base__adapter 0x7f090014
 int string title_activity_btcommunicator 0x7f090016
 int string title_activity_btconnectable 0x7f090017

@@ -42,6 +42,7 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 public class MainActivity extends SlidingFragmentActivity implements BTConnectable{
 	//Toast para mensajes
 	private Toast reusableToast;
+	private boolean doubleBackToExitPressedOnce = false;
 	///////////////////Variables Conexión Bluetooth////////////////////////////////////////
 	private boolean pairing;
 	private static boolean btOnByUs = false;
@@ -644,7 +645,32 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 	        
 
     }
+    
+    @Override
+    public void onBackPressed(){
+    	
+    	SherlockFragment fragment1 = ((MainPetActivity)getSupportFragmentManager().findFragmentByTag("mainpet")); //busca el fragmento
+    	 if(fragment1==null || (fragment1!=null && fragment1.isDetached())){ //ve si esxiste, en caso de que exista verifica si esta pegado a algo 
+    		 detachAll();
+    		 launch_states();
+    		 launch_mainpet();	
+    	 }else{
+    		 Log.d("MainPetActivity","en fragmento mainPetActivity");
 
+    		    if (doubleBackToExitPressedOnce) {
+    		        super.onBackPressed();
+    		        return;
+    		    }
+    		    this.doubleBackToExitPressedOnce = true;
+    		    Toast.makeText(this, R.string.exit2, Toast.LENGTH_SHORT).show();
+
+    		 Log.d("MainPetActivity","en fragmento mainPetActivity");
+    		 
+    	 }
+    	 
+    }
+    
+    
 	@Override
 	public boolean isPairing() {
 		// TODO Auto-generated method stub

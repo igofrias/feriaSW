@@ -1352,7 +1352,7 @@ containing a value of this type.
         public static final int dia=0x7f090048;
         public static final int dias=0x7f090049;
         public static final int disconnect=0x7f09003f;
-        public static final int hello_world=0x7f09004a;
+        public static final int exit2=0x7f09004b;
         public static final int hora=0x7f090044;
         public static final int horas=0x7f090045;
         public static final int minuto=0x7f090046;
@@ -1374,7 +1374,7 @@ containing a value of this type.
          */
         public static final int sensor_initialization_failure=0x7f090039;
         public static final int start=0x7f090040;
-        public static final int title_activity_ballgame=0x7f09004b;
+        public static final int title_activity_ballgame=0x7f09004a;
         public static final int title_activity_base__adapter=0x7f090014;
         public static final int title_activity_btcommunicator=0x7f090016;
         public static final int title_activity_btconnectable=0x7f090017;
