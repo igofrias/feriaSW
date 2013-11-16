@@ -114,20 +114,11 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		 requestWindowFeature(Window.FEATURE_NO_TITLE);
 	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
 	                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 		thisActivity = this;
-		//setContentView(R.layout.activity_main);
-		//bncnt.setOnClickListener(listener);
-		//////////////sliding
 		setContentView(R.layout.activity_main);
-
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-
-		ft.replace(R.id.frame2, new MainPetActivity());
-		ft.commit();
-
 		setBehindContentView(R.layout.menu_frame);
-
+		//////////////sliding
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		ft = getSupportFragmentManager().beginTransaction();
 
 		ft.replace(R.id.menu_frame, new FragmentList());
@@ -138,7 +129,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		sm.setFadeDegree(0.35f);
 		sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-////////////////////////////////////////////////////////
+		//////////////////////////////////////
 		reusableToast = Toast.makeText(thisActivity, "", Toast.LENGTH_SHORT);
 		thread = new ThreadClass(new Handler() {
 			@Override
@@ -163,7 +154,8 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     	
     	if(menuitem==1){
     		if (btservice.isConnected()){
-        		detachAll();
+    			detach_achievementlist();
+       		 	detach_statisticslist();
         		launch_remotecontrol();
         		getSlidingMenu().showContent();
         	}else{
