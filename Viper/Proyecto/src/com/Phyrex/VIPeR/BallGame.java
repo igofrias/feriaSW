@@ -5,6 +5,7 @@ import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
+import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
@@ -21,6 +22,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.IBinder;
 import android.widget.Toast;
 
@@ -32,6 +35,9 @@ public class BallGame extends SimpleBaseGameActivity{
 	
 	
 	VertexBufferObjectManager vbo;
+	
+	Player player;
+	Ball ball;
 	BTService btservice;
 	Activity thisActivity = this;
 	protected boolean mBound;
@@ -76,7 +82,7 @@ public class BallGame extends SimpleBaseGameActivity{
     };
     @Override
     protected void onDestroy() {
-        btservice.destroyBTCommunicator();
+        //btservice.destroyBTCommunicator();
         if (mBound) {
             unbindService(btconnection);
             mBound = false;
@@ -86,12 +92,12 @@ public class BallGame extends SimpleBaseGameActivity{
     }
     @Override
 	public void onStop() {
-		if (mBound) {
-			unbindService(btconnection);
-			mBound = false;
-		}
+//		if (mBound) {
+//			unbindService(btconnection);
+//			mBound = false;
+//		}
 		super.onStop(); 
-		finish(); //Queremos que el juego finalize cuando se retroceda.
+//		finish(); //Queremos que el juego finalize cuando se retroceda.
 	}
     @Override
     public void onPause()
@@ -122,7 +128,8 @@ public class BallGame extends SimpleBaseGameActivity{
 	        {
 	            if (touchEvent.isActionUp())
 	            {
-	                // move player left
+	            	Player player = BallGame.this.player;
+	                player.sprite.setPosition(player.sprite.getX()-20, player.sprite.getY());
 	            }
 	            return true;
 	        };
@@ -134,7 +141,8 @@ public class BallGame extends SimpleBaseGameActivity{
 	        {
 	            if (touchEvent.isActionUp())
 	            {
-	                // move player left
+	            	Player player = BallGame.this.player;
+	                player.sprite.setPosition(player.sprite.getX()+20, player.sprite.getY());
 	            }
 	            return true;
 	        };
@@ -159,6 +167,8 @@ public class BallGame extends SimpleBaseGameActivity{
 	    	 {
 	    		 btservice.startProgram("Eat.rxe");
 	    	 }
+	     player = new Player(BallGame.CAMERA_WIDTH/2,BallGame.CAMERA_HEIGHT/2);
+	     scene.attachChild(player.sprite);
 	     return scene;
 	}
 	@Override
@@ -212,5 +222,38 @@ public class BallGame extends SimpleBaseGameActivity{
         reusableToast.setText(resID);
         reusableToast.setDuration(length);
         reusableToast.show();
+    }
+    
+    private class Ball 
+    {
+    	Rectangle sprite;
+    	
+    	int size_x = 10;
+    	int size_y = 10;
+    	public Ball(int x, int y)
+    	{
+    		sprite = new Rectangle(x-size_x,y-size_y,size_x,size_y,BallGame.this.vbo);
+    		
+    	}
+    	
+    	
+    }
+    private class Player
+    {
+    	Rectangle sprite;
+    	
+    	int size_x = 10;
+    	int size_y = 10;
+    	public Player(int x, int y)
+    	{
+    		sprite = new Rectangle(x-size_x,y-size_y,size_x,size_y,BallGame.this.vbo);
+    		
+    		
+    	}
+    }
+    private class Ground 
+    {
+    	Rectangle ground = new Rectangle(0,0,BallGame.CAMERA_WIDTH,10,BallGame.this.vbo);
+    	
     }
 }
