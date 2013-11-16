@@ -73,14 +73,6 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     private com.actionbarsherlock.view.Menu myMenu;
     //////////////////////////////////
     
-    /////*********Valores de motores*********//////
-   /* private int motorActiona;
-    private int motorActionb;
-    private int motorActionc;
-    private int directionAction;
-  */
-    ///////////////////////////////////
-    
     @Override
     protected void onStart() {
     	bindService(new Intent(thisActivity,BTService.class),btconnection,Context.BIND_AUTO_CREATE);
@@ -165,14 +157,29 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		
 	}
     
-    public void switchContent(Fragment fragment) {
+    public void switchContent(Fragment fragment, int menuitem) {
   		// TODO Auto-generated method stub
     	
-    	//modificar los pegados =)
-  		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-  		ft.replace(R.id.linear0, fragment);
-  		ft.commit();
+    	if(menuitem==1){
+    		launch_remotecontrol();
+    	}else if(menuitem!=0){
+    		//modificar los pegados =)
+	  		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+	  		ft.replace(R.id.linear0, fragment);
+	  		ft.commit();
+    	}
   		getSlidingMenu().showContent();
+  		if (menuitem==0){
+			if (btservice.getCommunicator() == null || !btservice.isConnected()) {
+				Database_Helper db = new Database_Helper(thisActivity);
+		    	List<Pet> mascotas = db.getPets(); //lista de mascotas
+		    	db.close();
+		    	Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
+				btservice.connect(petto.get_mac());
+		    } else if(btservice.isConnected()){
+		    	btservice.destroyBTCommunicator();
+		    }
+    	}
 
   	}
     

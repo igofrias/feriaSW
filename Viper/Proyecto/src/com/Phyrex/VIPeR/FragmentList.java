@@ -23,8 +23,7 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockListFragment;
 
 public class FragmentList extends SherlockListFragment {
-	ListView list;
-	Activity thisActivity;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -34,53 +33,47 @@ public class FragmentList extends SherlockListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		thisActivity = getActivity();
-		list= (ListView) thisActivity.findViewById(R.layout.list);
-		String[] frags = { "Mascota", "Conectar", "Control Remoto", "Logros", "Estadisticas", "About" };
+		String[] frags = {"Conectar", "Control Remoto", "Logros", "Estadisticas", "About" };
 		ArrayAdapter<String> fragAdapter = new ArrayAdapter<String>(
 				getActivity(), android.R.layout.simple_list_item_1,
 				android.R.id.text1, frags);
 		setListAdapter(fragAdapter);
-		//list.getChildAt(0).setEnabled(false);
 	}
 
 	@Override
 	public void onListItemClick(ListView lv, View v, int position, long id) {
 		Fragment newContent = null;
+		int menuitem = -1;
 		switch (position) {
 		case 0:
-			//mascota, mostrar mascota, o hacer atras y siembre volver a la mascota D: 
+			menuitem=0;
 			break;
 		case 1:
-			//conectar (la idea seria habilitar y deshabilitar el boton D:
+			menuitem=1;
 			break;
 		case 2:
-			newContent = new RemoteControl();
-			break;
-		case 3:
 			newContent = new Achievement_Activity();
 			break;
-		case 4:
+		case 3:
 			newContent = new Statistics_Activity();
 			break;
-		case 5:
+		case 4:
 			//about?
 			break;
 		
 		}
-		if (newContent != null)
-			switchFragment(newContent);
+		switchFragment(newContent, menuitem);
 
 	}
 
 	// the meat of switching the above fragment
-	private void switchFragment(Fragment fragment) {
+	private void switchFragment(Fragment fragment, int menuitem) {
 		if (getActivity() == null)
 			return;
 
 		if (getActivity() instanceof MainActivity) {
 			MainActivity fca = (MainActivity) getActivity();
-			fca.switchContent(fragment);
+			fca.switchContent(fragment, menuitem);
 		}
 	}
 

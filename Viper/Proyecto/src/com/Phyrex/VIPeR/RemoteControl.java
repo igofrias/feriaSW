@@ -386,12 +386,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					R.drawable.remotecontrolbackground);
 			circulo = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.pointremotecontrol);
-			if(playmode){
-				//seleccion de pelotas
-				//cerrar pinzas 
-				//tiempo
-				//puntaje
-			}
+			
 			// TODO Auto-generated constructor stub
 		}
 
@@ -431,7 +426,13 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					center_y - centro.getHeight()/2, color);
 			canvas.drawBitmap(circulo, x-circulo.getWidth()/2,
 					y-circulo.getHeight()/2, color);
-			
+			if(playmode){
+				//seleccion de pelotas
+				//cerrar pinzas 
+				//tiempo
+				//puntaje
+				//TODO
+			}
 			
 		}
 		public void update_coordinates(Double x, Double y)
@@ -443,7 +444,6 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
 			
 			while(running){
 				if(hold.getSurface().isValid() && thisActivity.isConnected())
@@ -484,7 +484,6 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					retry = false;
 					drawthread = null;
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
