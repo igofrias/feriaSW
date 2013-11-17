@@ -84,5 +84,6 @@
     <string name="dias">Días</string>
     <string name="title_activity_ballgame">BallGame</string>
      <string name="exit2">Presiones atrás nuevamente para salir</string>
+     <string name="menu_about">About</string>
 
 </resources>
