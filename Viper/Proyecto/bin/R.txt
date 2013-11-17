@@ -472,7 +472,6 @@ int layout rowlist 0x7f030025
 int layout sherlock_spinner_dropdown_item 0x7f030026
 int layout sherlock_spinner_item 0x7f030027
 int layout slidingmenumain 0x7f030028
-int layout textsviews 0x7f030029
 int menu base__adapter 0x7f0c0000
 int menu bt 0x7f0c0001
 int menu btcommunicator 0x7f0c0002

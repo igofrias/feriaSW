@@ -389,7 +389,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 
 		/////manejo de tiempo //////
 		    int count=0;
-		    int totalTime= 1000;
+		    int totalTime= 5000;
 			int timeLeft= totalTime;
 			float lefttimeprogress;
 			
@@ -480,16 +480,72 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 				if(inplay){
 					timecalc(height);
 				}
-				 canvas.drawRect(width*13/14, 0, width , lefttimeprogress, color);
-
-
+				canvas.drawRect(width*13/14, 0, width , lefttimeprogress, color);
+				insertTextObjetive(width, height);
+				insertTextScore(width, height);
+				insertTextScorevalue(width, height);
 				//TODO
 			}
 			
 		}
 		
+		public void insertTextObjetive(float width, float height){
+			String text = "Objetivo:";
+			int textColor = Color.GREEN;
+			float textSize = 15;
+			can.save();
+			 can.rotate(90, width*4/16, height/25);
+			 Paint textPaint = new Paint();
+			 textPaint.setAntiAlias(true);
+			 textPaint.setColor(textColor);
+			 textPaint.setTextSize(textSize);
+			 Rect bounds = new Rect();
+			 textPaint.getTextBounds(text, 0, text.length(), bounds);
+			 can.drawText(text, width*4/16, height/25, textPaint);
+			 can.restore();
+			
+		}
+		
+		public void insertTextScore(float width, float height){
+			String text = "Puntaje:";
+			int textColor = Color.GREEN;
+			float textSize = 15;
+			 can.save();
+			 can.rotate(90, width*13/16, height/25);
+			 Paint textPaint = new Paint();
+			 textPaint.setAntiAlias(true);
+			 textPaint.setColor(textColor);
+			 textPaint.setTextSize(textSize);
+			 Rect bounds = new Rect();
+			 textPaint.getTextBounds(text, 0, text.length(), bounds);
+			 can.drawText(text, width*13/16, height/25, textPaint);
+			 can.restore();
+			
+		}
+		
+		public void insertTextScorevalue(float width, float height){
+			String text = "00000";
+			int textColor = Color.GREEN;
+			float textSize = 20;
+			can.save();
+			 can.rotate(90, width*11/16, height/25);
+			 Paint textPaint = new Paint();
+			 textPaint.setAntiAlias(true);
+			 textPaint.setColor(textColor);
+			 textPaint.setTextSize(textSize);
+			 Rect bounds = new Rect();
+			 textPaint.getTextBounds(text, 0, text.length(), bounds);
+			 can.drawText(text, width*11/16, height/25, textPaint);
+			 can.restore();
+			
+		}
+		
 		public void timecalc(float height){
             lefttimeprogress = (height*timeLeft)/totalTime;
+		}
+		
+		public void score(){//manejo de puntaje
+			
 		}
 		
 		public void playmodedialog(){

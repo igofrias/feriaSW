@@ -1258,7 +1258,6 @@ containing a value of this type.
         public static final int sherlock_spinner_dropdown_item=0x7f030026;
         public static final int sherlock_spinner_item=0x7f030027;
         public static final int slidingmenumain=0x7f030028;
-        public static final int textsviews=0x7f030029;
     }
     public static final class menu {
         public static final int base__adapter=0x7f0c0000;
