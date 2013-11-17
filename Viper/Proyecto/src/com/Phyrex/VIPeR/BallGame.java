@@ -2,6 +2,9 @@ package com.Phyrex.VIPeR;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
+import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
@@ -167,10 +170,14 @@ public class BallGame extends SimpleBaseGameActivity{
 	    	 {
 	    		 btservice.startProgram("Eat.rxe");
 	    	 }
-	     player = new Player(BallGame.CAMERA_WIDTH/2,BallGame.CAMERA_HEIGHT/2);
+	     player = new Player(BallGame.CAMERA_WIDTH/2,player.size_x);
+	     ball = new Ball(BallGame.CAMERA_WIDTH/2,BallGame.CAMERA_HEIGHT, 10);
 	     scene.attachChild(player.sprite);
+	     scene.attachChild(ball.sprite);
+	     ball.createFallUpdater();
 	     return scene;
 	}
+	
 	@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -224,16 +231,50 @@ public class BallGame extends SimpleBaseGameActivity{
         reusableToast.show();
     }
     
-    private class Ball 
+    private class Ball
     {
     	Rectangle sprite;
     	
-    	int size_x = 10;
-    	int size_y = 10;
-    	public Ball(int x, int y)
+    	int size_x = 40;
+    	int size_y = 40;
+    	TimerHandler spriteTimerHandler;
+    	float speed;
+    	float x;
+    	float y;
+    	public Ball(int x, int y, float speed)
     	{
+    		this.x = x;
+    		this.y = y;
     		sprite = new Rectangle(x-size_x,y-size_y,size_x,size_y,BallGame.this.vbo);
-    		
+    		this.speed = speed;
+    	}
+		
+    	public void createFallUpdater()
+    	{
+    		float updateTime = 0.1f;
+			spriteTimerHandler = new TimerHandler(updateTime, new ITimerCallback()
+	        {                      
+	            @Override
+	            public void onTimePassed(final TimerHandler pTimerHandler)
+	            {
+	            	if(spriteTimerHandler != null)
+	            	{
+	            		spriteTimerHandler.reset();
+	            		if(Ball.this.y >= 0)
+	            		{
+	            			Ball.this.y = Ball.this.y - speed;
+	            		}
+	            		else
+	            		{
+	            			Ball.this.y = BallGame.CAMERA_HEIGHT;
+	            		}
+	            		sprite.setPosition(x, y);
+	            	}
+	               
+	            }
+	        });
+			
+	        BallGame.this.getEngine().registerUpdateHandler(spriteTimerHandler );
     	}
     	
     	
@@ -242,8 +283,8 @@ public class BallGame extends SimpleBaseGameActivity{
     {
     	Rectangle sprite;
     	
-    	int size_x = 10;
-    	int size_y = 10;
+    	static final int size_x = 60;
+    	static final int size_y = 60;
     	public Player(int x, int y)
     	{
     		sprite = new Rectangle(x-size_x,y-size_y,size_x,size_y,BallGame.this.vbo);
