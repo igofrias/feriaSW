@@ -1,6 +1,8 @@
 package com.Phyrex.VIPeR;
 
 
+import java.util.Timer;
+
 import com.actionbarsherlock.app.SherlockFragment;
 
 import android.annotation.TargetApi;
@@ -15,6 +17,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -29,6 +32,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Toast;
 //Maneja el control remoto usando acelerometro
@@ -381,6 +385,14 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		Bitmap buttonclose;
 		Bitmap buttonopen;
 		int pincersstate;
+		boolean inplay;
+
+		/////manejo de tiempo //////
+		    int count=0;
+		    int totalTime= 1000;
+			int timeLeft= totalTime;
+			float lefttimeprogress;
+			
 		public DrawJoystick(Context context) {
 			
 			super(context);
@@ -406,7 +418,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					R.drawable.closepincers);
 			buttonopen = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.openpincers);
+			nextball();
 			pincersstate=0;
+			inplay=false;
+			
 			// TODO Auto-generated constructor stub
 		}
 
@@ -437,13 +452,13 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		{
 			
 			float center_x = canvas.getWidth()/2;
+			float width = canvas.getWidth();
 			float center_y = canvas.getHeight()/2;
+			float height = canvas.getHeight();
 			int size = 30;
 			float x = bar_percentage(canvas.getWidth() - size, center_x, -MAX_VEL, vel_x);
 			float y = bar_percentage(canvas.getHeight() - size, center_y,MAX_VEL, vel_y);
 			canvas.drawARGB(255, 0, 0, 0);
-			//canvas.drawCircle(canvas.getWidth()/2,canvas.getHeight()/2,100, color_center);
-			//canvas.drawCircle(x, y , size, color);
 			canvas.drawBitmap(centro, center_x-centro.getWidth()/2, 
 					center_y - centro.getHeight()/2, color);
 			canvas.drawBitmap(circulo, x-circulo.getWidth()/2,
@@ -460,9 +475,21 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					canvas.drawBitmap(buttonopen, center_x*4/16-buttonopen.getWidth()/2,
 							center_y*2*13/16-buttonopen.getHeight()/2, color);
 				}
+				canvas.drawBitmap(ballnext, center_x*2*2/16-ballnext.getWidth()/2,
+						center_y*2*2/16-ballnext.getHeight()/2, color);
+				if(inplay){
+					timecalc(height);
+				}
+				 canvas.drawRect(width*13/14, 0, width , lefttimeprogress, color);
+
+
 				//TODO
 			}
 			
+		}
+		
+		public void timecalc(float height){
+            lefttimeprogress = (height*timeLeft)/totalTime;
 		}
 		
 		public void playmodedialog(){
@@ -483,9 +510,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	    			thisActivity.launch_mainpet();
 			    }
 	        }); 
-	        dialog.setPositiveButton("Comenzar", new DialogInterface.OnClickListener() {  //boton positivo (opcional)
+	        dialog.setPositiveButton("Jugar", new DialogInterface.OnClickListener() {  //boton positivo (opcional)
 	            public void onClick(DialogInterface dialogo1, int id) {  
-	            	//start game
+	            	//aceptar
+	            	inplay=true;
 			    }
 	        });
 	        dialog.show();
@@ -503,9 +531,9 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		public void nextball(){//excoje una pelota al azar
 			int rand = (int) (Math.random() * 2);
 			if(rand==0){
-				Bitmap ballnext = ballr;
+				ballnext = ballr;
 			}else{
-				Bitmap ballnext = ballb;
+				ballnext = ballb;
 			}
 		}
 		
@@ -522,6 +550,17 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			while(running){
 				if(hold.getSurface().isValid() && thisActivity.isConnected())
 				{
+					///////////Manejo de tiempo/////
+					if (inplay){
+						timeLeft = totalTime-count;  
+						count++;
+		                if(timeLeft == 0){
+		                	inplay=false;
+		                }
+					}
+		            ////////////////////////////////
+					
+					
 					can = hold.lockCanvas();
 				
 					
