@@ -60,10 +60,15 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	double sens;
 	Runnable messegerRunnable;
 	Thread thMesseger;
-	
+	//PLAYMODE
+	boolean playmode;
 	DrawJoystick canvas;
 	Activity parent_activity;
 	MainActivity thisActivity;
+	
+	public void setPlaymode(boolean value){
+		playmode=value;
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +80,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	{
 		super.onAttach(activity);
 		parent_activity = activity;
+		
 	}
 	@Override
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -363,6 +369,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	{
 		this.thMesseger.start();
 	}
+	
 	private class DrawJoystick extends SurfaceView implements SurfaceHolder.Callback, Runnable
 	{
 		//Clase que maneja el dibujo del joystick. Tiene un thread que llama a que
@@ -377,7 +384,6 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		Boolean running;
 		Bitmap centro;
 		Bitmap circulo;
-		Boolean playmode;
 		
 		///////////Play Mode ///////////
 		Bitmap ballb;
@@ -392,10 +398,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		int ballcolor;
 
 		/////manejo de tiempo //////
-		    int count=0;
-		    int totalTime= 5000;
-			int timeLeft= totalTime;
-			float lefttimeprogress;
+		int count=0;
+		int totalTime= 5000;
+		int timeLeft= totalTime;
+		float lefttimeprogress;
 			
 		public DrawJoystick(Context context) {
 			
@@ -408,7 +414,6 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			vel_x = 0.0;
 			vel_y = 0.0;
 			running = false;
-			playmode=true;
 			centro = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.remotecontrolbackground);
 			circulo = BitmapFactory.decodeResource(getResources(), 
@@ -632,6 +637,12 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			}
 		}
 		
+		public void exitgame(){
+			running=false;
+        	thisActivity.detach_remotecontrol();
+			thisActivity.launch_mainpet();
+		}
+		
 		public void playmodedialog(){
 			AlertDialog.Builder dialog = new AlertDialog.Builder(thisActivity);  
 	        dialog.setTitle("Tento pelota (?)");		//titulo (opcional)
@@ -645,9 +656,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	        
 	        dialog.setNegativeButton("Salir", new DialogInterface.OnClickListener() {  //boton positivo (opcional)
 	            public void onClick(DialogInterface dialogo1, int id) {  
-	            	running=false;
-	            	thisActivity.detach_remotecontrol();
-	    			thisActivity.launch_mainpet();
+	            	exitgame();
 			    }
 	        }); 
 	        dialog.setPositiveButton("Jugar", new DialogInterface.OnClickListener() {  //boton positivo (opcional)
@@ -693,10 +702,18 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			float width = canvas.getWidth();
 			float height= canvas.getHeight();
 			
-			if(touchX>width*5/32-buttonclose.getWidth()/2 && touchX<width*5/32+buttonclose.getWidth()/2 && touchY>height*13/16-buttonclose.getHeight()/2 && touchY<height*13/16+buttonclose.getHeight()/2){
+			if(inplay){
+				if(touchX>width*5/32-buttonclose.getWidth()/2 && touchX<width*5/32+buttonclose.getWidth()/2 && touchY>height*13/16-buttonclose.getHeight()/2 && touchY<height*13/16+buttonclose.getHeight()/2){
+					switch (e.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						movepincers();
+				      break;
+				    }
+				}
+			}else{
 				switch (e.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					movepincers();
+					exitgame();
 			      break;
 			    }
 			}

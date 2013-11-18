@@ -73,7 +73,6 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     public static final int ACHIEVEMENTS = com.actionbarsherlock.view.Menu.FIRST + 4;
     private com.actionbarsherlock.view.Menu myMenu;
     //////////////////////////////////
-    
     @Override
     protected void onStart() {
     	bindService(new Intent(thisActivity,BTService.class),btconnection,Context.BIND_AUTO_CREATE);
@@ -120,7 +119,6 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		//////////////sliding
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		ft = getSupportFragmentManager().beginTransaction();
-
 		ft.replace(R.id.menu_frame, new FragmentList());
 		ft.commit();
 
@@ -157,6 +155,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     			detachAll();
     			detach_achievementlist();
        		 	detach_statisticslist();
+       		 	launch_states();
         		launch_remotecontrol();
         		getSlidingMenu().showContent();
         	}else{
@@ -244,15 +243,17 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     
     //llama al supa framento
     void launch_remotecontrol() {//identificamos y cargamos el fragmento control remoto
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		SherlockFragment fragment = ((RemoteControl)getSupportFragmentManager().findFragmentByTag("remotecontrol"));
 		
 		if(fragment==null){
 			fragment = new RemoteControl();
+			((RemoteControl) fragment).setPlaymode(false);
 			ft.replace(R.id.frame2, fragment,"remotecontrol");
 		}
 		else{
 			if(fragment.isDetached()){
+				((RemoteControl) fragment).setPlaymode(false);
 				ft.attach(fragment);
 			}
 		}
@@ -260,9 +261,11 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		changeLayoutVisibility();
 	}
     
+    
+    
     //mata el supa framento
     void detach_remotecontrol() {//identificamos y quitamos el fragmento control remoto 
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		SherlockFragment fragment = ((RemoteControl)getSupportFragmentManager().findFragmentByTag("remotecontrol"));
 
 		if(fragment!=null){
@@ -272,6 +275,31 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		}
 		ft.commit();
 	}
+    
+  //llama al supa framento
+    void launch_remotecontrolgame() {//identificamos y cargamos el fragmento control remoto
+    	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		SherlockFragment fragment = ((RemoteControl)getSupportFragmentManager().findFragmentByTag("remotecontrol"));
+		
+		if(fragment==null){
+			fragment = new RemoteControl();
+			((RemoteControl) fragment).setPlaymode(true);
+			ft.replace(R.id.linear, fragment,"remotecontrol");
+		}
+		else{
+			((RemoteControl) fragment).setPlaymode(true);
+			if(fragment.isDetached()){
+				ft.attach(fragment);
+			}
+		}
+		frame1 = (FrameLayout)this.findViewById(R.id.frame1);
+		frame2 = (FrameLayout)this.findViewById(R.id.frame2);
+		frame1.setVisibility(View.GONE);
+		frame2.setVisibility(View.GONE);
+		detachAll();
+		ft.commit();
+	}
+    
     
   //llama al supa framento
     void launch_states() {//identificamos y cargamos el fragmento de barrita de estado
@@ -367,6 +395,8 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		frame1.setVisibility(View.VISIBLE);
 		frame2.setVisibility(View.VISIBLE);
 		detach_statisticslist();
+		detach_remotecontrol();
+		detach_achievementlist();
     }
     
     void detachAll(){
@@ -617,6 +647,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     		 detachAll();
     		 detach_achievementlist();
     		 detach_statisticslist();
+    		 detach_remotecontrol();
     		 launch_states();
     		 launch_mainpet();	
     	 }else{

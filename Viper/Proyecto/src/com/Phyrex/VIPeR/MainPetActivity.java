@@ -129,7 +129,6 @@ public class MainPetActivity extends SherlockFragment{
 			 			Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
 	 			    	if(((MainActivity)thisActivity).isConnected())
 			    				((MainActivity)thisActivity).startProgram("Shake.rxe");
-		 			    	startBallGame();
 		 			}else{
 		 				Toast.makeText(thisActivity, "no puedes molestar a la mascota mientras duerme", Toast.LENGTH_SHORT).show();
 		 			}
@@ -155,7 +154,7 @@ public class MainPetActivity extends SherlockFragment{
 		//Clase que maneja el dibujo del joystick. Tiene un thread que llama a que
 		//se dibje en el canvas
 		Paint color;
-		Paint color_center;
+		Paint colorgray;
 		SurfaceHolder hold;
 		Canvas can;
 		Thread drawthread;
@@ -208,6 +207,7 @@ public class MainPetActivity extends SherlockFragment{
 	    int framesCountAvg=0;
 	    long framesTimer=0;
 	    Paint fpsPaint=new Paint();	
+	    boolean gameselect = false;
 				
 		public DrawJoystick(Context context) {
 			
@@ -215,8 +215,8 @@ public class MainPetActivity extends SherlockFragment{
 			color = new Paint();
 			getHolder().addCallback(this);
 			color.setColor(Color.GREEN);
-			color_center = new Paint();
-			color_center.setColor(Color.GRAY);
+			colorgray = new Paint();
+			colorgray.setColor(Color.GRAY);
 			running = false;
 			tento = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.tentosaurio);
@@ -287,82 +287,101 @@ public class MainPetActivity extends SherlockFragment{
 			float touchY = (int)e.getY();
 			float width = canvas.getWidth();
 			float height= canvas.getHeight();
-			
-				switch (e.getAction()) {
-					case MotionEvent.ACTION_DOWN:
-						if(!sleeping && timeeat==0){
-							if(!soapFingerMove && touchX>0 && touchX<food.getWidth() && touchY>height*5/6 && touchY<height*5/6+food.getHeight()){
-								//update_coordinates(touchX, touchY);//comida
-								foodFingerMove = true;
-							}else if(!foodFingerMove && !soapFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()/7){
-								//update_coordinates(touchX, touchY);//tocar mascota
-								petFingerMove = true;
-								Actions(7);
-							}else if(!foodFingerMove && touchX>width/2-soap.getWidth() && touchX<width/2+soap.getWidth() && touchY>height*5/6 && touchY<height*5/6+soap.getHeight()){
-								//update_coordinates(touchX, touchY);//arrastrar soap
-								soapFingerMove = true;
+				if(!gameselect){
+					switch (e.getAction()) {
+						case MotionEvent.ACTION_DOWN:
+							if(!sleeping && timeeat==0){
+								if(!soapFingerMove && touchX>0 && touchX<food.getWidth() && touchY>height*5/6 && touchY<height*5/6+food.getHeight()){
+									//update_coordinates(touchX, touchY);//comida
+									foodFingerMove = true;
+								}else if(!foodFingerMove && !soapFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()/7){
+									//update_coordinates(touchX, touchY);//tocar mascota
+									petFingerMove = true;
+									Actions(7);
+								}else if(!foodFingerMove && touchX>width/2-soap.getWidth() && touchX<width/2+soap.getWidth() && touchY>height*5/6 && touchY<height*5/6+soap.getHeight()){
+									//update_coordinates(touchX, touchY);//arrastrar soap
+									soapFingerMove = true;
+								}
 							}
+					      break;
+					    case MotionEvent.ACTION_MOVE:
+				    		if(foodFingerMove){
+				    		update_coordinates(touchX, touchY);
+					    	}else if(soapFingerMove){
+					    		update_coordinates(touchX, touchY);
+					    	}
+					    	if(!soapFingerMove && !foodFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()*4/7){
+					    		petFingerMove = true;
+					    		if(dirtstate<9){
+					    			dirtstate++;
+					    		}
+					    		poop=true;
+					    	}else{
+					    		petFingerMove = false;
+					    	}
+					      break;
+					    case MotionEvent.ACTION_UP:
+					    	petFingerMove = false;
+					    	foodFingerMove = false;
+					    	soapFingerMove = false;
+					    	cleanning=false;
+					      break;
+					}
+				if(timeeat==0 && touchX>width/4 && touchX<width/4+clock.getWidth() && touchY>height*5/6 && touchY<height*5/6+clock.getHeight()){
+					switch (e.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						if(petstate==2){
+							petstate=0;
+							sleeping=false;
+							Actions(2);//accion dormir
+						}else{
+							petstate=2;
+							sleeping=true;
+							Actions(2);//accion dormir
 						}
 				      break;
-				    case MotionEvent.ACTION_MOVE:
-			    		if(foodFingerMove){
-			    		update_coordinates(touchX, touchY);
-				    	}else if(soapFingerMove){
-				    		update_coordinates(touchX, touchY);
-				    	}
-				    	if(!soapFingerMove && !foodFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()*4/7){
-				    		petFingerMove = true;
-				    		if(dirtstate<9){
-				    			dirtstate++;
-				    		}
-				    		poop=true;
-				    	}else{
-				    		petFingerMove = false;
-				    	}
-				      break;
-				    case MotionEvent.ACTION_UP:
-				    	petFingerMove = false;
-				    	foodFingerMove = false;
-				    	soapFingerMove = false;
-				    	cleanning=false;
-				      break;
+				    }
 				}
-			if(timeeat==0 && touchX>width/4 && touchX<width/4+clock.getWidth() && touchY>height*5/6 && touchY<height*5/6+clock.getHeight()){
-				switch (e.getAction()) {
-				case MotionEvent.ACTION_DOWN:
-					if(petstate==2){
-						petstate=0;
-						sleeping=false;
-						Actions(2);//accion dormir
-					}else{
-						petstate=2;
-						sleeping=true;
-						Actions(2);//accion dormir
-					}
-			      break;
-			    }
-			}
-			if(timeeat==0 && touchX>width*14/16-poo.getWidth()/2 && touchX<width*14/16+poo.getWidth()/2 && touchY>height*9/12- poo.getHeight()/2 && touchY<height*9/12+ poo.getHeight()/2){
-				switch (e.getAction()) {
-				case MotionEvent.ACTION_DOWN:
-					poop= false;
-					Actions(4);
-			      break;
-			    }
-			}
-			if(timeeat==0 && !sleeping && touchX>width*3/4 && touchX<width*3/4+play.getWidth() && touchY>height*5/6 && touchY<height*5/6+play.getHeight()){
-				switch (e.getAction()) {
-				case MotionEvent.ACTION_DOWN:
-					Actions(5);//accion de jugar
-			      break;
-			    }
+				if(timeeat==0 && touchX>width*14/16-poo.getWidth()/2 && touchX<width*14/16+poo.getWidth()/2 && touchY>height*9/12- poo.getHeight()/2 && touchY<height*9/12+ poo.getHeight()/2){
+					switch (e.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						poop= false;
+						Actions(4);
+				      break;
+				    }
+				}
+				if(timeeat==0 && !sleeping && touchX>width*3/4 && touchX<width*3/4+play.getWidth() && touchY>height*5/6 && touchY<height*5/6+play.getHeight()){
+					switch (e.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						gameselect=true;
+						Actions(5);//accion de jugar
+						
+				      break;
+				    }
+				}
+			}else{//botones de juego
+				if(touchX>width*2/16 && touchX<width*6/16 && touchY>height*2/20 && touchY<height*6/20){
+					switch (e.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						startBallGame();
+				      break;
+				    }
+				}else if(touchX>width*2/16 && touchX<width*6/16 && touchY>height*8/20 && touchY<height*13/20){
+					if(thisActivity.isConnected()){
+						switch (e.getAction()){
+						case MotionEvent.ACTION_DOWN:
+							thisActivity.launch_remotecontrolgame();
+					      break;
+					    }
+					}//decir q no se puede xq requiere conexion xD
+				}
 			}
 			  return true;
 		}
 
 		@Override
 		public void surfaceCreated(SurfaceHolder holder) {
-			// TODO Auto-generated method stub
+			// Auto-generated method stub
 			
 			hold = canvas.getHolder();
 			running = true;
@@ -400,49 +419,57 @@ public class MainPetActivity extends SherlockFragment{
 			float x = corx;
 			float y = cory;
 			canvas.drawARGB(255, 50, 50, 255);
-			if(bowlstate==0){
-				can.drawBitmap(bowl[0], width*1/16, height*5/8, color);
-			}else if(bowlstate==1){
-				can.drawBitmap(bowl[1], width*1/16, height*5/8, color);
-			}else if(bowlstate==2){
-				can.drawBitmap(bowl[2], width*1/16, height*5/8, color);
-			}else if(bowlstate==3){
-				can.drawBitmap(bowl[3], width*1/16, height*5/8, color);
-			}
-			if(petstate==0){//si la mascta en estado normal
-				Drawtail(center_x, center_y, width, height);
-				canvas.drawBitmap(tento, center_x-tento.getWidth()*1/3, 
-						center_y - tento.getHeight()*4/7, color);
-				Drawtouchingpet(center_x,center_y);
-				Drawdirt(center_x,center_y, canvas);
-			}else if(petstate==2){
-				Drawsleeping(center_x,center_y);
-			}else if(petstate==1){
-				Draweating(width, height, center_x, center_y);
-			}	
-			/*//Measure frame rate (unit: frames per second).
-	         now=System.currentTimeMillis();
-	         canvas.drawText(framesCountAvg+" fps", 40, 70, fpsPaint);
-	         framesCount++;
-	         if(now-framesTimer>1000) {
-	                 framesTimer=now;
-	                 framesCountAvg=framesCount;
-	                 framesCount=0;
-	         }*/
-			canvas.drawBitmap(clock, width/4, height*5/6, color);
-			canvas.drawBitmap(play, width*3/4, height*5/6, color);
-		
-			if(poop){
-				can.drawBitmap(poo, center_x*28/16-poo.getWidth()/2, 
-					center_y*9/6- poo.getHeight()/2, color);
-			}
-			//si se arrastra la comida
-			if(foodFingerMove){
-				Drawsoap(x,y,width,height);
-				Drawfood(x,y,width,height);
-			}else{
-				Drawfood(x,y,width,height);
-				Drawsoap(x,y,width,height);
+			if(!gameselect){
+				if(bowlstate==0){
+					can.drawBitmap(bowl[0], width*1/16, height*5/8, color);
+				}else if(bowlstate==1){
+					can.drawBitmap(bowl[1], width*1/16, height*5/8, color);
+				}else if(bowlstate==2){
+					can.drawBitmap(bowl[2], width*1/16, height*5/8, color);
+				}else if(bowlstate==3){
+					can.drawBitmap(bowl[3], width*1/16, height*5/8, color);
+				}
+				if(petstate==0){//si la mascta en estado normal
+					Drawtail(center_x, center_y, width, height);
+					canvas.drawBitmap(tento, center_x-tento.getWidth()*1/3, 
+							center_y - tento.getHeight()*4/7, color);
+					Drawtouchingpet(center_x,center_y);
+					Drawdirt(center_x,center_y, canvas);
+				}else if(petstate==2){
+					Drawsleeping(center_x,center_y);
+				}else if(petstate==1){
+					Draweating(width, height, center_x, center_y);
+				}	
+				/*//Measure frame rate (unit: frames per second).
+		         now=System.currentTimeMillis();
+		         canvas.drawText(framesCountAvg+" fps", 40, 70, fpsPaint);
+		         framesCount++;
+		         if(now-framesTimer>1000) {
+		                 framesTimer=now;
+		                 framesCountAvg=framesCount;
+		                 framesCount=0;
+		         }*/
+				canvas.drawBitmap(clock, width/4, height*5/6, color);
+				canvas.drawBitmap(play, width*3/4, height*5/6, color);
+			
+				if(poop){
+					can.drawBitmap(poo, center_x*28/16-poo.getWidth()/2, 
+						center_y*9/6- poo.getHeight()/2, color);
+				}
+				//si se arrastra la comida
+				if(foodFingerMove){
+					Drawsoap(x,y,width,height);
+					Drawfood(x,y,width,height);
+				}else{
+					Drawfood(x,y,width,height);
+					Drawsoap(x,y,width,height);
+				}
+			//game selection
+			}else{//rectangulo con seleccion de juegos
+				canvas.drawRect(width/16, height/20, width*15/16 , height*19/20, colorgray);
+				canvas.drawRect(width*2/16, height*2/20, width*6/16 , height*6/20, color);
+				canvas.drawRect(width*2/16, height*8/20, width*6/16 , height*13/20, color);
+				//dibujar links a juegos y nombres D:	
 			}
 	       
 	       
