@@ -155,6 +155,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     			detachAll();
     			detach_achievementlist();
        		 	detach_statisticslist();
+       		 	detach_remotecontrolgame();
        		 	launch_states();
         		launch_remotecontrol();
         		getSlidingMenu().showContent();
