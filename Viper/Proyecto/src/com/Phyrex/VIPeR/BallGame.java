@@ -1,5 +1,7 @@
 package com.Phyrex.VIPeR;
 
+import java.util.Random;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.handler.IUpdateHandler;
@@ -12,7 +14,13 @@ import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.texture.ITexture;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.color.Color;
@@ -35,14 +43,16 @@ public class BallGame extends SimpleBaseGameActivity{
 	private Camera camera;
 	private static final int CAMERA_WIDTH = 800;
 	private static final int CAMERA_HEIGHT = 480;
-	
+	private Font font;
 	
 	VertexBufferObjectManager vbo;
-	
+	private Text hudText;
 	Player player;
 	Ball ball;
 	BTService btservice;
 	Activity thisActivity = this;
+	int puntaje;
+	int vidas;
 	protected boolean mBound;
 	private Toast reusableToast;
 	private boolean pairing;
@@ -83,6 +93,7 @@ public class BallGame extends SimpleBaseGameActivity{
             mBound = false;
         }
     };
+	
     @Override
     protected void onDestroy() {
         //btservice.destroyBTCommunicator();
@@ -119,13 +130,20 @@ public class BallGame extends SimpleBaseGameActivity{
 	@Override
 	protected void onCreateResources() {
 		// TODO Auto-generated method stub
-		
+
+	    FontFactory.setAssetBasePath("font/");
+	    final ITexture fontTexture = new BitmapTextureAtlas(this.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+
+	    font = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 40.0f, true, Color.BLACK.getABGRPackedInt());
+	    font.load();
 	}
 	protected void registerButtons()
 	{
 		//Inicializa botones del juego
 		HUD  hud = new HUD();
-		final Rectangle left_arrow = new Rectangle(20, 100, 60, 60, vbo)
+		String hudStr = String.format("Puntaje:%d Vidas:%d",BallGame.this.puntaje, BallGame.this.vidas);
+		hudText = new Text(70, 40, font, hudStr,BallGame.this.vbo);
+		final Rectangle left_arrow = new Rectangle(20, 380, 60, 60, vbo)
 	    {
 	        public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
 	        {
@@ -138,7 +156,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	        };
 	    };
 	    left_arrow.setColor(new Color(0.3333f, 0.3f, 0.3f));
-	    final Rectangle right_arrow = new Rectangle(730, 100, 60, 60, vbo)
+	    final Rectangle right_arrow = new Rectangle(730, 380, 60, 60, vbo)
 	    {
 	        public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
 	        {
@@ -150,18 +168,35 @@ public class BallGame extends SimpleBaseGameActivity{
 	            return true;
 	        };
 	    };
-
 	    hud.registerTouchArea(left_arrow);
 	    hud.registerTouchArea(right_arrow);
 	    hud.attachChild(left_arrow);
 	    hud.attachChild(right_arrow);
+	    hud.attachChild(hudText);
 	    
 	    camera.setHUD(hud);
+	}
+	public void updateScore()
+	{
+		//Agrega 1 al puntaje actual
+		puntaje += 1;
+		hudText.setText("Puntaje:"+puntaje+" Vidas:" + vidas);
+	}
+	public void removeLive()
+	{
+		//Quita una vida al tentosaurio. Si no quedan vidas sale del juego TODO
+		if(vidas > 0)
+		{
+			vidas -=1;
+			hudText.setText("Puntaje:"+puntaje+" Vidas:" + vidas);
+		}
 	}
 	@Override
 	protected Scene onCreateScene() {
 		// TODO Auto-generated method stub
 		Scene scene = new Scene();
+		puntaje = 0;
+		vidas = 3;
 		vbo = mEngine.getVertexBufferObjectManager();
 		registerButtons();
 	     scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
@@ -170,8 +205,8 @@ public class BallGame extends SimpleBaseGameActivity{
 	    	 {
 	    		 btservice.startProgram("Eat.rxe");
 	    	 }
-	     player = new Player(BallGame.CAMERA_WIDTH/2,player.size_x);
-	     ball = new Ball(BallGame.CAMERA_WIDTH/2,BallGame.CAMERA_HEIGHT, 10);
+	     player = new Player(BallGame.CAMERA_WIDTH/2,BallGame.CAMERA_HEIGHT-player.size_x);
+	     ball = new Ball(BallGame.CAMERA_WIDTH/2,0, 10);
 	     scene.attachChild(player.sprite);
 	     scene.attachChild(ball.sprite);
 	     ball.createFallUpdater();
@@ -235,8 +270,8 @@ public class BallGame extends SimpleBaseGameActivity{
     {
     	Rectangle sprite;
     	
-    	int size_x = 40;
-    	int size_y = 40;
+    	static final int size_x = 40;
+    	static final int size_y = 40;
     	TimerHandler spriteTimerHandler;
     	float speed;
     	float x;
@@ -245,7 +280,23 @@ public class BallGame extends SimpleBaseGameActivity{
     	{
     		this.x = x;
     		this.y = y;
-    		sprite = new Rectangle(x-size_x,y-size_y,size_x,size_y,BallGame.this.vbo);
+    		sprite = new Rectangle(x-size_x,y-size_y,size_x,size_y,BallGame.this.vbo)
+    		{
+    		     @Override
+    		     protected void onManagedUpdate(float pSecondsElapsed)
+    		     {
+    		         if (player.sprite.collidesWith(this))
+    		         {                                                              
+    		             //Aumenta puntaje si es que choca con el jugador. Ademas vuelve a poner a la pelota arriba
+    		        	 //en una posicion x arbitraria
+    		        	 BallGame.this.updateScore();
+    		        	 Ball.this.y = 0;
+    		        	 
+    		        	 Ball.this.x = (float) (Math.random()*BallGame.CAMERA_WIDTH); //En el rango entre 0 y CAMERA_WIDTH
+    		        	 Ball.this.sprite.setPosition(Ball.this.x, Ball.this.y);
+    		         }
+    		     };
+    		};;
     		this.speed = speed;
     	}
 		
@@ -260,13 +311,15 @@ public class BallGame extends SimpleBaseGameActivity{
 	            	if(spriteTimerHandler != null)
 	            	{
 	            		spriteTimerHandler.reset();
-	            		if(Ball.this.y >= 0)
+	            		if(Ball.this.y <= BallGame.CAMERA_HEIGHT)
 	            		{
-	            			Ball.this.y = Ball.this.y - speed;
+	            			Ball.this.y = Ball.this.y + speed;
 	            		}
 	            		else
 	            		{
-	            			Ball.this.y = BallGame.CAMERA_HEIGHT;
+	            			Ball.this.x = (float) (Math.random()*BallGame.CAMERA_WIDTH);
+	            			Ball.this.y = 0;
+	            			BallGame.this.removeLive();
 	            		}
 	            		sprite.setPosition(x, y);
 	            	}
