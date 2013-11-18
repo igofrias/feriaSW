@@ -409,7 +409,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		frame1.setVisibility(View.VISIBLE);
 		frame2.setVisibility(View.VISIBLE);
 		detach_statisticslist();
-		detach_remotecontrol();
+		detach_remotecontrolgame();
 		detach_achievementlist();
     }
     
