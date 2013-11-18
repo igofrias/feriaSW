@@ -276,10 +276,23 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		ft.commit();
 	}
     
+  //mata el supa framento
+    void detach_remotecontrolgame() {//identificamos y quitamos el fragmento control remoto 
+    	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		SherlockFragment fragment = ((RemoteControl)getSupportFragmentManager().findFragmentByTag("remotecontrolgame"));
+
+		if(fragment!=null){
+			if(!fragment.isDetached()){
+				ft.detach(fragment);
+			}
+		}
+		ft.commit();
+	}
+    
   //llama al supa framento
     void launch_remotecontrolgame() {//identificamos y cargamos el fragmento control remoto
     	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		SherlockFragment fragment = ((RemoteControl)getSupportFragmentManager().findFragmentByTag("remotecontrol"));
+		SherlockFragment fragment = ((RemoteControl)getSupportFragmentManager().findFragmentByTag("remotecontrolgame"));
 		
 		if(fragment==null){
 			fragment = new RemoteControl();
@@ -647,7 +660,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     		 detachAll();
     		 detach_achievementlist();
     		 detach_statisticslist();
-    		 detach_remotecontrol();
+    		 detach_remotecontrolgame();
     		 launch_states();
     		 launch_mainpet();	
     	 }else{
