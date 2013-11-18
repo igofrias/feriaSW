@@ -492,6 +492,7 @@ public class MainPetActivity extends SherlockFragment{
 					}
 					timetail++;
 				}else if(tailposition==1){
+					can.save();
 					can.rotate(5, width*10/16, height*4/9);
 					can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
 					if(timetail==4){
@@ -501,6 +502,7 @@ public class MainPetActivity extends SherlockFragment{
 					timetail++;
 					can.restore();
 				}else if(tailposition==-1){
+					can.save();
 					can.rotate(-5, width*10/16, height*4/9);
 					can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
 					if(timetail==4){
@@ -542,7 +544,8 @@ public class MainPetActivity extends SherlockFragment{
 		public void Drawfood(float x, float y, float width, float height){
 			if (foodFingerMove) {
 	        	if(bowlstate<3 && timeeat==0 && x>width*2/16 && x<width*2/16+bowl[0].getWidth() &&y>height*6/11 && y<height*6/11+bowl[0].getHeight()){
-					can.rotate(-40, width*3/16, height*4/7);
+					can.save();
+	        		can.rotate(-40, width*3/16, height*4/7);
 					can.drawBitmap(food, width*1/16, height*6/11, color);
 					can.restore();
 					bowlstate=3;

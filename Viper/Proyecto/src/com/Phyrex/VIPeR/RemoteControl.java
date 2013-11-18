@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -386,6 +387,9 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		Bitmap buttonopen;
 		int pincersstate;
 		boolean inplay;
+		boolean catchball;
+		int score;
+		int ballcolor;
 
 		/////manejo de tiempo //////
 		    int count=0;
@@ -421,6 +425,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			nextball();
 			pincersstate=0;
 			inplay=false;
+			catchball=false;
+			score=0;
 			
 			// TODO Auto-generated constructor stub
 		}
@@ -469,22 +475,28 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 				//tiempo llevar el tiempo y resetearlo
 				//puntaje contar puntaje y sumarle extra por buen tiempo
 				if(pincersstate==0){//cargar boton de las pinzas
-					canvas.drawBitmap(buttonclose, center_x*4/16-buttonclose.getWidth()/2,
+					canvas.drawBitmap(buttonclose, center_x*5/16-buttonclose.getWidth()/2,
 							center_y*2*13/16-buttonclose.getHeight()/2, color);
 				}else{
-					canvas.drawBitmap(buttonopen, center_x*4/16-buttonopen.getWidth()/2,
+					canvas.drawBitmap(buttonopen, center_x*5/16-buttonopen.getWidth()/2,
 							center_y*2*13/16-buttonopen.getHeight()/2, color);
 				}
 				canvas.drawBitmap(ballnext, center_x*2*2/16-ballnext.getWidth()/2,
 						center_y*2*2/16-ballnext.getHeight()/2, color);
 				if(inplay){
 					timecalc(height);
+					validcatchball();
 				}
+				
 				canvas.drawRect(width*13/14, 0, width , lefttimeprogress, color);
 				insertTextObjetive(width, height);
 				insertTextScore(width, height);
 				insertTextScorevalue(width, height);
 				//TODO
+				if(!inplay){
+					insertTextgameover(width, height);
+					//GAME OVER
+				}
 			}
 			
 		}
@@ -492,7 +504,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		public void insertTextObjetive(float width, float height){
 			String text = "Objetivo:";
 			int textColor = Color.GREEN;
-			float textSize = 15;
+			float textSize=0;
+			textSize=TextSizedpi(textSize);
 			can.save();
 			 can.rotate(90, width*4/16, height/25);
 			 Paint textPaint = new Paint();
@@ -506,10 +519,29 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			
 		}
 		
+		public void insertTextgameover(float width, float height){
+			String text = "GAME OVER";
+			int textColor = Color.WHITE;
+			float textSize=0;
+			textSize=TextSizedpiGameover(textSize);
+			can.save();
+			 can.rotate(90, width/2, height/2);
+			 Paint textPaint = new Paint();
+			 textPaint.setAntiAlias(true);
+			 textPaint.setColor(textColor);
+			 textPaint.setTextSize(textSize);
+			 Rect bounds = new Rect();
+			 textPaint.getTextBounds(text, 0, text.length(), bounds);
+			 can.drawText(text, width/2-bounds.centerX(), height/2-bounds.centerY(), textPaint);
+			 can.restore();
+			
+		}
+		
 		public void insertTextScore(float width, float height){
 			String text = "Puntaje:";
 			int textColor = Color.GREEN;
-			float textSize = 15;
+			float textSize = 0;
+			textSize=TextSizedpi(textSize);
 			 can.save();
 			 can.rotate(90, width*13/16, height/25);
 			 Paint textPaint = new Paint();
@@ -524,9 +556,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		}
 		
 		public void insertTextScorevalue(float width, float height){
-			String text = "00000";
+			String text = String.valueOf(score);
 			int textColor = Color.GREEN;
-			float textSize = 20;
+			float textSize=0;
+			textSize=TextSizedpiscore(textSize);
 			can.save();
 			 can.rotate(90, width*11/16, height/25);
 			 Paint textPaint = new Paint();
@@ -540,12 +573,63 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			
 		}
 		
+		public float TextSizedpi(float textSize){
+			float dpi = getResources().getDisplayMetrics().density;
+			if(dpi ==0.75){
+				textSize=15;
+			}else if(dpi==1){
+				textSize=25;
+			}
+			else if(dpi==1.5){
+				textSize=35;
+			}
+			return textSize;
+		}
+		public float TextSizedpiGameover(float textSize){
+			float dpi = getResources().getDisplayMetrics().density;
+			if(dpi ==0.75){
+				textSize=50;
+			}else if(dpi==1){
+				textSize=70;
+			}
+			else if(dpi==1.5){
+				textSize=90;
+			}
+			return textSize;
+		}
+		public float TextSizedpiscore(float textSize){
+			float dpi = getResources().getDisplayMetrics().density;
+			if(dpi ==0.75){
+				textSize=25;
+			}else if(dpi==1){
+				textSize=35;
+			}
+			else if(dpi==1.5){
+				textSize=45;
+			}
+			return textSize;
+		}
+		
 		public void timecalc(float height){
             lefttimeprogress = (height*timeLeft)/totalTime;
 		}
 		
 		public void score(){//manejo de puntaje
-			
+			if(catchball){
+				score = (int)(300 + score + lefttimeprogress/100);
+				catchball=false;
+			}
+		}
+		
+		public void validcatchball(){
+			//detenccion de sensor
+			int sensorball=0;
+			if (sensorball==ballcolor){
+				catchball=true;
+				score();
+				nextball();
+				totalTime=totalTime-300;
+			}
 		}
 		
 		public void playmodedialog(){
@@ -575,7 +659,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	        dialog.show();
 		}
 		
-		public void closepincers(){//llama a cerrar las pinzas
+		public void movepincers(){//llama a cerrar las pinzas
 			//thisActivity.startProgram("");
 			if(pincersstate==0){
 				pincersstate=1;
@@ -588,8 +672,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			int rand = (int) (Math.random() * 2);
 			if(rand==0){
 				ballnext = ballr;
+				ballcolor=0;
 			}else{
 				ballnext = ballb;
+				ballcolor=1;
 			}
 		}
 		
@@ -598,6 +684,23 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			vel_x = x;
 			vel_y = y;
 			
+		}
+		
+		public boolean onTouchEvent(MotionEvent e) {
+			Log.e("Draw", "pepe");
+			float touchX = (int)e.getX();
+			float touchY = (int)e.getY();
+			float width = canvas.getWidth();
+			float height= canvas.getHeight();
+			
+			if(touchX>width*5/32-buttonclose.getWidth()/2 && touchX<width*5/32+buttonclose.getWidth()/2 && touchY>height*13/16-buttonclose.getHeight()/2 && touchY<height*13/16+buttonclose.getHeight()/2){
+				switch (e.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					movepincers();
+			      break;
+			    }
+			}
+			  return true;
 		}
 
 		@Override
@@ -613,6 +716,9 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		                if(timeLeft == 0){
 		                	inplay=false;
 		                }
+					}
+					if(catchball){
+						score();
 					}
 		            ////////////////////////////////
 					
