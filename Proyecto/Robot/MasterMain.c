@@ -21,7 +21,7 @@ void sendMess(int nData);
 void checkConnection(); //Not used.... yet...
 void readMessages();
 void calibrate();
-void captureBall(int iColor);
+//void captureBall(int iColor);
 
 /*****************************************
  *       Global Variable Statement
@@ -30,7 +30,7 @@ int ColorVal;
 int LightRVal;
 int LightLVal;
 int nAction;
-int nColor;
+// int nColor;
 int nMensaje = 0;
 
 
@@ -109,9 +109,63 @@ void readMessages(){
 		if (nMensaje != 0){
 			nAction = messageParm[0];
 			switch(nAction){
-				case 3 : //Capture Green Ball
-					nColor = messageParm[1];
-					captureBall(nColor);
+				case 1 : //Normal Eyes Case!!
+					break;
+				case 2 :
+					StopTask(ShowEyes);
+					eraseDisplay();
+					nxtDisplayRICFile(0, 0, "AngryEyes.ric");
+					wait1Msec(4000);
+					eraseDisplay();
+					StartTask(ShowEyes);
+					break;
+				case 3 :
+					StopTask(ShowEyes);
+					eraseDisplay();
+					nxtDisplayRICFile(0, 0, "BoredEyes.ric");
+					wait1Msec(4000);
+					eraseDisplay();
+					StartTask(ShowEyes);
+					break;
+				case 4 :
+					StopTask(ShowEyes);
+					eraseDisplay();
+					nxtDisplayRICFile(0, 0, "CloseEyes.ric");
+					wait1Msec(4000);
+					eraseDisplay();
+					StartTask(ShowEyes);
+					break;
+				case 5 :
+					StopTask(ShowEyes);
+					eraseDisplay();
+					nxtDisplayRICFile(0, 0, "HappyEyes.ric");
+					wait1Msec(4000);
+					eraseDisplay();
+					StartTask(ShowEyes);
+					break;
+				case 6 :
+					StopTask(ShowEyes);
+					eraseDisplay();
+					nxtDisplayRICFile(0, 0, "ShameEyes.ric");
+					wait1Msec(4000);
+					eraseDisplay();
+					StartTask(ShowEyes);
+					break;
+				case 30:
+					StopTask(ShowEyes);
+					eraseDisplay();
+					nxtDisplayRICFile(0, 0, "DeadEyes.ric");
+					wait1Msec(4000);
+					eraseDisplay();
+					StartTask(ShowEyes);
+					break;
+				case 31: //Calibrate Case
+					StopTask(ShowEyes);
+					eraseDisplay();
+					calibrate();
+					eraseDisplay();
+					StartTask(ShowEyes);
+					break;
 			}
 			ClearMessage();
 		}
@@ -204,6 +258,7 @@ void calibrate(){
 	StopTask(MonitorLLight);
 }
 
+/*
 //Function: captureBall
 void captureBall(int iColor){
 	int capture = 0;
@@ -254,3 +309,4 @@ void captureBall(int iColor){
 	StartTask(ShowEyes);
 	StopTask(MonitorColor);
 }
+*/
