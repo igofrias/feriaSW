@@ -44,6 +44,10 @@ public class BallGame extends SimpleBaseGameActivity{
 	private static final int CAMERA_WIDTH = 800;
 	private static final int CAMERA_HEIGHT = 480;
 	private Font font;
+	HUD hud;
+	Rectangle left_arrow;
+	Rectangle right_arrow;
+	Scene scene;
 	
 	VertexBufferObjectManager vbo;
 	private Text hudText;
@@ -140,40 +144,76 @@ public class BallGame extends SimpleBaseGameActivity{
 	protected void registerButtons()
 	{
 		//Inicializa botones del juego
-		HUD  hud = new HUD();
+		hud = new HUD();
 		String hudStr = String.format("Puntaje:%d Vidas:%d",BallGame.this.puntaje, BallGame.this.vidas);
 		hudText = new Text(70, 40, font, hudStr,BallGame.this.vbo);
-		final Rectangle left_arrow = new Rectangle(20, 380, 60, 60, vbo)
+		left_arrow = new Rectangle(20, 380, 60, 60, vbo)
 	    {
+			boolean isDown = false;
 	        public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
 	        {
-	            if (touchEvent.isActionUp())
+	            if (touchEvent.isActionDown())
 	            {
-	            	Player player = BallGame.this.player;
-	                player.sprite.setPosition(player.sprite.getX()-20, player.sprite.getY());
+	            	isDown = true;
 	            }
+	            if (touchEvent.isActionUp())
+	    		{
+	    			isDown = false;
+	    		}
 	            return true;
 	        };
+	        @Override
+	    	protected void onManagedUpdate(float pSecondsElapsed)
+	    	{
+	    		if (isDown)
+	    		{
+	    			Player player = BallGame.this.player;
+	    			if(player.sprite.getX()>0)
+	    			{
+	    				player.sprite.setPosition(player.sprite.getX()-Player.speed, player.sprite.getY());
+	    			}
+	    		}
+	    		super.onManagedUpdate(pSecondsElapsed);
+	    	}
 	    };
 	    left_arrow.setColor(new Color(0.3333f, 0.3f, 0.3f));
-	    final Rectangle right_arrow = new Rectangle(730, 380, 60, 60, vbo)
+	    right_arrow = new Rectangle(730, 380, 60, 60, vbo)
 	    {
+	    	boolean isDown = false;
 	        public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
 	        {
-	            if (touchEvent.isActionUp())
+	            if (touchEvent.isActionDown())
 	            {
-	            	Player player = BallGame.this.player;
-	                player.sprite.setPosition(player.sprite.getX()+20, player.sprite.getY());
+	            	isDown = true;
 	            }
+	            if (touchEvent.isActionUp())
+	    		{
+	    			isDown = false;
+	    		}
 	            return true;
 	        };
+	        @Override
+	    	protected void onManagedUpdate(float pSecondsElapsed)
+	    	{
+	    		if (isDown)
+	    		{
+	    			Player player = BallGame.this.player;
+	    			if(player.sprite.getX()< BallGame.CAMERA_WIDTH - Player.size_x)
+	    			{
+	    				player.sprite.setPosition(player.sprite.getX()+Player.speed, player.sprite.getY());
+	    			}
+	    		}
+	    		super.onManagedUpdate(pSecondsElapsed);
+	    	}
+	        
+	        
 	    };
 	    hud.registerTouchArea(left_arrow);
 	    hud.registerTouchArea(right_arrow);
 	    hud.attachChild(left_arrow);
 	    hud.attachChild(right_arrow);
 	    hud.attachChild(hudText);
-	    
+	    hud.setTouchAreaBindingOnActionDownEnabled(true);
 	    camera.setHUD(hud);
 	}
 	public void updateScore()
@@ -185,20 +225,30 @@ public class BallGame extends SimpleBaseGameActivity{
 	public void removeLive()
 	{
 		//Quita una vida al tentosaurio. Si no quedan vidas sale del juego TODO
-		if(vidas > 0)
+		if(vidas > 1)
 		{
 			vidas -=1;
 			hudText.setText("Puntaje:"+puntaje+" Vidas:" + vidas);
+		}
+		else
+		{
+			//Aqui se mata
+			hudText = new Text(70, 40, font, "Game Over. Presione el boton atrás para volver",BallGame.this.vbo);
+			hud.detachChild(left_arrow);
+			hud.detachChild(right_arrow);
+			ball.detach();
+			player.detach();
 		}
 	}
 	@Override
 	protected Scene onCreateScene() {
 		// TODO Auto-generated method stub
-		Scene scene = new Scene();
+		scene = new Scene();
 		puntaje = 0;
 		vidas = 3;
 		vbo = mEngine.getVertexBufferObjectManager();
 		registerButtons();
+		scene.setTouchAreaBindingOnActionDownEnabled(true);
 	     scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
 	     if(btservice != null)
 	    	 if(btservice.isConnected())
@@ -206,7 +256,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	    		 btservice.startProgram("Eat.rxe");
 	    	 }
 	     player = new Player(BallGame.CAMERA_WIDTH/2,BallGame.CAMERA_HEIGHT-player.size_x);
-	     ball = new Ball(BallGame.CAMERA_WIDTH/2,0, 10);
+	     ball = new Ball(BallGame.CAMERA_WIDTH/2,0, 5);
 	     scene.attachChild(player.sprite);
 	     scene.attachChild(ball.sprite);
 	     ball.createFallUpdater();
@@ -292,7 +342,7 @@ public class BallGame extends SimpleBaseGameActivity{
     		        	 BallGame.this.updateScore();
     		        	 Ball.this.y = 0;
     		        	 
-    		        	 Ball.this.x = (float) (Math.random()*BallGame.CAMERA_WIDTH); //En el rango entre 0 y CAMERA_WIDTH
+    		        	 Ball.this.x = (float) (Math.random()*BallGame.CAMERA_WIDTH-size_x); //En el rango entre 0 y CAMERA_WIDTH
     		        	 Ball.this.sprite.setPosition(Ball.this.x, Ball.this.y);
     		         }
     		     };
@@ -302,7 +352,7 @@ public class BallGame extends SimpleBaseGameActivity{
 		
     	public void createFallUpdater()
     	{
-    		float updateTime = 0.1f;
+    		float updateTime = 0.0333f;
 			spriteTimerHandler = new TimerHandler(updateTime, new ITimerCallback()
 	        {                      
 	            @Override
@@ -317,7 +367,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	            		}
 	            		else
 	            		{
-	            			Ball.this.x = (float) (Math.random()*BallGame.CAMERA_WIDTH);
+	            			Ball.this.x = (float) (Math.random()*BallGame.CAMERA_WIDTH-size_x);
 	            			Ball.this.y = 0;
 	            			BallGame.this.removeLive();
 	            		}
@@ -329,7 +379,11 @@ public class BallGame extends SimpleBaseGameActivity{
 			
 	        BallGame.this.getEngine().registerUpdateHandler(spriteTimerHandler );
     	}
-    	
+    	public void detach()
+    	{
+    		sprite.detachSelf();
+    		sprite.dispose();
+    	}
     	
     }
     private class Player
@@ -338,16 +392,18 @@ public class BallGame extends SimpleBaseGameActivity{
     	
     	static final int size_x = 60;
     	static final int size_y = 60;
+    	static final int speed = 10;
     	public Player(int x, int y)
     	{
     		sprite = new Rectangle(x-size_x,y-size_y,size_x,size_y,BallGame.this.vbo);
     		
     		
     	}
+    	public void detach()
+    	{
+    		sprite.detachSelf();
+    		sprite.dispose();
+    	}
     }
-    private class Ground 
-    {
-    	Rectangle ground = new Rectangle(0,0,BallGame.CAMERA_WIDTH,10,BallGame.this.vbo);
-    	
-    }
+    
 }
