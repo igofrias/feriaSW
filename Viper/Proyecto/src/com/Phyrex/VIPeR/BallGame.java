@@ -43,14 +43,17 @@ public class BallGame extends SimpleBaseGameActivity{
 	private Camera camera;
 	private static final int CAMERA_WIDTH = 800;
 	private static final int CAMERA_HEIGHT = 480;
+	
 	private Font font;
+	private Font smallfont;
 	HUD hud;
+	private Text hudText;
 	Rectangle left_arrow;
 	Rectangle right_arrow;
 	Scene scene;
 	
 	VertexBufferObjectManager vbo;
-	private Text hudText;
+	
 	Player player;
 	Ball ball;
 	BTService btservice;
@@ -98,6 +101,7 @@ public class BallGame extends SimpleBaseGameActivity{
         }
     };
 	
+	
     @Override
     protected void onDestroy() {
         //btservice.destroyBTCommunicator();
@@ -139,14 +143,16 @@ public class BallGame extends SimpleBaseGameActivity{
 	    final ITexture fontTexture = new BitmapTextureAtlas(this.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
 	    font = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 40.0f, true, Color.BLACK.getABGRPackedInt());
+	    smallfont = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 20.0f, true, Color.BLACK.getABGRPackedInt());
 	    font.load();
+	    smallfont.load();
 	}
 	protected void registerButtons()
 	{
 		//Inicializa botones del juego
 		hud = new HUD();
 		String hudStr = String.format("Puntaje:%d Vidas:%d",BallGame.this.puntaje, BallGame.this.vidas);
-		hudText = new Text(70, 40, font, hudStr,BallGame.this.vbo);
+		hudText = new Text(70, 40, font, hudStr,100,BallGame.this.vbo);
 		left_arrow = new Rectangle(20, 380, 60, 60, vbo)
 	    {
 			boolean isDown = false;
@@ -233,9 +239,12 @@ public class BallGame extends SimpleBaseGameActivity{
 		else
 		{
 			//Aqui se mata
-			hudText = new Text(70, 40, font, "Game Over. Presione el boton atrás para volver",BallGame.this.vbo);
+			hud.detachChild(hudText);
+			hudText = new Text(70, 40, smallfont, "Game Over. Presione el boton atrás para volver",100,BallGame.this.vbo);
+			hud.attachChild(hudText);
 			hud.detachChild(left_arrow);
 			hud.detachChild(right_arrow);
+			this.getEngine().unregisterUpdateHandler(ball.spriteTimerHandler);
 			ball.detach();
 			player.detach();
 		}
@@ -381,8 +390,7 @@ public class BallGame extends SimpleBaseGameActivity{
     	}
     	public void detach()
     	{
-    		sprite.detachSelf();
-    		sprite.dispose();
+    		BallGame.this.scene.detachChild(sprite);
     	}
     	
     }
@@ -401,8 +409,7 @@ public class BallGame extends SimpleBaseGameActivity{
     	}
     	public void detach()
     	{
-    		sprite.detachSelf();
-    		sprite.dispose();
+    		BallGame.this.scene.detachChild(sprite);
     	}
     }
     
