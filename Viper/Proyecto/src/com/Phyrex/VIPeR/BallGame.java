@@ -14,6 +14,7 @@ import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.Font;
@@ -21,6 +22,8 @@ import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.color.Color;
@@ -56,6 +59,10 @@ public class BallGame extends SimpleBaseGameActivity{
 	
 	Player player;
 	Ball ball;
+	BitmapTextureAtlas ballTexture;
+	ITextureRegion ballTextureRegion;
+	BitmapTextureAtlas playerTexture;
+	ITextureRegion playerTextureRegion;
 	BTService btservice;
 	Activity thisActivity = this;
 	int puntaje;
@@ -146,6 +153,14 @@ public class BallGame extends SimpleBaseGameActivity{
 	    smallfont = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 20.0f, true, Color.BLACK.getABGRPackedInt());
 	    font.load();
 	    smallfont.load();
+	    
+	    BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+	    ballTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.DEFAULT);
+	    ballTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(ballTexture, this, "ball.png", 0, 0);
+	    ballTexture.load(); 
+	    playerTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.DEFAULT);
+	    playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(playerTexture, this, "tento.png", 0, 0);
+	    playerTexture.load();  
 	}
 	protected void registerButtons()
 	{
@@ -327,7 +342,7 @@ public class BallGame extends SimpleBaseGameActivity{
     
     private class Ball
     {
-    	Rectangle sprite;
+    	Sprite sprite;
     	
     	static final int size_x = 40;
     	static final int size_y = 40;
@@ -339,7 +354,7 @@ public class BallGame extends SimpleBaseGameActivity{
     	{
     		this.x = x;
     		this.y = y;
-    		sprite = new Rectangle(x-size_x,y-size_y,size_x,size_y,BallGame.this.vbo)
+    		sprite = new Sprite(x-size_x,y-size_y,size_x,size_y,ballTextureRegion,BallGame.this.vbo)
     		{
     		     @Override
     		     protected void onManagedUpdate(float pSecondsElapsed)
@@ -396,15 +411,15 @@ public class BallGame extends SimpleBaseGameActivity{
     }
     private class Player
     {
-    	Rectangle sprite;
+    	Sprite sprite;
     	
     	static final int size_x = 60;
-    	static final int size_y = 60;
+    	static final int size_y = 80;
     	static final int speed = 10;
     	public Player(int x, int y)
     	{
-    		sprite = new Rectangle(x-size_x,y-size_y,size_x,size_y,BallGame.this.vbo);
-    		
+    		//sprite = new Rectangle(x-size_x,y-size_y,size_x,size_y,BallGame.this.vbo);
+    		sprite = new Sprite(x-size_x,y-size_y,size_x,size_y, playerTextureRegion, vbo);
     		
     	}
     	public void detach()
