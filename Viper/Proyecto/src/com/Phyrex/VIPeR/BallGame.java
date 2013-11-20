@@ -168,7 +168,7 @@ public class BallGame extends SimpleBaseGameActivity{
 		hud = new HUD();
 		String hudStr = String.format("Puntaje:%d Vidas:%d",BallGame.this.puntaje, BallGame.this.vidas);
 		hudText = new Text(70, 40, font, hudStr,100,BallGame.this.vbo);
-		left_arrow = new Rectangle(20, 380, 60, 60, vbo)
+		left_arrow = new Rectangle(0, 0, CAMERA_WIDTH/2, CAMERA_HEIGHT, vbo)
 	    {
 			boolean isDown = false;
 	        public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
@@ -198,7 +198,8 @@ public class BallGame extends SimpleBaseGameActivity{
 	    	}
 	    };
 	    left_arrow.setColor(new Color(0.3333f, 0.3f, 0.3f));
-	    right_arrow = new Rectangle(730, 380, 60, 60, vbo)
+	    left_arrow.setAlpha(0.0f);
+	    right_arrow = new Rectangle(CAMERA_WIDTH/2, 0, CAMERA_WIDTH/2, CAMERA_HEIGHT, vbo)
 	    {
 	    	boolean isDown = false;
 	        public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
@@ -229,6 +230,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	        
 	        
 	    };
+	    right_arrow.setAlpha(0.0f);
 	    hud.registerTouchArea(left_arrow);
 	    hud.registerTouchArea(right_arrow);
 	    hud.attachChild(left_arrow);
