@@ -63,9 +63,11 @@ public class BallGame extends SimpleBaseGameActivity{
 	ITextureRegion ballTextureRegion;
 	BitmapTextureAtlas playerTexture;
 	ITextureRegion playerTextureRegion;
+	
 	BTService btservice;
 	Activity thisActivity = this;
 	int puntaje;
+	int dificultad;
 	int vidas;
 	protected boolean mBound;
 	private Toast reusableToast;
@@ -243,7 +245,20 @@ public class BallGame extends SimpleBaseGameActivity{
 	{
 		//Agrega 1 al puntaje actual
 		puntaje += 1;
+		if(puntaje % 2 == 0)
+		{
+			dificultad +=1; 
+			updateSpeed();
+		}
 		hudText.setText("Puntaje:"+puntaje+" Vidas:" + vidas);
+	}
+	public void updateSpeed()
+	{
+		//Cambia la velocidad de caida de la pelota de acuerdo a la dificultad
+		float min = 5;
+		float max = 100;
+		float steps = (float) (1.0/50.0); //Cantidad de "niveles" en los que sube la velocidad hasta llegar a max
+		ball.speed = (float) (min + (max-min)*steps*dificultad);
 	}
 	public void removeLive()
 	{
@@ -282,7 +297,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	    		 btservice.startProgram("Eat.rxe");
 	    	 }
 	     player = new Player(BallGame.CAMERA_WIDTH/2,BallGame.CAMERA_HEIGHT-player.size_x);
-	     ball = new Ball(BallGame.CAMERA_WIDTH/2,0, 5);
+	     ball = new Ball(BallGame.CAMERA_WIDTH/2,0);
 	     scene.attachChild(player.sprite);
 	     scene.attachChild(ball.sprite);
 	     ball.createFallUpdater();
@@ -352,7 +367,7 @@ public class BallGame extends SimpleBaseGameActivity{
     	float speed;
     	float x;
     	float y;
-    	public Ball(int x, int y, float speed)
+    	public Ball(int x, int y)
     	{
     		this.x = x;
     		this.y = y;
@@ -373,7 +388,7 @@ public class BallGame extends SimpleBaseGameActivity{
     		         }
     		     };
     		};;
-    		this.speed = speed;
+    		this.speed = 5;
     	}
 		
     	public void createFallUpdater()
