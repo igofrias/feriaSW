@@ -151,16 +151,16 @@ public class BallGame extends SimpleBaseGameActivity{
 	    final ITexture fontTexture = new BitmapTextureAtlas(this.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
 	    font = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 40.0f, true, Color.BLACK.getABGRPackedInt());
-	    smallfont = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 20.0f, true, Color.BLACK.getABGRPackedInt());
+	    smallfont = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 25.0f, true, Color.BLACK.getABGRPackedInt());
 	    font.load();
 	    smallfont.load();
 	    
 	    BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 	    ballTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.DEFAULT);
-	    ballTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(ballTexture, this, "ball.png", 0, 0);
+	    ballTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(ballTexture, this, "ballred.png", 0, 0);
 	    ballTexture.load(); 
 	    playerTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.DEFAULT);
-	    playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(playerTexture, this, "tento.png", 0, 0);
+	    playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(playerTexture, this, "tentosauriogame.png", 0, 0);
 	    playerTexture.load();  
 	}
 	protected void registerButtons()
@@ -229,14 +229,14 @@ public class BallGame extends SimpleBaseGameActivity{
 		vbo = mEngine.getVertexBufferObjectManager();
 		registerButtons();
 		scene.setTouchAreaBindingOnActionDownEnabled(true);
-	     scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
+	     scene.setBackground(new Background(0.678f, 0.847f, 0.901f));
 	     if(btservice != null)
 	    	 if(btservice.isConnected())
 	    	 {
 	    		 btservice.startProgram("Eat.rxe");
 	    	 }
-	     player = new Player(BallGame.CAMERA_WIDTH/2,BallGame.CAMERA_HEIGHT-player.size_x);
-	     ball = new Ball(BallGame.CAMERA_WIDTH/2,0);
+	     player = new Player();
+	     ball = new Ball();
 	     scene.attachChild(player.sprite);
 	     scene.attachChild(ball.sprite);
 	     ball.createFallUpdater();
@@ -306,10 +306,10 @@ public class BallGame extends SimpleBaseGameActivity{
     	float speed;
     	float x;
     	float y;
-    	public Ball(int x, int y)
+    	public Ball()
     	{
-    		this.x = x;
-    		this.y = y;
+    		this.x = 2*size_x +(float) (Math.random()*(BallGame.CAMERA_WIDTH-4*size_x));//Margen de 2*size_x;
+    		this.y = 0;
     		sprite = new Sprite(x-size_x,y-size_y,size_x,size_y,ballTextureRegion,BallGame.this.vbo)
     		{
     		     @Override
@@ -369,12 +369,14 @@ public class BallGame extends SimpleBaseGameActivity{
     {
     	Sprite sprite;
     	
-    	static final int size_x = 60;
-    	static final int size_y = 80;
+    	static final int size_x = 80;
+    	static final int size_y = 100;
     	static final int speed = 10;
-    	public Player(int x, int y)
+    	public Player()
     	{
     		//sprite = new Rectangle(x-size_x,y-size_y,size_x,size_y,BallGame.this.vbo);
+    		int x = BallGame.CAMERA_WIDTH/2;
+    		int y = BallGame.CAMERA_HEIGHT-size_y/2;
     		sprite = new Sprite(x-size_x,y-size_y,size_x,size_y, playerTextureRegion, vbo);
     		
     	}
