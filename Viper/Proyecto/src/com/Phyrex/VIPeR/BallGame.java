@@ -12,6 +12,9 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.primitive.Rectangle;
+import org.andengine.entity.scene.IOnAreaTouchListener;
+import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.ITouchArea;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
@@ -39,6 +42,7 @@ import android.content.ServiceConnection;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.IBinder;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 public class BallGame extends SimpleBaseGameActivity{
@@ -62,7 +66,8 @@ public class BallGame extends SimpleBaseGameActivity{
 	ITextureRegion ballTextureRegion;
 	BitmapTextureAtlas playerTexture;
 	ITextureRegion playerTextureRegion;
-	
+	btnListener leftListener;
+	btnListener rightListener;
 	BTService btservice;
 	Activity thisActivity = this;
 	int puntaje;
@@ -140,6 +145,7 @@ public class BallGame extends SimpleBaseGameActivity{
 		camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
 	    EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, 
 	    new FillResolutionPolicy(), camera);
+	    engineOptions.getTouchOptions().setNeedsMultiTouch(true);
 	    return engineOptions;
 	}
 
@@ -169,12 +175,12 @@ public class BallGame extends SimpleBaseGameActivity{
 		hud = new HUD();
 		String hudStr = String.format("Puntaje:%d Vidas:%d",BallGame.this.puntaje, BallGame.this.vidas);
 		hudText = new Text(70, 40, font, hudStr,100,BallGame.this.vbo);
-		control = new Control();
-	    hud.registerTouchArea(control.left_arrow);
-	    hud.registerTouchArea(control.right_arrow);
-	    hud.attachChild(control.left_arrow);
-	    hud.attachChild(control.right_arrow);
-	    hud.registerUpdateHandler(control);
+		leftListener = new btnListener();
+		rightListener = new btnListener();
+		
+	    //hud.attachChild(control.left_arrow);
+	    //hud.attachChild(control.right_arrow);
+	    
 	    hud.attachChild(hudText);
 	    hud.setTouchAreaBindingOnActionDownEnabled(true);
 	    //hud.setTouchAreaBindingOnActionMoveEnabled(true);
@@ -213,8 +219,6 @@ public class BallGame extends SimpleBaseGameActivity{
 			hud.detachChild(hudText);
 			hudText = new Text(70, 40, smallfont, "Game Over. Presione el boton atrás para volver",100,BallGame.this.vbo);
 			hud.attachChild(hudText);
-			hud.detachChild(control.left_arrow);
-			hud.detachChild(control.right_arrow);
 			this.getEngine().unregisterUpdateHandler(ball.spriteTimerHandler);
 			ball.detach();
 			player.detach();
@@ -228,7 +232,10 @@ public class BallGame extends SimpleBaseGameActivity{
 		vidas = 3;
 		vbo = mEngine.getVertexBufferObjectManager();
 		registerButtons();
+		control = new Control(leftListener, rightListener);
+		scene.setOnSceneTouchListener(control.tcontrol);
 		scene.setTouchAreaBindingOnActionDownEnabled(true);
+		hud.registerUpdateHandler(control);
 	     scene.setBackground(new Background(0.678f, 0.847f, 0.901f));
 	     if(btservice != null)
 	    	 if(btservice.isConnected())
@@ -419,6 +426,44 @@ public class BallGame extends SimpleBaseGameActivity{
       
     	
     }
+    class TouchControl implements IOnSceneTouchListener
+    {
+    	btnListener leftListener;
+    	btnListener rightListener;
+    	public TouchControl(btnListener left, btnListener right)
+    	{
+    		leftListener = left;
+    		rightListener = right;
+    	}
+		
+		@Override
+		public boolean onSceneTouchEvent(Scene pScene,
+				TouchEvent event) {
+			// TODO Auto-generated method stub
+			float X = event.getX();
+	    	float Y = event.getY();
+	    	if(event.isActionDown())
+	    	{
+	    		if(X > CAMERA_WIDTH/2)
+         	   {
+         		  leftListener.isOn = false;
+         		  rightListener.isOn = true;
+         	   }
+         	   else if(X <= CAMERA_WIDTH/2)
+         	   {
+         		  leftListener.isOn = true;
+         		  rightListener.isOn = false;
+         	   }
+	    	}
+	    	else if(event.isActionUp())
+	    	{
+	    		leftListener.isOn = false;
+       		  rightListener.isOn = false;
+	    	}
+	    	
+			return false;
+		}
+    }
     class btnListener
     {
     	boolean isOn;
@@ -434,14 +479,12 @@ public class BallGame extends SimpleBaseGameActivity{
     	DirButton right_arrow;
     	btnListener leftOn;
     	btnListener rightOn;
-    	public Control()
+    	TouchControl tcontrol;
+    	public Control(btnListener left, btnListener right)
     	{
-    		leftOn = new btnListener();
-    	    rightOn = new btnListener();
-    		left_arrow = new DirButton(0, 0, CAMERA_WIDTH/2, CAMERA_HEIGHT, vbo,leftOn);
-    	    left_arrow.setAlpha(0.0f);
-    	    right_arrow = new DirButton(CAMERA_WIDTH/2, 0, CAMERA_WIDTH/2, CAMERA_HEIGHT, vbo,rightOn);
-    	    right_arrow.setAlpha(0.0f);
+    		leftOn = left;
+    	    rightOn = right;
+    		tcontrol = new TouchControl(leftOn,rightOn);
     	    
     	}
 		@Override
@@ -478,4 +521,8 @@ public class BallGame extends SimpleBaseGameActivity{
 			
 		}
     }
+    private class RestartScene extends Scene
+    {
+    	
+    };
 }
