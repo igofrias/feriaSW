@@ -383,7 +383,7 @@ public class BallGame extends SimpleBaseGameActivity{
     		        	 BallGame.this.updateScore();
     		        	 Ball.this.y = 0;
     		        	 
-    		        	 Ball.this.x = (float) (Math.random()*BallGame.CAMERA_WIDTH-size_x); //En el rango entre 0 y CAMERA_WIDTH
+    		        	 Ball.this.x = 2*size_x +(float) (Math.random()*(BallGame.CAMERA_WIDTH-2*size_x)); 
     		        	 Ball.this.sprite.setPosition(Ball.this.x, Ball.this.y);
     		         }
     		     };
@@ -408,7 +408,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	            		}
 	            		else
 	            		{
-	            			Ball.this.x = (float) (Math.random()*BallGame.CAMERA_WIDTH-size_x);
+	            			Ball.this.x = 2*size_x +(float) (Math.random()*(BallGame.CAMERA_WIDTH-2*size_x));
 	            			Ball.this.y = 0;
 	            			BallGame.this.removeLive();
 	            		}
