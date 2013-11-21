@@ -156,10 +156,10 @@ public class BallGame extends SimpleBaseGameActivity{
 	    smallfont.load();
 	    
 	    BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-	    ballTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.DEFAULT);
+	    ballTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR);
 	    ballTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(ballTexture, this, "ballred.png", 0, 0);
 	    ballTexture.load(); 
-	    playerTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.DEFAULT);
+	    playerTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR);
 	    playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(playerTexture, this, "tentosauriogame.png", 0, 0);
 	    playerTexture.load();  
 	}
