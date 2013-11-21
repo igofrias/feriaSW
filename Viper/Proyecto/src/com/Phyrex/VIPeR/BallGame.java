@@ -51,8 +51,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	private Font smallfont;
 	HUD hud;
 	private Text hudText;
-	Rectangle left_arrow;
-	Rectangle right_arrow;
+	Control control;
 	Scene scene;
 	
 	VertexBufferObjectManager vbo;
@@ -170,76 +169,15 @@ public class BallGame extends SimpleBaseGameActivity{
 		hud = new HUD();
 		String hudStr = String.format("Puntaje:%d Vidas:%d",BallGame.this.puntaje, BallGame.this.vidas);
 		hudText = new Text(70, 40, font, hudStr,100,BallGame.this.vbo);
-		left_arrow = new Rectangle(0, 0, CAMERA_WIDTH/2, CAMERA_HEIGHT, vbo)
-	    {
-			boolean isDown = false;
-	        public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
-	        {
-	            if (touchEvent.isActionDown())
-	            {
-	            	isDown = true;
-	            }
-	            else if (touchEvent.isActionUp())
-	    		{
-	    			isDown = false;
-	    		}
-	            return true;
-	        };
-	        @Override
-	    	protected void onManagedUpdate(float pSecondsElapsed)
-	    	{
-	    		if (isDown)
-	    		{
-	    			Player player = BallGame.this.player;
-	    			if(player.sprite.getX()>0)
-	    			{
-	    				player.sprite.setPosition(player.sprite.getX()-Player.speed, player.sprite.getY());
-	    			}
-	    		}
-	    		super.onManagedUpdate(pSecondsElapsed);
-	    	}
-	    };
-	    left_arrow.setColor(new Color(0.3333f, 0.3f, 0.3f));
-	    left_arrow.setAlpha(0.0f);
-	    right_arrow = new Rectangle(CAMERA_WIDTH/2, 0, CAMERA_WIDTH/2, CAMERA_HEIGHT, vbo)
-	    {
-	    	boolean isDown = false;
-	        public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
-	        {
-	            if (touchEvent.isActionDown())
-	            {
-	            	isDown = true;
-	            }
-	            else if (touchEvent.isActionUp())
-	    		{
-	    			isDown = false;
-	    		}
-	            return true;
-	        };
-	        @Override
-	    	protected void onManagedUpdate(float pSecondsElapsed)
-	    	{
-	    		if (isDown)
-	    		{
-	    			Player player = BallGame.this.player;
-	    			if(player.sprite.getX()< BallGame.CAMERA_WIDTH - Player.size_x)
-	    			{
-	    				player.sprite.setPosition(player.sprite.getX()+Player.speed, player.sprite.getY());
-	    			}
-	    		}
-	    		super.onManagedUpdate(pSecondsElapsed);
-	    	}
-	        
-	        
-	    };
-	    right_arrow.setAlpha(0.0f);
-	    hud.registerTouchArea(left_arrow);
-	    hud.registerTouchArea(right_arrow);
-	    hud.attachChild(left_arrow);
-	    hud.attachChild(right_arrow);
+		control = new Control();
+	    hud.registerTouchArea(control.left_arrow);
+	    hud.registerTouchArea(control.right_arrow);
+	    hud.attachChild(control.left_arrow);
+	    hud.attachChild(control.right_arrow);
+	    hud.registerUpdateHandler(control);
 	    hud.attachChild(hudText);
 	    hud.setTouchAreaBindingOnActionDownEnabled(true);
-	    hud.setTouchAreaBindingOnActionMoveEnabled(true);
+	    //hud.setTouchAreaBindingOnActionMoveEnabled(true);
 	    camera.setHUD(hud);
 	}
 	public void updateScore()
@@ -275,8 +213,8 @@ public class BallGame extends SimpleBaseGameActivity{
 			hud.detachChild(hudText);
 			hudText = new Text(70, 40, smallfont, "Game Over. Presione el boton atrás para volver",100,BallGame.this.vbo);
 			hud.attachChild(hudText);
-			hud.detachChild(left_arrow);
-			hud.detachChild(right_arrow);
+			hud.detachChild(control.left_arrow);
+			hud.detachChild(control.right_arrow);
 			this.getEngine().unregisterUpdateHandler(ball.spriteTimerHandler);
 			ball.detach();
 			player.detach();
@@ -445,5 +383,97 @@ public class BallGame extends SimpleBaseGameActivity{
     		BallGame.this.scene.detachChild(sprite);
     	}
     }
-    
+    class DirButton extends Rectangle
+    {
+    	//Boton que controla una sola direccion
+    	btnListener downListener = null;
+
+		public DirButton(float pX, float pY, float pWidth, float pHeight,
+				VertexBufferObjectManager pVertexBufferObjectManager,btnListener parentDown) {
+			super(pX, pY, pWidth, pHeight, pVertexBufferObjectManager);
+			downListener = parentDown;
+			// TODO Auto-generated constructor stub
+		}
+		public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
+        {
+        	
+            if (touchEvent.isActionDown())
+            {
+            	downListener.isOn = true;
+            	return true;
+            }
+            else if (touchEvent.isActionUp())
+    		{
+    			downListener.isOn = false;
+    			return true;
+    		}
+            else if (touchEvent.isActionCancel())
+            {
+            	downListener.isOn = false;
+    			return true;
+            }
+            return false;
+        };
+      
+    	
+    }
+    class btnListener
+    {
+    	boolean isOn;
+    	public btnListener()
+    	{
+    		isOn = false;
+    	}
+    }
+    class Control implements IUpdateHandler
+    {
+    	//Clase que controla ambos botones y evita que ocurran interferencias
+    	DirButton left_arrow;
+    	DirButton right_arrow;
+    	btnListener leftOn;
+    	btnListener rightOn;
+    	public Control()
+    	{
+    		leftOn = new btnListener();
+    	    rightOn = new btnListener();
+    		left_arrow = new DirButton(0, 0, CAMERA_WIDTH/2, CAMERA_HEIGHT, vbo,leftOn);
+    	    left_arrow.setAlpha(0.0f);
+    	    right_arrow = new DirButton(CAMERA_WIDTH/2, 0, CAMERA_WIDTH/2, CAMERA_HEIGHT, vbo,rightOn);
+    	    right_arrow.setAlpha(0.0f);
+    	    
+    	}
+		@Override
+		public void onUpdate(float pSecondsElapsed) {
+			// TODO Auto-generated method stub
+			if(rightOn.isOn && leftOn.isOn)
+			{
+				rightOn.isOn = false;
+				leftOn.isOn = false;
+			}
+			if (rightOn.isOn)
+    		{
+				
+    			Player player = BallGame.this.player;
+    			if(player.sprite.getX()< BallGame.CAMERA_WIDTH - Player.size_x)
+    			{
+    				player.sprite.setPosition(player.sprite.getX()+Player.speed, player.sprite.getY());
+    			}
+    		}
+			else if (leftOn.isOn)
+    		{
+				
+    			Player player = BallGame.this.player;
+    			if(player.sprite.getX()>0)
+    			{
+    				player.sprite.setPosition(player.sprite.getX()-Player.speed, player.sprite.getY());
+    			}
+    		}
+			
+		}
+		@Override
+		public void reset() {
+			// TODO Auto-generated method stub
+			
+		}
+    }
 }
