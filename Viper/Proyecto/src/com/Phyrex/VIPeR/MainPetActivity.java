@@ -75,32 +75,33 @@ public class MainPetActivity extends SherlockFragment{
 	@Override
 	public void onResume() {
 		super.onResume();
-		running=true;
+		canvas.startCanvas();
 		
 	}
 	
 	@Override
 	public void onPause() {
 		super.onPause();
-		running=false;
+	
+		canvas.stopCanvas();
 	}
 	
 	@Override
 	public void onStop() {
 		super.onStop();
-		running=false;
+		canvas.stopCanvas();
 	}
 	
         @Override
 	public void onDetach(){
 		super.onDetach();
-		running = false;
+		canvas.stopCanvas();
 	}
         
     @Override
 	public void onDestroy(){
 		super.onDestroy();
-		running = false;
+		canvas.stopCanvas();
 	}
         
     public void Actions(int action){
@@ -392,20 +393,7 @@ public class MainPetActivity extends SherlockFragment{
 		@Override
 		public void surfaceDestroyed(SurfaceHolder holder) {
 			// TODO Auto-generated method stub
-			running = false;
-			Boolean retry = true;
-			while(retry)
-			{
-				try {
-					
-					drawthread.join();
-					retry = false;
-					
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			stopCanvas();
 		}
 		
 		
@@ -668,6 +656,34 @@ public class MainPetActivity extends SherlockFragment{
 						canvas.Draw(can);
 					
 					hold.unlockCanvasAndPost(can);
+				}
+			}
+			
+		}
+		public void startCanvas()
+		{
+			hold = canvas.getHolder();
+			running = true;
+			drawthread = new Thread(this);
+			drawthread.start();
+		}
+		public void stopCanvas()
+		{
+			running = false;
+			Boolean retry = true;
+			while(retry)
+			{
+				try {
+					
+					if(drawthread != null)
+					{
+						drawthread.join();
+						
+					}
+					retry = false;
+					drawthread = null;
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 		}

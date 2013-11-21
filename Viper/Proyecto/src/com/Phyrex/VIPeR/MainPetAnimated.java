@@ -272,13 +272,13 @@ public class MainPetAnimated extends SherlockFragment{
 					case MotionEvent.ACTION_DOWN:
 						if(!sleeping && timeeat==0){
 							if(!soapFingerMove && touchX>0 && touchX<food.getWidth() && touchY>height*5/6 && touchY<height*5/6+food.getHeight()){
-								update_coordinates(touchX, touchY);//comida
+								//update_coordinates(touchX, touchY);//comida
 								foodFingerMove = true;
 							}else if(!foodFingerMove && !soapFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()/7){
-								update_coordinates(touchX, touchY);//tocar mascota
+								//update_coordinates(touchX, touchY);//tocar mascota
 								petFingerMove = true;
 							}else if(!foodFingerMove && touchX>width/2-soap.getWidth() && touchX<width/2+soap.getWidth() && touchY>height*5/6 && touchY<height*5/6+soap.getHeight()){
-								update_coordinates(touchX, touchY);//arrastrar soap
+								//update_coordinates(touchX, touchY);//arrastrar soap
 								soapFingerMove = true;
 							}
 						}

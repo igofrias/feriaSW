@@ -281,19 +281,19 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	public final void onSensorChanged(SensorEvent event) {
 		if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
             return;
-	    //Cada vez que cambia el sensor se reciben los valores y se procesan.
-	    raw_accel_x = event.values[0];
-	    raw_accel_y = event.values[1];
-	    raw_accel_z = event.values[2];
-	    
-	    process_aceleration();
-	    get_speed();
-	    canvas.update_coordinates(this.vel_x, this.vel_y);
-	    //mostrar_velocidades_debug();
-	    
-	    
-	    
+		//TODO
+		if(!playmode  || (playmode && canvas.inplay)){
+		    //Cada vez que cambia el sensor se reciben los valores y se procesan.
+		    raw_accel_x = event.values[0];
+		    raw_accel_y = event.values[1];
+		    raw_accel_z = event.values[2];
+		    
+		    process_aceleration();
+		    get_speed();
+		    canvas.update_coordinates(this.vel_x, this.vel_y);
+		}
 	}
+	
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -477,8 +477,6 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			if(playmode){
 				//seleccion de pelotas en funcion next ball
 				//cerrar llamar a start program
-				//tiempo llevar el tiempo y resetearlo
-				//puntaje contar puntaje y sumarle extra por buen tiempo
 				if(pincersstate==0){//cargar boton de las pinzas
 					canvas.drawBitmap(buttonclose, center_x*5/16-buttonclose.getWidth()/2,
 							center_y*2*13/16-buttonclose.getHeight()/2, color);
