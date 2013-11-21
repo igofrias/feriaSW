@@ -179,7 +179,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	            {
 	            	isDown = true;
 	            }
-	            if (touchEvent.isActionUp())
+	            else if (touchEvent.isActionUp())
 	    		{
 	    			isDown = false;
 	    		}
@@ -210,7 +210,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	            {
 	            	isDown = true;
 	            }
-	            if (touchEvent.isActionUp())
+	            else if (touchEvent.isActionUp())
 	    		{
 	    			isDown = false;
 	    		}
@@ -239,6 +239,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	    hud.attachChild(right_arrow);
 	    hud.attachChild(hudText);
 	    hud.setTouchAreaBindingOnActionDownEnabled(true);
+	    hud.setTouchAreaBindingOnActionMoveEnabled(true);
 	    camera.setHUD(hud);
 	}
 	public void updateScore()
@@ -383,7 +384,7 @@ public class BallGame extends SimpleBaseGameActivity{
     		        	 BallGame.this.updateScore();
     		        	 Ball.this.y = 0;
     		        	 
-    		        	 Ball.this.x = 2*size_x +(float) (Math.random()*(BallGame.CAMERA_WIDTH-2*size_x)); 
+    		        	 Ball.this.x = 2*size_x +(float) (Math.random()*(BallGame.CAMERA_WIDTH-4*size_x));//Margen de 2*size_x
     		        	 Ball.this.sprite.setPosition(Ball.this.x, Ball.this.y);
     		         }
     		     };
@@ -408,7 +409,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	            		}
 	            		else
 	            		{
-	            			Ball.this.x = 2*size_x +(float) (Math.random()*(BallGame.CAMERA_WIDTH-2*size_x));
+	            			Ball.this.x = 2*size_x +(float) (Math.random()*(BallGame.CAMERA_WIDTH-4*size_x));
 	            			Ball.this.y = 0;
 	            			BallGame.this.removeLive();
 	            		}
