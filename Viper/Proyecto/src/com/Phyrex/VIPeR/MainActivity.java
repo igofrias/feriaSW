@@ -156,7 +156,6 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     			detach_achievementlist();
        		 	detach_statisticslist();
        		 	detach_remotecontrolgame();
-       		 	launch_states();
         		launch_remotecontrol();
         		getSlidingMenu().showContent();
         	}else{
@@ -250,7 +249,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		if(fragment==null){
 			fragment = new RemoteControl();
 			((RemoteControl) fragment).setPlaymode(false);
-			ft.replace(R.id.frame2, fragment,"remotecontrol");
+			ft.replace(R.id.linear, fragment,"remotecontrol");
 		}
 		else{
 			if(fragment.isDetached()){
@@ -258,8 +257,12 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 				ft.attach(fragment);
 			}
 		}
+		frame1 = (FrameLayout)this.findViewById(R.id.frame1);
+		frame2 = (FrameLayout)this.findViewById(R.id.frame2);
+		frame1.setVisibility(View.GONE);
+		frame2.setVisibility(View.GONE);
+		detachAll();
 		ft.commit();
-		changeLayoutVisibility();
 	}
     
     
@@ -496,7 +499,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 //            unbindService(btconnection);
 //            mBound = false;
 //        }
-        super.onPause(); //WHY IS CALLING STOP ON PAUSE;
+        super.onPause(); 
     }
 
     @Override
@@ -666,7 +669,9 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     		 launch_mainpet();	
     	 }else{
     		 Log.d("MainPetActivity","en fragmento mainPetActivity");
-
+    		 if(((MainPetActivity)fragment1).getGameselect()){
+    			 ((MainPetActivity)fragment1).setGameselect();
+    		 }else{
     		    if (doubleBackToExitPressedOnce) {
     		        super.onBackPressed();
     		        return;
@@ -674,7 +679,8 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     		    this.doubleBackToExitPressedOnce = true;
     		    Toast.makeText(this, R.string.exit2, Toast.LENGTH_SHORT).show();
 
-    		 Log.d("MainPetActivity","en fragmento mainPetActivity");
+    		    Log.d("MainPetActivity","en fragmento mainPetActivity");
+    		 }
     		 
     	 }
     	 
@@ -707,6 +713,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		else return false;
 	}
 
+	
 	public void sendBTCmessage(int delay, int message, int value1,
 			int value2) {
 		// TODO Auto-generated method stub

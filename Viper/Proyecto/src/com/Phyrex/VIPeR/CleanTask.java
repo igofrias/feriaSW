@@ -75,8 +75,8 @@ public class CleanTask implements Runnable {
 		 				//	Toast.LENGTH_LONG).show();
 				}
 				//Toast.makeText(parent, "wipe", Toast.LENGTH_SHORT).show();
-				if(((MainActivity)parent).isConnected())
-					((MainActivity)parent).startProgram("Clean.rxe");
+				//TODO if(((MainActivity)parent).isConnected())
+					//((MainActivity)parent).startProgram("HappyEyes.rxe");
 			}
         }
 		     	

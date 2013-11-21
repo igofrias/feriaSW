@@ -74,8 +74,8 @@ public class PooTask implements Runnable {
 		 			//Toast.makeText(parent, "Logro Desbloqueado Buena Digestion", 
 		 			//		Toast.LENGTH_LONG).show();
 				}
-				if(((MainActivity)parent).isConnected())
-					((MainActivity)parent).startProgram("Poo.rxe");
+			//	TODO if(((MainActivity)parent).isConnected())
+				//	((MainActivity)parent).startProgram("ShameEyes.rxe");
 			}
         }
 		     	
