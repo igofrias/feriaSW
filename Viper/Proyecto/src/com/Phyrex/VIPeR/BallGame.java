@@ -1,14 +1,32 @@
 package com.Phyrex.VIPeR;
 
+import java.util.Random;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
+import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
+import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.primitive.Rectangle;
+import org.andengine.entity.scene.IOnAreaTouchListener;
+import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.ITouchArea;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.texture.ITexture;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.color.Color;
@@ -21,7 +39,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.IBinder;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 public class BallGame extends SimpleBaseGameActivity{
@@ -30,10 +51,28 @@ public class BallGame extends SimpleBaseGameActivity{
 	private static final int CAMERA_WIDTH = 800;
 	private static final int CAMERA_HEIGHT = 480;
 	
+	private Font font;
+	private Font smallfont;
+	HUD hud;
+	private Text hudText;
+	Control control;
+	Scene scene;
 	
 	VertexBufferObjectManager vbo;
+	
+	Player player;
+	Ball ball;
+	BitmapTextureAtlas ballTexture;
+	ITextureRegion ballTextureRegion;
+	BitmapTextureAtlas playerTexture;
+	ITextureRegion playerTextureRegion;
+	btnListener leftListener;
+	btnListener rightListener;
 	BTService btservice;
 	Activity thisActivity = this;
+	int puntaje;
+	int dificultad;
+	int vidas;
 	protected boolean mBound;
 	private Toast reusableToast;
 	private boolean pairing;
@@ -74,9 +113,11 @@ public class BallGame extends SimpleBaseGameActivity{
             mBound = false;
         }
     };
+	
+	
     @Override
     protected void onDestroy() {
-        btservice.destroyBTCommunicator();
+        //btservice.destroyBTCommunicator();
         if (mBound) {
             unbindService(btconnection);
             mBound = false;
@@ -86,12 +127,12 @@ public class BallGame extends SimpleBaseGameActivity{
     }
     @Override
 	public void onStop() {
-		if (mBound) {
-			unbindService(btconnection);
-			mBound = false;
-		}
+//		if (mBound) {
+//			unbindService(btconnection);
+//			mBound = false;
+//		}
 		super.onStop(); 
-		finish(); //Queremos que el juego finalize cuando se retroceda.
+//		finish(); //Queremos que el juego finalize cuando se retroceda.
 	}
     @Override
     public void onPause()
@@ -104,63 +145,111 @@ public class BallGame extends SimpleBaseGameActivity{
 		camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
 	    EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, 
 	    new FillResolutionPolicy(), camera);
+	    engineOptions.getTouchOptions().setNeedsMultiTouch(true);
 	    return engineOptions;
 	}
 
 	@Override
 	protected void onCreateResources() {
 		// TODO Auto-generated method stub
-		
+
+	    FontFactory.setAssetBasePath("font/");
+	    final ITexture fontTexture = new BitmapTextureAtlas(this.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+
+	    font = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 40.0f, true, Color.BLACK.getABGRPackedInt());
+	    smallfont = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 25.0f, true, Color.BLACK.getABGRPackedInt());
+	    font.load();
+	    smallfont.load();
+	    
+	    BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+	    ballTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR);
+	    ballTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(ballTexture, this, "ballred.png", 0, 0);
+	    ballTexture.load(); 
+	    playerTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR);
+	    playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(playerTexture, this, "tentosauriogame.png", 0, 0);
+	    playerTexture.load();  
 	}
 	protected void registerButtons()
 	{
 		//Inicializa botones del juego
-		HUD  hud = new HUD();
-		final Rectangle left_arrow = new Rectangle(20, 100, 60, 60, vbo)
-	    {
-	        public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
-	        {
-	            if (touchEvent.isActionUp())
-	            {
-	                // move player left
-	            }
-	            return true;
-	        };
-	    };
-	    left_arrow.setColor(new Color(0.3333f, 0.3f, 0.3f));
-	    final Rectangle right_arrow = new Rectangle(730, 100, 60, 60, vbo)
-	    {
-	        public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
-	        {
-	            if (touchEvent.isActionUp())
-	            {
-	                // move player left
-	            }
-	            return true;
-	        };
-	    };
-
-	    hud.registerTouchArea(left_arrow);
-	    hud.registerTouchArea(right_arrow);
-	    hud.attachChild(left_arrow);
-	    hud.attachChild(right_arrow);
+		hud = new HUD();
+		String hudStr = String.format("Puntaje:%d Vidas:%d",BallGame.this.puntaje, BallGame.this.vidas);
+		hudText = new Text(70, 40, font, hudStr,100,BallGame.this.vbo);
+		leftListener = new btnListener();
+		rightListener = new btnListener();
+		
+	    //hud.attachChild(control.left_arrow);
+	    //hud.attachChild(control.right_arrow);
 	    
+	    hud.attachChild(hudText);
+	    hud.setTouchAreaBindingOnActionDownEnabled(true);
+	    //hud.setTouchAreaBindingOnActionMoveEnabled(true);
 	    camera.setHUD(hud);
+	}
+	public void updateScore()
+	{
+		//Agrega 1 al puntaje actual
+		puntaje += 1;
+		if(puntaje % 2 == 0)
+		{
+			dificultad +=1; 
+			updateSpeed();
+		}
+		hudText.setText("Puntaje:"+puntaje+" Vidas:" + vidas);
+	}
+	public void updateSpeed()
+	{
+		//Cambia la velocidad de caida de la pelota de acuerdo a la dificultad
+		float min = 5;
+		float max = 100;
+		float steps = (float) (1.0/50.0); //Cantidad de "niveles" en los que sube la velocidad hasta llegar a max
+		ball.speed = (float) (min + (max-min)*steps*dificultad);
+	}
+	public void removeLive()
+	{
+		//Quita una vida al tentosaurio. Si no quedan vidas sale del juego TODO
+		if(vidas > 1)
+		{
+			vidas -=1;
+			hudText.setText("Puntaje:"+puntaje+" Vidas:" + vidas);
+		}
+		else
+		{
+			//Aqui se mata
+			hud.detachChild(hudText);
+			hudText = new Text(70, 40, smallfont, "Game Over. Presione el boton atrás para volver",100,BallGame.this.vbo);
+			hud.attachChild(hudText);
+			this.getEngine().unregisterUpdateHandler(ball.spriteTimerHandler);
+			ball.detach();
+			player.detach();
+		}
 	}
 	@Override
 	protected Scene onCreateScene() {
 		// TODO Auto-generated method stub
-		Scene scene = new Scene();
+		scene = new Scene();
+		puntaje = 0;
+		vidas = 3;
 		vbo = mEngine.getVertexBufferObjectManager();
 		registerButtons();
-	     scene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
+		control = new Control(leftListener, rightListener);
+		scene.setOnSceneTouchListener(control.tcontrol);
+		scene.setTouchAreaBindingOnActionDownEnabled(true);
+		hud.registerUpdateHandler(control);
+	     scene.setBackground(new Background(0.678f, 0.847f, 0.901f));
 	     if(btservice != null)
 	    	 if(btservice.isConnected())
 	    	 {
 	    		 btservice.startProgram("Eat.rxe");
 	    	 }
+	     player = new Player();
+	     ball = new Ball();
+	     scene.attachChild(player.sprite);
+	     scene.attachChild(ball.sprite);
+	     ball.createFallUpdater();
 	     return scene;
 	}
+	
 	@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -213,4 +302,227 @@ public class BallGame extends SimpleBaseGameActivity{
         reusableToast.setDuration(length);
         reusableToast.show();
     }
+    
+    private class Ball
+    {
+    	Sprite sprite;
+    	
+    	static final int size_x = 40;
+    	static final int size_y = 40;
+    	TimerHandler spriteTimerHandler;
+    	float speed;
+    	float x;
+    	float y;
+    	public Ball()
+    	{
+    		this.x = 2*size_x +(float) (Math.random()*(BallGame.CAMERA_WIDTH-4*size_x));//Margen de 2*size_x;
+    		this.y = 0;
+    		sprite = new Sprite(x-size_x,y-size_y,size_x,size_y,ballTextureRegion,BallGame.this.vbo)
+    		{
+    		     @Override
+    		     protected void onManagedUpdate(float pSecondsElapsed)
+    		     {
+    		         if (player.sprite.collidesWith(this))
+    		         {                                                              
+    		             //Aumenta puntaje si es que choca con el jugador. Ademas vuelve a poner a la pelota arriba
+    		        	 //en una posicion x arbitraria
+    		        	 BallGame.this.updateScore();
+    		        	 Ball.this.y = 0;
+    		        	 
+    		        	 Ball.this.x = 2*size_x +(float) (Math.random()*(BallGame.CAMERA_WIDTH-4*size_x));//Margen de 2*size_x
+    		        	 Ball.this.sprite.setPosition(Ball.this.x, Ball.this.y);
+    		         }
+    		     };
+    		};;
+    		this.speed = 5;
+    	}
+		
+    	public void createFallUpdater()
+    	{
+    		float updateTime = 0.0333f;
+			spriteTimerHandler = new TimerHandler(updateTime, new ITimerCallback()
+	        {                      
+	            @Override
+	            public void onTimePassed(final TimerHandler pTimerHandler)
+	            {
+	            	if(spriteTimerHandler != null)
+	            	{
+	            		spriteTimerHandler.reset();
+	            		if(Ball.this.y <= BallGame.CAMERA_HEIGHT)
+	            		{
+	            			Ball.this.y = Ball.this.y + speed;
+	            		}
+	            		else
+	            		{
+	            			Ball.this.x = 2*size_x +(float) (Math.random()*(BallGame.CAMERA_WIDTH-4*size_x));
+	            			Ball.this.y = 0;
+	            			BallGame.this.removeLive();
+	            		}
+	            		sprite.setPosition(x, y);
+	            	}
+	               
+	            }
+	        });
+			
+	        BallGame.this.getEngine().registerUpdateHandler(spriteTimerHandler );
+    	}
+    	public void detach()
+    	{
+    		BallGame.this.scene.detachChild(sprite);
+    	}
+    	
+    }
+    private class Player
+    {
+    	Sprite sprite;
+    	
+    	static final int size_x = 80;
+    	static final int size_y = 100;
+    	static final int speed = 10;
+    	public Player()
+    	{
+    		//sprite = new Rectangle(x-size_x,y-size_y,size_x,size_y,BallGame.this.vbo);
+    		int x = BallGame.CAMERA_WIDTH/2;
+    		int y = BallGame.CAMERA_HEIGHT-size_y/2;
+    		sprite = new Sprite(x-size_x,y-size_y,size_x,size_y, playerTextureRegion, vbo);
+    		
+    	}
+    	public void detach()
+    	{
+    		BallGame.this.scene.detachChild(sprite);
+    	}
+    }
+    class DirButton extends Rectangle
+    {
+    	//Boton que controla una sola direccion
+    	btnListener downListener = null;
+
+		public DirButton(float pX, float pY, float pWidth, float pHeight,
+				VertexBufferObjectManager pVertexBufferObjectManager,btnListener parentDown) {
+			super(pX, pY, pWidth, pHeight, pVertexBufferObjectManager);
+			downListener = parentDown;
+			// TODO Auto-generated constructor stub
+		}
+		public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
+        {
+        	
+            if (touchEvent.isActionDown())
+            {
+            	downListener.isOn = true;
+            	return true;
+            }
+            else if (touchEvent.isActionUp())
+    		{
+    			downListener.isOn = false;
+    			return true;
+    		}
+            else if (touchEvent.isActionCancel())
+            {
+            	downListener.isOn = false;
+    			return true;
+            }
+            return false;
+        };
+      
+    	
+    }
+    class TouchControl implements IOnSceneTouchListener
+    {
+    	btnListener leftListener;
+    	btnListener rightListener;
+    	public TouchControl(btnListener left, btnListener right)
+    	{
+    		leftListener = left;
+    		rightListener = right;
+    	}
+		
+		@Override
+		public boolean onSceneTouchEvent(Scene pScene,
+				TouchEvent event) {
+			// TODO Auto-generated method stub
+			float X = event.getX();
+	    	float Y = event.getY();
+	    	if(event.isActionDown())
+	    	{
+	    		if(X > CAMERA_WIDTH/2)
+         	   {
+         		  leftListener.isOn = false;
+         		  rightListener.isOn = true;
+         	   }
+         	   else if(X <= CAMERA_WIDTH/2)
+         	   {
+         		  leftListener.isOn = true;
+         		  rightListener.isOn = false;
+         	   }
+	    	}
+	    	else if(event.isActionUp())
+	    	{
+	    		leftListener.isOn = false;
+       		  rightListener.isOn = false;
+	    	}
+	    	
+			return false;
+		}
+    }
+    class btnListener
+    {
+    	boolean isOn;
+    	public btnListener()
+    	{
+    		isOn = false;
+    	}
+    }
+    class Control implements IUpdateHandler
+    {
+    	//Clase que controla ambos botones y evita que ocurran interferencias
+    	DirButton left_arrow;
+    	DirButton right_arrow;
+    	btnListener leftOn;
+    	btnListener rightOn;
+    	TouchControl tcontrol;
+    	public Control(btnListener left, btnListener right)
+    	{
+    		leftOn = left;
+    	    rightOn = right;
+    		tcontrol = new TouchControl(leftOn,rightOn);
+    	    
+    	}
+		@Override
+		public void onUpdate(float pSecondsElapsed) {
+			// TODO Auto-generated method stub
+			if(rightOn.isOn && leftOn.isOn)
+			{
+				rightOn.isOn = false;
+				leftOn.isOn = false;
+			}
+			if (rightOn.isOn)
+    		{
+				
+    			Player player = BallGame.this.player;
+    			if(player.sprite.getX()< BallGame.CAMERA_WIDTH - Player.size_x)
+    			{
+    				player.sprite.setPosition(player.sprite.getX()+Player.speed, player.sprite.getY());
+    			}
+    		}
+			else if (leftOn.isOn)
+    		{
+				
+    			Player player = BallGame.this.player;
+    			if(player.sprite.getX()>0)
+    			{
+    				player.sprite.setPosition(player.sprite.getX()-Player.speed, player.sprite.getY());
+    			}
+    		}
+			
+		}
+		@Override
+		public void reset() {
+			// TODO Auto-generated method stub
+			
+		}
+    }
+    private class RestartScene extends Scene
+    {
+    	
+    };
 }
