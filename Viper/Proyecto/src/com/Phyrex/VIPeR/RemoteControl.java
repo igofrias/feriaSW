@@ -652,7 +652,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		
 		public void validcatchball() throws IOException{
 			//detenccion de sensor
-			int sensorball=((MainActivity)thisActivity).recivemsg();//aqui esto debe ser igual a lo de cele :D
+			int sensorball=((MainActivity)thisActivity).btservice.getBallColor();//aqui esto debe ser igual a lo de cele :D
 			//((MainActivity)thisActivity).sendMessageBTNumber(0, 201);
 			Log.e("Mensaje Recibido", String.valueOf(sensorball));
 			if (sensorball==ballcolor){
@@ -661,6 +661,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 				nextball();
 				totalTime=totalTime-300;
 			}
+			((MainActivity)thisActivity).btservice.invalidateBallColor();
 		}
 		
 		public void exitgame(){

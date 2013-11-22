@@ -57,7 +57,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 	private ThreadClass thread;
 	private String connectionType= null;
     String mac_nxt="";
-    private BTService btservice;
+    BTService btservice;
     private boolean mBound;
     ///******** Variables del layout main activity //////////
     private Layout linear;
