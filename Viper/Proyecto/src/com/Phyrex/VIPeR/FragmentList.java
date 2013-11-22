@@ -33,7 +33,7 @@ public class FragmentList extends SherlockListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		String[] frags = {"Conectar", "Control Remoto", "Logros", "About" };
+		String[] frags = {"Conectar", "Control Remoto", "Logros", "Estadisticas", "About" };		
 		ArrayAdapter<String> fragAdapter = new ArrayAdapter<String>(
 				getActivity(), android.R.layout.simple_list_item_1,
 				android.R.id.text1, frags);
@@ -55,7 +55,10 @@ public class FragmentList extends SherlockListFragment {
 			menuitem=2;
 			break;
 		case 3:
-			//about?
+			menuitem=3;
+			break;
+		case 4:
+			menuitem=4;
 			break;
 		
 		}

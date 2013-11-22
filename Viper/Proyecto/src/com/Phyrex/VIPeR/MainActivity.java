@@ -149,37 +149,57 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     
     public void switchContent(Fragment fragment, int menuitem) {
   		// TODO Auto-generated method stub
+    	switch(menuitem){
     	
-    	if(menuitem==1){
-    		if (btservice.isConnected()){
-    			detachAll();
-    			detach_achievementlist();
-       		 	detach_statisticslist();
-       		 	detach_remotecontrolgame();
-        		launch_remotecontrol();
-        		getSlidingMenu().showContent();
-        	}else{
-        		Toast.makeText(this, "Debe estar conectado para usar esta función", Toast.LENGTH_SHORT).show();
-        	}
-    	}else if(menuitem==2){
-    		launch_achievementlist();
-    		getSlidingMenu().showContent();
-    	}
+	    	case 0:{
+	  			getSlidingMenu().showContent();
+				if (btservice.getCommunicator() == null || !btservice.isConnected()) {
+					getSlidingMenu().showContent();
+					Database_Helper db = new Database_Helper(thisActivity);
+			    	List<Pet> mascotas = db.getPets(); //lista de mascotas
+			    	db.close();
+			    	Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
+					btservice.connect(petto.get_mac());
+					
+			    } 
+				else if(btservice.isConnected()){
+			    	btservice.destroyBTCommunicator();
+			    }
+	    		break;
+	    	}
+	    	
+	    	case 1:{
+	    		if (btservice.isConnected()){
+	    			detachAll();
+	    			detach_achievementlist();
+	       		 	detach_statisticslist();
+	        		launch_remotecontrol();
+	        		getSlidingMenu().showContent();
+	        	}else{
+	        		Toast.makeText(this, "Debe estar conectado para usar esta función", Toast.LENGTH_SHORT).show();
+	        	}
+	    		break;
+	    	}
+	    	
+	    	case 2:{
+		    	launch_achievementlist();
+				getSlidingMenu().showContent();
+				break;
+	    	}
+	    	
+	    	case 3:{
+	    		launch_statisticslist();
+				getSlidingMenu().showContent();
+				break;
+	    	}
+	    	case 4:{
+	    		launch_about();
+	    		getSlidingMenu().showContent();
+	    		break;	
+	    	}
+	    }    	
+    }
     	
-  		if (menuitem==0){
-  			getSlidingMenu().showContent();
-			if (btservice.getCommunicator() == null || !btservice.isConnected()) {
-				Database_Helper db = new Database_Helper(thisActivity);
-		    	List<Pet> mascotas = db.getPets(); //lista de mascotas
-		    	db.close();
-		    	Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
-				btservice.connect(petto.get_mac());
-		    } else if(btservice.isConnected()){
-		    	btservice.destroyBTCommunicator();
-		    }
-    	}
-
-  	}
     
     //llama al supa framento
     void launch_create() {//identificamos y cargamos el fragmento menu
@@ -405,7 +425,23 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		}
 		ft.commit();
 	}
-    
+    void launch_about(){
+    	
+		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		SherlockFragment fragment = ((About)getSupportFragmentManager().findFragmentByTag("about"));
+		
+		if(fragment==null){
+			fragment = new About();
+			ft.replace(R.id.frame2, fragment,"about");
+		}
+		else{
+			if(fragment.isDetached()){
+				ft.attach(fragment);
+			}
+		}
+		ft.commit();
+		changeLayoutVisibility();
+    }
     void changeLayoutVisibility(){
     	frame1 = (FrameLayout)this.findViewById(R.id.frame1);
 		frame2 = (FrameLayout)this.findViewById(R.id.frame2);

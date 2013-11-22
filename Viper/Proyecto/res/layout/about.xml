@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="General"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+  		android:layout_height="1dp"
+        android:layout_marginTop="8sp"
+        android:background="#FFFFFF"
+        />
+    
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:text="Aplicación creada por Juan Avalo, Celeste Bertin, Rocio Fernandez y Rodrigo Frias, miembros de la pre-empresa Phyrex,  para la Feria de Software de la UTFSM - Marzo 2014"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Juego"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ImageView
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+  		android:layout_height="1dp"
+        android:layout_marginTop="8sp"
+        android:background="#FFFFFF"
+        />
+        
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.78"
+        android:text="El juego se trata de una mascota virtual que esta conectada a un robot LEGO Mindstorms, con el cual interactua."
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="46dp"
+        android:layout_height="89dp"
+        android:layout_gravity="center"
+        android:src="@drawable/tentosaurioshot" />
+
+        <ImageView
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+  		android:layout_height="1dp"
+        android:layout_marginTop="8sp"
+        android:background="#FFFFFF"
+         />
+
+</LinearLayout>
