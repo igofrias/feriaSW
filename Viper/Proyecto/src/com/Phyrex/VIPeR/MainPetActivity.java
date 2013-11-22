@@ -163,6 +163,7 @@ public class MainPetActivity extends SherlockFragment{
 		//se dibje en el canvas
 		Paint color;
 		Paint colorgray;
+		Paint colorblack;
 		SurfaceHolder hold;
 		Canvas can;
 		Thread drawthread;
@@ -223,6 +224,8 @@ public class MainPetActivity extends SherlockFragment{
 			color = new Paint();
 			getHolder().addCallback(this);
 			color.setColor(Color.GREEN);
+			colorblack = new Paint();
+			colorblack.setColor(Color.BLACK);
 			colorgray = new Paint();
 			colorgray.setColor(Color.GRAY);
 			running = false;
@@ -474,7 +477,9 @@ public class MainPetActivity extends SherlockFragment{
 			}else{//rectangulo con seleccion de juegos
 				canvas.drawRect(width/16, height/20, width*15/16 , height*19/20, colorgray);
 				canvas.drawRect(width*2/16, height*2/20, width*6/16 , height*6/20, color);
-				canvas.drawRect(width*2/16, height*8/20, width*6/16 , height*13/20, color);
+				canvas.drawText("Juego 1", width*3/16 , height*4/20, colorblack);
+				canvas.drawRect(width*2/16, height*8/20, width*6/16 , height*12/20, color);
+				canvas.drawText("Juego 2", width*3/16 , height*10/20, colorblack);
 				//dibujar links a juegos y nombres D:	
 			}
 	       

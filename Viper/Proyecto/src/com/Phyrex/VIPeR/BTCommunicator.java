@@ -289,6 +289,7 @@ public class BTCommunicator extends Thread {
                     sendState(FIRMWARE_VERSION);
 
                 break;
+                //TODO
                                
         }
     }
