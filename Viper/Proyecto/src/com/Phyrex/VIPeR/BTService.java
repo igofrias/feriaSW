@@ -47,7 +47,7 @@ public class BTService extends Service implements BTConnectable{
     private String programToStart;
 	private ThreadClass thread;
 	private String connectionType= null;
-	private int lastColor;
+	private int lastColor = -1;
     String mac_nxt="";
     
     /////*********Valores de motores*********//////
