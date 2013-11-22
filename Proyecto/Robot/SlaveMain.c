@@ -45,11 +45,15 @@ void ReadMessages(){
 					StopTask(MoveTail);
 					motor[tailMotor] = 0;
 					break;
-				case 3: //Shutdown
+				case 90: //Victory Fanfare
+					PlaySoundFile("VictoryFanfare.rso");
+					break;
+				case 200: //Shutdown
 					powerOff();
 					break;
 			}
 			ClearMessage();
+			nMessage = 0;
 		}
 	}
 }
