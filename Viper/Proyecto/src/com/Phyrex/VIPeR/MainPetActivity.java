@@ -134,7 +134,7 @@ public class MainPetActivity extends SherlockFragment{
 		 			if(!((StatesActivity)fragment1).isSleeping()){
 		 				if(updater.play(entry))
 		         			Toast.makeText(thisActivity, "Logro Desbloqueado Jugueton", Toast.LENGTH_LONG).show();((StatesActivity)fragment1).playing();
-			 			Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
+			 			//Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
 	 			    	if(((MainActivity)thisActivity).isConnected())
 			    				((MainActivity)thisActivity).startProgram("Shake.rxe");
 		 			}else{
@@ -487,7 +487,7 @@ public class MainPetActivity extends SherlockFragment{
 			can.drawARGB(150, 0, 0, 0);
 			if(canvas.sleeping){
 				if(((MainActivity)thisActivity).isConnected())
-					((MainActivity)thisActivity).startProgram("Sleep.rxe");
+					((MainActivity)thisActivity).startProgram("CloseEyes.rxe");
 			}
 		}
 		
@@ -619,7 +619,7 @@ public class MainPetActivity extends SherlockFragment{
 						center_y - eyespooping.getHeight()*4/7, color);
 				if(cleantime%10==0){
 					if(((MainActivity)thisActivity).isConnected())
-	    				((MainActivity)thisActivity).startProgram("ShowEyes.rxe");
+	    				((MainActivity)thisActivity).startProgram("ShameEyes.rxe");
 					Drawclean(center_x, center_y);
 				}
 				cleantime++;

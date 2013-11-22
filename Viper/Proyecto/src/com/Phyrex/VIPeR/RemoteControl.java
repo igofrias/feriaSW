@@ -522,7 +522,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 				insertTextScore(width, height);
 				insertTextScorevalue(width, height);
 				//TODO
-				if(!inplay && count>0){
+				if(!inplay /*&& count>0*/){
 					insertTextgameover(width, height);
 					//GAME OVER
 				}
@@ -704,8 +704,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 				pincersstate=1;
 				if(((MainActivity)thisActivity).isConnected()){
     				((MainActivity)thisActivity).startProgram("CatchBall.rxe");
+    				///validcatchball();
     				release=false;
-    				validcatchball();
 				}
 			}else{//abrir TODO
 				pincersstate=0;

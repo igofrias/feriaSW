@@ -265,14 +265,14 @@ public class BTService extends Service implements BTConnectable{
     public void startProgram(String name) {
         // for .rxe programs: get program name, eventually stop this and start the new one delayed
         // is handled in startRXEprogram()
-        if (name.endsWith(".rxe")) {
-        	Log.d("pepe", "rxe");
-            programToStart = name;        
-            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.GET_PROGRAM_NAME, 0, 0);
-            Log.d("pepe", "startprogram fin D:");
-            //return;
-        }
-              
+//        if (name.endsWith(".rxe")) {
+//        	Log.d("pepe", "rxe");
+//            programToStart = name;        
+//            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.GET_PROGRAM_NAME, 0, 0);
+//            Log.d("pepe", "startprogram fin D:");
+//            //return;
+//        }
+//              
        /// for .nxj programs: stop bluetooth communication after starting the program
         /*if (name.endsWith(".nxj")) {
             sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name);
@@ -410,7 +410,7 @@ public class BTService extends Service implements BTConnectable{
         public void handleMessage(Message myMessage) {
             switch (myMessage.getData().getInt("message")) {
                 case BTCommunicator.DISPLAY_TOAST:
-                    showToast(myMessage.getData().getString("toastText"), Toast.LENGTH_SHORT);
+                    //showToast(myMessage.getData().getString("toastText"), Toast.LENGTH_SHORT);
                     break;
                 case BTCommunicator.STATE_CONNECTED:
                     connected = true;
@@ -432,10 +432,8 @@ public class BTService extends Service implements BTConnectable{
                 case BTCommunicator.PROGRAM_NAME:
                     if (myBTCommunicator != null) {
                         byte[] returnMessage = myBTCommunicator.getReturnMessage();
-                        Log.d("pepe", "handler bsdgns");
                         startRXEprogram(returnMessage[2]);
                     }
-                    
                     break;
 
                 case BTCommunicator.STATE_CONNECTERROR_PAIRING:
@@ -510,6 +508,5 @@ public class BTService extends Service implements BTConnectable{
         	return byteToInt(recibir[4]);	
     	}
     	return 0;
-    	
     }
 }
