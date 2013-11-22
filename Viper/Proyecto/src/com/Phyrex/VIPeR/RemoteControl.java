@@ -1,6 +1,7 @@
 package com.Phyrex.VIPeR;
 
 
+import java.io.IOException;
 import java.util.Timer;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -314,10 +315,21 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		}
 		//getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.control_remoto_debug)).commit();
 	}
-
+	
 	@Override
 	public void onPause() {
 		super.onPause();
+		if(playmode){
+			if(!canvas.release){
+				if(((MainActivity)thisActivity).isConnected()){
+					((MainActivity)thisActivity).startProgram("ReleaseBall.rxe");//TODO
+					waitRelease();	
+				}
+			}
+				if(((MainActivity)thisActivity).isConnected())
+					((MainActivity)thisActivity).startProgram("CloseClamps.rxe");
+			
+		}
 		manager.unregisterListener(this);
 		running=false;
 		try {
@@ -347,6 +359,21 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			e.printStackTrace();
 		}
 	}
+        
+    public void waitRelease(){
+    	long  time = System.currentTimeMillis();
+    	long timePrev=0;
+    	long timeDelta=0;
+    	boolean flag=true;
+    	while(flag){
+    		timePrev = System.currentTimeMillis();
+	        timeDelta = timePrev - time;
+	        if ( timeDelta > 2000) {
+	           flag=false;
+	        }
+    	}
+    }   
+        
 	public int getMAX_RANGE() {
 		return MAX_RANGE;
 	}
@@ -394,6 +421,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		int pincersstate;
 		boolean inplay;
 		boolean catchball;
+		boolean release;
 		int score;
 		int ballcolor;
 
@@ -459,7 +487,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		}
 		
 		
-		public void Draw(Canvas canvas)
+		public void Draw(Canvas canvas) throws IOException
 		{
 			
 			float center_x = canvas.getWidth()/2;
@@ -488,7 +516,6 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 						center_y*2*2/16-ballnext.getHeight()/2, color);
 				if(inplay){
 					timecalc(height);
-					validcatchball();
 				}
 				
 				canvas.drawRect(width*13/14, 0, width , lefttimeprogress, color);
@@ -496,7 +523,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 				insertTextScore(width, height);
 				insertTextScorevalue(width, height);
 				//TODO
-				if(!inplay){
+				if(!inplay && count>0){
 					insertTextgameover(width, height);
 					//GAME OVER
 				}
@@ -624,9 +651,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			}
 		}
 		
-		public void validcatchball(){
+		public void validcatchball() throws IOException{
 			//detenccion de sensor
-			int sensorball=0;
+			int sensorball=((MainActivity)thisActivity).recivemsg();//aqui esto debe ser igual a lo de cele :D
+			Log.e("Mensaje Recibido", String.valueOf(sensorball));
 			if (sensorball==ballcolor){
 				catchball=true;
 				score();
@@ -661,28 +689,41 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	            public void onClick(DialogInterface dialogo1, int id) {  
 	            	//aceptar
 	            	inplay=true;
+	            	if(((MainActivity)thisActivity).isConnected()){
+	    				((MainActivity)thisActivity).startProgram("OpenClamps.rxe");
+	    				release = true;
+	            	}
 			    }
 	        });
 	        dialog.show();
+	        
 		}
 		
-		public void movepincers(){//llama a cerrar las pinzas
-			//thisActivity.startProgram("");
-			if(pincersstate==0){
+		public void movepincers() throws IOException{//llama a cerrar las pinzas
+			if(pincersstate==0){//cerrar
 				pincersstate=1;
-			}else{
+				if(((MainActivity)thisActivity).isConnected()){
+    				((MainActivity)thisActivity).startProgram("CatchBall.rxe");
+    				release=false;
+    				validcatchball();
+				}
+			}else{//abrir TODO
 				pincersstate=0;
+				if(((MainActivity)thisActivity).isConnected()){
+    				((MainActivity)thisActivity).startProgram("ReleaseBall.rxe");
+    				release=true;
+				}
 			}
 		}
 		
-		public void nextball(){//excoje una pelota al azar
+		public void nextball(){//escoje una pelota al azar
 			int rand = (int) (Math.random() * 2);
 			if(rand==0){
 				ballnext = ballr;
-				ballcolor=0;
+				ballcolor=5;
 			}else{
 				ballnext = ballb;
-				ballcolor=1;
+				ballcolor=2;
 			}
 		}
 		
@@ -704,7 +745,12 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 				if(touchX>width*5/32-buttonclose.getWidth()/2 && touchX<width*5/32+buttonclose.getWidth()/2 && touchY>height*13/16-buttonclose.getHeight()/2 && touchY<height*13/16+buttonclose.getHeight()/2){
 					switch (e.getAction()) {
 					case MotionEvent.ACTION_DOWN:
-						movepincers();
+						try {
+							movepincers();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 				      break;
 				    }
 				}
@@ -741,7 +787,12 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					can = hold.lockCanvas();
 				
 					
-						canvas.Draw(can);
+						try {
+							canvas.Draw(can);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					
 					hold.unlockCanvasAndPost(can);
 				}

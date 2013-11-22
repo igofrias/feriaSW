@@ -82,13 +82,12 @@ public class StatesActivity extends SherlockFragment{
 	public void onStart(){
 		if(task!=null){
 			if(task.getStatus()== AsyncTask.Status.FINISHED){
-				Log.d("task", "on start say i'm finished");
 				//task.execute();
 			}else if(task.getStatus()== AsyncTask.Status.PENDING){
 				task.execute();
-				Log.d("task", "on start say i'm pending");
+			
 			}else if(task.getStatus() == AsyncTask.Status.RUNNING){
-				Log.d("task", "on start say i'm running");
+				
 				
 			}
 		}
@@ -180,13 +179,13 @@ public class StatesActivity extends SherlockFragment{
 		//para guardar en la BD
 		Database_Helper db = new Database_Helper(getActivity());
 		
-        Log.d("Reading: ", "Reading all contacts..");
+     
         List<Pet> mascotas = db.getPets();
         
         for (Pet cn : mascotas) {
             String log = "Id: "+cn.get_id()+", Name: " + cn.get_name() + ", Score: " + cn.get_raza();
                 // Writing Contacts to log
-        Log.d("Name: ", log);
+     
         
         db.close();
         
@@ -330,7 +329,7 @@ public class StatesActivity extends SherlockFragment{
 	    	while(flag){
 		    	if (isCancelled()){
 		    		try {
-		    			Log.d("task", "cancel in do in background");
+		    			
 		    	         flag=false;
 		    	     } catch (UnsupportedOperationException e) {
 		    	         e.printStackTrace();
@@ -352,22 +351,22 @@ public class StatesActivity extends SherlockFragment{
 			db.close();
 			Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
 			setlifetime(petto._birthdate);
-			Log.d("task", "task!");
+			
 	    	energy.setProgress((int) ((MainActivity)thisActivity).getBatteryLevel()*10);
 	    	hungrypet();
 			if(((MainActivity)thisActivity).isConnected()){
 				btstate.setVisibility(View.VISIBLE);
-				Log.d("task", "conectado");
+			
 			}else{
 				btstate.setVisibility(View.INVISIBLE);
-				Log.d("task", "desconectado");
+			
 			}
 			
 		}
 	    
 	    @Override
 	    protected void onPostExecute(Void voids) {
-	    	Log.d("task", "on post execute");
+	    
 
 	    }
 	    

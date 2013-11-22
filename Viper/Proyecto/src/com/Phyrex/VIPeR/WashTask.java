@@ -206,26 +206,22 @@ public class WashTask implements SensorEventListener, Runnable {
 		Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
 		vibe.vibrate(100); 
 		if(!states.isSleeping()){
-	    	if(!states.isFull())
-	    	{
-	    		if(updater.wash(helper)){
-	        		//Toast.makeText(parent, "Logro Desbloqueado Reluciente", Toast.LENGTH_LONG).show();
-	        	}
-	
-	     		if(states!=null && !states.isDetached()){//si el fragmento esta activo
-	     			states.washing();
-	            }
-	     		 if(((MainActivity)parent).isConnected())
-	    				((MainActivity)parent).startProgram("Wash.rxe"); //ver que sea el mismo nombre de programa
-	    	}
-	    	else
-	    	{
-	    		if(((MainActivity)parent).isConnected())
-					((MainActivity)parent).startProgram("Angry.rxe");
-	    		Toast.makeText(parent.getBaseContext(), ">:(", Toast.LENGTH_SHORT).show();
-	    	}
-		}else{
-			Toast.makeText(parent.getBaseContext(), "no puedes molestar a la mascota mientras duerme", Toast.LENGTH_SHORT).show();
-		}
+    		if(updater.wash(helper)){
+        		//Toast.makeText(parent, "Logro Desbloqueado Reluciente", Toast.LENGTH_LONG).show();
+        	}
+
+     		if(states!=null && !states.isDetached()){//si el fragmento esta activo
+     			states.washing();
+            }
+     		 if(((MainActivity)parent).isConnected())
+    				((MainActivity)parent).startProgram("ShameEyes.rxe"); //ver que sea el mismo nombre de programa
+    	}
+    	else
+    	{
+    	//	if(((MainActivity)parent).isConnected())
+			//	((MainActivity)parent).startProgram("Angry.rxe");
+    		//Toast.makeText(parent.getBaseContext(), ">:(", Toast.LENGTH_SHORT).show();
+    	}
+
 	}
 }

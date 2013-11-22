@@ -104,6 +104,13 @@ public class MainPetActivity extends SherlockFragment{
 		canvas.stopCanvas();
 	}
         
+    public boolean getGameselect(){
+    	return canvas.gameselect;
+    }
+    public void setGameselect(){
+    	canvas.gameselect=false;
+    }
+    
     public void Actions(int action){
 		final DB_Updater updater = new DB_Updater(thisActivity);
      	final Database_Helper entry = new Database_Helper(thisActivity);
@@ -112,13 +119,13 @@ public class MainPetActivity extends SherlockFragment{
 		switch(action){
 			case 1://comer
 				EatTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
-			break;
+				break;
 			case 2://dormir
 				SleepTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
-			break;
+				break;
 			case 3://lavar - Wash
 				WashTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
-			break;
+				break;
 			case 4://limpiar caca /clean
 				CleanTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
 			break;
@@ -328,13 +335,15 @@ public class MainPetActivity extends SherlockFragment{
 					    	cleanning=false;
 					      break;
 					}
-				if(timeeat==0 && touchX>width/4 && touchX<width/4+clock.getWidth() && touchY>height*5/6 && touchY<height*5/6+clock.getHeight()){
+				if(timeeat==0 && !soapFingerMove && !foodFingerMove && touchX>width/4 && touchX<width/4+clock.getWidth() && touchY>height*5/6 && touchY<height*5/6+clock.getHeight()){
 					switch (e.getAction()) {
 					case MotionEvent.ACTION_DOWN:
 						if(petstate==2){
 							petstate=0;
 							sleeping=false;
-							Actions(2);//accion dormir
+							if(((MainActivity)thisActivity).isConnected())
+								((MainActivity)thisActivity).startProgram("Vader.rxe");
+							Actions(2);//despertar
 						}else{
 							petstate=2;
 							sleeping=true;
@@ -427,6 +436,8 @@ public class MainPetActivity extends SherlockFragment{
 					Drawsleeping(center_x,center_y);
 				}else if(petstate==1){
 					Draweating(width, height, center_x, center_y);
+					if(((MainActivity)thisActivity).isConnected())
+	    				((MainActivity)thisActivity).startProgram("Eat.rxe");
 				}	
 				/*//Measure frame rate (unit: frames per second).
 		         now=System.currentTimeMillis();
@@ -441,6 +452,8 @@ public class MainPetActivity extends SherlockFragment{
 				canvas.drawBitmap(play, width*3/4, height*5/6, color);
 			
 				if(poop){
+					if(((MainActivity)thisActivity).isConnected())
+	    				((MainActivity)thisActivity).startProgram("ShameEyes.rxe");
 					can.drawBitmap(poo, center_x*28/16-poo.getWidth()/2, 
 						center_y*9/6- poo.getHeight()/2, color);
 				}
@@ -467,6 +480,10 @@ public class MainPetActivity extends SherlockFragment{
 			can.drawBitmap(tentosleeping, center_x-tentosleeping.getWidth()/2, 
 					center_y - tentosleeping.getHeight()*2/7, color);
 			can.drawARGB(150, 0, 0, 0);
+			if(canvas.sleeping){
+				if(((MainActivity)thisActivity).isConnected())
+					((MainActivity)thisActivity).startProgram("Sleep.rxe");
+			}
 		}
 		
 		public void Drawdirt(float center_x, float center_y, Canvas canvas){
@@ -533,7 +550,7 @@ public class MainPetActivity extends SherlockFragment{
 		
 		public void Draweating(float width, float height, float center_x, float center_y){
 			//masticando
-			if(timeeat>90){
+			if(timeeat>80){
 				bowlstate=3;
 				timeeat--;
 				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
@@ -598,6 +615,8 @@ public class MainPetActivity extends SherlockFragment{
 				can.drawBitmap(eyespooping, center_x-eyespooping.getWidth()*1/3, 
 						center_y - eyespooping.getHeight()*4/7, color);
 				if(cleantime%10==0){
+					if(((MainActivity)thisActivity).isConnected())
+	    				((MainActivity)thisActivity).startProgram("ShowEyes.rxe");
 					Drawclean(center_x, center_y);
 				}
 				cleantime++;
