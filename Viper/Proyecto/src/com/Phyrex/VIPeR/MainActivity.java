@@ -712,7 +712,16 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		}
 		else return false;
 	}
+	
+	public void sendMessageBTNumber(int box, int message) throws IOException{
+		// TODO Auto-generated method stub
+		if(btservice != null)
+		{
+			btservice.sendNumberMessage(box, message);
+		}
 
+	}
+	
 	public int recivemsg() throws IOException {
 		// TODO Auto-generated method stub
 		if(btservice != null)

@@ -231,7 +231,6 @@ public class BTCommunicator extends Thread {
      * @param message, the message as a byte array
      */
     public void sendMessage(byte[] message) throws IOException {
-    	Log.d("pepe", "sendMessage");
         if (nxtOutputStream == null)
             throw new IOException();
 
@@ -240,7 +239,6 @@ public class BTCommunicator extends Thread {
         nxtOutputStream.write(messageLength);
         nxtOutputStream.write(messageLength >> 8);
         nxtOutputStream.write(message, 0, message.length);
-        Log.d("pepe", "sendMessage fin");
     }  
 
     /**
@@ -250,7 +248,7 @@ public class BTCommunicator extends Thread {
     public byte[] receiveMessage() throws IOException {
         if (nxtInputStream == null)
             throw new IOException();
-
+     
         int length = nxtInputStream.read();
         length = (nxtInputStream.read() << 8) + length;
         byte[] returnMessage = new byte[length];
@@ -263,14 +261,11 @@ public class BTCommunicator extends Thread {
      * an error the state is sent to the handler.
      * @param message, the message as a byte array
      */
-    private void sendMessageAndState(byte[] message) {
-    	Log.d("pepe", "sendMessageAndState");
+    void sendMessageAndState(byte[] message) {
         if (nxtOutputStream == null){
-        	Log.d("pepe", "sendMessageAndState");
             return;
         }
         try {
-        	Log.d("pepe", "try send message  >:C");
             sendMessage(message);
         }
         catch (IOException e) {
@@ -299,7 +294,6 @@ public class BTCommunicator extends Thread {
     }
 
     private void startProgram(String programName) {
-    	Log.d("pepe", "start");
         byte[] message = LCPMessage.getStartProgramMessage(programName);
         sendMessageAndState(message);
         
@@ -311,10 +305,8 @@ public class BTCommunicator extends Thread {
     }
     
     private void getProgramName() {
-    	Log.d("pepe", "got program name  >:C");
         byte[] message = LCPMessage.getProgramNameMessage();
         sendMessageAndState(message);
-        Log.d("pepe", "got name del get program >:C");
     }
     private void doBeep(int frequency, int duration) {
         byte[] message = LCPMessage.getBeepMessage(frequency, duration);
@@ -411,16 +403,13 @@ public class BTCommunicator extends Thread {
                     doBeep(myMessage.getData().getInt("value1"), myMessage.getData().getInt("value2"));
                     break;
                 case START_PROGRAM:
-                	Log.d("pepe", "star program! :D >:C");
                     startProgram(myMessage.getData().getString("name"));
                     break;
                 case STOP_PROGRAM:
                 	stopProgram();
                     break;
                 case GET_PROGRAM_NAME:
-                	Log.d("pepe", "got name  >:C");
                     getProgramName();
-                    Log.d("pepe", "got name  >:C fin");
                     break;    
                 case DO_ACTION:
                     doAction(myMessage.getData().getInt("value1"));

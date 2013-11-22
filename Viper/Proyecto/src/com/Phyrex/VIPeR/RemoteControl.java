@@ -111,7 +111,6 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					if(thisActivity.isConnected())
 					{
 						send_speeds();
-						Log.e("RemoteControl", "thread corriendo");
 					}
 					else
 					{
@@ -654,6 +653,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		public void validcatchball() throws IOException{
 			//detenccion de sensor
 			int sensorball=((MainActivity)thisActivity).recivemsg();//aqui esto debe ser igual a lo de cele :D
+			//((MainActivity)thisActivity).sendMessageBTNumber(0, 201);
 			Log.e("Mensaje Recibido", String.valueOf(sensorball));
 			if (sensorball==ballcolor){
 				catchball=true;
@@ -735,7 +735,6 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		}
 		
 		public boolean onTouchEvent(MotionEvent e) {
-			Log.e("Draw", "pepe");
 			float touchX = (int)e.getX();
 			float touchY = (int)e.getY();
 			float width = canvas.getWidth();

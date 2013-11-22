@@ -315,6 +315,23 @@ public class BTService extends Service implements BTConnectable{
         else
             btcHandler.sendMessageDelayed(myMessage, delay);
     }
+    
+    //inbox = inbox al cul se manda mensaje
+    //message= mensaje numerico 
+    void sendNumberMessage(int inbox, int message) throws IOException { 
+    	
+    	byte[] msg = new byte[6];
+    	
+    	msg[0] = (byte)0x00; 		//0x00 0x80
+    	msg[1] = (byte)0x09; 		//0x09 
+    	msg[2] = (byte) inbox;      //inbox number (0-9)
+    	msg[3] = (byte) 5;			//messageSize
+    	msg[4] = (byte) message;	//MENSAJE  NUMERICO!!
+    	msg[5] = '\0'; 				//null, end of message
+    	myBTCommunicator.sendMessageAndState(msg); //funcion esta en BTCommunicator
+    	Log.d("Mensaje Enviado",Integer.toString(message));
+}
+   
 
   ///envia al bthandler los mensajes via blublu   (string)  
     void sendBTCmessage(int delay, int message, String name) {
@@ -475,6 +492,7 @@ public class BTService extends Service implements BTConnectable{
     {
     	return myBTCommunicator;
     }
+    
     public int reciveBTmessage(){
     	byte[] recibir = new byte[20];
     	String msgRecibido;
@@ -482,7 +500,7 @@ public class BTService extends Service implements BTConnectable{
      	recibir = myBTCommunicator.receiveMessage(); //ver que la funcion pida retorno
     	}catch(IOException e){
     		if(connected){
-    			myBTCommunicator.sendState(1004);
+    			myBTCommunicator.sendState(BTCommunicator.STATE_RECEIVEERROR);
     		}
     		return -1;
     	}
