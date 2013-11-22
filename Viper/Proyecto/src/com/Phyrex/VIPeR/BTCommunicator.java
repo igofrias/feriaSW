@@ -375,7 +375,7 @@ public class BTCommunicator extends Thread {
         sendBundle(myBundle);
     }
 
-    private void sendState(int message) {
+    void sendState(int message) {
         Bundle myBundle = new Bundle();
         myBundle.putInt("message", message);
         sendBundle(myBundle);

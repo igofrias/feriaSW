@@ -713,6 +713,14 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		else return false;
 	}
 
+	public int recivemsg() throws IOException {
+		// TODO Auto-generated method stub
+		if(btservice != null)
+		{
+			return btservice.reciveBTmessage();
+		}
+		else return 0;
+	}
 	
 	public void sendBTCmessage(int delay, int message, int value1,
 			int value2) {

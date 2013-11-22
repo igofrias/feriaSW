@@ -429,6 +429,7 @@ public class BTService extends Service implements BTConnectable{
                 case BTCommunicator.STATE_CONNECTERROR:
                     connectingProgressDialog.dismiss();
                 case BTCommunicator.STATE_RECEIVEERROR:
+                	
                 case BTCommunicator.STATE_SENDERROR:
 
                     destroyBTCommunicator();
@@ -473,5 +474,24 @@ public class BTService extends Service implements BTConnectable{
     public BTCommunicator getCommunicator()
     {
     	return myBTCommunicator;
+    }
+    public int reciveBTmessage(){
+    	byte[] recibir = new byte[20];
+    	String msgRecibido;
+    	try{
+     	recibir = myBTCommunicator.receiveMessage(); //ver que la funcion pida retorno
+    	}catch(IOException e){
+    		if(connected){
+    			myBTCommunicator.sendState(1004);
+    		}
+    		return -1;
+    	}
+     	msgRecibido = recibir.toString();
+    	if(!msgRecibido.isEmpty()){ // && (byte)recibir[0]==0x02
+    		Log.e("Mensare Recibido", String.valueOf(byteToInt(recibir[4])));
+        	return byteToInt(recibir[4]);	
+    	}
+    	return 0;
+    	
     }
 }

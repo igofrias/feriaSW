@@ -1,6 +1,7 @@
 package com.Phyrex.VIPeR;
 
 
+import java.io.IOException;
 import java.util.Timer;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -486,7 +487,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		}
 		
 		
-		public void Draw(Canvas canvas)
+		public void Draw(Canvas canvas) throws IOException
 		{
 			
 			float center_x = canvas.getWidth()/2;
@@ -515,7 +516,6 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 						center_y*2*2/16-ballnext.getHeight()/2, color);
 				if(inplay){
 					timecalc(height);
-					validcatchball();
 				}
 				
 				canvas.drawRect(width*13/14, 0, width , lefttimeprogress, color);
@@ -651,9 +651,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			}
 		}
 		
-		public void validcatchball(){
+		public void validcatchball() throws IOException{
 			//detenccion de sensor
-			int sensorball=0;//aqui esto debe ser igual a lo de cele :D
+			int sensorball=((MainActivity)thisActivity).recivemsg();//aqui esto debe ser igual a lo de cele :D
+			Log.e("Mensaje Recibido", String.valueOf(sensorball));
 			if (sensorball==ballcolor){
 				catchball=true;
 				score();
@@ -695,14 +696,16 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			    }
 	        });
 	        dialog.show();
+	        
 		}
 		
-		public void movepincers(){//llama a cerrar las pinzas
+		public void movepincers() throws IOException{//llama a cerrar las pinzas
 			if(pincersstate==0){//cerrar
 				pincersstate=1;
 				if(((MainActivity)thisActivity).isConnected()){
     				((MainActivity)thisActivity).startProgram("CatchBall.rxe");
     				release=false;
+    				validcatchball();
 				}
 			}else{//abrir TODO
 				pincersstate=0;
@@ -717,10 +720,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			int rand = (int) (Math.random() * 2);
 			if(rand==0){
 				ballnext = ballr;
-				ballcolor=0;
+				ballcolor=5;
 			}else{
 				ballnext = ballb;
-				ballcolor=1;
+				ballcolor=2;
 			}
 		}
 		
@@ -742,7 +745,12 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 				if(touchX>width*5/32-buttonclose.getWidth()/2 && touchX<width*5/32+buttonclose.getWidth()/2 && touchY>height*13/16-buttonclose.getHeight()/2 && touchY<height*13/16+buttonclose.getHeight()/2){
 					switch (e.getAction()) {
 					case MotionEvent.ACTION_DOWN:
-						movepincers();
+						try {
+							movepincers();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 				      break;
 				    }
 				}
@@ -779,7 +787,12 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					can = hold.lockCanvas();
 				
 					
-						canvas.Draw(can);
+						try {
+							canvas.Draw(can);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					
 					hold.unlockCanvasAndPost(can);
 				}
