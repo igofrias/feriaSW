@@ -1,8 +1,8 @@
 task Vader();
-task OpenCloseEyes();
+task AwakeEyes();
 
 task main(){
-	StartTask(OpenCloseEyes);
+	StartTask(AwakeEyes);
 	StartTask(Vader);
 	wait1Msec(5000);
 	StopAllTasks();
@@ -16,7 +16,7 @@ task Vader(){
 	}
 }
 
-task OpenCloseEyes(){
+task AwakeEyes(){
 	while(true){
 		nxtDisplayRICFile(0, 0, "OpenEyes.ric");
 		wait1Msec(1500);
