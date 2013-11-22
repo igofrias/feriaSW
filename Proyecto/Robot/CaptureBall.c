@@ -20,6 +20,8 @@ void leerMensajes();
 int ColorVal;
 int nAccion;
 int nMensaje = 0;
+int vel = 50;
+int mtime = 1500;
 
 /*******************************************************************
  ******************************************************************/
@@ -76,10 +78,8 @@ void leerMensajes(){
 						switch(ColorVal){
 							case REDCOLOR:
 								capture = 1;
-								nxtDisplayTextLine(4, "%i", ColorVal);
-								wait1Msec(2000);
-								motor[clampsMotor] = 30;
-								wait1Msec(500);
+								motor[clampsMotor] = vel;
+								wait1Msec(mtime);
 								break;
 						}
 						if (capture == 1){
@@ -104,10 +104,8 @@ void leerMensajes(){
 						switch(ColorVal){
 							case BLUECOLOR:
 								capture = 1;
-								nxtDisplayTextLine(4, "%i", ColorVal);
-								wait1Msec(2000);
-								motor[clampsMotor] = 30;
-								wait1Msec(500);
+								motor[clampsMotor] = vel;
+								wait1Msec(mtime);
 								break;
 						}
 						if (capture == 1){
@@ -132,10 +130,8 @@ void leerMensajes(){
 						switch(ColorVal){
 							case GREENCOLOR:
 								capture = 1;
-								nxtDisplayTextLine(4, "%i", ColorVal);
-								wait1Msec(2000);
-								motor[clampsMotor] = 30;
-								wait1Msec(500);
+								motor[clampsMotor] = vel;
+								wait1Msec(mtime);
 								break;
 						}
 						if (capture == 1){
