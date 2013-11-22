@@ -30,7 +30,6 @@ int ColorVal;
 int LightRVal;
 int LightLVal;
 int nAction;
-// int nColor;
 int nMensaje = 0;
 
 
