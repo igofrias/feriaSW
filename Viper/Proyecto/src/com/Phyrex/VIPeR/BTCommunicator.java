@@ -294,8 +294,14 @@ public class BTCommunicator extends Thread {
                     sendState(FIRMWARE_VERSION);
 
                 break;
-                               
+            case 9:
+            	if(message.length > 3) //No queremos que se salga del array
+                {
+                	sendState(message[4]);
+                }
         }
+        
+        	
     }
 
     private void startProgram(String programName) {

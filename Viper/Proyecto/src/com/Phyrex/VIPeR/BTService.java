@@ -47,6 +47,7 @@ public class BTService extends Service implements BTConnectable{
     private String programToStart;
 	private ThreadClass thread;
 	private String connectionType= null;
+	private int lastColor;
     String mac_nxt="";
     
     /////*********Valores de motores*********//////
@@ -391,7 +392,9 @@ public class BTService extends Service implements BTConnectable{
     final Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message myMessage) {
-            switch (myMessage.getData().getInt("message")) {
+        	int messageCode = myMessage.getData().getInt("message");
+        	Log.d("Color detector", String.valueOf(messageCode));
+            switch (messageCode) {
                 case BTCommunicator.DISPLAY_TOAST:
                     showToast(myMessage.getData().getString("toastText"), Toast.LENGTH_SHORT);
                     break;
@@ -466,8 +469,17 @@ public class BTService extends Service implements BTConnectable{
                     }
 
                     break;
-                
-             
+                    //Colores
+                	case 0:
+                	case 1:
+                	case 2:
+                	case 3:
+                	case 4:
+                	case 5:
+                	case 6:
+                		Log.d("Color detector", String.valueOf(messageCode));
+                		lastColor = messageCode;
+                		break;
             }
         }
     };
@@ -493,5 +505,15 @@ public class BTService extends Service implements BTConnectable{
     	}
     	return 0;
     	
+    }
+    public int getBallColor()
+    {
+    	//Devuelve el ultimo color detectado
+    	return lastColor;
+    }
+    public void invalidateBallColor()
+    {
+    	//Deja en claro que ya se ocupo el color o que ya no es valido
+    	lastColor = -1;
     }
 }
