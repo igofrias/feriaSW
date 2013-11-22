@@ -27,8 +27,10 @@ task main(){
 task enviarMensajes(){
 	while (true){
 		nBoton = nNxtButtonPressed;
-		if(nBoton > -1)
-			sendMessageWithParm(nBoton);
+		if(nBoton == 1){
+			sendMessageWithParm(nBoton*90);
+			nBoton = 0;
+		}
 	}
 	return;
 }
