@@ -57,7 +57,7 @@ public class BTCommunicator extends Thread {
     public static final int PROGRAM_NAME = 1011;
     public static final int SAY_TEXT = 1030;
     public static final int VIBRATE_PHONE = 1031;
-
+    public static final int RECEIVE_INT_MESSAGE = 1032;
     public static final int NO_DELAY = 0;
 
     private static final UUID SERIAL_PORT_SERVICE_CLASS_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -287,6 +287,13 @@ public class BTCommunicator extends Thread {
 
                 if (message.length >= 7)
                     sendState(FIRMWARE_VERSION);
+
+                break;
+                
+            case LCPMessage.MESSAGE_WRITE:
+
+               if (message.length >= 4)
+                   sendState(RECEIVE_INT_MESSAGE);
 
                 break;
                 //TODO

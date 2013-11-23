@@ -408,7 +408,8 @@ public class BTService extends Service implements BTConnectable{
     final Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message myMessage) {
-            switch (myMessage.getData().getInt("message")) {
+        	int messageType = myMessage.getData().getInt("message");
+            switch (messageType) {
                 case BTCommunicator.DISPLAY_TOAST:
                     //showToast(myMessage.getData().getString("toastText"), Toast.LENGTH_SHORT);
                     break;
@@ -479,7 +480,12 @@ public class BTService extends Service implements BTConnectable{
                             }
                         }
                     }
-
+                    break;
+                	case BTCommunicator.RECEIVE_INT_MESSAGE:
+                		byte[] message = myBTCommunicator.getReturnMessage();
+                		Toast.makeText(thisActivity, String.valueOf(message[4]), 
+    		 					Toast.LENGTH_SHORT).show();
+                		//TODO Hay que despachar mensaje a MainActivity->ControlRemoto
                     break;
                 
              
