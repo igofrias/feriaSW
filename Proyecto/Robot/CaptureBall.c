@@ -18,15 +18,16 @@ void leerMensajes();
  * Global Variables Statements
  */
 int ColorVal;
-int nAccion;
-int nMensaje = 0;
+int RandNum;
 int vel = 50;
-int mtime = 1500;
+int mtime = 1300;
 
 /*******************************************************************
  ******************************************************************/
 task main(){
-	StartTask(ShowEyes);
+	srand(nSysTime);
+	RandNum = 2 + random(3);
+	//StartTask(ShowEyes);
 	leerMensajes();
 	return;
 }
@@ -63,90 +64,118 @@ task MonitorColor(){
 void leerMensajes(){
 	int capture=0;
 	while (true){
-		nMensaje = message;
-		if (nMensaje != 0){
-			nAccion = messageParm[0];
-			switch(nAccion){
-				case 1 : //Capture Red Ball
-					StopTask(ShowEyes);
-					eraseDisplay();
-					StartTask(MonitorColor);
-					nxtDisplayTextLine(2, "Buscando Pelota");
-					nxtDisplayTextLine(3, "Roja");
-					wait1Msec(2000);
-					while(true){
-						switch(ColorVal){
-							case REDCOLOR:
-								capture = 1;
-								motor[clampsMotor] = vel;
-								wait1Msec(mtime);
-								break;
-						}
-						if (capture == 1){
-							capture = 0;
+		switch(RandNum){
+			case 2 : //Capture Blue Ball
+				StopTask(ShowEyes);
+				eraseDisplay();
+				StartTask(MonitorColor);
+				nxtDisplayTextLine(2, "Buscando Pelota");
+				nxtDisplayTextLine(3, "Azul");
+				while(true){
+					switch(ColorVal){
+						case BLUECOLOR:
+							capture = 1;
+							motor[clampsMotor] = vel;
+							wait1Msec(mtime);
 							break;
-						}
 					}
-					motor[clampsMotor] = 0;
-
-					eraseDisplay();
-					StartTask(ShowEyes);
-					StopTask(MonitorColor);
-					break;
-				case 2 : //Capture Blue Ball
-					StopTask(ShowEyes);
-					eraseDisplay();
-					StartTask(MonitorColor);
-					nxtDisplayTextLine(2, "Buscando Pelota");
-					nxtDisplayTextLine(3, "Azul");
-					wait1Msec(2000);
-					while(true){
-						switch(ColorVal){
-							case BLUECOLOR:
-								capture = 1;
-								motor[clampsMotor] = vel;
-								wait1Msec(mtime);
-								break;
-						}
-						if (capture == 1){
-							capture = 0;
+					if (capture == 1){
+						capture = 0;
+						break;
+					}
+				}
+				motor[clampsMotor] = 0;
+				eraseDisplay();
+				nxtDisplayTextLine(2, "Pelota Atrapada!");
+				wait1Msec(2000);
+				eraseDisplay();
+				StartTask(ShowEyes);
+				StopTask(MonitorColor);
+				break;
+			case 3 : //Capture Green Ball
+				StopTask(ShowEyes);
+				eraseDisplay();
+				StartTask(MonitorColor);
+				nxtDisplayTextLine(2, "Buscando Pelota");
+				nxtDisplayTextLine(3, "Verde");
+				while(true){
+					switch(ColorVal){
+						case GREENCOLOR:
+							capture = 1;
+							motor[clampsMotor] = vel;
+							wait1Msec(mtime);
 							break;
-						}
 					}
-					motor[clampsMotor] = 0;
-
-					eraseDisplay();
-					StartTask(ShowEyes);
-					StopTask(MonitorColor);
-					break;
-				case 3 : //Capture Green Ball
-					StopTask(ShowEyes);
-					eraseDisplay();
-					StartTask(MonitorColor);
-					nxtDisplayTextLine(2, "Buscando Pelota");
-					nxtDisplayTextLine(3, "Verde");
-					wait1Msec(2000);
-					while(true){
-						switch(ColorVal){
-							case GREENCOLOR:
-								capture = 1;
-								motor[clampsMotor] = vel;
-								wait1Msec(mtime);
-								break;
-						}
-						if (capture == 1){
-							capture = 0;
+					if (capture == 1){
+						capture = 0;
+						break;
+					}
+				}
+				motor[clampsMotor] = 0;
+				eraseDisplay();
+				nxtDisplayTextLine(2, "Pelota Atrapada!");
+				wait1Msec(2000);
+				eraseDisplay();
+				StartTask(ShowEyes);
+				StopTask(MonitorColor);
+				break;
+			case 4 : //Capture Yellow Ball
+				StopTask(ShowEyes);
+				eraseDisplay();
+				StartTask(MonitorColor);
+				nxtDisplayTextLine(2, "Buscando Pelota");
+				nxtDisplayTextLine(3, "Amarilla");
+				while(true){
+					switch(ColorVal){
+						case YELLOWCOLOR:
+							capture = 1;
+							motor[clampsMotor] = vel;
+							wait1Msec(mtime);
 							break;
-						}
 					}
-					motor[clampsMotor] = 0;
-
-					eraseDisplay();
-					StartTask(ShowEyes);
-					StopTask(MonitorColor);
-					break;
-			}
-			ClearMessage();
+					if (capture == 1){
+						capture = 0;
+						break;
+					}
+				}
+				motor[clampsMotor] = 0;
+				eraseDisplay();
+				nxtDisplayTextLine(2, "Pelota Atrapada!");
+				wait1Msec(2000);
+				eraseDisplay();
+				StartTask(ShowEyes);
+				StopTask(MonitorColor);
+				break;
+			case 5 : //Capture Roja Ball
+				StopTask(ShowEyes);
+				eraseDisplay();
+				StartTask(MonitorColor);
+				nxtDisplayTextLine(2, "Buscando Pelota");
+				nxtDisplayTextLine(3, "Roja");
+				while(true){
+					switch(ColorVal){
+						case REDCOLOR:
+							capture = 1;
+							motor[clampsMotor] = vel;
+							wait1Msec(mtime);
+							break;
+					}
+					if (capture == 1){
+						capture = 0;
+						break;
+					}
+				}
+				motor[clampsMotor] = 0;
+				eraseDisplay();
+				nxtDisplayTextLine(2, "Pelota Atrapada!");
+				wait1Msec(2000);
+				eraseDisplay();
+				StartTask(ShowEyes);
+				StopTask(MonitorColor);
+				break;
+		}
+		if(capture==1){
+			break;
 		}
 	}
 }

@@ -2,12 +2,12 @@
 
 task EatSound();
 task HappyEyes();
-task MoveHead();
+// task MoveHead();
 
 task main(){
 	StartTask(HappyEyes);
 	StartTask(EatSound);
-	StartTask(MoveHead);
+//	StartTask(MoveHead);
 	wait1Msec(5000);
 
 	StopAllTasks();
@@ -26,10 +26,11 @@ task HappyEyes(){
 		nxtDisplayRICFile(0, 0, "HappyEyes.ric");
 	}
 }
-
+/*
 task MoveHead(){
 	motor[headMotor]=25;
 	wait10Msec(40);
 	motor[headMotor]=-25;
 	wait10Msec(40);
 }
+*/
