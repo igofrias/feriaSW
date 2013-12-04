@@ -178,7 +178,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	    playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(playerTexture, this, "tentosauriogame.png", 0, 0);
 	    playerTexture.load();  
 	    bgTexture = new BitmapTextureAtlas(getTextureManager(), 800, 600, TextureOptions.BILINEAR);
-	    bgTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bgTexture, this, "ballgamebg.png", 0, 0);
+	    bgTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bgTexture, this, "ballgamebg.jpg", 0, 0);
 	    bgTexture.load();
 	}
 	protected void registerButtons()
@@ -242,7 +242,7 @@ public class BallGame extends SimpleBaseGameActivity{
 		hud.registerUpdateHandler(control);
 		
 //	     scene.setBackground(new Background(0.678f, 0.847f, 0.901f));
-		scene.setBackground(new SpriteBackground(new Sprite(CAMERA_WIDTH/2,CAMERA_HEIGHT/2,bgTextureRegion,this.vbo)));
+		scene.setBackground(new SpriteBackground(new Sprite(0,0,bgTextureRegion,this.vbo)));
 	     if(btservice != null)
 	    	 if(btservice.isConnected())
 	    	 {
