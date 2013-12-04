@@ -18,6 +18,8 @@ import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.ITouchArea;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.background.ParallaxBackground;
+import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
@@ -177,7 +179,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	    playerTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR);
 	    playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(playerTexture, this, "tentosauriogame.png", 0, 0);
 	    playerTexture.load();  
-	    bgTexture = new BitmapTextureAtlas(getTextureManager(), 800, 600, TextureOptions.BILINEAR);
+	    bgTexture = new BitmapTextureAtlas(getTextureManager(), 1000, 800, TextureOptions.BILINEAR);
 	    bgTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bgTexture, this, "ballgamebg.jpg", 0, 0);
 	    bgTexture.load();
 	}
@@ -242,7 +244,9 @@ public class BallGame extends SimpleBaseGameActivity{
 		hud.registerUpdateHandler(control);
 		
 //	     scene.setBackground(new Background(0.678f, 0.847f, 0.901f));
-		scene.setBackground(new SpriteBackground(new Sprite(0,0,bgTextureRegion,this.vbo)));
+		ParallaxBackground background = new ParallaxBackground(0, 0, 0);
+	    background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(0, 0, bgTextureRegion, vbo)));
+	    scene.setBackground(background);
 	     if(btservice != null)
 	    	 if(btservice.isConnected())
 	    	 {
