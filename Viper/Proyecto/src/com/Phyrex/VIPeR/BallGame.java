@@ -18,6 +18,7 @@ import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.ITouchArea;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
@@ -68,6 +69,9 @@ public class BallGame extends SimpleBaseGameActivity{
 	ITextureRegion ballTextureRegion;
 	BitmapTextureAtlas playerTexture;
 	ITextureRegion playerTextureRegion;
+	BitmapTextureAtlas bgTexture;
+	ITextureRegion bgTextureRegion;
+	
 	btnListener leftListener;
 	btnListener rightListener;
 	BTService btservice;
@@ -173,6 +177,9 @@ public class BallGame extends SimpleBaseGameActivity{
 	    playerTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR);
 	    playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(playerTexture, this, "tentosauriogame.png", 0, 0);
 	    playerTexture.load();  
+	    bgTexture = new BitmapTextureAtlas(getTextureManager(), 800, 600, TextureOptions.BILINEAR);
+	    bgTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bgTexture, this, "ballgamebg.png", 0, 0);
+	    bgTexture.load();
 	}
 	protected void registerButtons()
 	{
@@ -234,7 +241,8 @@ public class BallGame extends SimpleBaseGameActivity{
 		scene.setTouchAreaBindingOnActionDownEnabled(true);
 		hud.registerUpdateHandler(control);
 		
-	     scene.setBackground(new Background(0.678f, 0.847f, 0.901f));
+//	     scene.setBackground(new Background(0.678f, 0.847f, 0.901f));
+		scene.setBackground(new SpriteBackground(new Sprite(CAMERA_WIDTH/2,CAMERA_HEIGHT/2,bgTextureRegion,this.vbo)));
 	     if(btservice != null)
 	    	 if(btservice.isConnected())
 	    	 {
