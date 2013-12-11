@@ -369,25 +369,35 @@ public class BallGame extends SimpleBaseGameActivity{
     	{
     		//Es lo que actualiza la posicion en un instante de tiempo
     		//La idea es que distintos tipos de Bolas cambien esto para actualizar 
-    		//su posicion
+    		//su posicion, para eso deberian cambiar inBoundaryAction() y outOfBoundaryAction()
     		if(spriteTimerHandler != null)
         	{
         		spriteTimerHandler.reset();
         		if(Ball.this.y <= BallGame.CAMERA_HEIGHT)
         		{
-        			Ball.this.y = Ball.this.y + speed;
+        			inBoundaryAction();
         		}
         		else
         		{
-        			inPlay = false;
-        			BallGame.this.removeLive();
-        			
-        			Ball.this.detach();
+        			outOfBoundaryAction();
         		
         		}
         		sprite.setPosition(x, y);
         	}
-           
+    		
+    	}
+    	public void inBoundaryAction()
+    	{
+    		//Aqui va lo que la pelota hace cuando esta dentro del terreno de juego
+    		//Las subclases deberian cambiar esto
+    		Ball.this.y = Ball.this.y + speed;
+    	}
+    	public void outOfBoundaryAction()
+    	{
+    		inPlay = false;
+			BallGame.this.removeLive();
+			
+			Ball.this.detach();
     	}
     	public void detach()
     	{
@@ -405,6 +415,36 @@ public class BallGame extends SimpleBaseGameActivity{
     	}
     	
     }
+    private class DiagonalBall extends Ball
+    {	
+    	//Clase que se mueve diagonalmente
+    	float speed_x;
+		public DiagonalBall(BallGenerator generator, float speed_mod) {
+			//Genera el vector velocidad a partir de su modulo
+			super(generator, 0);
+			float angle = (float) (Math.random()*-140 +70); //Entre -70 y 70 grados
+			speed = (float) (speed_mod*Math.cos(Math.toRadians(angle)));
+			speed_x = (float)(speed_mod*Math.sin(Math.toRadians(angle)));
+			
+			// TODO Auto-generated constructor stub
+		}
+		public DiagonalBall(BallGenerator generator, float speed_x, float speed_y) {
+			super(generator, speed_y);
+			this.speed_x = speed_x;
+			// TODO Auto-generated constructor stub
+		}
+		@Override
+		public void inBoundaryAction()
+		{
+			//Hace que se mueva en diagonal y que rebote
+			super.inBoundaryAction();
+			this.x = this.x + this.speed_x;
+			if(this.x <= 0 || this.x >= BallGame.CAMERA_WIDTH)
+			{
+				this.speed_x = -this.speed_x;
+			}
+		}
+    }
     private class BallGenerator
     {
     	//Genera pelotas aleatoriamente TODO
@@ -418,11 +458,27 @@ public class BallGame extends SimpleBaseGameActivity{
     	{
     		if(BallGame.this.inGame)
     		{
-	    		Ball current_ball = new Ball(this,speed);
+	    		//Ball current_ball = new Ball(this,speed);
+    			Ball current_ball = selectBall();
 	    		currentBalls.add(current_ball);
 	    		BallGame.this.scene.attachChild(current_ball.sprite);
 	    		current_ball.createFallUpdater();
     		}
+    		
+    	}
+    	public Ball selectBall()
+    	{
+    		Random randgen = new Random();
+    		int type =  randgen.nextInt(2);
+    		switch(type)
+    		{
+    		case 0:
+    			return new Ball(this,speed);
+    		case 1:
+    			return new DiagonalBall(this,speed);
+    		}
+    		return null;
+    		
     		
     	}
     	public void removeBall(Ball toRemove)
