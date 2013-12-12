@@ -50,6 +50,7 @@ public class BTService extends Service implements BTConnectable{
     private String programToStart;
 	private ThreadClass thread;
 	private String connectionType= null;
+	private int lastColor;
     String mac_nxt="";
     
     /////*********Valores de motores*********//////
@@ -493,6 +494,7 @@ public class BTService extends Service implements BTConnectable{
          public void handleMessage(Message myMessage) {
          	int messageType = myMessage.getData().getInt("message");
              switch (messageType) {
+            switch (messageCode) {
                  case BTCommunicator.DISPLAY_TOAST:
                      //showToast(myMessage.getData().getString("toastText"), Toast.LENGTH_SHORT);
                      break;
