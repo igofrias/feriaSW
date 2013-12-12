@@ -703,7 +703,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			if(pincersstate==0){//cerrar
 				pincersstate=1;
 				if(((MainActivity)thisActivity).isConnected()){
-    				((MainActivity)thisActivity).startProgram("CatchBall.rxe");
+    				((MainActivity)thisActivity).startProgram("CatchBall-NM.rxe");
     				///validcatchball();
     				release=false;
 				}

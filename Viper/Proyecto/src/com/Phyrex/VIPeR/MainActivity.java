@@ -734,7 +734,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 	public void sendBTCmessage(int delay, int message, int value1,
 			int value2) {
 		// TODO Auto-generated method stub
-		btservice.sendBTCmessage(delay, message, value1, value2);
+		btservice.sendBTCmessage(delay, message, value1, value2,btservice.myHandler,btservice.btcHandler);
 	}
 	public String return_mac(){
 		return btservice.return_mac();
@@ -742,4 +742,8 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 	public void startProgram(String name) {
 	       btservice.startProgram(name);
 	    }
+	public void startProgram(String name, int brick)
+	{
+		btservice.startProgram(name,brick);
+	}
 }
