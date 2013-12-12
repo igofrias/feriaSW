@@ -172,7 +172,11 @@ public class BTService extends Service implements BTConnectable{
             sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.DISCONNECT, 0, 0,myHandler,btcHandler);
             myBTCommunicator = null;
         }
-        
+        if(slaveBTCommunicator != null)
+        {
+        	sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.DISCONNECT, 0, 0,slaveHandler,slaveBtcHandler);
+            slaveBTCommunicator = null;
+        }
         connected = false;
         //updateButtonsAndMenu();
     }
