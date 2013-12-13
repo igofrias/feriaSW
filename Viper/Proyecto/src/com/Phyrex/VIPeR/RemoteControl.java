@@ -703,7 +703,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			if(pincersstate==0){//cerrar
 				pincersstate=1;
 				if(((MainActivity)thisActivity).isConnected()){
-    				((MainActivity)thisActivity).startProgram("CatchBall.rxe");
+    				((MainActivity)thisActivity).startProgram("CatchBallsinmessage.rxe");
     				///validcatchball();
     				release=false;
 				}
@@ -740,7 +740,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			float width = canvas.getWidth();
 			float height= canvas.getHeight();
 			
-			if(inplay){
+			if(inplay && playmode){
 				if(touchX>width*5/32-buttonclose.getWidth()/2 && touchX<width*5/32+buttonclose.getWidth()/2 && touchY>height*13/16-buttonclose.getHeight()/2 && touchY<height*13/16+buttonclose.getHeight()/2){
 					switch (e.getAction()) {
 					case MotionEvent.ACTION_DOWN:

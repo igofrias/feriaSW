@@ -191,7 +191,7 @@ public class EatTask implements SensorEventListener, Runnable {
 	    	else
 	    	{
 	    		if(((MainActivity)parent).isConnected())
-					((MainActivity)parent).startProgram("Angry.rxe");
+					((MainActivity)parent).startProgram("AngryEyes.rxe");
 	    		Toast.makeText(parent.getBaseContext(), ">:(", Toast.LENGTH_SHORT).show();
 	    	}
 		}

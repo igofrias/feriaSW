@@ -187,7 +187,7 @@ public class MainPetActivity extends SherlockFragment{
 		Bitmap dirt[]=new Bitmap[9];
 		//cola ? xD
 		Bitmap tail;
-		float corx, cory =0;
+		float corx, cory =-1;
 		boolean foodFingerMove = false;
 		boolean petFingerMove = false;
 		boolean soapFingerMove = false;
@@ -323,10 +323,10 @@ public class MainPetActivity extends SherlockFragment{
 					    	}
 					    	if(!soapFingerMove && !foodFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()*4/7){
 					    		petFingerMove = true;
-					    		if(dirtstate<9){
+					    		/*if(dirtstate<9){
 					    			dirtstate++;
-					    		}
-					    		poop=true;
+					    		}*/
+					    		//poop=true;
 					    	}else{
 					    		petFingerMove = false;
 					    	}
@@ -336,7 +336,7 @@ public class MainPetActivity extends SherlockFragment{
 					    	foodFingerMove = false;
 					    	soapFingerMove = false;
 					    	cleanning=false;
-					    	update_coordinates(0, 0);//comida
+					    	update_coordinates(-1, -1);//comida
 					      break;
 					}
 				if(timeeat==0 && !soapFingerMove && !foodFingerMove && touchX>width/4 && touchX<width/4+clock.getWidth() && touchY>height*5/6 && touchY<height*5/6+clock.getHeight()){
@@ -346,7 +346,7 @@ public class MainPetActivity extends SherlockFragment{
 							petstate=0;
 							sleeping=false;
 							if(((MainActivity)thisActivity).isConnected())
-								((MainActivity)thisActivity).startProgram("Vader.rxe");
+								((MainActivity)thisActivity).startProgram("AwakeEyes.rxe");
 							Actions(2);//despertar
 						}else{
 							petstate=2;
@@ -417,9 +417,9 @@ public class MainPetActivity extends SherlockFragment{
 			float height= canvas.getHeight();
 			float center_x = canvas.getWidth()/2;
 			float center_y = canvas.getHeight()/2;
-			float x = 0;
-			float y = 0;
-			if(corx !=0 && cory!=0){
+			float x = -1;
+			float y = -1;
+			if(corx !=-1 && cory!=-1){
 				x = corx;
 				y = cory;
 			}
@@ -492,7 +492,7 @@ public class MainPetActivity extends SherlockFragment{
 			can.drawARGB(150, 0, 0, 0);
 			if(canvas.sleeping){
 				if(((MainActivity)thisActivity).isConnected())
-					((MainActivity)thisActivity).startProgram("CloseEyes.rxe");
+					((MainActivity)thisActivity).startProgram("SleepEyes.rxe");
 			}
 		}
 		
@@ -591,7 +591,7 @@ public class MainPetActivity extends SherlockFragment{
 					bowlstate=3;
 					petstate=1;
 					timeeat=150;
-				}else if(bowlstate==3){
+				}else if(bowlstate==3 || (x==-1 && y==-1)){
 					can.drawBitmap(food, 0, height*5/6, color);
 				}else{
 					can.drawBitmap(food, x-food.getWidth()/2, y-food.getHeight()/2, color);
@@ -604,7 +604,7 @@ public class MainPetActivity extends SherlockFragment{
 		
 		
 		public void Drawsoap(float x, float y, float width, float height){
-			if (soapFingerMove) {
+			if (soapFingerMove && (x!=-1 && y!=-1)) {
 	        	if(x>width/2-tento.getWidth()*1/3 && x<width/2+tento.getWidth()*2/3 && y>height/2 - tento.getHeight()*4/7 && y<height/2 + tento.getHeight()*4/7){
 	        		can.drawBitmap(soap, x-soap.getWidth()/2, y-soap.getHeight()/2, color);
 	        		cleanning=true;
