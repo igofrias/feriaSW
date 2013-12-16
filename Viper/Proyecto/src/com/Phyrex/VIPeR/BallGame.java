@@ -1,5 +1,6 @@
 package com.Phyrex.VIPeR;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 import org.andengine.engine.camera.Camera;
@@ -17,6 +18,9 @@ import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.ITouchArea;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.background.ParallaxBackground;
+import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
+import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
@@ -62,17 +66,24 @@ public class BallGame extends SimpleBaseGameActivity{
 	
 	Player player;
 	Ball ball;
+	BallGenerator ballGenerator;
 	BitmapTextureAtlas ballTexture;
 	ITextureRegion ballTextureRegion;
 	BitmapTextureAtlas playerTexture;
 	ITextureRegion playerTextureRegion;
+	BitmapTextureAtlas bgTexture;
+	ITextureRegion bgTextureRegion;
+	
 	btnListener leftListener;
 	btnListener rightListener;
 	BTService btservice;
 	Activity thisActivity = this;
+	
 	int puntaje;
 	int dificultad;
 	int vidas;
+	boolean inGame;
+
 	protected boolean mBound;
 	private Toast reusableToast;
 	private boolean pairing;
@@ -168,6 +179,9 @@ public class BallGame extends SimpleBaseGameActivity{
 	    playerTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR);
 	    playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(playerTexture, this, "tentosauriogame.png", 0, 0);
 	    playerTexture.load();  
+	    bgTexture = new BitmapTextureAtlas(getTextureManager(), 1000, 800, TextureOptions.BILINEAR);
+	    bgTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bgTexture, this, "ballgamebg.jpg", 0, 0);
+	    bgTexture.load();
 	}
 	protected void registerButtons()
 	{
@@ -193,18 +207,11 @@ public class BallGame extends SimpleBaseGameActivity{
 		if(puntaje % 2 == 0)
 		{
 			dificultad +=1; 
-			updateSpeed();
+			ballGenerator.updateSpeed();
 		}
 		hudText.setText("Puntaje:"+puntaje+" Vidas:" + vidas);
 	}
-	public void updateSpeed()
-	{
-		//Cambia la velocidad de caida de la pelota de acuerdo a la dificultad
-		float min = 5;
-		float max = 100;
-		float steps = (float) (1.0/50.0); //Cantidad de "niveles" en los que sube la velocidad hasta llegar a max
-		ball.speed = (float) (min + (max-min)*steps*dificultad);
-	}
+	
 	public void removeLive()
 	{
 		//Quita una vida al tentosaurio. Si no quedan vidas sale del juego TODO
@@ -216,11 +223,10 @@ public class BallGame extends SimpleBaseGameActivity{
 		else
 		{
 			//Aqui se mata
+			inGame = false;
 			hud.detachChild(hudText);
 			hudText = new Text(70, 40, smallfont, "Game Over. Presione el boton atrás para volver",100,BallGame.this.vbo);
 			hud.attachChild(hudText);
-			this.getEngine().unregisterUpdateHandler(ball.spriteTimerHandler);
-			ball.detach();
 			player.detach();
 		}
 	}
@@ -236,17 +242,21 @@ public class BallGame extends SimpleBaseGameActivity{
 		scene.setOnSceneTouchListener(control.tcontrol);
 		scene.setTouchAreaBindingOnActionDownEnabled(true);
 		hud.registerUpdateHandler(control);
-	     scene.setBackground(new Background(0.678f, 0.847f, 0.901f));
+		
+//	     scene.setBackground(new Background(0.678f, 0.847f, 0.901f));
+		ParallaxBackground background = new ParallaxBackground(0, 0, 0);
+	    background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(0, 0, bgTextureRegion, vbo)));
+	    scene.setBackground(background);
 	     if(btservice != null)
 	    	 if(btservice.isConnected())
 	    	 {
 	    		 btservice.startProgram("Eat.rxe");
 	    	 }
 	     player = new Player();
-	     ball = new Ball();
+	     ballGenerator = new BallGenerator();
 	     scene.attachChild(player.sprite);
-	     scene.attachChild(ball.sprite);
-	     ball.createFallUpdater();
+	     inGame = true;
+	     ballGenerator.CreateBall();
 	     return scene;
 	}
 	
@@ -306,15 +316,18 @@ public class BallGame extends SimpleBaseGameActivity{
     private class Ball
     {
     	Sprite sprite;
-    	
+    	BallGenerator currentGenerator;
     	static final int size_x = 40;
     	static final int size_y = 40;
     	TimerHandler spriteTimerHandler;
     	float speed;
     	float x;
     	float y;
-    	public Ball()
+    	boolean inPlay;
+    	public Ball(BallGenerator generator,float speed)
     	{
+    		currentGenerator = generator;
+    		inPlay = true;
     		this.x = 2*size_x +(float) (Math.random()*(BallGame.CAMERA_WIDTH-4*size_x));//Margen de 2*size_x;
     		this.y = 0;
     		sprite = new Sprite(x-size_x,y-size_y,size_x,size_y,ballTextureRegion,BallGame.this.vbo)
@@ -327,14 +340,11 @@ public class BallGame extends SimpleBaseGameActivity{
     		             //Aumenta puntaje si es que choca con el jugador. Ademas vuelve a poner a la pelota arriba
     		        	 //en una posicion x arbitraria
     		        	 BallGame.this.updateScore();
-    		        	 Ball.this.y = 0;
-    		        	 
-    		        	 Ball.this.x = 2*size_x +(float) (Math.random()*(BallGame.CAMERA_WIDTH-4*size_x));//Margen de 2*size_x
-    		        	 Ball.this.sprite.setPosition(Ball.this.x, Ball.this.y);
+    		        	 Ball.this.detach();
     		         }
     		     };
     		};;
-    		this.speed = 5;
+    		this.speed = speed;
     	}
 		
     	public void createFallUpdater()
@@ -345,32 +355,144 @@ public class BallGame extends SimpleBaseGameActivity{
 	            @Override
 	            public void onTimePassed(final TimerHandler pTimerHandler)
 	            {
-	            	if(spriteTimerHandler != null)
+	            	if(inPlay)
 	            	{
-	            		spriteTimerHandler.reset();
-	            		if(Ball.this.y <= BallGame.CAMERA_HEIGHT)
-	            		{
-	            			Ball.this.y = Ball.this.y + speed;
-	            		}
-	            		else
-	            		{
-	            			Ball.this.x = 2*size_x +(float) (Math.random()*(BallGame.CAMERA_WIDTH-4*size_x));
-	            			Ball.this.y = 0;
-	            			BallGame.this.removeLive();
-	            		}
-	            		sprite.setPosition(x, y);
+	            		updatePos(spriteTimerHandler);
 	            	}
-	               
+	            	
 	            }
 	        });
 			
 	        BallGame.this.getEngine().registerUpdateHandler(spriteTimerHandler );
     	}
+    	public void updatePos(TimerHandler timerHandler)
+    	{
+    		//Es lo que actualiza la posicion en un instante de tiempo
+    		//La idea es que distintos tipos de Bolas cambien esto para actualizar 
+    		//su posicion, para eso deberian cambiar inBoundaryAction() y outOfBoundaryAction()
+    		if(spriteTimerHandler != null)
+        	{
+        		spriteTimerHandler.reset();
+        		if(Ball.this.y <= BallGame.CAMERA_HEIGHT)
+        		{
+        			inBoundaryAction();
+        		}
+        		else
+        		{
+        			outOfBoundaryAction();
+        		
+        		}
+        		sprite.setPosition(x, y);
+        	}
+    		
+    	}
+    	public void inBoundaryAction()
+    	{
+    		//Aqui va lo que la pelota hace cuando esta dentro del terreno de juego
+    		//Las subclases deberian cambiar esto
+    		Ball.this.y = Ball.this.y + speed;
+    	}
+    	public void outOfBoundaryAction()
+    	{
+    		inPlay = false;
+			BallGame.this.removeLive();
+			
+			Ball.this.detach();
+    	}
     	public void detach()
     	{
-    		BallGame.this.scene.detachChild(sprite);
+    		currentGenerator.removeBall(this);
+    		currentGenerator.CreateBall();
+    		BallGame.this.runOnUpdateThread(new Runnable()
+    		{
+    		    @Override
+    		     public void run()
+    		     {
+    		    	BallGame.this.scene.detachChild(sprite);
+    		    	BallGame.this.getEngine().unregisterUpdateHandler(Ball.this.spriteTimerHandler);
+    		     }
+    		});
     	}
     	
+    }
+    private class DiagonalBall extends Ball
+    {	
+    	//Clase que se mueve diagonalmente
+    	float speed_x;
+		public DiagonalBall(BallGenerator generator, float speed_mod) {
+			//Genera el vector velocidad a partir de su modulo
+			super(generator, 0);
+			float angle = (float) (Math.random()*-140 +70); //Entre -70 y 70 grados
+			speed = (float) (speed_mod*Math.cos(Math.toRadians(angle)));
+			speed_x = (float)(speed_mod*Math.sin(Math.toRadians(angle)));
+			
+			// TODO Auto-generated constructor stub
+		}
+		public DiagonalBall(BallGenerator generator, float speed_x, float speed_y) {
+			super(generator, speed_y);
+			this.speed_x = speed_x;
+			// TODO Auto-generated constructor stub
+		}
+		@Override
+		public void inBoundaryAction()
+		{
+			//Hace que se mueva en diagonal y que rebote
+			super.inBoundaryAction();
+			this.x = this.x + this.speed_x;
+			if(this.x <= 0 || this.x >= BallGame.CAMERA_WIDTH)
+			{
+				this.speed_x = -this.speed_x;
+			}
+		}
+    }
+    private class BallGenerator
+    {
+    	//Genera pelotas aleatoriamente TODO
+    	LinkedList<Ball> currentBalls = new LinkedList<Ball>();
+    	float speed;
+    	public BallGenerator()
+    	{
+    		this.speed = 5;
+    	}
+    	public void CreateBall()
+    	{
+    		if(BallGame.this.inGame)
+    		{
+	    		//Ball current_ball = new Ball(this,speed);
+    			Ball current_ball = selectBall();
+	    		currentBalls.add(current_ball);
+	    		BallGame.this.scene.attachChild(current_ball.sprite);
+	    		current_ball.createFallUpdater();
+    		}
+    		
+    	}
+    	public Ball selectBall()
+    	{
+    		Random randgen = new Random();
+    		int type =  randgen.nextInt(2);
+    		switch(type)
+    		{
+    		case 0:
+    			return new Ball(this,speed);
+    		case 1:
+    			return new DiagonalBall(this,speed);
+    		}
+    		return null;
+    		
+    		
+    	}
+    	public void removeBall(Ball toRemove)
+    	{
+    		currentBalls.remove(toRemove);
+    	}
+    	public void updateSpeed()
+    	{
+    		//Cambia la velocidad de caida de la pelota de acuerdo a la dificultad
+    		float min = 5;
+    		float max = 100;
+    		float steps = (float) (1.0/50.0); //Cantidad de "niveles" en los que sube la velocidad hasta llegar a max
+    		speed = (float) (min + (max-min)*steps*BallGame.this.dificultad);
+    	}
     }
     private class Player
     {

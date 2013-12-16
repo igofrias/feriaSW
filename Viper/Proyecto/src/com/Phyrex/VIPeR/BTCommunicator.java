@@ -297,8 +297,9 @@ public class BTCommunicator extends Thread {
 
                 break;
                 //TODO
-                               
         }
+        
+        	
     }
 
     private void startProgram(String programName) {

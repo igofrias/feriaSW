@@ -33,11 +33,14 @@ import java.util.List;
 public class BTService extends Service implements BTConnectable{
     
 	//Toast para mensajes
+	String mac_slave = "00:16:53:17:67:EA";
 	private Toast reusableToast;
 	///////////////////Variables Conexión Bluetooth////////////////////////////////////////
 	private static boolean btOnByUs = false;
 	private BTCommunicator myBTCommunicator = null;
-	private Handler btcHandler;
+	private BTCommunicator slaveBTCommunicator = null;
+	Handler btcHandler;
+	Handler slaveBtcHandler;
 	private boolean connected = false;
     static final int REQUEST_CONNECT_DEVICE = 500;
     static final int REQUEST_ENABLE_BT = 2000;
@@ -47,6 +50,7 @@ public class BTService extends Service implements BTConnectable{
     private String programToStart;
 	private ThreadClass thread;
 	private String connectionType= null;
+	private int lastColor;
     String mac_nxt="";
     
     /////*********Valores de motores*********//////
@@ -130,7 +134,11 @@ public class BTService extends Service implements BTConnectable{
     private void createBTCommunicator() {
         // interestingly BT adapter needs to be obtained by the UI thread - so we pass it in in the constructor
         myBTCommunicator = new BTCommunicator(this, myHandler, BluetoothAdapter.getDefaultAdapter(), getResources());
+        slaveBTCommunicator = new BTCommunicator(this, slaveHandler, BluetoothAdapter.getDefaultAdapter(), getResources());
         btcHandler = myBTCommunicator.getHandler();
+        slaveBtcHandler = slaveBTCommunicator.getHandler();
+        myHandler = new btHandler(btcHandler);
+        slaveHandler = new btHandler(slaveBtcHandler);
     }
     //crea y arranca un thread para la conexion bluetooth/////////////
     //recibe la mac del robot/////////////
@@ -144,9 +152,17 @@ public class BTService extends Service implements BTConnectable{
             }
             catch (IOException e) { }
         }
+        if (slaveBTCommunicator != null) {
+            try {
+                slaveBTCommunicator.destroyNXTconnection();
+            }
+            catch (IOException e) { }
+        }
         createBTCommunicator();
         myBTCommunicator.setMACAddress(mac_address);
         myBTCommunicator.start();
+        slaveBTCommunicator.setMACAddress(mac_slave);
+        slaveBTCommunicator.start();
         connected=true;
     }
     
@@ -154,14 +170,39 @@ public class BTService extends Service implements BTConnectable{
     public void destroyBTCommunicator() {
 
         if (myBTCommunicator != null) {
-            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.DISCONNECT, 0, 0);
+            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.DISCONNECT, 0, 0,myHandler,btcHandler);
             myBTCommunicator = null;
         }
-
+        if(slaveBTCommunicator != null)
+        {
+        	sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.DISCONNECT, 0, 0,slaveHandler,slaveBtcHandler);
+            slaveBTCommunicator = null;
+        }
         connected = false;
         //updateButtonsAndMenu();
     }
-
+   public void destroyBTCommunicator(int brick)
+   {
+	   Handler btchandler = null;
+	   Handler myhandler = null;
+	   switch(brick)
+	   {
+	   case 1:
+		   btchandler = slaveBtcHandler;
+		   myhandler = slaveHandler;
+		   break;
+	   default:
+		   btchandler = btcHandler;
+		   myhandler = myHandler;
+		   break;
+	   }
+	   if (myBTCommunicator != null) {
+           sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.DISCONNECT, 0, 0,myhandler,btchandler);
+           myBTCommunicator = null;
+       }
+       
+       connected = false;
+   }
    ///muestra el Toast///
     ////recive el mensaje y la duracion del Toast///////////
     private void showToast(String textToShow, int length) {
@@ -281,9 +322,21 @@ public class BTService extends Service implements BTConnectable{
         } */      
         Log.d("pepe", "start!!!!!!!!!!!!!!!");
         // for all other programs: just start the program
-        sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name);
+        sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name, btcHandler);
     }
-    
+    public void startProgram(String name, int brick)
+    {
+    	//Como el anterior pero pide explicitamente a que brick enviar
+    	switch(brick)
+    	{
+    	case 0:
+    		sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name, btcHandler);
+    		break;
+    	case 1:
+    		sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, name, slaveBtcHandler);
+    		break;
+    	}
+    }
     /**
      * Depending on the status (whether the program runs already) we stop it, wait and restart it again.
      * @param status The current status, 0x00 means that the program is already running.
@@ -291,29 +344,54 @@ public class BTService extends Service implements BTConnectable{
     public void startRXEprogram(byte status) {
         if (status == 0x00) {
         	 Log.d("pepe", "status 0x00");
-            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.STOP_PROGRAM, 0, 0);
-            sendBTCmessage(1000, BTCommunicator.START_PROGRAM, programToStart);
+            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.STOP_PROGRAM, 0, 0,myHandler,btcHandler);
+            sendBTCmessage(1000, BTCommunicator.START_PROGRAM, programToStart,btcHandler);
         }    
         else {
         	 Log.d("pepe", "no status 0x00");
-            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, programToStart);
+            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, programToStart,btcHandler);
+        }
+    }   
+    public void startRXEprogram(byte status,int brick) {
+    	//Mismo que el anterior pero selecciona a quien enviar explicitamente
+    	Handler btchandler = null;
+    	Handler myhandler = null;
+    	switch(brick)
+    	{
+    	case 1:
+    		btchandler = slaveBtcHandler;
+    		myhandler = slaveHandler;
+    		break;
+    	default:
+    		btchandler = btcHandler;
+    		myhandler = myHandler;
+    		break;
+    	}
+        if (status == 0x00) {
+        	 Log.d("pepe", "status 0x00");
+            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.STOP_PROGRAM, 0, 0,myhandler,btchandler);
+            sendBTCmessage(1000, BTCommunicator.START_PROGRAM, programToStart,btchandler);
+        }    
+        else {
+        	 Log.d("pepe", "no status 0x00");
+            sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, programToStart,btchandler);
         }
     }   
     
     ///envia al bthandler los mensajes via blublu   (enteros)
-    void sendBTCmessage(int delay, int message, int value1, int value2) {
+    void sendBTCmessage(int delay, int message, int value1, int value2,Handler myhandler, Handler btchandler) {
         Bundle myBundle = new Bundle();
         myBundle.putInt("message", message);
         myBundle.putInt("value1", value1);
         myBundle.putInt("value2", value2);
-        Message myMessage = myHandler.obtainMessage();
+        Message myMessage = myhandler.obtainMessage();
         myMessage.setData(myBundle);
 
         if (delay == 0)
-            btcHandler.sendMessage(myMessage);
+            btchandler.sendMessage(myMessage);
 
         else
-            btcHandler.sendMessageDelayed(myMessage, delay);
+            btchandler.sendMessageDelayed(myMessage, delay);
     }
     
     //inbox = inbox al cul se manda mensaje
@@ -334,7 +412,7 @@ public class BTService extends Service implements BTConnectable{
    
 
   ///envia al bthandler los mensajes via blublu   (string)  
-    void sendBTCmessage(int delay, int message, String name) {
+    void sendBTCmessage(int delay, int message, String name,Handler btchandler) {
         Bundle myBundle = new Bundle();
         myBundle.putInt("message", message);
         myBundle.putString("name", name);
@@ -342,9 +420,9 @@ public class BTService extends Service implements BTConnectable{
         myMessage.setData(myBundle);
 
         if (delay == 0)
-            btcHandler.sendMessage(myMessage);
+            btchandler.sendMessage(myMessage);
         else
-            btcHandler.sendMessageDelayed(myMessage, delay);
+            btchandler.sendMessageDelayed(myMessage, delay);
     }
     //llama a la actividad que  busca dispositivos
     void selectNXT() {
@@ -405,93 +483,109 @@ public class BTService extends Service implements BTConnectable{
     
     
     //administra los errores que pueden suceder antes y durante la conexion.
-    final Handler myHandler = new Handler() {
-        @Override
-        public void handleMessage(Message myMessage) {
-        	int messageType = myMessage.getData().getInt("message");
-            switch (messageType) {
-                case BTCommunicator.DISPLAY_TOAST:
-                    //showToast(myMessage.getData().getString("toastText"), Toast.LENGTH_SHORT);
-                    break;
-                case BTCommunicator.STATE_CONNECTED:
-                    connected = true;
-                    connectingProgressDialog.dismiss();
-                    sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.GET_FIRMWARE_VERSION, 0, 0);
-                    break;
-                    
-                case BTCommunicator.MOTOR_STATE:
+    private class btHandler extends Handler
+    {
+    	private Handler btchandler;
+    	public btHandler(Handler btchandler)
+    	{	
+    		this.btchandler = btchandler;
+    	}
+    	 @Override
+         public void handleMessage(Message myMessage) {
+         	int messageType = myMessage.getData().getInt("message");
+             switch (messageType) {
+            switch (messageCode) {
+                 case BTCommunicator.DISPLAY_TOAST:
+                     //showToast(myMessage.getData().getString("toastText"), Toast.LENGTH_SHORT);
+                     break;
+                 case BTCommunicator.STATE_CONNECTED:
+                	 connected = true;
+            		 if(connectingProgressDialog.isShowing())
+            		 {
+            			 connectingProgressDialog.dismiss();
+            		 }
+                	 if(btchandler != null)
+                	 {
+                         sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.GET_FIRMWARE_VERSION, 0, 0,(Handler)this,btchandler);
+                	 }
+                     
+                     break;
+                     
+                 case BTCommunicator.MOTOR_STATE:
 
-                    if (myBTCommunicator != null) {
-                        byte[] motorMessage = myBTCommunicator.getReturnMessage();
-                        int position = byteToInt(motorMessage[21]) + (byteToInt(motorMessage[22]) << 8) + (byteToInt(motorMessage[23]) << 16)
-                                       + (byteToInt(motorMessage[24]) << 24);
-                        showToast(getResources().getString(R.string.current_position) + position, Toast.LENGTH_SHORT);
-                    }
+                     if (myBTCommunicator != null) {
+                         byte[] motorMessage = myBTCommunicator.getReturnMessage();
+                         int position = byteToInt(motorMessage[21]) + (byteToInt(motorMessage[22]) << 8) + (byteToInt(motorMessage[23]) << 16)
+                                        + (byteToInt(motorMessage[24]) << 24);
+                         showToast(getResources().getString(R.string.current_position) + position, Toast.LENGTH_SHORT);
+                     }
 
-                    break;
-                    
-                case BTCommunicator.PROGRAM_NAME:
-                    if (myBTCommunicator != null) {
-                        byte[] returnMessage = myBTCommunicator.getReturnMessage();
-                        startRXEprogram(returnMessage[2]);
-                    }
-                    break;
+                     break;
+                     
+                 case BTCommunicator.PROGRAM_NAME:
+                     if (myBTCommunicator != null) {
+                         byte[] returnMessage = myBTCommunicator.getReturnMessage();
+                         startRXEprogram(returnMessage[2]);
+                     }
+                     break;
 
-                case BTCommunicator.STATE_CONNECTERROR_PAIRING:
-                    connectingProgressDialog.dismiss();
-                    destroyBTCommunicator();
-                    break;
+                 case BTCommunicator.STATE_CONNECTERROR_PAIRING:
+                     connectingProgressDialog.dismiss();
+                     destroyBTCommunicator();
+                     break;
 
-                case BTCommunicator.STATE_CONNECTERROR:
-                    connectingProgressDialog.dismiss();
-                case BTCommunicator.STATE_RECEIVEERROR:
-                	
-                case BTCommunicator.STATE_SENDERROR:
+                 case BTCommunicator.STATE_CONNECTERROR:
+                     connectingProgressDialog.dismiss();
+                 case BTCommunicator.STATE_RECEIVEERROR:
+                 	
+                 case BTCommunicator.STATE_SENDERROR:
 
-                    destroyBTCommunicator();
-                    if (btErrorPending == false) {
-                        btErrorPending = true;
-                        // inform the user of the error with an AlertDialog
-                        AlertDialog.Builder builder = new AlertDialog.Builder(thisActivity);
-                        builder.setTitle(getResources().getString(R.string.bt_error_dialog_title))
-                        .setMessage(getResources().getString(R.string.bt_error_dialog_message2)).setCancelable(false)
-                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                btErrorPending = false;
-                                dialog.cancel();
-                                //agregar re conexion
-                                //selectNXT();
-                            }
-                        });
-                        builder.create().show();
-                    }
+                     destroyBTCommunicator();
+                     if (btErrorPending == false) {
+                         btErrorPending = true;
+                         // inform the user of the error with an AlertDialog
+                         AlertDialog.Builder builder = new AlertDialog.Builder(thisActivity);
+                         builder.setTitle(getResources().getString(R.string.bt_error_dialog_title))
+                         .setMessage(getResources().getString(R.string.bt_error_dialog_message2)).setCancelable(false)
+                         .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                             @Override
+                             public void onClick(DialogInterface dialog, int id) {
+                                 btErrorPending = false;
+                                 dialog.cancel();
+                                 //agregar re conexion
+                                 //selectNXT();
+                             }
+                         });
+                         builder.create().show();
+                     }
 
-                    break;
+                     break;
 
-                	case BTCommunicator.FIRMWARE_VERSION:
+                 	case BTCommunicator.FIRMWARE_VERSION:
 
-                    if (myBTCommunicator != null) {
-                        byte[] firmwareMessage = myBTCommunicator.getReturnMessage();
-                        // check if we know the firmware
-                        for (int pos=0; pos<4; pos++) {
-                            if (firmwareMessage[pos + 3] != LCPMessage.FIRMWARE_VERSION_LEJOSMINDDROID[pos]) {
-                                break;
-                            }
-                        }
-                    }
-                    break;
-                	case BTCommunicator.RECEIVE_INT_MESSAGE:
-                		byte[] message = myBTCommunicator.getReturnMessage();
-                		Toast.makeText(thisActivity, String.valueOf(message[4]), 
-    		 					Toast.LENGTH_SHORT).show();
-                		//TODO Hay que despachar mensaje a MainActivity->ControlRemoto
-                    break;
-                
-             
-            }
-        }
-    };
+                     if (myBTCommunicator != null) {
+                         byte[] firmwareMessage = myBTCommunicator.getReturnMessage();
+                         // check if we know the firmware
+                         for (int pos=0; pos<4; pos++) {
+                             if (firmwareMessage[pos + 3] != LCPMessage.FIRMWARE_VERSION_LEJOSMINDDROID[pos]) {
+                                 break;
+                             }
+                         }
+                     }
+                     break;
+                 	case BTCommunicator.RECEIVE_INT_MESSAGE:
+                 		byte[] message = myBTCommunicator.getReturnMessage();
+                 		Toast.makeText(thisActivity, String.valueOf(message[4]), 
+     		 					Toast.LENGTH_SHORT).show();
+                 		//TODO Hay que despachar mensaje a MainActivity->ControlRemoto
+                     break;
+                 
+              
+             }
+         }
+    }
+    Handler myHandler = new btHandler(btcHandler);
+    Handler slaveHandler = new btHandler(slaveBtcHandler);
     public BTCommunicator getCommunicator()
     {
     	return myBTCommunicator;
