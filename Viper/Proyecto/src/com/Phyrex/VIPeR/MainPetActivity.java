@@ -248,7 +248,7 @@ public class MainPetActivity extends SherlockFragment{
 			bowl[3] = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.bowl2);
 			soap = BitmapFactory.decodeResource(getResources(), 
-					R.drawable.soappet);
+					R.drawable.soap);
 			poo = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.poo);
 			play = BitmapFactory.decodeResource(getResources(), 

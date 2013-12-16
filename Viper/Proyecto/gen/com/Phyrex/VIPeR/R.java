@@ -1090,17 +1090,14 @@ containing a value of this type.
         public static final int sleep=0x7f02009b;
         public static final int smenu=0x7f02009c;
         public static final int soap=0x7f02009d;
-        public static final int soappet=0x7f02009e;
-        public static final int soapstat=0x7f02009f;
-        public static final int tento=0x7f0200a0;
-        public static final int tentogrande=0x7f0200a1;
-        public static final int tentosaurio=0x7f0200a2;
-        public static final int tentosaurioava=0x7f0200a3;
-        public static final int tentosaurioeating=0x7f0200a4;
-        public static final int tentosaurioshot=0x7f0200a5;
-        public static final int tentosauriosleeping=0x7f0200a6;
-        public static final int tentosauriotail=0x7f0200a7;
-        public static final int toiletpaper=0x7f0200a8;
+        public static final int soapstat=0x7f02009e;
+        public static final int tentosaurio=0x7f02009f;
+        public static final int tentosaurioava=0x7f0200a0;
+        public static final int tentosaurioeating=0x7f0200a1;
+        public static final int tentosaurioshot=0x7f0200a2;
+        public static final int tentosauriosleeping=0x7f0200a3;
+        public static final int tentosauriotail=0x7f0200a4;
+        public static final int toiletpaper=0x7f0200a5;
     }
     public static final class id {
         public static final int Colortext=0x7f040041;
