@@ -11,9 +11,9 @@ task main(){
 	motor[clampsMotor] = 50;
 	wait1Msec(1300);
 	motor[clampsMotor] = 0;
-	nxtDisplayTextLine(2,"%d",ColorVal);
+/*nxtDisplayTextLine(2,"%d",ColorVal);
 	wait1Msec(2000);
-	StopAllTasks();
+*/StopAllTasks();
 }
 
 //Type Color monitoring
