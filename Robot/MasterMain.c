@@ -1,6 +1,6 @@
 #pragma config(Motor, motorA, rightMotor,  tmotorNXT, PIDControl)
 #pragma config(Motor, motorB, clampsMotor, tmotorNXT, PIDControl)
-#pragma config(Motor, motorC,  leftMotor,  tmotorNXT, PIDControl)
+#pragma config(Motor, motorC, leftMotor,   tmotorNXT, PIDControl)
 #pragma config(Sensor, S1, lightRSensor, sensorLightInactive)
 #pragma config(Sensor, S2, lightLSensor, sensorLightInactive)
 #pragma config(Sensor, S3, colorSensor,  sensorCOLORFULL)
@@ -21,7 +21,10 @@ void sendMess(int nData);
 void checkConnection(); //Not used.... yet...
 void readMessages();
 void calibrate();
-//void captureBall(int iColor);
+void openClamps();
+void closeClamps();
+void catchBall();
+void releaseBall();
 
 /*****************************************
  *       Global Variable Statement
@@ -31,8 +34,8 @@ int LightRVal;
 int LightLVal;
 int nAction;
 int nMensaje = 0;
-
-
+int oClamps = 0; //0 -> Close ; 1 -> Open ; 2 -> Catch
+ubyte OutGoingMessage[1] = {0};
 
 
 /*****************************************
@@ -165,6 +168,18 @@ void readMessages(){
 					eraseDisplay();
 					StartTask(ShowEyes);
 					break;
+				case 41:
+					openClamps();
+					break;
+				case 42:
+					closeClamps();
+					break;
+				case 43:
+					catchBall();
+					break;
+				case 44:
+					releaseBall();
+					break;
 			}
 			ClearMessage();
 		}
@@ -257,55 +272,58 @@ void calibrate(){
 	StopTask(MonitorLLight);
 }
 
-/*
-//Function: captureBall
-void captureBall(int iColor){
-	int capture = 0;
-	switch(iColor){
-		case 1:
-			iColor = BLACKCOLOR;
-			break;
-		case 2:
-			iColor = BLUECOLOR;
-			break;
-		case 3:
-			iColor = GREENCOLOR;
-			break;
-		case 4:
-			iColor = YELLOWCOLOR;
-			break;
-		case 5:
-			iColor = REDCOLOR;
-			break;
-		case 6:
-			iColor = WHITECOLOR;
-			break;
-	}
-
-	StopTask(ShowEyes);
-	eraseDisplay();
-	StartTask(MonitorColor);
-
-	nxtDisplayTextLine(2, "Buscando Pelota");
-	nxtDisplayTextLine(3, "Verde");
-	wait1Msec(2000);
-	while(true){
-		switch(ColorVal){
-			case iColor:
-				capture = 1;
-				motor[clampsMotor] = 30;
-				wait1Msec(500);
-				break;
+//Function: openClamps
+void openClamps(){
+		if(oClamps == 0){ //Si estan en 'Close', las deja en 'Open'
+			motor[clampsMotor] = -50;
+			wait1Msec(2000);
+			oClamps = 1;
 		}
-		if (capture == 1){
-			capture = 0;
-			break;
+		if(oClamps == 2){ //Si estan en 'Catch', ejecuta 'releaseBall' para dejarlas en 'Open'
+			releaseBall();
+			oClamps = 1;
 		}
-	}
-	motor[clampsMotor] = 0;
-
-	eraseDisplay();
-	StartTask(ShowEyes);
-	StopTask(MonitorColor);
+		return;
 }
-*/
+
+//Function: closeClamps
+void closeClamps(){
+	if(oClamps == 1){ //Si estan en 'Open', las deja en 'Close'
+		motor[clampsMotor] = 50;
+		wait1Msec(2000);
+		oClamps = 0;
+	}
+	if(oClamps == 2){ //Si estan en 'Catch', ejecuta 'openClamps' (para dejar en 'Open') y luego se ejecuta a si mismo
+		openClamps();
+		closeClamps();
+	}
+	return;
+}
+
+//Function: catchClamps
+void catchBall(){
+	StartTask(MonitorColor);
+	if(oClamps == 1){ //Si estan en 'Open', captura, comprueba color y envia mensaje. Deja en 'Catch'
+		motor[clampsMotor] = 50;
+		wait1Msec(1300);
+		motor[clampsMotor] = 0;
+
+		OutGoingMessage[0] = ColorVal;
+		cCmdMessageWriteToBluetooth(0,OutGoingMessage,1,mailbox1);
+		//nxtDisplayTextLine(2,"%d",ColorVal);
+		//wait1Msec(2000);
+		oClamps = 2;
+	}
+	StopTask(MonitorColor);
+	return;
+}
+
+//Function: releaseClamps
+void releaseBall(){
+	if(oClamps == 2){	//Si esta en 'Catch', deja en 'Open'
+		motor[clampsMotor] = -50;
+		wait1Msec(1300);
+		oClamps = 1;
+	}
+	return;
+}
