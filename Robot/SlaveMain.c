@@ -1,19 +1,53 @@
-#pragma config(Motor, motorB,  tailMotor, tmotorNXT, PIDControl)
+#pragma config(Motor, motorA, headMotor,  tmotorNXT, PIDControl)
+#pragma config(Motor, motorB, tailMotor, tmotorNXT, PIDControl)
 
-int nMessage = 0;
+/*****************************************
+ *            Task Statement
+ ****************************************/
+//task moveTail();
+
+/*****************************************
+ *            Function Statement
+ ****************************************/
+void readMessages();
+void moveHead();
+void moveTail();
+//void checkConnection();
+
+/*****************************************
+ *       Global Variable Statement
+ ****************************************/
 int nAction;
+int nMessage = 0;
+ubyte OutGoingMessage[1] = {0};
 
-void ReadMessages();
-void checkConnection();
-task MoveTail();
-
+/*****************************************
+ *            Main Task
+ ****************************************/
 task main(){
-	checkConnection();
+//	checkConnection();
 	eraseDisplay();
-	bNxtLCDStatusDisplay = true;
-	wait1Msec(500);
-	ReadMessages();
+	motor[tailMotor] = 50;
+	wait1Msec(300);
+//	bNxtLCDStatusDisplay = true;
+//	wait1Msec(500);
+	readMessages();
 	return;
+}
+
+/*****************************************
+ *            Task Definition
+ ****************************************/
+/*//Function: moveTail
+task moveTail(){
+	while(true){
+		nMotorEncoder[tailMotor] = 0;
+		nMotorEncoderTarget[tailMotor] = 40;
+		motor[tailMotor] = 60;
+		wait1Msec(150);
+		motor[tailMotor] = -60;
+		wait1Msec(150);
+	}
 }
 
 void checkConnection(){
@@ -27,23 +61,23 @@ void checkConnection(){
 	wait1Msec(3000);
 	StopAllTasks();
 }
+*/
 
-/*
- * void ReadMessages
- *
- */
-void ReadMessages(){
+/*****************************************
+ *          Function Definition
+ ****************************************/
+//Function: readMessages
+void readMessages(){
 	while(true){
 		nMessage = message;
 		if (nMessage != 0){
 			nAction = messageParm[0];
 			switch(nAction){
-				case 1:	//Move Tail
-					StartTask(MoveTail);
+				case 45: //Move Head
+					moveHead();
 					break;
-				case 2: //Stop Tail
-					StopTask(MoveTail);
-					motor[tailMotor] = 0;
+				case 46: //Move Tail
+					moveTail();
 					break;
 				case 90: //Victory Fanfare
 					PlaySoundFile("VictoryFanfare.rso");
@@ -58,13 +92,22 @@ void ReadMessages(){
 	}
 }
 
-task MoveTail(){
-	while(true){
-		nMotorEncoder[tailMotor] = 0;
-		nMotorEncoderTarget[tailMotor] = 40;
-		motor[tailMotor] = 60;
-		wait1Msec(150);
-		motor[tailMotor] = -60;
-		wait1Msec(150);
+//Function: moveHead
+void moveHead(){
+	for(int i=0;i<3;i++){
+		motor[headMotor] = 50;
+		wait1Msec(80);
+		motor[headMotor] = -50;
+		wait1Msec(120);
+	}
+}
+
+//Function: moveTail
+void moveTail(){
+	for(int i=0;i<5;i++){
+		motor[tailMotor] = -50;
+		wait1Msec(80);
+		motor[tailMotor] = 50;
+		wait1Msec(120);
 	}
 }
