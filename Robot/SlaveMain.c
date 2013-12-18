@@ -96,10 +96,11 @@ void readMessages(){
 void moveHead(){
 	for(int i=0;i<3;i++){
 		motor[headMotor] = 50;
-		wait1Msec(80);
+		wait1Msec(100);
 		motor[headMotor] = -50;
-		wait1Msec(120);
+		wait1Msec(100);
 	}
+	motor[headMotor] = 0;
 }
 
 //Function: moveTail
@@ -110,4 +111,5 @@ void moveTail(){
 		motor[tailMotor] = 50;
 		wait1Msec(120);
 	}
+	motor[tailMotor] = 0;
 }
