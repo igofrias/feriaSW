@@ -29,6 +29,8 @@ void releaseBall();
 /*****************************************
  *       Global Variable Statement
  ****************************************/
+int openE;
+int closeE;
 int ColorVal;
 int LightRVal;
 int LightLVal;
@@ -42,6 +44,7 @@ ubyte OutGoingMessage[1] = {0};
  *            Main Task
  ****************************************/
 task main(){
+	srand(nSysTime);
 	StartTask(ShowNormalEyes);
 	readMessages();
 	return;
@@ -53,10 +56,16 @@ task main(){
 //Show Normal Eyes
 task ShowNormalEyes(){
 	while(true){
+		openE = 0;
+		closeE = 0;
+		while(openE < 2000)
+			openE = rand()%8000 + 2000;
+		while(closeE < 300)
+			closeE = rand()%100 + 300;
 		nxtDisplayRICFile(0, 0, "OpenEyes.ric");
-		wait1Msec(2000);
+		wait1Msec(openE);
 		nxtDisplayRICFile(0, 0, "CloseEyes.ric");
-		wait1Msec(400);
+		wait1Msec(closeE);
 	}
 }
 
@@ -112,8 +121,9 @@ void readMessages(){
 			nAction = messageParm[0];
 			switch(nAction){
 				case 1 : //Normal Eyes Case!!
+					StartTask(ShowNormalEyes);
 					break;
-				case 2 :
+				case 2 : //Angry Eyes
 					StopTask(ShowNormalEyes);
 					eraseDisplay();
 					nxtDisplayRICFile(0, 0, "AngryEyes.ric");
@@ -121,7 +131,7 @@ void readMessages(){
 					eraseDisplay();
 					StartTask(ShowNormalEyes);
 					break;
-				case 3 :
+				case 3 : //Bored Eyes
 					StopTask(ShowNormalEyes);
 					eraseDisplay();
 					nxtDisplayRICFile(0, 0, "BoredEyes.ric");
@@ -129,7 +139,7 @@ void readMessages(){
 					eraseDisplay();
 					StartTask(ShowNormalEyes);
 					break;
-				case 4 :
+				case 4 : //Close Eyes
 					StopTask(ShowNormalEyes);
 					eraseDisplay();
 					nxtDisplayRICFile(0, 0, "CloseEyes.ric");
@@ -137,7 +147,7 @@ void readMessages(){
 					eraseDisplay();
 					StartTask(ShowNormalEyes);
 					break;
-				case 5 :
+				case 5 : //Happy Eyes
 					StopTask(ShowNormalEyes);
 					eraseDisplay();
 					nxtDisplayRICFile(0, 0, "HappyEyes.ric");
@@ -145,7 +155,7 @@ void readMessages(){
 					eraseDisplay();
 					StartTask(ShowNormalEyes);
 					break;
-				case 6 :
+				case 6 : //Shame Eyes
 					StopTask(ShowNormalEyes);
 					eraseDisplay();
 					nxtDisplayRICFile(0, 0, "ShameEyes.ric");
@@ -153,7 +163,7 @@ void readMessages(){
 					eraseDisplay();
 					StartTask(ShowNormalEyes);
 					break;
-				case 30:
+				case 30: //Dead Eyes
 					StopTask(ShowNormalEyes);
 					eraseDisplay();
 					nxtDisplayRICFile(0, 0, "DeadEyes.ric");
@@ -168,19 +178,19 @@ void readMessages(){
 					eraseDisplay();
 					StartTask(ShowNormalEyes);
 					break;
-				case 41:
+				case 41: //Open Clamps
 					openClamps();
 					break;
-				case 42:
+				case 42: //Close Clamps
 					closeClamps();
 					break;
-				case 43:
+				case 43: //Catch Ball
 					catchBall();
 					break;
-				case 44:
+				case 44: //Release Ball
 					releaseBall();
 					break;
-				case 200:
+				case 200: //Shutdown
 					powerOff();
 					break;
 			}
@@ -280,6 +290,7 @@ void openClamps(){
 		if(oClamps == 0){ //Si estan en 'Close', las deja en 'Open'
 			motor[clampsMotor] = -50;
 			wait1Msec(2000);
+			motor[clampsMotor] = 0;
 			oClamps = 1;
 		}
 		if(oClamps == 2){ //Si estan en 'Catch', ejecuta 'releaseBall' para dejarlas en 'Open'
@@ -294,6 +305,7 @@ void closeClamps(){
 	if(oClamps == 1){ //Si estan en 'Open', las deja en 'Close'
 		motor[clampsMotor] = 50;
 		wait1Msec(2000);
+		motor[clampsMotor] = 0;
 		oClamps = 0;
 	}
 	if(oClamps == 2){ //Si estan en 'Catch', ejecuta 'openClamps' (para dejar en 'Open') y luego se ejecuta a si mismo
@@ -326,6 +338,7 @@ void releaseBall(){
 	if(oClamps == 2){	//Si esta en 'Catch', deja en 'Open'
 		motor[clampsMotor] = -50;
 		wait1Msec(1300);
+		motor[clampsMotor] = 0;
 		oClamps = 1;
 	}
 	return;
