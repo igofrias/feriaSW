@@ -180,6 +180,9 @@ void readMessages(){
 				case 44:
 					releaseBall();
 					break;
+				case 200:
+					powerOff();
+					break;
 			}
 			ClearMessage();
 		}
