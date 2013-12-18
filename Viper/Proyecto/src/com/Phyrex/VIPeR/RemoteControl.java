@@ -326,7 +326,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 				}
 			}
 				if(((MainActivity)thisActivity).isConnected())
-					((MainActivity)thisActivity).startProgram("CloseClamps.rxe");
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "CloseClamps");
 			
 		}
 		manager.unregisterListener(this);
@@ -690,7 +690,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	            	//aceptar
 	            	inplay=true;
 	            	if(((MainActivity)thisActivity).isConnected()){
-	    				((MainActivity)thisActivity).startProgram("OpenClamps.rxe");
+	            		((MainActivity)thisActivity).getBTService().sendPetMessage(0, "OpenClamps");
 	    				release = true;
 	            	}
 			    }
@@ -703,14 +703,14 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			if(pincersstate==0){//cerrar
 				pincersstate=1;
 				if(((MainActivity)thisActivity).isConnected()){
-    				((MainActivity)thisActivity).startProgram("CatchBall-NM.rxe");
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "CatchBall");
     				///validcatchball();
     				release=false;
 				}
 			}else{//abrir TODO
 				pincersstate=0;
 				if(((MainActivity)thisActivity).isConnected()){
-    				((MainActivity)thisActivity).startProgram("ReleaseBall.rxe");
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "ReleaseBall");
     				release=true;
 				}
 			}

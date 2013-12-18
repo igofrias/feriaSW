@@ -136,7 +136,7 @@ public class MainPetActivity extends SherlockFragment{
 		         			Toast.makeText(thisActivity, "Logro Desbloqueado Jugueton", Toast.LENGTH_LONG).show();((StatesActivity)fragment1).playing();
 			 			//Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
 	 			    	if(((MainActivity)thisActivity).isConnected())
-			    				((MainActivity)thisActivity).startProgram("tail.rxe",1);
+	 			    		((MainActivity)thisActivity).getBTService().sendPetMessage(1, "MoveTail");
 		 			}else{
 		 				Toast.makeText(thisActivity, "no puedes molestar a la mascota mientras duerme", Toast.LENGTH_SHORT).show();
 		 			}
