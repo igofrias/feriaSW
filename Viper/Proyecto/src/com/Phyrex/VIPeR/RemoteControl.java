@@ -396,7 +396,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		this.thMesseger.start();
 	}
 	
-	private class DrawJoystick extends SurfaceView implements SurfaceHolder.Callback, Runnable
+	class DrawJoystick extends SurfaceView implements SurfaceHolder.Callback, Runnable
 	{
 		//Clase que maneja el dibujo del joystick. Tiene un thread que llama a que
 		//se dibuje en el canvas
@@ -650,9 +650,9 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			}
 		}
 		
-		public void validcatchball() throws IOException{
+		public void validcatchball(int sensorball) throws IOException{
 			//detenccion de sensor
-			int sensorball=0;/*((MainActivity)thisActivity).recivemsg();/aqui esto debe ser igual a lo de cele :D*/
+			/*((MainActivity)thisActivity).recivemsg();/aqui esto debe ser igual a lo de cele :D*/
 			//((MainActivity)thisActivity).sendMessageBTNumber(0, 201);
 			Log.e("Mensaje Recibido", String.valueOf(sensorball));
 			if (sensorball==ballcolor){

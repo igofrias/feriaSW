@@ -617,8 +617,21 @@ public class BTService extends Service implements BTConnectable{
                      break;
                  	case BTCommunicator.RECEIVE_INT_MESSAGE:
                  		byte[] message = myBTCommunicator.getReturnMessage();
-                 		Toast.makeText(thisActivity, String.valueOf(message[4]), 
-     		 					Toast.LENGTH_SHORT).show();
+//                 		Toast.makeText(thisActivity, String.valueOf(message[4]), 
+//     		 					Toast.LENGTH_SHORT).show();
+                 		if(thisActivity instanceof MainActivity)
+                 		{
+                 				RemoteControl control = ((MainActivity)thisActivity).getRemoteControl();
+                 				if(control != null)
+                 				{
+                 					try {
+                 						control.canvas.validcatchball(message[4]);
+                 					} catch (IOException e) {
+                 						// TODO Auto-generated catch block
+                 						e.printStackTrace();
+                 					}
+                 				}
+                 		}
                  		//TODO Hay que despachar mensaje a MainActivity->ControlRemoto
                      break;
                  

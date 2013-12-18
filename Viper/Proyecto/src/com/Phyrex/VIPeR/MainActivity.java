@@ -265,7 +265,20 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		ft.commit();
 	}
     
-    
+    public RemoteControl getRemoteControl()
+    {
+    	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		SherlockFragment fragment = ((RemoteControl)getSupportFragmentManager().findFragmentByTag("remotecontrol"));
+		if(fragment==null ){
+			return null;
+		}
+		else{
+			if(!fragment.isDetached()){
+				return (RemoteControl) fragment;
+			}
+		}
+		return null;
+    }
     
     //mata el supa framento
     void detach_remotecontrol() {//identificamos y quitamos el fragmento control remoto 
