@@ -9,7 +9,7 @@
 /*****************************************
  *            Task Statement
  ****************************************/
-task ShowEyes();
+task ShowNormalEyes();
 task MonitorRLight();
 task MonitorLLight();
 task MonitorColor();
@@ -17,8 +17,8 @@ task MonitorColor();
 /*****************************************
  *            Function Statement
  ****************************************/
-void sendMess(int nData);
-void checkConnection(); //Not used.... yet...
+//void sendMess(int nData);
+//void checkConnection(); //Not used.... yet...
 void readMessages();
 void calibrate();
 void openClamps();
@@ -42,7 +42,7 @@ ubyte OutGoingMessage[1] = {0};
  *            Main Task
  ****************************************/
 task main(){
-	StartTask(ShowEyes);
+	StartTask(ShowNormalEyes);
 	readMessages();
 	return;
 }
@@ -51,7 +51,7 @@ task main(){
  *            Task Definition
  ****************************************/
 //Show Normal Eyes
-task ShowEyes(){
+task ShowNormalEyes(){
 	while(true){
 		nxtDisplayRICFile(0, 0, "OpenEyes.ric");
 		wait1Msec(2000);
@@ -85,7 +85,7 @@ task MonitorColor(){
 /*****************************************
  *          Function Definition
  ****************************************/
-//Function: sendMess
+/*//Function: sendMess
 void sendMess(int nData){
 	sendMessageWithParm(nData);
 	return;
@@ -102,7 +102,7 @@ void checkConnection(){
 	nxtDisplayCenteredTextLine(4, "Conectado");
 	wait1Msec(3000);
 	StopAllTasks();
-}
+}*/
 
 //Function: readMessages
 void readMessages(){
@@ -114,59 +114,59 @@ void readMessages(){
 				case 1 : //Normal Eyes Case!!
 					break;
 				case 2 :
-					StopTask(ShowEyes);
+					StopTask(ShowNormalEyes);
 					eraseDisplay();
 					nxtDisplayRICFile(0, 0, "AngryEyes.ric");
 					wait1Msec(4000);
 					eraseDisplay();
-					StartTask(ShowEyes);
+					StartTask(ShowNormalEyes);
 					break;
 				case 3 :
-					StopTask(ShowEyes);
+					StopTask(ShowNormalEyes);
 					eraseDisplay();
 					nxtDisplayRICFile(0, 0, "BoredEyes.ric");
 					wait1Msec(4000);
 					eraseDisplay();
-					StartTask(ShowEyes);
+					StartTask(ShowNormalEyes);
 					break;
 				case 4 :
-					StopTask(ShowEyes);
+					StopTask(ShowNormalEyes);
 					eraseDisplay();
 					nxtDisplayRICFile(0, 0, "CloseEyes.ric");
 					wait1Msec(4000);
 					eraseDisplay();
-					StartTask(ShowEyes);
+					StartTask(ShowNormalEyes);
 					break;
 				case 5 :
-					StopTask(ShowEyes);
+					StopTask(ShowNormalEyes);
 					eraseDisplay();
 					nxtDisplayRICFile(0, 0, "HappyEyes.ric");
 					wait1Msec(4000);
 					eraseDisplay();
-					StartTask(ShowEyes);
+					StartTask(ShowNormalEyes);
 					break;
 				case 6 :
-					StopTask(ShowEyes);
+					StopTask(ShowNormalEyes);
 					eraseDisplay();
 					nxtDisplayRICFile(0, 0, "ShameEyes.ric");
 					wait1Msec(4000);
 					eraseDisplay();
-					StartTask(ShowEyes);
+					StartTask(ShowNormalEyes);
 					break;
 				case 30:
-					StopTask(ShowEyes);
+					StopTask(ShowNormalEyes);
 					eraseDisplay();
 					nxtDisplayRICFile(0, 0, "DeadEyes.ric");
 					wait1Msec(4000);
 					eraseDisplay();
-					StartTask(ShowEyes);
+					StartTask(ShowNormalEyes);
 					break;
 				case 31: //Calibrate Case
-					StopTask(ShowEyes);
+					StopTask(ShowNormalEyes);
 					eraseDisplay();
 					calibrate();
 					eraseDisplay();
-					StartTask(ShowEyes);
+					StartTask(ShowNormalEyes);
 					break;
 				case 41:
 					openClamps();
