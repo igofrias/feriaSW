@@ -51,7 +51,7 @@ public class Init {
 	public static final int img9 = R.drawable.logropepe;*/
 	public static final String ach10 = "Cajita de Arena";	
 	public static final String ach10_desc = "Tu mascota ha sido limpiada 5 veces";
-	public static final int img10 = R.drawable.logropepe;
+	public static final int img10 = R.drawable.logrolimpcaca;
 	
 	int done =0;
 		
