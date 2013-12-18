@@ -58,11 +58,13 @@ public class BTCommunicator extends Thread {
     public static final int SAY_TEXT = 1030;
     public static final int VIBRATE_PHONE = 1031;
     public static final int RECEIVE_INT_MESSAGE = 1032;
+    public static final int SEND_PET_MESSAGE = 1033;
     public static final int NO_DELAY = 0;
 
     private static final UUID SERIAL_PORT_SERVICE_CLASS_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     // this is the only OUI registered by LEGO, see http://standards.ieee.org/regauth/oui/index.shtml
     public static final String OUI_LEGO = "00:16:53";
+	
 
     private Resources mResources;
     private BluetoothAdapter btAdapter;
@@ -327,7 +329,16 @@ public class BTCommunicator extends Thread {
         byte[] message = LCPMessage.getActionMessage(actionNr);
         sendMessageAndState(message);
     }
-
+    private void sendPetMessage(int inbox, int petmessage)
+    {
+    	byte[] message = new byte[5];
+    	message[0] = LCPMessage.DIRECT_COMMAND_NOREPLY;
+    	message[1] = LCPMessage.MESSAGE_WRITE;
+    	message[2] = (byte)inbox;
+    	message[3] = 1;
+    	message[4] = (byte) petmessage;
+    	sendMessageAndState(message);
+    }
     
     private void changeMotorSpeed(int motor, int speed) {
         if (speed > 100)
@@ -426,6 +437,9 @@ public class BTCommunicator extends Thread {
                 case READ_MOTOR_STATE:
                     readMotorState(myMessage.getData().getInt("value1"));
                     break;
+                case SEND_PET_MESSAGE:
+                	sendPetMessage(myMessage.getData().getInt("value1"),myMessage.getData().getInt("value2"));
+                	break;
                 case GET_FIRMWARE_VERSION:
                     getFirmwareVersion();
                     break;

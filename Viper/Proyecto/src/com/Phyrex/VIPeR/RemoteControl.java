@@ -321,7 +321,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		if(playmode){
 			if(!canvas.release){
 				if(((MainActivity)thisActivity).isConnected()){
-					((MainActivity)thisActivity).startProgram("ReleaseBall.rxe");//TODO
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "ReleaseBall");//TODO
 					waitRelease();	
 				}
 			}

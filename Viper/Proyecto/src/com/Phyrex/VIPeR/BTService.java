@@ -27,6 +27,7 @@ import android.widget.Toast;
 import android.app.ProgressDialog;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -52,6 +53,7 @@ public class BTService extends Service implements BTConnectable{
 	private String connectionType= null;
 	private int lastColor;
     String mac_nxt="";
+    HashMap<String, Integer> messageMap;
     
     /////*********Valores de motores*********//////
    /* private int motorActiona;
@@ -60,6 +62,10 @@ public class BTService extends Service implements BTConnectable{
     private int directionAction;
   */
     ///////////////////////////////////
+    public BTService()
+    {
+    	createMessageMap();
+    }
 	public void setCurrentActivity(Activity main)
 	{
 		thisActivity = main;
@@ -84,7 +90,6 @@ public class BTService extends Service implements BTConnectable{
     			});
     			thread.setRunning(true);
     			thread.start();
-    			
     	
     	return startId;
         // TODO Auto-generated method stub
@@ -377,7 +382,45 @@ public class BTService extends Service implements BTConnectable{
             sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.START_PROGRAM, programToStart,btchandler);
         }
     }   
-    
+    public void createMessageMap()
+    {
+    	//Crea el mapeo de mensajes a enteros
+    	messageMap = new HashMap<String,Integer>(13); 
+    	messageMap.put("OpenEyes", 1);
+    	messageMap.put("AngryEyes", 2);
+    	messageMap.put("BoredEyes",3);
+    	messageMap.put("CloseEyes", 4);
+    	messageMap.put("Eat", 5);
+    	messageMap.put("ShameEyes", 6);
+    	messageMap.put("OpenClamps", 41);
+    	messageMap.put("CloseClamps", 42);
+    	messageMap.put("CatchBall", 43);
+    	messageMap.put("ReleaseBall", 44);
+    	messageMap.put("MoveTail", 46);
+    	
+    }
+    public void sendPetMessage(int brick, String message)
+    {
+    	//Envia un mensaje al brick apropiado
+    	Handler btchandler = null;
+    	Handler myhandler = null;
+    	switch(brick)
+    	{
+    	case 1:
+    		btchandler = slaveBtcHandler;
+    		myhandler = slaveHandler;
+    		break;
+    	default:
+    		btchandler = btcHandler;
+    		myhandler = myHandler;
+    		break;
+    	}
+    	int inbox = 0;
+    	int messageNumber = 0;
+    	messageNumber = (Integer) messageMap.get(message);
+    	
+    	sendBTCmessage(BTCommunicator.NO_DELAY,BTCommunicator.SEND_PET_MESSAGE,inbox,messageNumber,myhandler,btchandler);
+    }
     ///envia al bthandler los mensajes via blublu   (enteros)
     void sendBTCmessage(int delay, int message, int value1, int value2,Handler myhandler, Handler btchandler) {
         Bundle myBundle = new Bundle();
@@ -494,7 +537,6 @@ public class BTService extends Service implements BTConnectable{
          public void handleMessage(Message myMessage) {
          	int messageType = myMessage.getData().getInt("message");
              switch (messageType) {
-            switch (messageCode) {
                  case BTCommunicator.DISPLAY_TOAST:
                      //showToast(myMessage.getData().getString("toastText"), Toast.LENGTH_SHORT);
                      break;

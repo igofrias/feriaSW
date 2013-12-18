@@ -346,7 +346,7 @@ public class MainPetActivity extends SherlockFragment{
 							petstate=0;
 							sleeping=false;
 							if(((MainActivity)thisActivity).isConnected())
-								((MainActivity)thisActivity).startProgram("AwakeEyes.rxe");
+								((MainActivity)thisActivity).getBTService().sendPetMessage(0, "OpenEyes");
 							Actions(2);//despertar
 						}else{
 							petstate=2;
@@ -445,7 +445,10 @@ public class MainPetActivity extends SherlockFragment{
 				}else if(petstate==1){
 					Draweating(width, height, center_x, center_y);
 					if(((MainActivity)thisActivity).isConnected())
-	    				((MainActivity)thisActivity).startProgram("Eat.rxe");
+					{
+	    				//((MainActivity)thisActivity).startProgram("Eat.rxe");
+						((MainActivity)thisActivity).getBTService().sendPetMessage(0, "Eat");
+					} 
 				}	
 				/*//Measure frame rate (unit: frames per second).
 		         now=System.currentTimeMillis();
@@ -461,7 +464,7 @@ public class MainPetActivity extends SherlockFragment{
 			
 				if(poop){
 					if(((MainActivity)thisActivity).isConnected())
-	    				((MainActivity)thisActivity).startProgram("ShameEyes.rxe");
+						((MainActivity)thisActivity).getBTService().sendPetMessage(0, "ShameEyes");
 					can.drawBitmap(poo, center_x*28/16-poo.getWidth()/2, 
 						center_y*9/6- poo.getHeight()/2, color);
 				}
@@ -492,7 +495,7 @@ public class MainPetActivity extends SherlockFragment{
 			can.drawARGB(150, 0, 0, 0);
 			if(canvas.sleeping){
 				if(((MainActivity)thisActivity).isConnected())
-					((MainActivity)thisActivity).startProgram("SleepEyes.rxe");
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "CloseEyes");
 			}
 		}
 		
@@ -624,7 +627,7 @@ public class MainPetActivity extends SherlockFragment{
 						center_y - eyespooping.getHeight()*4/7, color);
 				if(cleantime%10==0){
 					if(((MainActivity)thisActivity).isConnected())
-	    				((MainActivity)thisActivity).startProgram("ShameEyes.rxe");
+						((MainActivity)thisActivity).getBTService().sendPetMessage(0, "ShameEyes");
 					Drawclean(center_x, center_y);
 				}
 				cleantime++;

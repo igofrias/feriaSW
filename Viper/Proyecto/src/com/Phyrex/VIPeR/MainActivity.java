@@ -746,4 +746,8 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 	{
 		btservice.startProgram(name,brick);
 	}
+	public BTService getBTService()
+	{
+		return this.btservice;
+	}
 }
