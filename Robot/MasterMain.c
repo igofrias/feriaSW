@@ -261,6 +261,15 @@ void readMessages(){
 				case 44: //Release Ball
 					releaseBall();
 					break;
+				case 61:
+					PlaySoundFile(nAction);
+					break;
+				case 62:
+					PlaySoundFile(nAction);
+					break;
+				case 63:
+					PlaySoundFile(nAction);
+					break;
 				case 200: //Shutdown
 					StopAllTasks();
 					powerOff();
@@ -460,5 +469,20 @@ void stopEyes(int e){
 			break;
 	}
 	eraseDisplay();
+	return;
+}
+
+void playTheme(int t){
+	switch(t){
+		case 61:
+			PlaySoundFile("YawnSound.rso");
+			break;
+		case 62:
+			PlaySoundFile("SleepSound.rso");
+			break;
+		case 63:
+			PlaySoundFile("EatSound.rso");
+			break;
+	}
 	return;
 }
