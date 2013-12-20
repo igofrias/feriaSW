@@ -12,6 +12,7 @@
 void readMessages();
 void moveHead();
 void moveTail();
+void playTheme(int t);
 //void checkConnection();
 
 /*****************************************
@@ -80,7 +81,7 @@ void readMessages(){
 					moveTail();
 					break;
 				case 90: //Victory Fanfare
-					PlaySoundFile("VictoryFanfare.rso");
+					playTheme(nAction);
 					break;
 				case 200: //Shutdown
 					StopAllTasks();
@@ -114,4 +115,13 @@ void moveTail(){
 		wait1Msec(120);
 	}
 	motor[tailMotor] = 0;
+}
+
+void playTheme(int t){
+	switch(t){
+		case 90:
+			PlaySoundFile("VictoryFanfare.rso");
+			break;
+	}
+	return;
 }
