@@ -10,6 +10,14 @@
  *            Task Statement
  ****************************************/
 task ShowNormalEyes();
+task ShowAngryEyes();
+task ShowBoredEyes();
+task ShowCloseEyes();
+task ShowHappyEyes();
+task ShowShameEyes();
+task ShowSadEyes();
+task ShowCryEyes();
+task ShowDeadEyes();
 task MonitorRLight();
 task MonitorLLight();
 task MonitorColor();
@@ -25,6 +33,8 @@ void openClamps();
 void closeClamps();
 void catchBall();
 void releaseBall();
+void eyesTime();
+void stopEyes(int e);
 
 /*****************************************
  *       Global Variable Statement
@@ -34,9 +44,10 @@ int closeE;
 int ColorVal;
 int LightRVal;
 int LightLVal;
-int nAction;
-int nMensaje = 0;
 int oClamps = 0; //0 -> Close ; 1 -> Open ; 2 -> Catch
+int eyesTask = 0;
+long nAction;
+long nMensaje = 0;
 ubyte OutGoingMessage[1] = {0};
 
 
@@ -56,16 +67,82 @@ task main(){
 //Show Normal Eyes
 task ShowNormalEyes(){
 	while(true){
-		openE = 0;
-		closeE = 0;
-		while(openE < 2000)
-			openE = rand()%8000 + 2000;
-		while(closeE < 300)
-			closeE = rand()%100 + 300;
+		eyesTime();
 		nxtDisplayRICFile(0, 0, "OpenEyes.ric");
 		wait1Msec(openE);
 		nxtDisplayRICFile(0, 0, "CloseEyes.ric");
 		wait1Msec(closeE);
+	}
+}
+
+//Show Angry Eyes
+task ShowAngryEyes(){
+	while(true){
+		eyesTime();
+		nxtDisplayRICFile(0, 0, "AngryEyes.ric");
+		wait1Msec(openE);
+	}
+}
+
+//Show Bored Eyes
+task ShowBoredEyes(){
+	while(true){
+		eyesTime();
+		nxtDisplayRICFile(0, 0, "BoredEyes.ric");
+		wait1Msec(openE);
+	}
+}
+
+//Show Close Eyes
+task ShowCloseEyes(){
+	while(true){
+		eyesTime();
+		nxtDisplayRICFile(0, 0, "CloseEyes.ric");
+		wait1Msec(openE);
+	}
+}
+
+//Show Happy Eyes
+task ShowHappyEyes(){
+	while(true){
+		eyesTime();
+		nxtDisplayRICFile(0, 0, "HappyEyes.ric");
+		wait1Msec(openE);
+	}
+}
+
+//Show Shame Eyes
+task ShowShameEyes(){
+	while(true){
+		eyesTime();
+		nxtDisplayRICFile(0, 0, "ShameEyes.ric");
+		wait1Msec(openE);
+	}
+}
+
+//Show Sad Eyes
+task ShowSadEyes(){
+	while(true){
+		eyesTime();
+		nxtDisplayRICFile(0, 0, "SadEyes.ric");
+		wait1Msec(openE);
+	}
+}
+
+//Show Cry Eyes
+task ShowCryEyes(){
+	while(true){
+		eyesTime();
+		nxtDisplayRICFile(0, 0, "CryEyes.ric");
+		wait1Msec(openE);
+	}
+}
+
+task ShowDeadEyes(){
+	while(true){
+		eyesTime();
+		nxtDisplayRICFile(0, 0, "DeadEyes.ric");
+		wait1Msec(openE);
 	}
 }
 
@@ -120,59 +197,53 @@ void readMessages(){
 		if (nMensaje != 0){
 			nAction = messageParm[0];
 			switch(nAction){
-				case 1 : //Normal Eyes Case!!
+				case 1 : //Normal Eyes
+					stopEyes(eyesTask);
 					StartTask(ShowNormalEyes);
+					eyesTask = 1;
 					break;
 				case 2 : //Angry Eyes
-					StopTask(ShowNormalEyes);
-					eraseDisplay();
-					nxtDisplayRICFile(0, 0, "AngryEyes.ric");
-					wait1Msec(4000);
-					eraseDisplay();
-					StartTask(ShowNormalEyes);
+					stopEyes(eyesTask);
+					StartTask(ShowAngryEyes);
+					eyesTask = 2;
 					break;
 				case 3 : //Bored Eyes
-					StopTask(ShowNormalEyes);
-					eraseDisplay();
-					nxtDisplayRICFile(0, 0, "BoredEyes.ric");
-					wait1Msec(4000);
-					eraseDisplay();
-					StartTask(ShowNormalEyes);
+					stopEyes(eyesTask);
+					StartTask(ShowBoredEyes);
+					eyesTask = 3;
 					break;
 				case 4 : //Close Eyes
-					StopTask(ShowNormalEyes);
-					eraseDisplay();
-					nxtDisplayRICFile(0, 0, "CloseEyes.ric");
-					wait1Msec(4000);
-					eraseDisplay();
-					StartTask(ShowNormalEyes);
+					stopEyes(eyesTask);
+					StartTask(ShowCloseEyes);
+					eyesTask = 4;
 					break;
 				case 5 : //Happy Eyes
-					StopTask(ShowNormalEyes);
-					eraseDisplay();
-					nxtDisplayRICFile(0, 0, "HappyEyes.ric");
-					wait1Msec(4000);
-					eraseDisplay();
-					StartTask(ShowNormalEyes);
+					stopEyes(eyesTask);
+					StartTask(ShowHappyEyes);
+					eyesTask = 5;
 					break;
 				case 6 : //Shame Eyes
-					StopTask(ShowNormalEyes);
-					eraseDisplay();
-					nxtDisplayRICFile(0, 0, "ShameEyes.ric");
-					wait1Msec(4000);
-					eraseDisplay();
-					StartTask(ShowNormalEyes);
+					stopEyes(eyesTask);
+					StartTask(ShowShameEyes);
+					eyesTask = 6;
+					break;
+				case 7: //Sad Eyes
+					stopEyes(eyesTask);
+					StartTask(ShowSadEyes);
+					eyesTask = 7;
+					break;
+				case 8: //Cry Eyes
+					stopEyes(eyesTask);
+					StartTask(ShowCryEyes);
+					eyesTask = 8;
 					break;
 				case 30: //Dead Eyes
-					StopTask(ShowNormalEyes);
-					eraseDisplay();
-					nxtDisplayRICFile(0, 0, "DeadEyes.ric");
-					wait1Msec(4000);
-					eraseDisplay();
-					StartTask(ShowNormalEyes);
+					stopEyes(eyesTask);
+					StartTask(ShowDeadEyes);
+					eyesTask = 30;
 					break;
 				case 31: //Calibrate Case
-					StopTask(ShowNormalEyes);
+					stopEyes(eyesTask);
 					eraseDisplay();
 					calibrate();
 					eraseDisplay();
@@ -191,7 +262,9 @@ void readMessages(){
 					releaseBall();
 					break;
 				case 200: //Shutdown
+					StopAllTasks();
 					powerOff();
+					return;
 					break;
 			}
 			ClearMessage();
@@ -341,5 +414,51 @@ void releaseBall(){
 		motor[clampsMotor] = 0;
 		oClamps = 1;
 	}
+	return;
+}
+
+void eyesTime(){
+	openE = 0;
+	closeE = 0;
+	while(openE < 2000)
+		openE = rand()%8000 + 2000;
+	while(closeE < 300)
+		closeE = rand()%100 + 300;
+	return;
+}
+
+void stopEyes(int e){
+	switch(e){
+		case 1:
+			StopTask(ShowNormalEyes);
+			break;
+		case 2:
+			StopTask(ShowAngryEyes);
+			break;
+		case 3:
+			StopTask(ShowBoredEyes);
+			break;
+		case 4:
+			StopTask(ShowCloseEyes);
+			break;
+		case 5:
+			StopTask(ShowHappyEyes);
+			break;
+		case 6:
+			StopTask(ShowShameEyes);
+			break;
+		case 7:
+			StopTask(ShowSadEyes);
+			break;
+		case 8:
+			StopTask(ShowCryEyes);
+			break;
+		case 30:
+			StopTask(ShowNormalEyes);
+			break;
+		default:
+			break;
+	}
+	eraseDisplay();
 	return;
 }
