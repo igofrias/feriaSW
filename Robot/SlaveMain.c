@@ -83,7 +83,9 @@ void readMessages(){
 					PlaySoundFile("VictoryFanfare.rso");
 					break;
 				case 200: //Shutdown
+					StopAllTasks();
 					powerOff();
+					return;
 					break;
 			}
 			ClearMessage();
