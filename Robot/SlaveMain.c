@@ -120,7 +120,7 @@ void moveTail(){
 void playTheme(int t){
 	switch(t){
 		case 90:
-			PlaySoundFile("VictoryFanfare.rso");
+			PlaySoundFile("FanfareSound.rso");
 			break;
 	}
 	return;
