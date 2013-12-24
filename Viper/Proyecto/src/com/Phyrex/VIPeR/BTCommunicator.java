@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.nio.ByteBuffer;
 import java.util.UUID;
 
 
@@ -331,12 +332,17 @@ public class BTCommunicator extends Thread {
     }
     private void sendPetMessage(int inbox, int petmessage)
     {
-    	byte[] message = new byte[5];
+    	byte[] int_message = ByteBuffer.allocate(4).putInt(petmessage).array();
+    	byte[] message = new byte[8];
     	message[0] = LCPMessage.DIRECT_COMMAND_NOREPLY;
     	message[1] = LCPMessage.MESSAGE_WRITE;
     	message[2] = (byte)inbox;
-    	message[3] = 1;
-    	message[4] = (byte) petmessage;
+    	message[3] = 4;
+    	for(int i = 0; i < 4; i++)
+    	{
+    		message[4+i] = int_message[i];
+    	}
+    	
     	sendMessageAndState(message);
     }
     
