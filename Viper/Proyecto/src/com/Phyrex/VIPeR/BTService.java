@@ -385,18 +385,26 @@ public class BTService extends Service implements BTConnectable{
     public void createMessageMap()
     {
     	//Crea el mapeo de mensajes a enteros
-    	messageMap = new HashMap<String,Integer>(13); 
+    	messageMap = new HashMap<String,Integer>(50); 
     	messageMap.put("OpenEyes", 1);
     	messageMap.put("AngryEyes", 2);
     	messageMap.put("BoredEyes",3);
     	messageMap.put("CloseEyes", 4);
-    	messageMap.put("Eat", 5);
+    	messageMap.put("HappyEyes", 5);
     	messageMap.put("ShameEyes", 6);
+    	messageMap.put("SadEyes", 7);
+    	messageMap.put("CryEyes", 8);
+    	messageMap.put("DeadEyes", 30);
+    	messageMap.put("Calibration", 31);
     	messageMap.put("OpenClamps", 41);
     	messageMap.put("CloseClamps", 42);
     	messageMap.put("CatchBall", 43);
     	messageMap.put("ReleaseBall", 44);
     	messageMap.put("MoveTail", 46);
+    	messageMap.put("YawnSound", 61);
+    	messageMap.put("SleepSound", 62);
+    	messageMap.put("EatSound", 63);
+    	messageMap.put("Shutdown", 200);
     	
     }
     public void sendPetMessage(int brick, String message)

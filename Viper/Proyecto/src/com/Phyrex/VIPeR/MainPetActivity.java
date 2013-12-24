@@ -447,7 +447,7 @@ public class MainPetActivity extends SherlockFragment{
 					if(((MainActivity)thisActivity).isConnected())
 					{
 	    				//((MainActivity)thisActivity).startProgram("Eat.rxe");
-						((MainActivity)thisActivity).getBTService().sendPetMessage(0, "Eat");
+						((MainActivity)thisActivity).getBTService().sendPetMessage(0, "HappyEyes");
 					} 
 				}	
 				/*//Measure frame rate (unit: frames per second).
