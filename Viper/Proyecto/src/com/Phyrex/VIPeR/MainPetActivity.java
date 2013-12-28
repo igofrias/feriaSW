@@ -179,6 +179,7 @@ public class MainPetActivity extends SherlockFragment{
 		Bitmap poo;
 		Bitmap play;
 		Bitmap action;
+		Bitmap bubbles[] = new Bitmap[3];
 		//ojos
 		Bitmap eyesnormal;
 		Bitmap eyespooping;
@@ -283,12 +284,17 @@ public class MainPetActivity extends SherlockFragment{
 					R.drawable.dirt8);
 			dirt[8]= BitmapFactory.decodeResource(getResources(), 
 					R.drawable.dirt9);
+			bubbles[0] = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.bubble1);
+			bubbles[1] = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.bubble2);
+			bubbles[2] = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.bubble3);
 		}
 
 		@Override
 		public void surfaceChanged(SurfaceHolder holder, int format, int width,
 				int height) {
-			// TODO Auto-generated method stub
 			
 		}
 		
@@ -326,7 +332,7 @@ public class MainPetActivity extends SherlockFragment{
 					    		/*if(dirtstate<9){
 					    			dirtstate++;
 					    		}*/
-					    		//poop=true;
+					    		poop=true;
 					    	}else{
 					    		petFingerMove = false;
 					    	}
@@ -405,7 +411,6 @@ public class MainPetActivity extends SherlockFragment{
 
 		@Override
 		public void surfaceDestroyed(SurfaceHolder holder) {
-			// TODO Auto-generated method stub
 			stopCanvas();
 		}
 		
@@ -438,7 +443,7 @@ public class MainPetActivity extends SherlockFragment{
 					Drawtail(center_x, center_y, width, height);
 					canvas.drawBitmap(tento, center_x-tento.getWidth()*1/3, 
 							center_y - tento.getHeight()*4/7, color);
-					Drawtouchingpet(center_x,center_y);
+					Drawtouchingpet(center_x,center_y, x , y);
 					Drawdirt(center_x,center_y, canvas);
 				}else if(petstate==2){
 					Drawsleeping(center_x,center_y);
@@ -446,7 +451,6 @@ public class MainPetActivity extends SherlockFragment{
 					Draweating(width, height, center_x, center_y);
 					if(((MainActivity)thisActivity).isConnected())
 					{
-	    				//((MainActivity)thisActivity).startProgram("Eat.rxe");
 						((MainActivity)thisActivity).getBTService().sendPetMessage(0, "HappyEyes");
 					} 
 				}	
@@ -621,10 +625,11 @@ public class MainPetActivity extends SherlockFragment{
 	        }
 		} 
 		
-		public void Drawtouchingpet(float center_x, float center_y){
+		public void Drawtouchingpet(float center_x, float center_y, float x, float y){
 			if(cleanning){
 				can.drawBitmap(eyespooping, center_x-eyespooping.getWidth()*1/3, 
 						center_y - eyespooping.getHeight()*4/7, color);
+				Drawbubbles(x,y,center_x*2, center_y*2);
 				if(cleantime%10==0){
 					if(((MainActivity)thisActivity).isConnected())
 						((MainActivity)thisActivity).getBTService().sendPetMessage(0, "ShameEyes");
@@ -654,6 +659,26 @@ public class MainPetActivity extends SherlockFragment{
 			}
 		}
 		
+		public void Drawbubbles(float x, float y, float width, float height){
+			int j=0;
+			while(j<5){
+				for(int i=0; i<3; i++){
+					int rand1 = (int) (Math.random() * 10)+1;
+					int rand2 = (int) (Math.random() * 10)+1;
+					int dirx = (int) Math.floor(Math.random() * (1 + 1)) - 1;
+					int diry = (int) Math.floor(Math.random() * (1 + 1)) - 1;
+					if(dirx==0)
+						dirx++;
+					if(diry==0)
+						diry++;
+					Log.e("Draw","dirx: " + dirx +", diry: "+diry+ " rand: "+ rand1);
+					can.drawBitmap(bubbles[i], (x -(bubbles[i].getWidth()/2))+dirx*rand1*width/80, 
+							(y - (bubbles[i].getHeight()/2))+diry*rand2*height/90, color);
+				}
+				j++;
+			}
+		}
+		
 		public void update_coordinates(float x, float y)
 		{
 			corx= x;
@@ -663,7 +688,7 @@ public class MainPetActivity extends SherlockFragment{
 		
 		@Override
 		public void run() {
-			// TODO Auto-generated method stub
+			
 
 			while(running){
 				//limit frame rate to max 60fps
