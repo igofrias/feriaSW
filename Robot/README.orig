@@ -1,0 +1,21 @@
+Codigo de las funciones del robot LEGO Mindstorms
+
+Las posiciones de motores y sensores se detalla a continuación:
+>Bender (Master)
+	*motorA  = Pierna Derecha
+	*motorB  = Cabeza
+	*motorC  = Pierna Izquierda
+	*sensor1 = Sensor de Luz
+	*sensor2 =
+	*sensor3 =
+	*sensor4 =
+
+>Ben (Slave)
+	*motorA  = Cola
+	*motorB  = Pinza
+	*motorC  = 
+	*sensor1 = Sensor de Presión
+	*sensor2 =
+	*sensor3 =
+	*sensor4 =
+

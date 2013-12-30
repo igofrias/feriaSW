@@ -179,8 +179,8 @@ public class BallGame extends SimpleBaseGameActivity{
 	    playerTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR);
 	    playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(playerTexture, this, "tentosauriogame.png", 0, 0);
 	    playerTexture.load();  
-	    bgTexture = new BitmapTextureAtlas(getTextureManager(), 1000, 800, TextureOptions.BILINEAR);
-	    bgTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bgTexture, this, "ballgamebg.jpg", 0, 0);
+	    bgTexture = new BitmapTextureAtlas(getTextureManager(), 800, 480, TextureOptions.BILINEAR);
+	    bgTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(bgTexture, this, "ballgamebg.png", 0, 0);
 	    bgTexture.load();
 	}
 	protected void registerButtons()

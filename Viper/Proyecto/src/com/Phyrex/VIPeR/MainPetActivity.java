@@ -135,8 +135,9 @@ public class MainPetActivity extends SherlockFragment{
 		 				if(updater.play(entry))
 		         			Toast.makeText(thisActivity, "Logro Desbloqueado Jugueton", Toast.LENGTH_LONG).show();((StatesActivity)fragment1).playing();
 			 			//Toast.makeText(thisActivity, ":D", Toast.LENGTH_SHORT).show();
-	 			    	if(((MainActivity)thisActivity).isConnected())
+	 			    	if(((MainActivity)thisActivity).isConnected()){
 	 			    		((MainActivity)thisActivity).getBTService().sendPetMessage(1, "MoveTail");
+	 			    	}
 		 			}else{
 		 				Toast.makeText(thisActivity, "no puedes molestar a la mascota mientras duerme", Toast.LENGTH_SHORT).show();
 		 			}
@@ -154,7 +155,26 @@ public class MainPetActivity extends SherlockFragment{
 			break;
 		}
 	}
-        
+    
+    boolean eyesOpen = true;
+    void sendOpenEyes()
+    {
+    	//Solo envia el aviso de abrir ojos si antes estaban cerrados
+    	if(!eyesOpen)
+    	{
+    		eyesOpen = true;
+    		if(((MainActivity)thisActivity).isConnected())
+			{
+				((MainActivity)thisActivity).getBTService().sendPetMessage(0, "OpenEyes");
+			} 
+    		
+    	}
+    }
+    void eyesClosed()
+    {
+    	eyesOpen = false;
+    }
+    
    /////////////////////////////clase draw joytick////////////////////////////////////
 	
 	private class DrawJoystick extends SurfaceView implements SurfaceHolder.Callback, Runnable
@@ -440,6 +460,7 @@ public class MainPetActivity extends SherlockFragment{
 					can.drawBitmap(bowl[3], width*1/16, height*5/8, color);
 				}
 				if(petstate==0){//si la mascta en estado normal
+					sendOpenEyes();
 					Drawtail(center_x, center_y, width, height);
 					canvas.drawBitmap(tento, center_x-tento.getWidth()*1/3, 
 							center_y - tento.getHeight()*4/7, color);
@@ -452,6 +473,7 @@ public class MainPetActivity extends SherlockFragment{
 					if(((MainActivity)thisActivity).isConnected())
 					{
 						((MainActivity)thisActivity).getBTService().sendPetMessage(0, "HappyEyes");
+						eyesClosed();
 					} 
 				}	
 				/*//Measure frame rate (unit: frames per second).
@@ -468,7 +490,10 @@ public class MainPetActivity extends SherlockFragment{
 			
 				if(poop){
 					if(((MainActivity)thisActivity).isConnected())
+					{
 						((MainActivity)thisActivity).getBTService().sendPetMessage(0, "ShameEyes");
+						eyesClosed();
+					}
 					can.drawBitmap(poo, center_x*28/16-poo.getWidth()/2, 
 						center_y*9/6- poo.getHeight()/2, color);
 				}
@@ -499,7 +524,10 @@ public class MainPetActivity extends SherlockFragment{
 			can.drawARGB(150, 0, 0, 0);
 			if(canvas.sleeping){
 				if(((MainActivity)thisActivity).isConnected())
+				{
 					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "CloseEyes");
+					eyesClosed();
+				}
 			}
 		}
 		
@@ -632,7 +660,10 @@ public class MainPetActivity extends SherlockFragment{
 				Drawbubbles(x,y,center_x*2, center_y*2);
 				if(cleantime%10==0){
 					if(((MainActivity)thisActivity).isConnected())
+					{
 						((MainActivity)thisActivity).getBTService().sendPetMessage(0, "ShameEyes");
+						eyesClosed();
+					}
 					Drawclean(center_x, center_y);
 				}
 				cleantime++;
