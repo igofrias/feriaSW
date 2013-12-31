@@ -207,6 +207,7 @@ public class MainPetActivity extends SherlockFragment{
 		int timeeat=0;
 		int cleantime=0;
 		int timeeyes=0;
+		int timesleep=0;
 		//posiciones y estados
 		//burbujas
 		float posbubblesx=0;
@@ -364,6 +365,7 @@ public class MainPetActivity extends SherlockFragment{
 						}else{
 							petstate=2;
 							sleeping=true;
+							timesleep=90;
 							Actions(2);//accion dormir
 						}
 				      break;
@@ -502,14 +504,79 @@ public class MainPetActivity extends SherlockFragment{
 	       
 		}
 		
-		public void Drawsleeping(float center_x, float center_y){
+		public void Drawsleeping(float center_x, float center_y){ //TODO
 			can.drawBitmap(tentosleeping, center_x-tentosleeping.getWidth()/2, 
 					center_y - tentosleeping.getHeight()*2/7, color);
 			can.drawARGB(150, 0, 0, 0);
+			DrawZetas(center_x*2,center_y*2);
 			if(canvas.sleeping){
 				if(((MainActivity)thisActivity).isConnected())
 					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "CloseEyes");
 			}
+		}
+		
+		public void DrawZetas(float width, float height){
+			String text = "Z";
+			int textColor = Color.WHITE;
+			float textSize=0;
+			textSize= ZetaTextSizedpi(textSize);
+			can.save();
+			float posx, posy=0;
+			if(timesleep>60){
+				timesleep--;
+				posx=width*5/16;
+				posy=height*9/25;
+			}else if(timesleep>30){
+				posx=width*6/16;
+				posy=height*8/25;
+				timesleep--;
+			}else{
+				posx=width*7/16;
+				posy=height*7/25;
+				timesleep--;
+				if (timesleep==0)
+					timesleep=90;
+			}
+			can.rotate(-45, posx, posy);
+			Paint textPaint = new Paint();
+			textPaint.setAntiAlias(true);
+			textPaint.setColor(textColor);
+			textPaint.setTextSize(textSize);
+			Rect bounds = new Rect();
+			textPaint.getTextBounds(text, 0, text.length(), bounds);
+			can.drawText(text, posx, posy, textPaint);
+			can.restore();
+		}
+		
+		public float ZetaTextSizedpi(float textSize){
+			float dpi = getResources().getDisplayMetrics().density;
+			if(dpi ==0.75){
+				if(timesleep>60){
+					textSize=15;
+				}else if(timesleep>30){
+					textSize=30;
+				}else{
+					textSize=45;
+				}
+			}else if(dpi==1){
+				if(timesleep>60){
+					textSize=25;
+				}else if(timesleep>30){
+					textSize=50;
+				}else{
+					textSize=75;
+				}
+			}
+			else if(dpi==1.5){
+				if(timesleep>60){
+					textSize=35;
+				}else if(timesleep>30){
+					textSize=70;
+				}else{
+					textSize=105;
+				}
+			}
+			return textSize;
 		}
 		
 		public void Drawdirt(float center_x, float center_y, Canvas canvas){
@@ -685,7 +752,7 @@ public class MainPetActivity extends SherlockFragment{
 					Log.e("Draw","dirx: " + dirx +", diry: "+diry+ " rand: "+ rand1);
 					can.drawBitmap(bubbles[i], (x -(bubbles[i].getWidth()/2))+dirx*rand1*width/80, 
 							(y - (bubbles[i].getHeight()/2))+diry*rand2*height/90, color);
-					Bubbles bubble = new Bubbles(bubbles[i], (x -(bubbles[i].getWidth()/2))+dirx*rand1*width/80, (y - (bubbles[i].getHeight()/2))+diry*rand2*height/90, 60); 
+					Bubbles bubble = new Bubbles(bubbles[i], (x -(bubbles[i].getWidth()/2))+dirx*rand1*width/80, (y - (bubbles[i].getHeight()/2))+diry*rand2*height/90, 90); 
 					if(bubblesimgs !=null && bubblesimgs.size()>=50)
 						bubblesimgs.remove(1);
 					bubblesimgs.add(bubble);
