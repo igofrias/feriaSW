@@ -1089,6 +1089,7 @@ containing a value of this type.
         public static final int tentosauriosleeping=0x7f0200aa;
         public static final int tentosauriotail=0x7f0200ab;
         public static final int toiletpaper=0x7f0200ac;
+        public static final int toiletpaper=0x7f0200ad;
     }
     public static final class id {
         public static final int Colortext=0x7f040040;
