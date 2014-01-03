@@ -357,9 +357,9 @@ public class MainPetActivity extends SherlockFragment{
 					    	}
 					    	if(!soapFingerMove && !foodFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()*4/7){
 					    		petFingerMove = true;
-					    		/*if(dirtstate<9){
+					    		if(dirtstate<9){
 					    			dirtstate++;
-					    		}*/
+					    		}
 					    		poop=true;
 					    	}else{
 					    		petFingerMove = false;
@@ -391,7 +391,7 @@ public class MainPetActivity extends SherlockFragment{
 				      break;
 				    }
 				}
-				if(timeeat==0 && touchX>width*14/16-poo.getWidth()/2 && touchX<width*14/16+poo.getWidth()/2 && touchY>height*9/12- poo.getHeight()/2 && touchY<height*9/12+ poo.getHeight()/2){
+				if(poop && timeeat==0 && touchX>width*14/16-poo.getWidth()/2 && touchX<width*14/16+poo.getWidth()/2 && touchY>height*9/12- poo.getHeight()/2 && touchY<height*9/12+ poo.getHeight()/2){
 					switch (e.getAction()) {
 					case MotionEvent.ACTION_DOWN:
 						poop= false;
