@@ -341,7 +341,8 @@ public class MainPetActivity extends SherlockFragment{
 								}else if(!foodFingerMove && !soapFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()/7){
 									update_coordinates(touchX, touchY);//tocar mascota
 									petFingerMove = true;
-									Actions(7);
+									poop=true;
+						    		Actions(7); //hacer caca
 								}else if(!foodFingerMove && touchX>width/2 && touchX<width/2+soap.getWidth()
 										&& touchY>height*5/6 && touchY<height*5/6+soap.getHeight()){
 									update_coordinates(touchX, touchY);//arrastrar soap
@@ -360,7 +361,7 @@ public class MainPetActivity extends SherlockFragment{
 					    		if(dirtstate<9){
 					    			dirtstate++;
 					    		}
-					    		poop=true;
+					    		
 					    	}else{
 					    		petFingerMove = false;
 					    	}
