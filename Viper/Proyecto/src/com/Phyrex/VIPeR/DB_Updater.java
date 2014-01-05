@@ -44,7 +44,7 @@ public class DB_Updater {
 		if(aux_amount == 4){
 			flag = 1;
 			helper.close();
-			achievement_unlock(helper, "Jugueton");
+			achievement_unlock(helper, "Juguetón");
 			achiviement = true;
 		}
 		
