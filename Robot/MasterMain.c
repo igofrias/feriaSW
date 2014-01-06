@@ -35,6 +35,8 @@ void catchBall();
 void releaseBall();
 void eyesTime();
 void stopEyes(int e);
+void playTheme(int t);
+void shake();
 
 /*****************************************
  *       Global Variable Statement
@@ -44,6 +46,8 @@ int closeE;
 int ColorVal;
 int LightRVal;
 int LightLVal;
+float averRLight = 0, devRLight = 0;	// create two float variables 'averLight' & 'devLight'
+float averLLight = 0, devLLight = 0; 	// create two float variables 'averLLight' & 'devLLight'
 int oClamps = 0; //0 -> Close ; 1 -> Open ; 2 -> Catch
 int eyesTask = 0;
 long nAction;
@@ -261,14 +265,17 @@ void readMessages(){
 				case 44: //Release Ball
 					releaseBall();
 					break;
+				case 47:
+					shake();
+					break;
 				case 61:
-					PlaySoundFile(nAction);
+					playTheme(nAction);
 					break;
 				case 62:
-					PlaySoundFile(nAction);
+					playTheme(nAction);
 					break;
 				case 63:
-					PlaySoundFile(nAction);
+					playTheme(nAction);
 					break;
 				case 200: //Shutdown
 					StopAllTasks();
@@ -291,8 +298,8 @@ void calibrate(){
 	int myFileSize = 10;                	// create and initialize an integer variable 'myFileSize'
 	int LightRData[10];					  				// create an array 'LightData' for data of light sensor
 	int LightLData[10];						  			// create an array 'LightLData' for data of light sensor
-	float averRLight = 0, devRLight = 0;	// create two float variables 'averLight' & 'devLight'
-	float averLLight = 0, devLLight = 0; 	// create two float variables 'averLLight' & 'devLLight'
+//	float averRLight = 0, devRLight = 0;	// create two float variables 'averLight' & 'devLight'
+//	float averLLight = 0, devLLight = 0; 	// create two float variables 'averLLight' & 'devLLight'
 
 	//Start MonitorRLight & MonitorLLight
 	StartTask(MonitorRLight);
@@ -485,4 +492,17 @@ void playTheme(int t){
 			break;
 	}
 	return;
+}
+
+void shake(){
+	for(int i = 0;i<10;i++){
+			motor[leftMotor] = 100;
+			motor[rightMotor] = -100;
+			wait1Msec(75);
+			motor[leftMotor] = -100;
+			motor[rightMotor] = 100;
+			wait1Msec(75);
+	}
+	motor[leftMotor] = 0;
+	motor[rightMotor] = 0;
 }
