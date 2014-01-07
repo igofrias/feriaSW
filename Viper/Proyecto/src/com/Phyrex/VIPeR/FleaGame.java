@@ -57,15 +57,26 @@ public class FleaGame extends SimpleBaseGameActivity
 	protected boolean mBound;
 	private Toast reusableToast;
 	private boolean pairing;
+	
+	float randX;
+	float randY;
+	
+	int level=0;
+	boolean reload=true;
+	
+	Sprite[] flea = new Sprite[200];
     
 	HUD hud; //HUD
 	private Text hudText;
 	private int score = 0; 	
-	private int time = 0;
+	private int time = 30;
 	private Font font;
 	private Font fontGame;
 	
-	private int amountFlea = 5;
+	float centerX, centerY; //posicion tentosaurio
+	float centerFX, centerFY; //posicion pulga
+	
+	int amountFlea = 5;
 	
 	private Text gameOverText; //game over
 	public FleaGame()
@@ -106,9 +117,10 @@ public class FleaGame extends SimpleBaseGameActivity
     	flea_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(splashTextureAtlas, this, "cartoon_flea.png", 0, 0);
     	splashTextureAtlas.load();
     	
-    	tento = new BitmapTextureAtlas(this.getTextureManager(), 470, 482, TextureOptions.BILINEAR); //cargar tentosaurio
-    	tento_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(tento, this, "tentosaurioeating.png", 0, 0);
-    	//tento_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(tento, this, "tento-pulgoso.png", 0, 0);
+    	//tento = new BitmapTextureAtlas(this.getTextureManager(), 470, 482, TextureOptions.BILINEAR); //cargar tentosaurio
+    	//tento_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(tento, this, "tentosaurioeating.png", 0, 0);
+    	tento = new BitmapTextureAtlas(this.getTextureManager(), 650, 301, TextureOptions.BILINEAR); //cargar tentosaurio
+    	tento_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(tento, this, "tento-pulgoso.png", 0, 0);
     	tento.load();
     	
     }
@@ -160,19 +172,16 @@ public class FleaGame extends SimpleBaseGameActivity
     	final float tentoX = this.tento_region.getWidth();
     	final float tentoY = this.tento_region.getHeight();
     	
-    	time = 30;
-    	
     	//coordenadas para que este en el centro
-		final float centerX = (CAMERA_WIDTH - tentoX) / 2; //centro de tento
-		final float centerY = (CAMERA_HEIGHT - tentoY) / 2;
+		centerX = (CAMERA_WIDTH - tentoX) / 2; //centro de tento
+		centerY = (CAMERA_HEIGHT - tentoY) / 2;
 		
-		final float centerFX = (CAMERA_WIDTH - this.flea_region.getWidth()) / 2; //centro de pulga
-		final float centerFY = (CAMERA_HEIGHT - this.flea_region.getHeight()) / 2;
+		centerFX = (CAMERA_WIDTH - this.flea_region.getWidth()) / 2; //centro de pulga
+		centerFY = (CAMERA_HEIGHT - this.flea_region.getHeight()) / 2;
 		
 		createHUD();
 		
 		//create tento and add to scene
-		
 		final Sprite tento = new Sprite(centerX, centerY, this.tento_region, this.getVertexBufferObjectManager());
 		scene.attachChild(tento);
 		
@@ -182,24 +191,32 @@ public class FleaGame extends SimpleBaseGameActivity
 	        	SubstractTime(1);	                
 	                if(time==0){
 		                scene.unregisterUpdateHandler(pTimerHandler);
-		                displayGameOverText();	                
+		                displayGameOverText();	
+		                //que pulgas no se muevan
 	                }        
 	                pTimerHandler.reset();
 	        	}
 		}));
-		
-		final Sprite[] flea = new Sprite[200]; //200 fleas :o
-		
-		float randX;
-		float randY;
-		
+		level=1;
+		populateGame(amountFlea, centerX, centerY, centerFX, centerFY, level, reload );
+		reload=false;
+
+    	return scene;
+    } //end create scene
+    
+    void populateGame(int numPulgas, float centerX, float centerY, float centerFX, float centerFY, int nivel, boolean status){
+    	Log.d("Posicion","Inicio Populate");
+    	
 		//DESDE AQUI
-		
-		for(int i=0;i<amountFlea;i++){
+		if(status==true){
+			status=false;
+		for(int j=0;j<numPulgas;j++){
 			randX = randFloat(-centerX*2, centerX*2);
-			randY = randFloat(-centerY*75, centerY*75);
-			Log.d("randomX","pulga " + i + " randX " + (centerFX+randX) + " randY " + (centerFY+randY));
-			flea[i] = new Sprite((centerFX+randX),(centerFY+randY), this.flea_region, this.getVertexBufferObjectManager()){
+			randY = randFloat(-centerY*2, centerY*2);
+			
+			Log.d("randomX","pulga " + j + " randX " + (centerFX+randX) + " randY " + (centerFY+randY));
+			
+			flea[j] = new Sprite((centerFX+randX),(centerFY+randY), this.flea_region, this.getVertexBufferObjectManager()){
 				float deltaX=0;
 				float deltaY=0;
 				boolean moving = false;
@@ -252,7 +269,6 @@ public class FleaGame extends SimpleBaseGameActivity
 					else{
 						setPosition(this.getX() + velX,this.getY() + velY);
 					}
-					//if(checkPosition((CAMERA_WIDTH - tentoX) / 2, (CAMERA_WIDTH - tentoX) / 2 + tentoX, (CAMERA_HEIGHT - tentoY) / 2, (CAMERA_HEIGHT - tentoY) / 2 + tentoY,this.getX() - this.getWidth() / 2, this.getY() - this.getHeight() / 2)==false)
 					if(checkPosition(0, CAMERA_WIDTH, 0, CAMERA_HEIGHT, this.getX() - this.getWidth() / 2, this.getY() - this.getHeight() / 2)==false)
 					{
 		        		this.setVisible(false);	//make flea invisible
@@ -260,33 +276,43 @@ public class FleaGame extends SimpleBaseGameActivity
 		        		dispose_sprite(this); //delete flea
 		        		extractFlea();
 		        		Log.d("Pulgas","Cantidad de pulgas: " + amountFlea);
+		        		Log.d("Posicion","fin de IF populate");
 		        	}
 				}
 			};
-			scene.registerTouchArea(flea[i]);
+			scene.registerTouchArea(flea[j]);
 			scene.setTouchAreaBindingOnActionDownEnabled(true);
-			scene.attachChild(flea[i]);
-		} //END IF
-		
-		//HASTA AQUI
-
-    	return scene;
-    } //end create scene
+			scene.attachChild(flea[j]);
+			reload=false;
+		} 
+		}//END IF
+		else{
+			Log.d("Posicion","else de populate");
+		}
+    }
     
     void extractFlea(){
+    	Log.d("Posicion","extractFlea");
     	amountFlea-=1;
-    	//shake();
-    	checkStateGame();
+    	//shake(); 
+
+    	if(amountFlea==0){
+        	reload=true;
+        	checkStateGame();
+    	}			
     }
     void checkStateGame(){
-    	if(amountFlea == 0 && time>=0){ 
-    		//populate again
-    		addTime(30); //agregar tiempo
+    	Log.d("Posicion","checkStateGame");
+    	
+    	if((amountFlea == 0) && (time>0) && (reload == true))
+    	{ 
+    		level+=1;
+    		amountFlea=5*level;
+    		addTime(15);
+    		populateGame(amountFlea, centerX, centerY, centerFX, centerFY, level, reload);
+    		reload=false;
     	}
-    	/*else
-    		if(!gameOverDisplayed)
-    			displayGameOverText();
-    	*/
+
     }
     
     void shake()
@@ -294,7 +320,7 @@ public class FleaGame extends SimpleBaseGameActivity
     	if(btservice != null)
 	    	 if(btservice.isConnected())
 	    	 {
-	    		 //AQUI CODIGO DE ENVIAR MENSAJE A MAIN PARA QUE HAGA SHAKE!!!!!!!
+	    		 //AQUI CODIGO DE ENVIAR MENSAJE A MAIN PARA QUE HAGA SHAKE!!! mensaje 57
 	    		 btservice.startProgram("Eat.rxe");
 	    	 }
     	
