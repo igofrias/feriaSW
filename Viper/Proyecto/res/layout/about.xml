@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#033600"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/logrostext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Sobre Phyrex"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="General"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+  		android:layout_height="1dp"
+        android:layout_marginTop="8sp"
+        android:background="#FFFFFF"
+        />
+    
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:text="Aplicación creada por Juan Avalo, Celeste Bertin, Rocio Fernandez y Rodrigo Frias, miembros de la pre-empresa Phyrex,  para la Feria de Software de la UTFSM - Marzo 2014"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Juego"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ImageView
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+  		android:layout_height="1dp"
+        android:layout_marginTop="8sp"
+        android:background="#FFFFFF"
+        />
+        
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:text="El juego se trata de una mascota virtual que esta conectada a un robot LEGO Mindstorms, con el cual interactua."
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Licencia"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ImageView
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+  		android:layout_height="1dp"
+        android:layout_marginTop="8sp"
+        android:background="#FFFFFF"
+         />
+        
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:text="Creative Commons -- Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</LinearLayout>
