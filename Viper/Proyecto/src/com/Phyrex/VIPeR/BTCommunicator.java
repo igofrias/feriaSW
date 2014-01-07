@@ -337,12 +337,12 @@ public class BTCommunicator extends Thread {
     	message[0] = LCPMessage.DIRECT_COMMAND_NOREPLY;
     	message[1] = LCPMessage.MESSAGE_WRITE;
     	message[2] = (byte)inbox;
-    	message[3] = 4;
-    	for(int i = 0; i < 4; i++)
-    	{
-    		message[4+i] = int_message[i];
-    	}
-    	
+    	message[3] = 1;
+//    	for(int i = 0; i < 4; i++)
+//    	{
+//    		message[4+i] = int_message[i];
+//    	}
+    	message[4] = (byte)petmessage;
     	sendMessageAndState(message);
     }
     
