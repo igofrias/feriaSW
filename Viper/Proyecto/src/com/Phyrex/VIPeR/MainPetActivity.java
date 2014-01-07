@@ -64,6 +64,11 @@ public class MainPetActivity extends SherlockFragment{
 		Intent intent = new Intent(thisActivity, BallGame.class);
 	    startActivity(intent);
 	}
+	public void startFleaGame()
+	{
+		Intent intent = new Intent(thisActivity, FleaGame.class);
+	    startActivity(intent);
+	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -377,7 +382,7 @@ public class MainPetActivity extends SherlockFragment{
 				if(touchX>width*2/16 && touchX<width*6/16 && touchY>height*2/20 && touchY<height*6/20){
 					switch (e.getAction()) {
 					case MotionEvent.ACTION_DOWN:
-						startBallGame();
+						startFleaGame();
 				      break;
 				    }
 				}else if(touchX>width*2/16 && touchX<width*6/16 && touchY>height*8/20 && touchY<height*13/20){

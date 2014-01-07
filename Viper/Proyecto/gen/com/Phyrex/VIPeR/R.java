@@ -1387,6 +1387,7 @@ containing a value of this type.
         public static final int title_activity_create=0x7f090011;
         public static final int title_activity_cursor__adapter=0x7f090013;
         public static final int title_activity_device_list=0x7f090019;
+        public static final int title_activity_fleagame=0x7f09004c;
         public static final int title_activity_lcpmessage=0x7f090018;
         public static final int title_activity_main_pet=0x7f09003b;
         public static final int title_activity_states=0x7f090015;

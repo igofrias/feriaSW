@@ -561,6 +561,7 @@ int string title_activity_control_remoto 0x7f090043
 int string title_activity_create 0x7f090011
 int string title_activity_cursor__adapter 0x7f090013
 int string title_activity_device_list 0x7f090019
+int string title_activity_fleagame 0x7f09004c
 int string title_activity_lcpmessage 0x7f090018
 int string title_activity_main_pet 0x7f09003b
 int string title_activity_states 0x7f090015
