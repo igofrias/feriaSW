@@ -4,13 +4,11 @@ import org.andengine.engine.Engine;
 import org.andengine.engine.LimitedFPSEngine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
-import org.andengine.engine.handler.physics.PhysicsHandler;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
-import org.andengine.entity.modifier.MoveModifier;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
@@ -28,6 +26,18 @@ import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.color.Color;
 import android.util.Log;
 
+import com.Phyrex.VIPeR.BTService.BTBinder;
+
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+
+import android.widget.Toast;
+
 
 public class FleaGame extends SimpleBaseGameActivity
 {
@@ -40,6 +50,13 @@ public class FleaGame extends SimpleBaseGameActivity
     
     public ITextureRegion flea_region; //flea
     private BitmapTextureAtlas splashTextureAtlas;
+
+	BTService btservice; //bluetooth
+	Activity thisActivity = this;
+	
+	protected boolean mBound;
+	private Toast reusableToast;
+	private boolean pairing;
     
 	HUD hud; //HUD
 	private Text hudText;
@@ -48,12 +65,13 @@ public class FleaGame extends SimpleBaseGameActivity
 	private Font font;
 	private Font fontGame;
 	
-	private int level=0; //levels game
 	private int amountFlea = 5;
 	
 	private Text gameOverText; //game over
-	private boolean gameOverDisplayed = false;
-	
+	public FleaGame()
+	{
+		mBound = false;
+	}
     @Override
     public Engine onCreateEngine(EngineOptions pEngineOptions) 
     {
@@ -90,6 +108,7 @@ public class FleaGame extends SimpleBaseGameActivity
     	
     	tento = new BitmapTextureAtlas(this.getTextureManager(), 470, 482, TextureOptions.BILINEAR); //cargar tentosaurio
     	tento_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(tento, this, "tentosaurioeating.png", 0, 0);
+    	//tento_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(tento, this, "tento-pulgoso.png", 0, 0);
     	tento.load();
     	
     }
@@ -115,7 +134,6 @@ public class FleaGame extends SimpleBaseGameActivity
         camera.setChaseEntity(null);
         gameOverText.setPosition(CAMERA_WIDTH/2 - 250,CAMERA_HEIGHT/2);
         scene.attachChild(gameOverText);
-        gameOverDisplayed = true;
     }
     
     private void addToScore(int i)
@@ -142,7 +160,6 @@ public class FleaGame extends SimpleBaseGameActivity
     	final float tentoX = this.tento_region.getWidth();
     	final float tentoY = this.tento_region.getHeight();
     	
-    	level = 0;
     	time = 30;
     	
     	//coordenadas para que este en el centro
@@ -258,6 +275,7 @@ public class FleaGame extends SimpleBaseGameActivity
     
     void extractFlea(){
     	amountFlea-=1;
+    	//shake();
     	checkStateGame();
     }
     void checkStateGame(){
@@ -269,6 +287,17 @@ public class FleaGame extends SimpleBaseGameActivity
     		if(!gameOverDisplayed)
     			displayGameOverText();
     	*/
+    }
+    
+    void shake()
+    {
+    	if(btservice != null)
+	    	 if(btservice.isConnected())
+	    	 {
+	    		 //AQUI CODIGO DE ENVIAR MENSAJE A MAIN PARA QUE HAGA SHAKE!!!!!!!
+	    		 btservice.startProgram("Eat.rxe");
+	    	 }
+    	
     }
     void dispose_sprite(final Sprite toDispose)
     {
@@ -298,21 +327,118 @@ public class FleaGame extends SimpleBaseGameActivity
        return (float)(Math.random() * range) + min;
     }
     
+	@Override
+	protected void onStart() {
+		if(!mBound)
+		{
+			bindService(new Intent(this,BTService.class),btconnection,Context.BIND_AUTO_CREATE);
+		}
+		super.onStart();
+	}
+    
+	@Override
+	protected void onResume() {
+		if(!mBound)
+		{
+			bindService(new Intent(this,BTService.class),btconnection,Context.BIND_AUTO_CREATE);
+		}
+		super.onResume();
+	}
+	
+	private ServiceConnection btconnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            BTBinder binder = (BTBinder) service;
+            btservice =  binder.getService();
+            btservice.setCurrentActivity(thisActivity);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+    
+    @Override
+    protected void onDestroy() {
+        //btservice.destroyBTCommunicator();
+        if (mBound) {
+            unbindService(btconnection);
+            mBound = false;
+        }
+        super.onDestroy();
+        finish();
+    }
+    @Override
+	public void onStop() {
+//		if (mBound) {
+//			unbindService(btconnection);
+//			mBound = false;
+//		}
+		super.onStop(); 
+//		finish(); //Queremos que el juego finalize cuando se retroceda.
+	}
     @Override
     public void onPause()
     {
     	super.onPause();
     }
     
-    @Override
-	public void onStop() 
-    {
-		super.onStop(); 
-	}
-    
-    @Override
-    protected void onDestroy() 
-    {
-        super.onDestroy();
+	@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case BTService.REQUEST_CONNECT_DEVICE:
+
+                
+                if (resultCode == Activity.RESULT_OK) {
+                    String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+                    pairing = data.getExtras().getBoolean(DeviceListActivity.PAIRING);
+                    btservice.startBTCommunicator(address);
+                    
+	 		        
+                }
+                
+                break;
+                
+            case BTService.REQUEST_ENABLE_BT:
+
+                // When the request to enable Bluetooth returns
+                switch (resultCode) {
+                    case Activity.RESULT_OK:
+                        btservice.setBtOnByUs(true);
+                        btservice.selectTypeCnt();
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        showToast(R.string.bt_needs_to_be_enabled, Toast.LENGTH_SHORT);
+                        break;
+                    default:
+                        showToast(R.string.problem_at_connecting, Toast.LENGTH_SHORT);
+                        //finish();
+                        break;
+                }
+                
+                break;
+             
+        }
     }
+	
+	///muestra el Toast///
+    ////recive el mensaje y la duracion del Toast///////////
+    private void showToast(String textToShow, int length) {
+        reusableToast.setText(textToShow);
+        reusableToast.setDuration(length);
+        reusableToast.show();
+    }
+
+    ///muestra el Toast///
+    ////recive el mensaje  (int - ID) y la duracion del Toast///////////
+    private void showToast(int resID, int length) {
+        reusableToast.setText(resID);
+        reusableToast.setDuration(length);
+        reusableToast.show();
+    }
+    
 }

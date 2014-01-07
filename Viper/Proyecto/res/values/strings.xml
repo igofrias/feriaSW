@@ -82,6 +82,7 @@
     <string name="minutos">Minutos</string>
     <string name="dia">Día</string>
     <string name="dias">Días</string>
+    <string name="menu_about">About</string>
     <string name="title_activity_ballgame">BallGame</string>
      <string name="exit2">Presione atrás nuevamente para salir</string>
      <string name="title_activity_fleagame">FleaGame</string>
