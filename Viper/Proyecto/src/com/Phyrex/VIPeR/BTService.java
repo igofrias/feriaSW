@@ -401,8 +401,10 @@ public class BTService extends Service implements BTConnectable{
     	messageMap.put("CloseClamps", 42);
     	messageMap.put("CatchBall", 43);
     	messageMap.put("ReleaseBall", 44);
+    	messageMap.put("StartMoveHead", 45);
     	messageMap.put("MoveTail", 46);
     	messageMap.put("Shake", 47);
+    	messageMap.put("StopMoveHead", 48);
     	messageMap.put("YawnSound", 61);
     	messageMap.put("SleepSound", 62);
     	messageMap.put("EatSound", 63);

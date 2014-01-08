@@ -2,6 +2,8 @@ package com.Phyrex.VIPeR;
 
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -135,6 +137,31 @@ public class MainPetActivity extends SherlockFragment{
 			}
     	}
     }
+    private class PetMessage
+    {
+    	int brick;
+    	String messageType;
+    	public PetMessage(int brick, String messageType)
+    	{
+    		this.brick = brick;
+    		this.messageType = messageType;
+    	}
+    }
+    void sendNonOpenEyes(List<PetMessage> mensajes)
+    {
+    	if(eyesOpen)
+    	{
+    		eyesOpen = false;
+    		Log.d("sendNonOpenEyes","Sending messages");
+    		if(((MainActivity)thisActivity).isConnected())
+			{
+				for(PetMessage mensaje:mensajes)
+				{
+					((MainActivity)thisActivity).getBTService().sendPetMessage(mensaje.brick, mensaje.messageType);
+				}
+			}
+    	}
+    }
     void sendMiscAction(String mensaje,int brick)
     {
     	if(((MainActivity)thisActivity).isConnected())
@@ -152,6 +179,7 @@ public class MainPetActivity extends SherlockFragment{
 				EatTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
 				sendOpenEyes();
 				sendMiscAction("EatSound",0);
+				sendMiscAction("StopMoveHead",1);
 				break;
 			case 2://dormir
 				SleepTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
@@ -510,7 +538,11 @@ public class MainPetActivity extends SherlockFragment{
 				}else if(petstate==2){
 					Drawsleeping(center_x,center_y);
 				}else if(petstate==1){
-					sendNonOpenEyes("HappyEyes");
+					//sendNonOpenEyes("HappyEyes");
+					LinkedList<PetMessage> messageList = new LinkedList<PetMessage>();
+					messageList.add(new PetMessage(0,"HappyEyes"));
+					messageList.add(new PetMessage(1,"StartMoveHead"));
+					sendNonOpenEyes(messageList);
 					Draweating(width, height, center_x, center_y);
 					
 				}	
