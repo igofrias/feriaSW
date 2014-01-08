@@ -331,5 +331,28 @@ public class DB_Updater {
 			return;
 		}
 		
-	
+		//funcion que actualiza puntaje de juego en la bd
+		public boolean unlock_achgame(Database_Helper helper, int id, int score, int scoreach, String ach){
+			helper.open_write();
+			Achievement newAch = new Achievement();
+			Cursor aux_cursor_ach  = helper.getAchievement(ach);
+
+			if (aux_cursor_ach.moveToFirst() == false){
+				return false;
+			}
+			if(scoreach>score)
+				return false;
+			
+			//Datos a actualizar en achievement en BD
+			newAch._id = Integer.parseInt(aux_cursor_ach.getString(0));
+			newAch._name = aux_cursor_ach.getString(1);
+			newAch._desc = aux_cursor_ach.getString(2);
+			newAch._done = Integer.parseInt(aux_cursor_ach.getString(3)) + 1;
+
+			helper.confirmAchievement(newAch._id, newAch._name, newAch._desc, newAch._done);
+
+			helper.close();
+			return true;
+		}
+		
 }
