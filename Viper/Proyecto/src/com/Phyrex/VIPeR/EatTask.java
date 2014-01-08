@@ -179,7 +179,10 @@ public class EatTask implements SensorEventListener, Runnable {
 	    	if(!states.isFull())
 	    	{
 	    		if(updater.eat(helper)){
-	        		Toast.makeText(parent, "Logro Desbloqueado Primeras mordidas", Toast.LENGTH_LONG).show();
+	    			if(parent!=null)
+	    			{
+	    				Toast.makeText(parent, "Logro Desbloqueado Primeras mordidas", Toast.LENGTH_LONG).show();
+	    			}
 	        	}
 	
 	     		if(states!=null && !states.isDetached()){//si el fragmento esta activo
@@ -191,8 +194,11 @@ public class EatTask implements SensorEventListener, Runnable {
 	    	else
 	    	{
 	    		if(((MainActivity)parent).isConnected())
-					((MainActivity)parent).startProgram("AngryEyes.rxe");
-	    		Toast.makeText(parent.getBaseContext(), ">:(", Toast.LENGTH_SHORT).show();
+					((MainActivity)parent).getBTService().sendPetMessage(0, "AngryEyes");
+	    		if(parent!=null)
+	    		{
+	    			Toast.makeText(parent.getBaseContext(), ">:(", Toast.LENGTH_SHORT).show();
+	    		}
 	    	}
 		}
 	}

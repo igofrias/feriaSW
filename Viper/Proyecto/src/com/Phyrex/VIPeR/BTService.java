@@ -395,7 +395,8 @@ public class BTService extends Service implements BTConnectable{
     	messageMap.put("SadEyes", 7);
     	messageMap.put("CryEyes", 8);
     	messageMap.put("DeadEyes", 30);
-    	messageMap.put("Calibration", 31);
+    	messageMap.put("StopSensors", 31);
+    	messageMap.put("StartSensors", 32);
     	messageMap.put("OpenClamps", 41);
     	messageMap.put("CloseClamps", 42);
     	messageMap.put("CatchBall", 43);
