@@ -1,10 +1,10 @@
-#pragma config(Motor, motorA, rightMotor,  tmotorNXT, PIDControl)
-#pragma config(Motor, motorB, clampsMotor, tmotorNXT, PIDControl)
-#pragma config(Motor, motorC, leftMotor,   tmotorNXT, PIDControl)
-#pragma config(Sensor, S1, lightRSensor, sensorLightInactive)
-#pragma config(Sensor, S2, lightLSensor, sensorLightInactive)
-#pragma config(Sensor, S3, colorSensor,  sensorCOLORFULL)
-
+#pragma config(Motor, 	motorA, rightMotor,  	tmotorNXT, PIDControl)
+#pragma config(Motor,		motorB, clampsMotor, 	tmotorNXT, PIDControl)
+#pragma config(Motor, 	motorC, leftMotor,   	tmotorNXT, PIDControl)
+#pragma config(Sensor, 	S1, 		lightRSensor, sensorLightInactive)
+#pragma config(Sensor, 	S2, 		lightLSensor, sensorLightInactive)
+#pragma config(Sensor, 	S3, 		colorSensor,  sensorCOLORFULL)
+#pragma config(Sensor, 	S4, 		touchSensor, 	sensorTouch)
 
 /*****************************************
  *            Task Statement
@@ -21,12 +21,13 @@ task ShowDeadEyes();
 task MonitorRLight();
 task MonitorLLight();
 task MonitorColor();
+task MonitorTouch();
+task Caress();
+task Photophobia();
 
 /*****************************************
  *            Function Statement
  ****************************************/
-//void sendMess(int nData);
-//void checkConnection(); //Not used.... yet...
 void readMessages();
 void calibrate();
 void openClamps();
@@ -35,8 +36,11 @@ void catchBall();
 void releaseBall();
 void eyesTime();
 void stopEyes(int e);
+void startEyes(int e);
 void playTheme(int t);
 void shake();
+void monitorInit();
+void monitorFinish();
 
 /*****************************************
  *       Global Variable Statement
@@ -46,10 +50,15 @@ int closeE;
 int ColorVal;
 int LightRVal;
 int LightLVal;
-float averRLight = 0, devRLight = 0;	// create two float variables 'averLight' & 'devLight'
-float averLLight = 0, devLLight = 0; 	// create two float variables 'averLLight' & 'devLLight'
+int RightLimit;
+int LeftLimit;
+int TouchVal;
 int oClamps = 0; //0 -> Close ; 1 -> Open ; 2 -> Catch
 int eyesTask = 0;
+int actualEyes;
+int showHappiness = 0;
+float averRLight = 0/*, devRLight = 0*/;	// create two float variables 'averLight' & 'devLight'
+float averLLight = 0/*, devLLight = 0*/; 	// create two float variables 'averLLight' & 'devLLight'
 long nAction;
 long nMensaje = 0;
 ubyte OutGoingMessage[1] = {0};
@@ -61,6 +70,9 @@ ubyte OutGoingMessage[1] = {0};
 task main(){
 	srand(nSysTime);
 	StartTask(ShowNormalEyes);
+	eyesTask = 1;
+	calibrate();
+	monitorInit();
 	readMessages();
 	return;
 }
@@ -85,6 +97,8 @@ task ShowAngryEyes(){
 		eyesTime();
 		nxtDisplayRICFile(0, 0, "AngryEyes.ric");
 		wait1Msec(openE);
+		nxtDisplayRICFile(0, 0, "CloseEyes.ric");
+		wait1Msec(closeE);
 	}
 }
 
@@ -130,6 +144,8 @@ task ShowSadEyes(){
 		eyesTime();
 		nxtDisplayRICFile(0, 0, "SadEyes.ric");
 		wait1Msec(openE);
+		nxtDisplayRICFile(0, 0, "CloseEyes.ric");
+		wait1Msec(closeE);
 	}
 }
 
@@ -139,6 +155,8 @@ task ShowCryEyes(){
 		eyesTime();
 		nxtDisplayRICFile(0, 0, "CryEyes.ric");
 		wait1Msec(openE);
+		nxtDisplayRICFile(0, 0, "CloseEyes.ric");
+		wait1Msec(closeE);
 	}
 }
 
@@ -171,29 +189,69 @@ task MonitorColor(){
 	}
 }
 
+//Touch monitoring
+task MonitorTouch(){
+	while(true){
+		TouchVal = SensorValue[touchSensor];
+	}
+}
+
+//Caress Robot
+task Caress(){
+	while(true){
+		if(TouchVal == 1 && showHappiness == 0){
+			actualEyes = eyesTask;
+			stopEyes(actualEyes);
+			eyesTask = 5;
+			startEyes(eyesTask);
+			showHappiness = 1;
+		}
+		else if(TouchVal == 0 && showHappiness == 1){
+			stopEyes(eyesTask);
+			eyesTask = actualEyes;
+			startEyes(eyesTask);
+			actualEyes = 0;
+			showHappiness = 0;
+		}
+	}
+}
+
+//Photophobic Robot
+task Photophobia(){
+	while(true){
+		RightLimit = averRLight +10;
+		LeftLimit = averLLight+10;
+		if(LightRVal > RightLimit && LightLVal < LeftLimit){
+			motor[leftMotor] = 50;
+			motor[rightMotor] = -50;
+			wait1Msec(500);
+			motor[leftMotor] = 0;
+			motor[rightMotor] = 0;
+			calibrate();
+		}
+		if(LightLVal > LeftLimit && LightRVal < RightLimit){
+			motor[leftMotor] = -50;
+			motor[rightMotor] = 50;
+			wait1Msec(500);
+			motor[leftMotor] = 0;
+			motor[rightMotor] = 0;
+			calibrate();
+		}
+		if(LightLVal > LeftLimit && LightRVal > RightLimit){
+			motor[leftMotor] = 50;
+			motor[rightMotor] = 50;
+			wait1Msec(500);
+			motor[leftMotor] = 0;
+			motor[rightMotor] = 0;
+			calibrate();
+		}
+	}
+	return;
+}
 
 /*****************************************
  *          Function Definition
  ****************************************/
-/*//Function: sendMess
-void sendMess(int nData){
-	sendMessageWithParm(nData);
-	return;
-}
-
-//Function: checkConnection
-void checkConnection(){
-	if (nBTCurrentStreamIndex >= 0)
-		return;
-	PlaySound(soundLowBuzz);
-	PlaySound(soundLowBuzz);
-	eraseDisplay();
-	nxtDisplayCenteredTextLine(3, "No esta");
-	nxtDisplayCenteredTextLine(4, "Conectado");
-	wait1Msec(3000);
-	StopAllTasks();
-}*/
-
 //Function: readMessages
 void readMessages(){
 	while (true){
@@ -202,56 +260,23 @@ void readMessages(){
 			nAction = messageParm[0];
 			switch(nAction){
 				case 1 : //Normal Eyes
-					stopEyes(eyesTask);
-					StartTask(ShowNormalEyes);
-					eyesTask = 1;
-					break;
 				case 2 : //Angry Eyes
-					stopEyes(eyesTask);
-					StartTask(ShowAngryEyes);
-					eyesTask = 2;
-					break;
 				case 3 : //Bored Eyes
-					stopEyes(eyesTask);
-					StartTask(ShowBoredEyes);
-					eyesTask = 3;
-					break;
 				case 4 : //Close Eyes
-					stopEyes(eyesTask);
-					StartTask(ShowCloseEyes);
-					eyesTask = 4;
-					break;
 				case 5 : //Happy Eyes
-					stopEyes(eyesTask);
-					StartTask(ShowHappyEyes);
-					eyesTask = 5;
-					break;
 				case 6 : //Shame Eyes
-					stopEyes(eyesTask);
-					StartTask(ShowShameEyes);
-					eyesTask = 6;
-					break;
-				case 7: //Sad Eyes
-					stopEyes(eyesTask);
-					StartTask(ShowSadEyes);
-					eyesTask = 7;
-					break;
-				case 8: //Cry Eyes
-					stopEyes(eyesTask);
-					StartTask(ShowCryEyes);
-					eyesTask = 8;
-					break;
+				case 7 : //Sad Eyes
+				case 8 : //Cry Eyes
 				case 30: //Dead Eyes
 					stopEyes(eyesTask);
-					StartTask(ShowDeadEyes);
-					eyesTask = 30;
+					eyesTask = nAction;
+					startEyes(eyesTask);
 					break;
-				case 31: //Calibrate Case
-					stopEyes(eyesTask);
-					eraseDisplay();
-					calibrate();
-					eraseDisplay();
-					StartTask(ShowNormalEyes);
+				case 31: //Stop Sensors
+					monitorFinish();
+					break;
+				case 32: //Start Sensors
+					monitorInit();
 					break;
 				case 41: //Open Clamps
 					openClamps();
@@ -269,11 +294,7 @@ void readMessages(){
 					shake();
 					break;
 				case 61:
-					playTheme(nAction);
-					break;
 				case 62:
-					playTheme(nAction);
-					break;
 				case 63:
 					playTheme(nAction);
 					break;
@@ -291,87 +312,22 @@ void readMessages(){
 //Function: calibrate
 void calibrate(){
 	//Variables definitions
-	TFileHandle calFile;           				// create a file handle variable 'calFile'
-	TFileIOResult IOResult;           	  // create an IO result variable 'IOResult'
-	string lightRFile = "lightRCal.dat";	// create and initialize a string variable 'lightCal'
-	string lightLFile = "lightLCal.dat";	// create and initialize a string variable 'soundCal'
-	int myFileSize = 10;                	// create and initialize an integer variable 'myFileSize'
 	int LightRData[10];					  				// create an array 'LightData' for data of light sensor
 	int LightLData[10];						  			// create an array 'LightLData' for data of light sensor
-//	float averRLight = 0, devRLight = 0;	// create two float variables 'averLight' & 'devLight'
-//	float averLLight = 0, devLLight = 0; 	// create two float variables 'averLLight' & 'devLLight'
 
-	//Start MonitorRLight & MonitorLLight
-	StartTask(MonitorRLight);
-	StartTask(MonitorLLight);
-
-	//Display message
-	nxtDisplayCenteredTextLine(3, "Calibrando...");
-	nxtDisplayTextLine(4, "Espere unos");
-	nxtDisplayTextLine(5, "momentos");
+	//Initial Value
+	averLLight = 0;
+	averRLight = 0;
 
 	//Light medition
 	for(int i = 0;i<10; i++){
 		LightRData[i] = LightRVal;
 		LightLData[i] = LightLVal;
-		eraseDisplay();
-		nxtDisplayString(4, "Obteniendo Datos");
 
 		//Obtain Average
 		averRLight += (LightRData[i]/10.0);
 		averLLight += (LightLData[i]/10.0);
-
-		//wait time
-		wait1Msec(500);
 	}
-
-	//Obtain Standard Deviation
-	for(int i = 0;i<10;i++){
-		devRLight = pow( (LightRData[i]-averRLight), 2);
-		devLLight = pow( (LightLData[i]-averLLight), 2);
-	}
-	devRLight = sqrt(devRLight/9);
-	devLLight = sqrt(devLLight/9);
-
-	//Delete Previous Data & Save New Data
-	eraseDisplay();
-	Delete("lightRCal.dat", IOResult);
-	Delete("lightLCal.dat", IOResult);
-	nxtDisplayTextLine(2, "Guardando Datos");
-	//Save Light Calibration (Right)
-	OpenWrite(calFile, IOResult, lightRFile, myFileSize);	// open for write: "myFile.txt"
-	WriteFloat(calFile, IOResult, averRLight);							// writes "average" value to the file handled by 'calFile'
-	WriteFloat(calFile, IOResult, devRLight);							// writes "deviation" value to the file handled by 'calFile'
-	Close(calFile, IOResult);															// close the file (DON'T FORGET THIS STEP!)
-
-	//Save Light Calibration (Left)
-	OpenWrite(calFile, IOResult, lightLFile, myFileSize);	// open for write: "myFile.txt"
-	WriteFloat(calFile, IOResult, averLLight);							// writes "average" value to the file handled by 'calFile'
-	WriteFloat(calFile, IOResult, devLLight);							// writes "deviation" value to the file handled by 'calFile'
-	Close(calFile, IOResult);															// close the file (DON'T FORGET THIS STEP!)
-	wait1Msec(1000);
-
-	//Exit Message
-	eraseDisplay();
-	nxtDisplayTextLine(2, "Sensor Derecho");
-	nxtDisplayTextLine(3, "Nivel Luz: %3d", averRLight);
-	nxtDisplayTextLine(4, "Error Luz: %3d", devRLight);
-	wait10Msec(500);
-
-	nxtDisplayTextLine(2, "Sensor Izquierdo");
-	nxtDisplayTextLine(3, "Nivel Luz: %3d", averLLight);
-	nxtDisplayTextLine(4, "Error Luz: %3d", devLLight);
-	wait10Msec(500);
-
-	eraseDisplay();
-	nxtDisplayCenteredTextLine(2, "Calibracion");
-	nxtDisplayCenteredTextLine(3, "Terminada");
-	wait10Msec(100);
-	eraseDisplay();
-
-	//Finish Light Monitor Task
-	StopTask(MonitorRLight);
-	StopTask(MonitorLLight);
 }
 
 //Function: openClamps
@@ -404,7 +360,7 @@ void closeClamps(){
 	return;
 }
 
-//Function: catchClamps
+//Function: catchBall
 void catchBall(){
 	StartTask(MonitorColor);
 	if(oClamps == 1){ //Si estan en 'Open', captura, comprueba color y envia mensaje. Deja en 'Catch'
@@ -422,7 +378,7 @@ void catchBall(){
 	return;
 }
 
-//Function: releaseClamps
+//Function: releaseBall
 void releaseBall(){
 	if(oClamps == 2){	//Si esta en 'Catch', deja en 'Open'
 		motor[clampsMotor] = -50;
@@ -433,6 +389,7 @@ void releaseBall(){
 	return;
 }
 
+//Function: eyesTime
 void eyesTime(){
 	openE = 0;
 	closeE = 0;
@@ -443,7 +400,9 @@ void eyesTime(){
 	return;
 }
 
+//Function stopEyes
 void stopEyes(int e){
+	eyesTask = e;
 	switch(e){
 		case 1:
 			StopTask(ShowNormalEyes);
@@ -479,6 +438,45 @@ void stopEyes(int e){
 	return;
 }
 
+//Function startEyes
+void startEyes(int e){
+//	eyesTask = e;
+	switch(e){
+		case 1:
+			StartTask(ShowNormalEyes);
+			break;
+		case 2:
+			StartTask(ShowAngryEyes);
+			break;
+		case 3:
+			StartTask(ShowBoredEyes);
+			break;
+		case 4:
+			StartTask(ShowCloseEyes);
+			break;
+		case 5:
+			StartTask(ShowHappyEyes);
+			break;
+		case 6:
+			StartTask(ShowShameEyes);
+			break;
+		case 7:
+			StartTask(ShowSadEyes);
+			break;
+		case 8:
+			StartTask(ShowCryEyes);
+			break;
+		case 30:
+			StartTask(ShowDeadEyes);
+			break;
+		default:
+			StartTask(ShowNormalEyes);
+			break;
+	}
+	return;
+}
+
+//Function: playTheme
 void playTheme(int t){
 	switch(t){
 		case 61:
@@ -494,8 +492,9 @@ void playTheme(int t){
 	return;
 }
 
+//Function: shake
 void shake(){
-	for(int i = 0;i<10;i++){
+	for(int i = 0;i<2;i++){
 			motor[leftMotor] = 100;
 			motor[rightMotor] = -100;
 			wait1Msec(75);
@@ -505,4 +504,22 @@ void shake(){
 	}
 	motor[leftMotor] = 0;
 	motor[rightMotor] = 0;
+}
+
+//Function: monitorInit
+void monitorInit(){
+	StartTask(MonitorTouch);
+	StartTask(MonitorLLight);
+	StartTask(MonitorRLight);
+	StartTask(Photophobia);
+	StartTask(Caress);
+}
+
+//Function: monitorFinish
+void monitorFinish(){
+	StopTask(MonitorTouch);
+	StopTask(MonitorLLight);
+	StopTask(MonitorRLight);
+	StopTask(Photophobia);
+	StopTask(Caress);
 }
