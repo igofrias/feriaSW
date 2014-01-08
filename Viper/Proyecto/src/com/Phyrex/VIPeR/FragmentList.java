@@ -30,7 +30,12 @@ public class FragmentList extends SherlockListFragment {
 			Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.list, null);
 	}
-
+	
+	public void onResume(){
+		super.onResume();
+		Reload();
+	}
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -84,7 +89,6 @@ public class FragmentList extends SherlockListFragment {
 	private void switchFragment(Fragment fragment, int menuitem) {
 		if (getActivity() == null)
 			return;
-		Reload();
 		if (getActivity() instanceof MainActivity) {
 			MainActivity fca = (MainActivity) getActivity();
 			fca.switchContent(fragment, menuitem);

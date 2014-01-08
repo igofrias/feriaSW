@@ -441,7 +441,9 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			color.setColor(Color.GREEN);
 			color_center = new Paint();
 			color_center.setColor(Color.GRAY);
+			red = new Paint();
 			red.setColor(Color.RED);
+			yellow=new Paint();
 			yellow.setColor(Color.YELLOW);
 			vel_x = 0.0;
 			vel_y = 0.0;

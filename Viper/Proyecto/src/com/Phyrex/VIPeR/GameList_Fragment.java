@@ -51,6 +51,11 @@ public class GameList_Fragment extends SherlockFragment {
 		super.onAttach(activity);
 		parent_activity = activity;
 	}
+	
+	public void onResume(){
+		super.onResume();
+		Reload(((MainActivity)thisActivity).isConnected());
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
