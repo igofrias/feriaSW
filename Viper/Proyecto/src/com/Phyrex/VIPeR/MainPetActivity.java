@@ -151,6 +151,7 @@ public class MainPetActivity extends SherlockFragment{
 			case 1://comer
 				EatTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
 				sendOpenEyes();
+				sendMiscAction("YawnSound",0);
 				break;
 			case 2://dormir
 				SleepTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
