@@ -93,7 +93,7 @@ public class Achievement_Activity extends SherlockFragment {
 				}else{
 					AlertDialog.Builder dialog = new AlertDialog.Builder((MainActivity)thisActivity);  
 			        dialog.setTitle("Logro Bloqueado");		//titulo (opcional)
-			        dialog.setIcon(R.drawable.ic_launcher);		//icono  (opcional)
+			        dialog.setIcon(R.drawable.logrobloq);		//icono  (opcional)
 			        dialog.setMessage("Aun no has desbloqueado este logro"); 
 			        
 			        

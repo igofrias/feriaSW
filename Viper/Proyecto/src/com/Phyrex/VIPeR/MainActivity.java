@@ -63,7 +63,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     private Layout linear;
     private FrameLayout frame1;
     private FrameLayout frame2;
-    
+    SlidingMenu sm;
     
     ////////////////Menu/////////////
     public static final int MENU_TOGGLE_CONNECT = com.actionbarsherlock.view.Menu.FIRST;
@@ -122,9 +122,10 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		ft.replace(R.id.menu_frame, new FragmentList());
 		ft.commit();
 
-		SlidingMenu sm = getSlidingMenu();
+		sm = getSlidingMenu();
 		sm.setShadowWidthRes(R.dimen.shadow_width);
 		sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		sm.setFadeEnabled(true);
 		sm.setFadeDegree(0.35f);
 		sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		//////////////////////////////////////
@@ -132,7 +133,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		thread = new ThreadClass(new Handler() {
 			@Override
 			public void handleMessage(Message m) {
-
+				
 			}
 		});
 		thread.setRunning(true);
@@ -146,6 +147,9 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		}
 		
 	}
+    public SlidingMenu getSM(){
+    	return sm;
+    }
     public void switchContent(Fragment fragment, int menuitem) {
   		// TODO Auto-generated method stub
     	switch(menuitem){

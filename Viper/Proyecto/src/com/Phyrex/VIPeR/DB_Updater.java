@@ -315,4 +315,19 @@ public class DB_Updater {
 			helper.modifyStatistics(aux_st._id, aux_st._name, aux_st._desc, aux_amount);           	          	    	
 			helper.close();
 		}
+		
+		//funcion que actualiza puntaje de juego en la bd
+			public void updateHS(Database_Helper helper, int id, int score){
+				helper.open_write();
+				Cursor gamescore  = helper.getGame(id);
+
+				if (gamescore.moveToFirst() == false){
+					return;
+				}
+				if(Integer.parseInt(gamescore.getString(4))<score)
+					helper.updateHighScore(id, score);
+				
+				helper.close();
+				return;
+			}
 }

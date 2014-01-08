@@ -285,6 +285,22 @@ public class Database_Helper {
 	    	Cursor c = Database.rawQuery(select, null);
 			return c;
 		}
+		
+		//Obtener todas las estadísticas existentes
+		public Cursor getGame(int id) {
+			String select = "Select * From "+DB_table_games;
+			select = select + " WHERE _id="+id;
+			Cursor c = Database.rawQuery(select, null);
+			return c;
+		}
+		
+		//Modifica Estadísticas Actuales
+		public void updateHighScore(int id, int score){
+		    ContentValues cv = new ContentValues();
+		    cv.put("_id", id);
+			cv.put(Key_score_game, score);
+		    Database.update(DB_table_games, cv, "_id=" + id, null);   
+		}
 	
 	//Confirma Realización de achievement.
 	//Cambios esperados: 
@@ -308,5 +324,7 @@ public class Database_Helper {
 		cv.put(Key_cant_est, amount);
 	    Database.update(DB_table_est, cv, "_id=" + id, null);   
 	}
+	
+	
 	
 }
