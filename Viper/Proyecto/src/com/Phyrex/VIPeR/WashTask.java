@@ -201,13 +201,19 @@ public class WashTask implements SensorEventListener, Runnable {
 		action = false;
 		manager.unregisterListener(thisTask);
 	}
-	public static void petAction(Activity parent, DB_Updater updater, Database_Helper helper, StatesActivity states){
+	public static void petAction(final Activity parent, DB_Updater updater, Database_Helper helper, StatesActivity states){
 		//para que vibre al realizar accion
 		Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
 		vibe.vibrate(100); 
 		if(!states.isSleeping()){
     		if(updater.wash(helper)){
-        		//Toast.makeText(parent, "Logro Desbloqueado Reluciente", Toast.LENGTH_LONG).show();
+    			parent.runOnUiThread(new Runnable() {
+    		        @Override
+    		        public void run() {
+    		        	Toast.makeText(parent, "Logro Desbloqueado Reluciente", Toast.LENGTH_LONG).show();
+    		        }
+    		    });
+        		//
         	}
 
      		if(states!=null && !states.isDetached()){//si el fragmento esta activo

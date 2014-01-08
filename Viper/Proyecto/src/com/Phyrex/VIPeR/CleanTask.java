@@ -61,7 +61,7 @@ public class CleanTask implements Runnable {
 		//Se ocupa cuando se termina desde afuera este task.
 		action = false;
 	}
-	public static void petAction(Activity parent, DB_Updater updater, Database_Helper helper, StatesActivity states){
+	public static void petAction(final Activity parent, DB_Updater updater, Database_Helper helper, StatesActivity states){
 		//para que vibre al realizar accion
 		Vibrator vibe = (Vibrator) parent.getSystemService(Context.VIBRATOR_SERVICE);	
 		vibe.vibrate(100); 
@@ -71,6 +71,12 @@ public class CleanTask implements Runnable {
 			{
 				states.cleaning();
 				if(updater.clean(helper)){
+					parent.runOnUiThread(new Runnable() {
+	    		        @Override
+	    		        public void run() {
+	    		        	Toast.makeText(parent, "Logro Desbloqueado Cajita de Arena", Toast.LENGTH_LONG).show();
+	    		        }
+	    		    });
 		 			//Toast.makeText(parent, "Logro Desbloqueado Cajita de Arena", //se puede cambiar xD 
 		 				//	Toast.LENGTH_LONG).show();
 				}

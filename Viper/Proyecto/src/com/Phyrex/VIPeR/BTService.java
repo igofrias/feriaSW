@@ -406,7 +406,8 @@ public class BTService extends Service implements BTConnectable{
     	messageMap.put("YawnSound", 61);
     	messageMap.put("SleepSound", 62);
     	messageMap.put("EatSound", 63);
-    	messageMap.put("Shutdown", 200);
+    	messageMap.put("FartSound", 64);
+    	messageMap.put("Shutdown", 100);
     	
     }
     public void sendPetMessage(int brick, String message)

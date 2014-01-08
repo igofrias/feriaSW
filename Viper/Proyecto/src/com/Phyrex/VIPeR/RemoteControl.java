@@ -798,7 +798,12 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		            		final DB_Updater updater = new DB_Updater(thisActivity);
 		            		updater.updateHS(entry, 2, score);
 		            		if(updater.unlock_achgame(entry, 2, score, 1000, "Controlador principiante"))
-		            			Toast.makeText(thisActivity, "Logro "+ " Desbloqueado", Toast.LENGTH_SHORT).show();
+		            			thisActivity.runOnUiThread(new Runnable() {
+		            		        @Override
+		            		        public void run() {
+		            		        	Toast.makeText(thisActivity, "Logro "+ " Desbloqueado", Toast.LENGTH_SHORT).show();
+		            		        }
+		            		    });
 		                }
 					}
 					if(catchball){

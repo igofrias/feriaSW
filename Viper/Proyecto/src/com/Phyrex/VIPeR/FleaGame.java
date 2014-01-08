@@ -236,7 +236,13 @@ public class FleaGame extends SimpleBaseGameActivity
 	            		final DB_Updater updater = new DB_Updater(thisActivity);
 	            		updater.updateHS(entry, 3, score);
 	            		if(updater.unlock_achgame(entry, 3, score, 1500, "Desparacitador principiante"))
-	            			Toast.makeText(thisActivity, "Logro "+ " Desbloqueado", Toast.LENGTH_SHORT).show();
+	            			thisActivity.runOnUiThread(new Runnable() {
+	            		        @Override
+	            		        public void run() {
+	            		        	Toast.makeText(thisActivity, "Logro "+ " Desbloqueado", Toast.LENGTH_SHORT).show();
+	            		        }
+	            		    });
+	            			
 	                }        
 	                pTimerHandler.reset();
 	        	}

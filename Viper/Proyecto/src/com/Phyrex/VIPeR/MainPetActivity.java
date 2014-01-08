@@ -384,6 +384,7 @@ public class MainPetActivity extends SherlockFragment{
 									};
 									Handler h = new Handler();
 									h.postDelayed(shameFace, 10);
+								sendMiscAction("FartSound",1);	
 					    		Actions(7); //hacer caca
 							}else if(!foodFingerMove && touchX>width/2 && touchX<width/2+soap.getWidth()
 									&& touchY>height*5/6 && touchY<height*5/6+soap.getHeight()){

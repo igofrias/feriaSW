@@ -70,12 +70,8 @@ public class PooTask implements Runnable {
 			if(!states.isSleeping())
 			{
 				states.pooing();
-				if(updater.poo(helper)){
-		 			//Toast.makeText(parent, "Logro Desbloqueado Buena Digestion", 
-		 			//		Toast.LENGTH_LONG).show();
-				}
-			//	TODO if(((MainActivity)parent).isConnected())
-				//	((MainActivity)parent).startProgram("ShameEyes.rxe");
+				
+		 			
 			}
         }
 		     	
