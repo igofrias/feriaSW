@@ -1,5 +1,7 @@
 package com.Phyrex.VIPeR;
 
+import java.io.IOException;
+
 import org.andengine.engine.Engine;
 import org.andengine.engine.LimitedFPSEngine;
 import org.andengine.engine.camera.Camera;
@@ -89,6 +91,37 @@ public class FleaGame extends SimpleBaseGameActivity
 	public FleaGame()
 	{
 		mBound = false;
+	}
+	
+	public boolean isConnected() {
+		// TODO Auto-generated method stub
+		if(btservice != null)
+		{
+			return btservice.isConnected();
+		}
+		else return false;
+	}
+	
+	public void sendBTCmessage(int delay, int message, int value1,
+			int value2) {
+		// TODO Auto-generated method stub
+		btservice.sendBTCmessage(delay, message, value1, value2,btservice.myHandler,btservice.btcHandler);
+	}
+	public void sendMessageBTNumber(int box, int message) throws IOException{
+		// TODO Auto-generated method stub
+		if(btservice != null)
+		{
+			btservice.sendNumberMessage(box, message);
+		}
+
+	}
+	public BTService getCurrentBTService()
+	{
+		return btservice;
+	}
+	public BTService getBTService()
+	{
+		return this.btservice;
 	}
     @Override
     public Engine onCreateEngine(EngineOptions pEngineOptions) 
@@ -306,9 +339,9 @@ public class FleaGame extends SimpleBaseGameActivity
     void extractFlea(){
     	Log.d("Posicion","extractFlea");
     	amountFlea-=1;
-    	
-    	//shake(); 
-
+	    	if(isConnected()){
+		    		getBTService().sendPetMessage(47, "Shake");
+		    	}
     	if(amountFlea==0){
         	reload=true;
         	checkStateGame();
