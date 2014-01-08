@@ -38,8 +38,7 @@ public class Achievement_CursorAdapter extends SimpleCursorAdapter{
 	    cursor.moveToPosition(position);
 	    
 	    /*declaración e identificación de cada elemento que ira dentro del item
-	     * */
-	    final TextView subtitle = (TextView)convertView.findViewById(R.id.title);	    
+	     * */    
 	    LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.layout);
 	    final TextView archtext = (TextView)convertView.findViewById(R.id.archname);	
 	    final TextView description = (TextView)convertView.findViewById(R.id.description);	
@@ -56,14 +55,12 @@ public class Achievement_CursorAdapter extends SimpleCursorAdapter{
 	    //Cada iamgen es necesario setearla de manera manual.
 	    //******************************************************/
 	    if(Integer.valueOf(cursor.getString(cursor.getColumnIndex(from[2]))) == 1){
-	    	subtitle.setText("Ver");
 	    	archtext.setText(cursor.getString(cursor.getColumnIndex(from[0])));
 	    	description.setText(cursor.getString(cursor.getColumnIndex(from[1])));
 	    	layout.setBackgroundResource(Integer.valueOf(cursor.getString(cursor.getColumnIndex(from[3]))));
 	    	imgint.setText(cursor.getString(cursor.getColumnIndex(from[3])));
 	    }
 	    else{
-	    	subtitle.setText("No disponible");
 	    	layout.setBackgroundResource(R.drawable.logrobloq);
 	    }
 	    

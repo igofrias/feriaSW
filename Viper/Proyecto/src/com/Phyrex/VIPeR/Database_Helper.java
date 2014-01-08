@@ -40,6 +40,16 @@ public class Database_Helper {
 	public static final String Key_cant_est = "amount";
 	public static final String Key_imgstat = "imgstat";
 	
+	//Elementos juegos
+		private static final String DB_table_games = "Games_data";
+		
+		public static final String Key_id_game = "_id";
+		public static final String Key_name_game = "name";
+		public static final String Key_desc_game = "desc";
+		public static final String Key_img_game = "img";
+		public static final String Key_score_game = "score";
+		
+	
 	private DBhelper helper;
 	private final Context context;
 	private SQLiteDatabase Database;
@@ -78,6 +88,14 @@ public class Database_Helper {
 					+ Key_desc_est + " TEXT NOT NULL,"
 					+ Key_cant_est + " INTEGER NOT NULL,"
 					+ Key_imgstat + " INTEGER NOT NULL);");
+			
+			//db.execSQL("DROP TABLE IF EXISTS " + DB_table_est);
+			db.execSQL("CREATE TABLE " + DB_table_games + " (" 
+					+ Key_id_game + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+					+ Key_name_game + " TEXT NOT NULL," 
+					+ Key_desc_game + " TEXT NOT NULL,"
+					+ Key_img_game + " INTEGER NOT NULL,"
+					+ Key_score_game + " INTEGER NOT NULL);");
 		}
 
 		@Override
@@ -219,6 +237,16 @@ public class Database_Helper {
 		Database.insert(DB_table_est, null, cv);
 	}
 	
+	//Agregar Indicador en Games
+		public void createGames(String nombre, String desc, int img, int score) {
+			ContentValues cv = new ContentValues();
+			cv.put(Key_name_game, nombre);
+			cv.put(Key_desc_game, desc);
+			cv.put(Key_img_game, img);
+			cv.put(Key_score_game, score);
+			Database.insert(DB_table_games, null, cv);
+		}
+	
 	//Obtener Achievement por nombre
 	public Cursor getAchievement(String name) {
 		String select = "Select * From "+DB_table_ach+" Where "+Key_name_ach+" = '"+name+"'";
@@ -249,6 +277,14 @@ public class Database_Helper {
     	Cursor c = Database.rawQuery(select, null);
 		return c;
 	}
+	
+	//Obtener todas las estadísticas existentes
+		public Cursor getAllGames() {
+			String select = "Select * From "+DB_table_games;
+			select = select + " ORDER BY "+Key_id+" ASC";
+	    	Cursor c = Database.rawQuery(select, null);
+			return c;
+		}
 	
 	//Confirma Realización de achievement.
 	//Cambios esperados: 

@@ -113,6 +113,7 @@ public class CreateActivity extends SherlockFragment{
 						    	entry.close();
 						    	initialize.AchievementsList(entry);
 						    	initialize.StatisticsList(entry);
+						    	initialize.GamesList(entry);
 						    	updater.newpet(entry);
 						    	if(updater.achievement_unlock(entry, "Primera Mascota"))
 						    		Toast.makeText(thisActivity, "Logro Primera Mascota Desbloqueado", Toast.LENGTH_LONG).show();
@@ -124,7 +125,7 @@ public class CreateActivity extends SherlockFragment{
 						    	if(raza.getSelectedItem().toString().equals("Tentosaurio")){
 						    		Log.d("pepe", "es tentosaurio");
 						    		if(updater.achievement_unlock(entry, "Tentosaurio"))
-						    			Toast.makeText(thisActivity, "Logro Tentosaurio Desbloqueado", Toast.LENGTH_LONG).show();
+						    			Toast.makeText(thisActivity, "Logro Pepe Debloqueado", Toast.LENGTH_LONG).show();
 						    	}
 						    	((MainActivity)thisActivity).detach_create();
 						    	((MainActivity)thisActivity).launch_states();

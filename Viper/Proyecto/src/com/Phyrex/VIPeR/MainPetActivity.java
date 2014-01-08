@@ -61,11 +61,6 @@ public class MainPetActivity extends SherlockFragment{
 		canvas.setWillNotDraw(false);
 	    return canvas;
 	  }	
-	public void startBallGame()
-	{
-		Intent intent = new Intent(thisActivity, BallGame.class);
-	    startActivity(intent);
-	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -143,6 +138,7 @@ public class MainPetActivity extends SherlockFragment{
 		 			}else{
 		 				Toast.makeText(thisActivity, "no puedes molestar a la mascota mientras duerme", Toast.LENGTH_SHORT).show();
 		 			}
+		 			//aca intent
      			}	
 			break;
 			case 6://boton accion
@@ -331,102 +327,84 @@ public class MainPetActivity extends SherlockFragment{
 			float touchY = (int)e.getY();
 			float width = canvas.getWidth();
 			float height= canvas.getHeight();
-				if(!gameselect){
-					switch (e.getAction()) {
-						case MotionEvent.ACTION_DOWN:
-							if(!sleeping && timeeat==0){
-								if(!soapFingerMove && touchX>0 && touchX<food.getWidth() && touchY>height*5/6 && touchY<height*5/6+food.getHeight()){
-									update_coordinates(touchX, touchY);//comida
-									foodFingerMove = true;
-								}else if(!foodFingerMove && !soapFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()/7){
-									update_coordinates(touchX, touchY);//tocar mascota
-									petFingerMove = true;
-									poop=true;
-						    		Actions(7); //hacer caca
-								}else if(!foodFingerMove && touchX>width/2 && touchX<width/2+soap.getWidth()
-										&& touchY>height*5/6 && touchY<height*5/6+soap.getHeight()){
-									update_coordinates(touchX, touchY);//arrastrar soap
-									soapFingerMove = true;
-								}
-							}
-					      break;
-					    case MotionEvent.ACTION_MOVE:
-				    		if(foodFingerMove){
-				    		update_coordinates(touchX, touchY);
-					    	}else if(soapFingerMove){
-					    		update_coordinates(touchX, touchY);
-					    	}
-					    	if(!soapFingerMove && !foodFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()*4/7){
-					    		petFingerMove = true;
-					    		if(dirtstate<9){
-					    			dirtstate++;
-					    		}
-					    		
-					    	}else{
-					    		petFingerMove = false;
-					    	}
-					      break;
-					    case MotionEvent.ACTION_UP:
-					    	petFingerMove = false;
-					    	foodFingerMove = false;
-					    	soapFingerMove = false;
-					    	cleanning=false;
-					    	update_coordinates(-1, -1);//comida
-					      break;
-					}
-				if(timeeat==0 && !soapFingerMove && !foodFingerMove && touchX>width/4 && touchX<width/4+clock.getWidth() && touchY>height*5/6 && touchY<height*5/6+clock.getHeight()){
-					switch (e.getAction()) {
+				switch (e.getAction()) {
 					case MotionEvent.ACTION_DOWN:
-						if(petstate==2){
-							petstate=0;
-							sleeping=false;
-							if(((MainActivity)thisActivity).isConnected())
-								((MainActivity)thisActivity).getBTService().sendPetMessage(0, "OpenEyes");
-							Actions(2);//despertar
-						}else{
-							petstate=2;
-							sleeping=true;
-							timesleep=90;
-							Actions(2);//accion dormir
+						if(!sleeping && timeeat==0){
+							if(!soapFingerMove && touchX>0 && touchX<food.getWidth() && touchY>height*5/6 && touchY<height*5/6+food.getHeight()){
+								update_coordinates(touchX, touchY);//comida
+								foodFingerMove = true;
+							}else if(!foodFingerMove && !soapFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()/7){
+								update_coordinates(touchX, touchY);//tocar mascota
+								petFingerMove = true;
+								poop=true;
+					    		Actions(7); //hacer caca
+							}else if(!foodFingerMove && touchX>width/2 && touchX<width/2+soap.getWidth()
+									&& touchY>height*5/6 && touchY<height*5/6+soap.getHeight()){
+								update_coordinates(touchX, touchY);//arrastrar soap
+								soapFingerMove = true;
+							}
 						}
 				      break;
-				    }
-				}
-				if(poop && timeeat==0 && touchX>width*14/16-poo.getWidth()/2 && touchX<width*14/16+poo.getWidth()/2 && touchY>height*9/12- poo.getHeight()/2 && touchY<height*9/12+ poo.getHeight()/2){
-					switch (e.getAction()) {
-					case MotionEvent.ACTION_DOWN:
-						poop= false;
-						Actions(4);
+				    case MotionEvent.ACTION_MOVE:
+			    		if(foodFingerMove){
+			    		update_coordinates(touchX, touchY);
+				    	}else if(soapFingerMove){
+				    		update_coordinates(touchX, touchY);
+				    	}
+				    	if(!soapFingerMove && !foodFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()*4/7){
+				    		petFingerMove = true;
+				    		if(dirtstate<9){
+				    			dirtstate++;
+				    		}
+				    		
+				    	}else{
+				    		petFingerMove = false;
+				    	}
 				      break;
-				    }
-				}
-				if(timeeat==0 && !sleeping && touchX>width*3/4 && touchX<width*3/4+play.getWidth() && touchY>height*5/6 && touchY<height*5/6+play.getHeight()){
-					switch (e.getAction()) {
-					case MotionEvent.ACTION_DOWN:
-						gameselect=true;
-						Actions(5);//accion de jugar
-						
+				    case MotionEvent.ACTION_UP:
+				    	petFingerMove = false;
+				    	foodFingerMove = false;
+				    	soapFingerMove = false;
+				    	cleanning=false;
+				    	update_coordinates(-1, -1);//comida
 				      break;
-				    }
 				}
-			}else{//botones de juego
-				if(touchX>width*2/16 && touchX<width*6/16 && touchY>height*2/20 && touchY<height*6/20){
-					switch (e.getAction()) {
-					case MotionEvent.ACTION_DOWN:
-						startBallGame();
-				      break;
-				    }
-				}else if(touchX>width*2/16 && touchX<width*6/16 && touchY>height*8/20 && touchY<height*13/20){
-					if(thisActivity.isConnected()){
-						switch (e.getAction()){
-						case MotionEvent.ACTION_DOWN:
-							thisActivity.launch_remotecontrolgame();
-					      break;
-					    }
-					}//decir q no se puede xq requiere conexion xD
-				}
+			if(timeeat==0 && !soapFingerMove && !foodFingerMove && touchX>width/4 && touchX<width/4+clock.getWidth() && touchY>height*5/6 && touchY<height*5/6+clock.getHeight()){
+				switch (e.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					if(petstate==2){
+						petstate=0;
+						sleeping=false;
+						if(((MainActivity)thisActivity).isConnected())
+							((MainActivity)thisActivity).getBTService().sendPetMessage(0, "OpenEyes");
+						Actions(2);//despertar
+					}else{
+						petstate=2;
+						sleeping=true;
+						timesleep=90;
+						Actions(2);//accion dormir
+					}
+			      break;
+			    }
 			}
-			  return true;
+			if(poop && timeeat==0 && touchX>width*14/16-poo.getWidth()/2 && touchX<width*14/16+poo.getWidth()/2 && touchY>height*9/12- poo.getHeight()/2 && touchY<height*9/12+ poo.getHeight()/2){
+				switch (e.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					poop= false;
+					Actions(4);
+			      break;
+			    }
+			}
+			if(timeeat==0 && !sleeping && touchX>width*3/4 && touchX<width*3/4+play.getWidth() && touchY>height*5/6 && touchY<height*5/6+play.getHeight()){
+				switch (e.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					//gameselect=true;
+					Actions(5);//accion de jugar
+					((MainActivity)thisActivity).launch_gameselect();
+			      break;
+			    }
+			}
+			return true;
 		}
 
 		@Override

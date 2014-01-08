@@ -30,7 +30,7 @@ public class Init {
 	public static final int img2 = R.drawable.logropromerasmordidas;
 	public static final String ach3 = "Juguetón";	
 	public static final String ach3_desc = "Has jugado 5 veces con tu mascota";
-	public static final int img3 = R.drawable.firstpetarch;
+	public static final int img3 = R.drawable.logrojugueton;
 	public static final String ach4 = "Obediencia Inicial";	
 	public static final String ach4_desc = "Ha hecho caso a 3 instrucciones de su amo";
 	public static final int img4 = R.drawable.firstpetarch;
@@ -39,10 +39,10 @@ public class Init {
 	public static final int img5 = R.drawable.logropepe;
 	public static final String ach6 = "Tentosaurio";	
 	public static final String ach6_desc = "Has creado una mascota de raza Tentosaurio";
-	public static final int img6 = R.drawable.firstpetarch;
+	public static final int img6 = R.drawable.logrotentosaurio;
 	public static final String ach7 = "Perezoso";	
 	public static final String ach7_desc = "Tu mascota ha dormido 5 veces";
-	public static final int img7 = R.drawable.logropepe;
+	public static final int img7 = R.drawable.logroperesozo;
 	public static final String ach8 = "Reluciente";	
 	public static final String ach8_desc = "Tu mascota ha sido lavada 5 veces";
 	public static final int img8 = R.drawable.logrolavar;
@@ -77,7 +77,21 @@ public class Init {
 	public static final String est7= "Ha sido Lavada";
 	public static final String est7_desc = "¿Cuantas veces ha lavado a sus mascotas?"; //limpiado por lavado
 	public static final int imgstat7 = R.drawable.soapstat;
+	
+	public static final String game1= "Atrapa las pelotas";
+	public static final String game1_desc = "Debes atrapar las pelotas que van callendo," +
+			"¡evita que estas toquen el piso!";
+	public static final int imggame1 = R.drawable.game1;
+	public static final String game2= "Atrapa las pelotas (con Robot)";
+	public static final String game2_desc = "Utuliza el robot para atrapar las pelota obtetivo," +
+			"¡debe ser dentro de un tiempo limite!";
+	public static final int imggame2 = R.drawable.game2;
+	public static final String game3= "Saca pulgas";
+	public static final String game3_desc = "Ayuda a tentosaurio que esta infestado  de pulgas," +
+			"¡debes quitar las pulgas dentro del tiempo!";
+	public static final int imggame3 = R.drawable.game1;
 
+	public static final int score = 0;
 	public static final int amount = 0;
 
 	//Inicialización lista de Achievements en la BD
@@ -131,5 +145,25 @@ public class Init {
 		helper.createStatistics(est7, est7_desc, amount, imgstat7); //lavado
 		helper.close();    	
 	}
+	
+	//Inicialización lista de Estadísticas en la BD
+		public void GamesList(Database_Helper helper)
+		{
+			helper.open_read();
+			Cursor aux = helper.getAllGames();
+
+			if(aux.moveToFirst()){ 
+				//Ya existe la tabla de Achievements registrada
+				helper.close();
+				return;
+			}
+			helper.close();  
+
+			helper.open_write();
+			helper.createGames(game1, game1_desc, imggame1, score);
+			helper.createGames(game2, game2_desc, imggame2, score);
+			helper.createGames(game3, game3_desc, imggame3, score);
+			helper.close();    	
+		}
 	
 }

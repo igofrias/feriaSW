@@ -23,7 +23,8 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockListFragment;
 
 public class FragmentList extends SherlockListFragment {
-
+	Activity thisActivity;
+	String[] frags= {"Conectar", "Control Remoto", "Logros", "Estadisticas","Sobre Phyrex" };
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -33,7 +34,14 @@ public class FragmentList extends SherlockListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		String[] frags = {"Conectar", "Control Remoto", "Logros", "About" };
+		thisActivity= getActivity();
+		if(!((MainActivity)thisActivity).isConnected())
+		{
+			frags[0] = "Conectar";
+		}else
+		{
+			frags[0] = "Desconectar";
+		}
 		ArrayAdapter<String> fragAdapter = new ArrayAdapter<String>(
 				getActivity(), android.R.layout.simple_list_item_1,
 				android.R.id.text1, frags);
@@ -44,7 +52,7 @@ public class FragmentList extends SherlockListFragment {
 	public void onListItemClick(ListView lv, View v, int position, long id) {
 		Fragment newContent = null;
 		int menuitem = -1;
-		switch (position) {
+		switch (position) {	
 		case 0:
 			menuitem=0;
 			break;
@@ -55,19 +63,28 @@ public class FragmentList extends SherlockListFragment {
 			menuitem=2;
 			break;
 		case 3:
-			//about?
+			menuitem = 3; //About
 			break;
-		
+		case 4:
+			menuitem = 4; //About
+			break;
 		}
 		switchFragment(newContent, menuitem);
-
 	}
-
+	public void Reload(){
+		if(!((MainActivity)thisActivity).isConnected())
+		{
+			frags[0] = "Conectar";
+		}else
+		{
+			frags[0] = "Desconectar";
+		}
+	}
 	// the meat of switching the above fragment
 	private void switchFragment(Fragment fragment, int menuitem) {
 		if (getActivity() == null)
 			return;
-
+		Reload();
 		if (getActivity() instanceof MainActivity) {
 			MainActivity fca = (MainActivity) getActivity();
 			fca.switchContent(fragment, menuitem);
