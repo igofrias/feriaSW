@@ -12,7 +12,7 @@ task MonitorLLight();
 /*****************************************
  *            Function Statement
  ****************************************/
-void FastCalibrate();
+void calibrate();
 void Photophobia();
 
 /*****************************************
@@ -31,7 +31,7 @@ float averLLight = 0; 	// float variable 'averLLight'
 task main(){
 	StartTask(MonitorRLight);
 	StartTask(MonitorLLight);
-	FastCalibrate();
+	calibrate();
 	Photophobia();
 	return;
 }
@@ -54,7 +54,7 @@ task MonitorLLight(){
 }
 
 //Function: calibrate
-void FastCalibrate(){
+void calibrate(){
 	//Variables definitions
 	int LightRData[10];					  				// create an array 'LightData' for data of light sensor
 	int LightLData[10];						  			// create an array 'LightLData' for data of light sensor
@@ -72,11 +72,11 @@ void FastCalibrate(){
 		averRLight += (LightRData[i]/10.0);
 		averLLight += (LightLData[i]/10.0);
 	}
-
 }
 
 void Photophobia(){
 	while(true){
+		calibrate();
 		RightLimit = averRLight +10;
 		LeftLimit = averLLight+10;
 		if(LightRVal > RightLimit && LightLVal < LeftLimit){
@@ -85,7 +85,6 @@ void Photophobia(){
 			wait1Msec(500);
 			motor[leftMotor] = 0;
 			motor[rightMotor] = 0;
-			FastCalibrate();
 		}
 		if(LightLVal > LeftLimit && LightRVal < RightLimit){
 			motor[leftMotor] = -50;
@@ -93,7 +92,6 @@ void Photophobia(){
 			wait1Msec(500);
 			motor[leftMotor] = 0;
 			motor[rightMotor] = 0;
-			FastCalibrate();
 		}
 		if(LightLVal > LeftLimit && LightRVal > RightLimit){
 			motor[leftMotor] = 50;
@@ -101,7 +99,6 @@ void Photophobia(){
 			wait1Msec(500);
 			motor[leftMotor] = 0;
 			motor[rightMotor] = 0;
-			FastCalibrate();
 		}
 	}
 	return;
