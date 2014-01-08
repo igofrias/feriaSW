@@ -199,7 +199,7 @@ task MonitorTouch(){
 //Caress Robot
 task Caress(){
 	while(true){
-		if(TouchVal == 1 && showHappiness == 0){
+		if(TouchVal == 1 && showHappiness == 0 && eyesTask != 4){
 			actualEyes = eyesTask;
 			stopEyes(actualEyes);
 			eyesTask = 5;
@@ -290,18 +290,19 @@ void readMessages(){
 				case 44: //Release Ball
 					releaseBall();
 					break;
-				case 47:
+				case 47: //Shake
 					shake();
 					break;
-				case 61:
-				case 62:
-				case 63:
+				case 61: //YawnSound
+				case 62: //SleepSound
+				case 63: //EatSound
 					playTheme(nAction);
 					break;
-				case 200: //Shutdown
-					StopAllTasks();
+				case 100: //Shutdown
 					powerOff();
 					return;
+					break;
+				case 101: //Send Level Battery
 					break;
 			}
 			ClearMessage();
