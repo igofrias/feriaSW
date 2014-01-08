@@ -119,6 +119,7 @@ public class MainPetActivity extends SherlockFragment{
     	//Solo envia el aviso de abrir ojos si antes estaban cerrados
     	if(!eyesOpen)
     	{
+    		Log.d("sendOpenEyes","Sending OpenEyes message");
     		eyesOpen = true;
     		if(((MainActivity)thisActivity).isConnected())
 			{
@@ -132,11 +133,19 @@ public class MainPetActivity extends SherlockFragment{
     	if(eyesOpen)
     	{
     		eyesOpen = false;
+    		Log.d("sendNonOpenEyes","Sending "+mensaje+" message");
     		if(((MainActivity)thisActivity).isConnected())
 			{
 				((MainActivity)thisActivity).getBTService().sendPetMessage(0, mensaje);
 			}
     	}
+    }
+    void sendMiscAction(String mensaje,int brick)
+    {
+    	if(((MainActivity)thisActivity).isConnected())
+		{
+			((MainActivity)thisActivity).getBTService().sendPetMessage(brick, mensaje);
+		}
     }
     public void Actions(int action){
 		final DB_Updater updater = new DB_Updater(thisActivity);
@@ -153,7 +162,7 @@ public class MainPetActivity extends SherlockFragment{
 				if(((StatesActivity)fragment1).isSleeping())
 				{
 					sendNonOpenEyes("CloseEyes");
-					sendNonOpenEyes("YawnSound");
+					sendMiscAction("YawnSound",0);
 				}
 				else
 				{
@@ -162,11 +171,9 @@ public class MainPetActivity extends SherlockFragment{
 				break;
 			case 3://lavar - Wash
 				WashTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
-				sendOpenEyes();
 				break;
 			case 4://limpiar caca /clean
 				CleanTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
-				sendOpenEyes();
 			break;
 			case 5://jugar
 				if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
@@ -190,7 +197,6 @@ public class MainPetActivity extends SherlockFragment{
 			break;
 			
 			case 7://cagar pooping
-				sendNonOpenEyes("ShameEyes");
 				PooTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
 			case 8://Volver al estado original
 				sendOpenEyes();
@@ -395,9 +401,11 @@ public class MainPetActivity extends SherlockFragment{
 				    		update_coordinates(touchX, touchY);
 					    	}else if(soapFingerMove){
 					    		update_coordinates(touchX, touchY);
+					    		sendNonOpenEyes("ShameEyes");
 					    	}
 					    	if(!soapFingerMove && !foodFingerMove && touchX>width/2-tento.getWidth()*1/3 && touchX<width/2+tento.getWidth()*1/3 && touchY>height/2 - tento.getHeight()*4/7 && touchY<height/2 + tento.getHeight()*4/7){
 					    		petFingerMove = true;
+					    		sendNonOpenEyes("HappyEyes");
 					    		if(dirtstate<9){
 					    			dirtstate++;
 					    		}
@@ -407,11 +415,17 @@ public class MainPetActivity extends SherlockFragment{
 					    	}
 					      break;
 					    case MotionEvent.ACTION_UP:
+					    	if(soapFingerMove || petFingerMove)
+					    	{
+					    		//Envia OpenEyes solo si antes se estaba moviendo para limpiarlo o para acariciarlo
+					    		sendOpenEyes();
+					    	}
 					    	petFingerMove = false;
 					    	foodFingerMove = false;
 					    	soapFingerMove = false;
 					    	cleanning=false;
 					    	update_coordinates(-1, -1);//comida
+					    	
 					      break;
 					}
 				if(timeeat==0 && !soapFingerMove && !foodFingerMove && touchX>width/4 && touchX<width/4+clock.getWidth() && touchY>height*5/6 && touchY<height*5/6+clock.getHeight()){
@@ -420,8 +434,7 @@ public class MainPetActivity extends SherlockFragment{
 						if(petstate==2){
 							petstate=0;
 							sleeping=false;
-							if(((MainActivity)thisActivity).isConnected())
-								((MainActivity)thisActivity).getBTService().sendPetMessage(0, "OpenEyes");
+							
 							Actions(2);//despertar
 						}else{
 							petstate=2;
@@ -510,7 +523,7 @@ public class MainPetActivity extends SherlockFragment{
 					can.drawBitmap(bowl[3], width*1/16, height*5/8, color);
 				}
 				if(petstate==0){//si la mascta en estado normal
-					sendOpenEyes();
+					
 					Drawtail(center_x, center_y, width, height);
 					canvas.drawBitmap(tento, center_x-tento.getWidth()*1/3, 
 							center_y - tento.getHeight()*4/7, color);
@@ -519,8 +532,9 @@ public class MainPetActivity extends SherlockFragment{
 				}else if(petstate==2){
 					Drawsleeping(center_x,center_y);
 				}else if(petstate==1){
-					Draweating(width, height, center_x, center_y);
 					sendNonOpenEyes("HappyEyes");
+					Draweating(width, height, center_x, center_y);
+					
 				}	
 				/*//Measure frame rate (unit: frames per second).
 		         now=System.currentTimeMillis();
