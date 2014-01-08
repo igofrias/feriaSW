@@ -115,10 +115,11 @@ void readMessages(){
 				case 90: //Fanfare Sound
 					playTheme(nAction);
 					break;
-				case 200: //Shutdown
-					StopAllTasks();
+				case 100: //Shutdown
 					powerOff();
 					return;
+					break;
+				case 101: //Send Level Battery
 					break;
 			}
 			ClearMessage();
