@@ -31,8 +31,8 @@ public class Init {
 	public static final String ach3 = "Juguetón";	
 	public static final String ach3_desc = "Has jugado 5 veces con tu mascota";
 	public static final int img3 = R.drawable.logrojugueton;
-	public static final String ach4 = "Obediencia Inicial";	
-	public static final String ach4_desc = "Ha hecho caso a 3 instrucciones de su amo";
+	public static final String ach4 = "Creciendo";	
+	public static final String ach4_desc = "Tu mascota ha cumplido su primer dia de vida";
 	public static final int img4 = R.drawable.firstpetarch;
 	public static final String ach5 = "Pepe";	
 	public static final String ach5_desc = "Has creado una mascota con el mejor nombre del mundo";
@@ -46,12 +46,24 @@ public class Init {
 	public static final String ach8 = "Reluciente";	
 	public static final String ach8_desc = "Tu mascota ha sido lavada 5 veces";
 	public static final int img8 = R.drawable.logrolavar;
-	/*public static final String ach9 = "Buena Digestion";	
+	public static final String ach9 = "Buena Digestion";	
 	public static final String ach9_desc = "Tu mascota ha hecho desechos 5 veces";
-	public static final int img9 = R.drawable.logropepe;*/
+	public static final int img9 = R.drawable.logropepe;
 	public static final String ach10 = "Cajita de Arena";	
 	public static final String ach10_desc = "Tu mascota ha sido limpiada 5 veces";
 	public static final int img10 = R.drawable.logrolimpcaca;
+	public static final String ach11 = "Atrapador principiante";	
+	public static final String ach11_desc = "Has obtenido un puntaje superior a 5 en el mini juego" +
+			"Atrapa las pelotas";
+	public static final int img11 = R.drawable.logrolavar;
+	public static final String ach12 = "Controlador principiante";	
+	public static final String ach12_desc = "Has obtenido un puntaje superior a 1000 en el juego" +
+			"Atraar pelota con Robot";
+	public static final int img12 = R.drawable.logropepe;
+	public static final String ach13 = "Desparacitador principiante";	
+	public static final String ach13_desc = "Has obtenido un puntaje superior a 1500 en el juego " +
+			"Saca pulgas";
+	public static final int img13 = R.drawable.logrolimpcaca;
 	
 	int done =0;
 		
@@ -77,10 +89,11 @@ public class Init {
 	public static final String est7= "Ha sido Lavada";
 	public static final String est7_desc = "¿Cuantas veces ha lavado a sus mascotas?"; //limpiado por lavado
 	public static final int imgstat7 = R.drawable.soapstat;
-	
 	public static final String game1= "Atrapa las pelotas";
 	public static final String game1_desc = "Debes atrapar las pelotas que van callendo," +
 			"¡evita que estas toquen el piso!";
+	
+	
 	public static final int imggame1 = R.drawable.game1;
 	public static final String game2= "Atrapa las pelotas (con Robot)";
 	public static final String game2_desc = "Utuliza el robot para atrapar las pelota obtetivo," +
@@ -89,7 +102,7 @@ public class Init {
 	public static final String game3= "Saca pulgas";
 	public static final String game3_desc = "Ayuda a tentosaurio que esta infestado  de pulgas," +
 			"¡debes quitar las pulgas dentro del tiempo!";
-	public static final int imggame3 = R.drawable.game1;
+	public static final int imggame3 = R.drawable.game3;
 
 	public static final int score = 0;
 	public static final int amount = 0;
@@ -116,8 +129,11 @@ public class Init {
 		helper.createAchievement(ach6, ach6_desc, done, img6);
 		helper.createAchievement(ach7, ach7_desc, done, img7);
 		helper.createAchievement(ach8, ach8_desc, done, img8);
-		//helper.createAchievement(ach9, ach9_desc, done, img9);
+		helper.createAchievement(ach9, ach9_desc, done, img9);
 		helper.createAchievement(ach10, ach10_desc, done, img10);
+		helper.createAchievement(ach11, ach11_desc, done, img11);
+		helper.createAchievement(ach12, ach12_desc, done, img12);
+		helper.createAchievement(ach13, ach13_desc, done, img13);
 
 		helper.close();    	
 	}

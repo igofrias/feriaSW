@@ -9,6 +9,8 @@ import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
+import org.andengine.entity.modifier.MoveYModifier;
+import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
@@ -25,6 +27,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.color.Color;
 import android.util.Log;
+import android.os.Vibrator;
 
 import com.Phyrex.VIPeR.BTService.BTBinder;
 
@@ -45,7 +48,7 @@ public class FleaGame extends SimpleBaseGameActivity
     private static final int CAMERA_WIDTH = 720;
     private static final int CAMERA_HEIGHT = 480;
     
-    private BitmapTextureAtlas tento; //tentosaurio
+    private BitmapTextureAtlas tentoImage; //tentosaurio
     private ITextureRegion tento_region;
     
     public ITextureRegion flea_region; //flea
@@ -57,14 +60,15 @@ public class FleaGame extends SimpleBaseGameActivity
 	protected boolean mBound;
 	private Toast reusableToast;
 	private boolean pairing;
-	
+	int maxFlea = 200;
 	float randX;
 	float randY;
 	
 	int level=0;
 	boolean reload=true;
 	
-	Sprite[] flea = new Sprite[200];
+	Sprite[] flea = new Sprite[maxFlea];
+	Sprite tento = null;
     
 	HUD hud; //HUD
 	private Text hudText;
@@ -79,6 +83,9 @@ public class FleaGame extends SimpleBaseGameActivity
 	int amountFlea = 5;
 	
 	private Text gameOverText; //game over
+	
+	//final Path path = new Path(3).to(CAMERA_WIDTH,CAMERA_HEIGHT-5).to(CAMERA_WIDTH,CAMERA_HEIGHT).to(CAMERA_WIDTH,CAMERA_HEIGHT+5);
+	
 	public FleaGame()
 	{
 		mBound = false;
@@ -109,7 +116,7 @@ public class FleaGame extends SimpleBaseGameActivity
 	    final ITexture fontTexture2 = new BitmapTextureAtlas(this.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
 	    font = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 40.0f, true, Color.BLACK.getABGRPackedInt());
-	    fontGame = FontFactory.createFromAsset(getFontManager(), fontTexture2, getAssets(), "ARCADECLASSIC.TTF", 100.0f, true, Color.BLACK.getABGRPackedInt());
+	    fontGame = FontFactory.createFromAsset(getFontManager(), fontTexture2, getAssets(), "ARCADECLASSIC.TTF", 100.0f, true, Color.WHITE.getABGRPackedInt());
 	    font.load();
 	    fontGame.load();
 	    	    
@@ -119,9 +126,9 @@ public class FleaGame extends SimpleBaseGameActivity
     	
     	//tento = new BitmapTextureAtlas(this.getTextureManager(), 470, 482, TextureOptions.BILINEAR); //cargar tentosaurio
     	//tento_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(tento, this, "tentosaurioeating.png", 0, 0);
-    	tento = new BitmapTextureAtlas(this.getTextureManager(), 650, 301, TextureOptions.BILINEAR); //cargar tentosaurio
-    	tento_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(tento, this, "tento-pulgoso.png", 0, 0);
-    	tento.load();
+    	tentoImage = new BitmapTextureAtlas(this.getTextureManager(), 650, 301, TextureOptions.BILINEAR); //cargar tentosaurio
+    	tento_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(tentoImage, this, "tento-pulgoso.png", 0, 0);
+    	tentoImage.load();
     	
     }
 
@@ -131,7 +138,7 @@ public class FleaGame extends SimpleBaseGameActivity
         
         // CREATE SCORE TEXT
     	hudText = new Text(20, 20, font, "Score: 0123456789", 100, this.getVertexBufferObjectManager());
-    	hudText.setText("Puntaje: 0 Tiempo: 0");
+    	hudText.setText("Puntaje: 0 Tiempo: 30");
         hud.attachChild(hudText);
         camera.setHUD(hud);
     }
@@ -182,17 +189,19 @@ public class FleaGame extends SimpleBaseGameActivity
 		createHUD();
 		
 		//create tento and add to scene
-		final Sprite tento = new Sprite(centerX, centerY, this.tento_region, this.getVertexBufferObjectManager());
+		tento = new Sprite(centerX, centerY, this.tento_region, this.getVertexBufferObjectManager());
 		scene.attachChild(tento);
-		
 		scene.registerUpdateHandler(new TimerHandler(1f, true, new ITimerCallback() { //countdown
 	        @Override
 	        public void onTimePassed(TimerHandler pTimerHandler) {
 	        	SubstractTime(1);	                
 	                if(time==0){
 		                scene.unregisterUpdateHandler(pTimerHandler);
-		                displayGameOverText();	
-		                //que pulgas no se muevan
+		                displayGameOverText();
+		                emptyGame();
+		                final Database_Helper entry = new Database_Helper(thisActivity);
+	            		final DB_Updater updater = new DB_Updater(thisActivity);
+	            		updater.updateHS(entry, 3, score);
 	                }        
 	                pTimerHandler.reset();
 	        	}
@@ -206,13 +215,14 @@ public class FleaGame extends SimpleBaseGameActivity
     
     void populateGame(int numPulgas, float centerX, float centerY, float centerFX, float centerFY, int nivel, boolean status){
     	Log.d("Posicion","Inicio Populate");
-    	
+    	final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);		
+
 		//DESDE AQUI
 		if(status==true){
 			status=false;
 		for(int j=0;j<numPulgas;j++){
-			randX = randFloat(-centerX*2, centerX*2);
-			randY = randFloat(-centerY*2, centerY*2);
+			randY = randFloat(-centerX*2, centerX*2);
+			randX = randFloat(-centerY*2 + 75, centerY*2 + 75);
 			
 			Log.d("randomX","pulga " + j + " randX " + (centerFX+randX) + " randY " + (centerFY+randY));
 			
@@ -253,10 +263,10 @@ public class FleaGame extends SimpleBaseGameActivity
 			    }
 				float lastX = this.getX();
 				float lastY = this.getY();
+				
 				@Override
 				protected void onManagedUpdate(float pSecondsElapsed)
-				{
-					
+				{	
 					if(moving)
 					{
 						deltaX =  this.getX() - lastX;
@@ -269,12 +279,14 @@ public class FleaGame extends SimpleBaseGameActivity
 					else{
 						setPosition(this.getX() + velX,this.getY() + velY);
 					}
-					if(checkPosition(0, CAMERA_WIDTH, 0, CAMERA_HEIGHT, this.getX() - this.getWidth() / 2, this.getY() - this.getHeight() / 2)==false)
+					if(checkPosition(10, CAMERA_WIDTH-50, 10, CAMERA_HEIGHT-50, this.getX() - this.getWidth() / 2, this.getY() - this.getHeight() / 2)==false)
 					{
 		        		this.setVisible(false);	//make flea invisible
 		        		addToScore(50);
 		        		dispose_sprite(this); //delete flea
 		        		extractFlea();
+		        		vibe.vibrate(250);   
+		        		shake_sprite(tento);
 		        		Log.d("Pulgas","Cantidad de pulgas: " + amountFlea);
 		        		Log.d("Posicion","fin de IF populate");
 		        	}
@@ -294,6 +306,7 @@ public class FleaGame extends SimpleBaseGameActivity
     void extractFlea(){
     	Log.d("Posicion","extractFlea");
     	amountFlea-=1;
+    	
     	//shake(); 
 
     	if(amountFlea==0){
@@ -312,7 +325,23 @@ public class FleaGame extends SimpleBaseGameActivity
     		populateGame(amountFlea, centerX, centerY, centerFX, centerFY, level, reload);
     		reload=false;
     	}
-
+    }
+    
+    void emptyGame(){
+    	
+    	for(int i=0;i<5*level;i++){
+    		flea[i].setVisible(false);
+    		dispose_sprite(flea[i]);  
+    		Log.d("Eliminar","Pulga " + i + "eliminada en nivel " + level);
+    	}
+    }
+    
+    void restartGame(){
+    	addTime(30);
+    	amountFlea = 5;
+    	level = 1;
+    	reload = true;
+    	populateGame(amountFlea, centerX, centerY, centerFX, centerFY, level, reload);
     }
     
     void shake()
@@ -337,6 +366,16 @@ public class FleaGame extends SimpleBaseGameActivity
 		});
     }
     
+    void shake_sprite(final Sprite toShake)
+    {
+				MoveYModifier spriteShake1 = new MoveYModifier((float) 0.02,centerY, centerY+20);
+				MoveYModifier spriteShake2 = new MoveYModifier((float) 0.02,centerY+20, centerY);
+				MoveYModifier spriteShake3 = new MoveYModifier((float) 0.02,centerY, centerY-20);
+				MoveYModifier spriteShake4 = new MoveYModifier((float) 0.02,centerY-20, centerY);
+
+				SequenceEntityModifier modifier = new SequenceEntityModifier(spriteShake1, spriteShake2, spriteShake3, spriteShake4);
+				toShake.registerEntityModifier(modifier);
+    }
 
     boolean checkPosition(float xMin, float xMax, float yMin, float yMax, float posFleaX, float posFleaY){ //falso si fuera area
     	if(posFleaY>yMax || posFleaX>xMax)

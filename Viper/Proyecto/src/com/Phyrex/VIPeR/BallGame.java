@@ -224,6 +224,9 @@ public class BallGame extends SimpleBaseGameActivity{
 		{
 			//Aqui se mata
 			inGame = false;
+			final Database_Helper entry = new Database_Helper(thisActivity);
+    		final DB_Updater updater = new DB_Updater(thisActivity);
+    		updater.updateHS(entry, 1, puntaje);
 			hud.detachChild(hudText);
 			hudText = new Text(70, 40, smallfont, "Game Over. Presione el boton atrás para volver",100,BallGame.this.vbo);
 			hud.attachChild(hudText);

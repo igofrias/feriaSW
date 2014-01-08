@@ -138,7 +138,7 @@ public class MainPetActivity extends SherlockFragment{
 		 			}else{
 		 				Toast.makeText(thisActivity, "no puedes molestar a la mascota mientras duerme", Toast.LENGTH_SHORT).show();
 		 			}
-		 			//aca intent
+		 			((MainActivity)thisActivity).launch_gameselect();
      			}	
 			break;
 			case 6://boton accion
@@ -398,9 +398,7 @@ public class MainPetActivity extends SherlockFragment{
 			if(timeeat==0 && !sleeping && touchX>width*3/4 && touchX<width*3/4+play.getWidth() && touchY>height*5/6 && touchY<height*5/6+play.getHeight()){
 				switch (e.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					//gameselect=true;
 					Actions(5);//accion de jugar
-					((MainActivity)thisActivity).launch_gameselect();
 			      break;
 			    }
 			}
