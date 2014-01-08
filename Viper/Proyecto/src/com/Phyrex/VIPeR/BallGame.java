@@ -227,7 +227,8 @@ public class BallGame extends SimpleBaseGameActivity{
 			final Database_Helper entry = new Database_Helper(thisActivity);
     		final DB_Updater updater = new DB_Updater(thisActivity);
     		updater.updateHS(entry, 1, puntaje);
-    		updater.unlock_achgame(entry, 1, puntaje, 5, "Atrapador principiante");
+    		if(updater.unlock_achgame(entry, 1, puntaje, 5, "Atrapador principiante"))
+    			Toast.makeText(thisActivity, "Logro "+ " Desbloqueado", Toast.LENGTH_SHORT).show();
 			hud.detachChild(hudText);
 			hudText = new Text(70, 40, smallfont, "Game Over. Presione el boton atrás para volver",100,BallGame.this.vbo);
 			hud.attachChild(hudText);
