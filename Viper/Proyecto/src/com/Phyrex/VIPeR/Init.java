@@ -55,15 +55,15 @@ public class Init {
 	public static final String ach11 = "Atrapador principiante";	
 	public static final String ach11_desc = "Has obtenido un puntaje superior a 5 en el mini juego" +
 			"Atrapa las pelotas";
-	public static final int img11 = R.drawable.logrolavar;
+	public static final int img11 = R.drawable.logroatrapapelota;
 	public static final String ach12 = "Controlador principiante";	
 	public static final String ach12_desc = "Has obtenido un puntaje superior a 1000 en el juego" +
 			"Atraar pelota con Robot";
-	public static final int img12 = R.drawable.logropepe;
+	public static final int img12 = R.drawable.logrocontrolador;
 	public static final String ach13 = "Desparacitador principiante";	
 	public static final String ach13_desc = "Has obtenido un puntaje superior a 1500 en el juego " +
 			"Saca pulgas";
-	public static final int img13 = R.drawable.logrolimpcaca;
+	public static final int img13 = R.drawable.logrosacapulgas;
 	
 	int done =0;
 		
