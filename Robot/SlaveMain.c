@@ -1,10 +1,13 @@
 #pragma config(Motor, motorA, headMotor,  tmotorNXT, PIDControl)
 #pragma config(Motor, motorB, tailMotor, tmotorNXT, PIDControl)
+#pragma config(Sensor, S3, touchSensor, sensorTouch)
 
 /*****************************************
  *            Task Statement
  ****************************************/
-//task moveTail();
+task MonitorTouch();
+task Caress();
+task taskMoveTail();
 
 /*****************************************
  *            Function Statement
@@ -13,11 +16,13 @@ void readMessages();
 void moveHead();
 void moveTail();
 void playTheme(int t);
-//void checkConnection();
+void monitorInit();
+void monitorFinish();
 
 /*****************************************
  *       Global Variable Statement
  ****************************************/
+int TouchVal;
 int nAction;
 int nMessage = 0;
 ubyte OutGoingMessage[1] = {0};
@@ -26,12 +31,10 @@ ubyte OutGoingMessage[1] = {0};
  *            Main Task
  ****************************************/
 task main(){
-//	checkConnection();
 	eraseDisplay();
 	motor[tailMotor] = 50;
 	wait1Msec(300);
-//	bNxtLCDStatusDisplay = true;
-//	wait1Msec(500);
+	monitorInit();
 	readMessages();
 	return;
 }
@@ -39,30 +42,42 @@ task main(){
 /*****************************************
  *            Task Definition
  ****************************************/
-/*//Function: moveTail
-task moveTail(){
+
+
+//Touch monitoring
+task MonitorTouch(){
 	while(true){
-		nMotorEncoder[tailMotor] = 0;
-		nMotorEncoderTarget[tailMotor] = 40;
-		motor[tailMotor] = 60;
-		wait1Msec(150);
-		motor[tailMotor] = -60;
-		wait1Msec(150);
+		TouchVal = SensorValue[touchSensor];
 	}
 }
 
-void checkConnection(){
-	if (nBTCurrentStreamIndex >= 0)
-		return;
-	PlaySound(soundLowBuzz);
-	PlaySound(soundLowBuzz);
-	eraseDisplay();
-	nxtDisplayCenteredTextLine(3, "No esta");
-	nxtDisplayCenteredTextLine(4, "Conectado");
-	wait1Msec(3000);
-	StopAllTasks();
+//Caress Robot
+task Caress(){
+	int showHappiness = 0;
+	while(true){
+		if(TouchVal == 1 && showHappiness == 0){
+			StartTask(taskMoveTail);
+			showHappiness = 1;
+		}
+		else if(TouchVal == 0 && showHappiness == 1){
+			StopTask(taskMoveTail);
+			motor[tailMotor] = 50;
+			wait1Msec(120);
+			motor[tailMotor] = 0;
+			showHappiness = 0;
+		}
+	}
 }
-*/
+
+//Move Tail
+task taskMoveTail(){
+	while(true){
+		motor[tailMotor] = -50;
+		wait1Msec(80);
+		motor[tailMotor] = 50;
+		wait1Msec(120);
+	}
+}
 
 /*****************************************
  *          Function Definition
@@ -80,7 +95,8 @@ void readMessages(){
 				case 46: //Move Tail
 					moveTail();
 					break;
-				case 90: //Victory Fanfare
+				case 64: //Fart Sound
+				case 90: //Fanfare Sound
 					playTheme(nAction);
 					break;
 				case 200: //Shutdown
@@ -117,11 +133,29 @@ void moveTail(){
 	motor[tailMotor] = 0;
 }
 
+//Function: playTheme
 void playTheme(int t){
 	switch(t){
+		case 64:
+			PlaySoundFile("FartSound.rso");
+			break;
 		case 90:
 			PlaySoundFile("FanfareSound.rso");
 			break;
 	}
 	return;
+}
+
+//Function: monitorInit
+void monitorInit(){
+	//StartTask(taskFinish);
+	StartTask(MonitorTouch);
+	StartTask(Caress);
+}
+
+//Function: monitor Finish
+void monitorFinish(){
+	//StopTask(taskFinish);
+	StopTask(MonitorTouch);
+	StopTask(Caress);
 }
