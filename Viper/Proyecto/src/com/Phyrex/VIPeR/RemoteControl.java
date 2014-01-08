@@ -403,6 +403,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		Double vel_x;
 		Double vel_y;
 		Paint color;
+		Paint red;
+		Paint yellow;
 		Paint color_center;
 		SurfaceHolder hold;
 		Canvas can;
@@ -414,6 +416,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		///////////Play Mode ///////////
 		Bitmap ballb;
 		Bitmap ballr;
+		Bitmap bally;
 		Bitmap ballnext;
 		Bitmap buttonclose;
 		Bitmap buttonopen;
@@ -438,6 +441,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			color.setColor(Color.GREEN);
 			color_center = new Paint();
 			color_center.setColor(Color.GRAY);
+			red = new Paint();
+			red.setColor(Color.RED);
+			yellow=new Paint();
+			yellow.setColor(Color.YELLOW);
 			vel_x = 0.0;
 			vel_y = 0.0;
 			running = false;
@@ -450,6 +457,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					R.drawable.ballblue);
 			ballr = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.ballred);
+			bally = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.ballyellow);
 			buttonclose = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.closepincers);
 			buttonopen = BitmapFactory.decodeResource(getResources(), 
@@ -516,8 +525,14 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 				if(inplay){
 					timecalc(height);
 				}
-				
-				canvas.drawRect(width*13/14, 0, width , lefttimeprogress, color);
+				if(lefttimeprogress<height/4){
+					canvas.drawRect(width*13/14, 0, width , lefttimeprogress, red);
+				}else if(lefttimeprogress<height/2){
+					canvas.drawRect(width*13/14, 0, width , lefttimeprogress, yellow);
+				}
+				else{
+					canvas.drawRect(width*13/14, 0, width , lefttimeprogress, color);
+				}
 				insertTextObjetive(width, height);
 				insertTextScore(width, height);
 				insertTextScorevalue(width, height);
@@ -673,10 +688,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			AlertDialog.Builder dialog = new AlertDialog.Builder(thisActivity);  
 	        dialog.setTitle("Tento pelota (?)");		//titulo (opcional)
 	        dialog.setIcon(R.drawable.ic_launcher);		//icono  (opcional)
-	        dialog.setMessage("Debes encontrar la pelota que te piden dentro del tiempo" +
-	        		"utilizando el robot y sus pinzas.\n" +
-	        		"¡Cuidado! debes encontrar las pelotas dentro del tiempo, entre mas" +
-	        		" rapido las recojas, mas puntaje tendras!\n\n"
+	        dialog.setMessage("Debes encontrar la pelota objetivo dentro del tiempo" +
+	        		"controlando el robot y sus pinzas.\n" +
+	        		"¡Cuidado con el tiempo! ¡Entre mas" +
+	        		" rápido las recojas, más puntaje tendras!\n\n"
 	        		); 
 	        
 	        
@@ -717,14 +732,18 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		}
 		
 		public void nextball(){//escoje una pelota al azar
-			int rand = (int) (Math.random() * 2);
+			int rand = (int) (Math.random() * 3);
 			if(rand==0){
 				ballnext = ballr;
 				ballcolor=5;
-			}else{
+			}else if(rand==1){
 				ballnext = ballb;
 				ballcolor=2;
+			}else{
+				ballnext = bally;
+				ballcolor=4;
 			}
+			
 		}
 		
 		public void update_coordinates(Double x, Double y)
@@ -775,6 +794,9 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 						count++;
 		                if(timeLeft == 0){
 		                	inplay=false;
+		                	final Database_Helper entry = new Database_Helper(thisActivity);
+		            		final DB_Updater updater = new DB_Updater(thisActivity);
+		            		updater.updateHS(entry, 2, score);
 		                }
 					}
 					if(catchball){

@@ -49,13 +49,14 @@ public class GameList_CursorAdapter extends SimpleCursorAdapter{
 		final TextView gamedes = (TextView)convertView.findViewById(R.id.gamedes);
 		final TextView gamenum = (TextView)convertView.findViewById(R.id.gamenum);
 		final ImageView gameimg = (ImageView)convertView.findViewById(R.id.gameimg);
+		final TextView gamescore = (TextView)convertView.findViewById(R.id.hs);
 		/*Asignacion de valores.
 		 * */
 		gamenum.setText(cursor.getString(cursor.getColumnIndex(from[0])));
 		gametittle.setText(cursor.getString(cursor.getColumnIndex(from[1])));
 		gamedes.setText(cursor.getString(cursor.getColumnIndex(from[2])));
 		gameimg.setImageResource(Integer.valueOf(cursor.getString(cursor.getColumnIndex(from[3]))));
-		Log.e("pepe","D:");
+		gamescore.setText(cursor.getString(cursor.getColumnIndex(from[4])));
 		/*El evento de click tambien se lo pueden dar al convertvews
 		 * EJ: convertView.setOnClickListener(listener);
 		 */

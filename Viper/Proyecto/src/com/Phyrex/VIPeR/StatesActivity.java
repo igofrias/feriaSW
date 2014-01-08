@@ -134,8 +134,7 @@ public class StatesActivity extends SherlockFragment{
             @Override
             public boolean onTouch(View v, MotionEvent event)
             {
-            	((MainActivity) thisActivity).launch_statisticslist();
-            	
+            	((MainActivity) thisActivity).getSM().showMenu(true);
             	return false;
             }
        });
@@ -165,6 +164,10 @@ public class StatesActivity extends SherlockFragment{
 		}else{
 			if(((int)lifetimecalc(birthdate) / (60*60*24))==1){
 				lifetime.setText(((int)lifetimecalc(birthdate) / (60*60*24)) + " Día");
+				final DB_Updater updater = new DB_Updater(thisActivity);
+				if(lifetime.equals("1 Día")){
+					updater.achievement_unlock(db, "Creciendo");
+				}
 			}else{
 				lifetime.setText(((int)lifetimecalc(birthdate) / (60*60*24)) + " Días");
 			}	
@@ -361,6 +364,7 @@ public class StatesActivity extends SherlockFragment{
 				btstate.setVisibility(View.INVISIBLE);
 			
 			}
+	
 			
 		}
 	    
