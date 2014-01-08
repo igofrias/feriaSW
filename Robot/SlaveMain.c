@@ -7,13 +7,13 @@
  ****************************************/
 task MonitorTouch();
 task Caress();
+task moveHead();
 task taskMoveTail();
 
 /*****************************************
  *            Function Statement
  ****************************************/
 void readMessages();
-void moveHead();
 void moveTail();
 void playTheme(int t);
 void monitorInit();
@@ -69,6 +69,16 @@ task Caress(){
 	}
 }
 
+//Move Head
+task moveHead(){
+	while(true){
+		motor[headMotor] = 40;
+		wait1Msec(200);
+		motor[headMotor] = -40;
+		wait1Msec(200);
+	}
+}
+
 //Move Tail
 task taskMoveTail(){
 	while(true){
@@ -89,11 +99,17 @@ void readMessages(){
 		if (nMessage != 0){
 			nAction = messageParm[0];
 			switch(nAction){
-				case 45: //Move Head
-					moveHead();
+				case 45: //Start Move Head
+					StartTask(moveHead);
 					break;
 				case 46: //Move Tail
 					moveTail();
+					break;
+				case 48: //Stop Move Head
+					StopTask(moveHead);
+					motor[headMotor] = -40;
+					wait1Msec(200);
+					motor[headMotor] = 0;
 					break;
 				case 64: //Fart Sound
 				case 90: //Fanfare Sound
@@ -109,17 +125,6 @@ void readMessages(){
 			nMessage = 0;
 		}
 	}
-}
-
-//Function: moveHead
-void moveHead(){
-	for(int i=0;i<3;i++){
-		motor[headMotor] = 50;
-		wait1Msec(100);
-		motor[headMotor] = -50;
-		wait1Msec(100);
-	}
-	motor[headMotor] = 0;
 }
 
 //Function: moveTail
