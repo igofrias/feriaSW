@@ -421,6 +421,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		Bitmap buttonclose;
 		Bitmap buttonopen;
 		int pincersstate;
+		boolean addtime;
 		boolean inplay;
 		boolean catchball;
 		boolean release;
@@ -654,26 +655,29 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			return textSize;
 		}
 		
-		public void timecalc(float height){
+		public void timecalc(float height){;
             lefttimeprogress = (height*timeLeft)/totalTime;
 		}
 		
 		public void score(){//manejo de puntaje
 			if(catchball){
 				score = (int)(300 + score + lefttimeprogress/100);
+				count = count -1000;
+				if(count>5000)
+					count=5000;
 				catchball=false;
 			}
 		}
 		
 		public void validcatchball(int sensorball) throws IOException{
-			//detenccion de sensor
-			/*((MainActivity)thisActivity).recivemsg();/aqui esto debe ser igual a lo de cele :D*/
-			//((MainActivity)thisActivity).sendMessageBTNumber(0, 201);
 			Log.e("Mensaje Recibido", String.valueOf(sensorball));
 			if (sensorball==ballcolor){
 				catchball=true;
 				score();
-				nextball();
+				int beforeballcolor=ballcolor;
+				while(ballcolor==beforeballcolor){
+					nextball();
+				}
 				totalTime=totalTime-300;
 			}
 		}
@@ -733,6 +737,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		
 		public void nextball(){//escoje una pelota al azar
 			int rand = (int) (Math.random() * 3);
+			
 			if(rand==0){
 				ballnext = ballr;
 				ballcolor=5;
@@ -801,7 +806,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		            			thisActivity.runOnUiThread(new Runnable() {
 		            		        @Override
 		            		        public void run() {
-		            		        	Toast.makeText(thisActivity, "Logro "+ " Desbloqueado", Toast.LENGTH_SHORT).show();
+		            		        	Toast.makeText(thisActivity, "Logro Controlador principiante Desbloqueado", Toast.LENGTH_SHORT).show();
 		            		        }
 		            		    });
 		                }

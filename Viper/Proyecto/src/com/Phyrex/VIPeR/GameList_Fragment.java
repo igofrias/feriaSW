@@ -81,6 +81,7 @@ public class GameList_Fragment extends SherlockFragment {
 			public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 				
 				Log.e("pepe","antes "+String.valueOf(position));
+				////seteo de restar 
 				if(position==0){
 					Intent intent = new Intent(thisActivity, BallGame.class);
 				    startActivity(intent);

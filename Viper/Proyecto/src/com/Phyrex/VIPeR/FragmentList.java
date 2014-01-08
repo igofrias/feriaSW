@@ -50,6 +50,7 @@ public class FragmentList extends SherlockListFragment {
 		ArrayAdapter<String> fragAdapter = new ArrayAdapter<String>(
 				getActivity(), android.R.layout.simple_list_item_1,
 				android.R.id.text1, frags);
+		
 		setListAdapter(fragAdapter);
 	}
 
@@ -74,8 +75,10 @@ public class FragmentList extends SherlockListFragment {
 			menuitem = 4; //About
 			break;
 		}
+		Reload();
 		switchFragment(newContent, menuitem);
 	}
+	
 	public void Reload(){
 		if(!((MainActivity)thisActivity).isConnected())
 		{
@@ -84,6 +87,11 @@ public class FragmentList extends SherlockListFragment {
 		{
 			frags[0] = "Desconectar";
 		}
+		ArrayAdapter<String> fragAdapter = new ArrayAdapter<String>(
+				getActivity(), android.R.layout.simple_list_item_1,
+				android.R.id.text1, frags);
+		
+		setListAdapter(fragAdapter);
 	}
 	// the meat of switching the above fragment
 	private void switchFragment(Fragment fragment, int menuitem) {

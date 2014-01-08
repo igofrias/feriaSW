@@ -231,7 +231,7 @@ public class BallGame extends SimpleBaseGameActivity{
     			this.runOnUiThread(new Runnable() {
     		        @Override
     		        public void run() {
-    		        	Toast.makeText(thisActivity, "Logro "+ " Desbloqueado", Toast.LENGTH_SHORT).show();
+    		        	Toast.makeText(thisActivity, "Logro Atrapador principiante Desbloqueado", Toast.LENGTH_SHORT).show();
     		        }
     		    });
     			

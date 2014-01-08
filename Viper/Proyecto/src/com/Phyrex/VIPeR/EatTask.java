@@ -194,8 +194,6 @@ public class EatTask implements SensorEventListener, Runnable {
 	     		if(states!=null && !states.isDetached()){//si el fragmento esta activo
 	     			states.eating();
 	            }
-	     		// if(((MainActivity)parent).isConnected())
-	    			//	((MainActivity)parent).startProgram("Eat.rxe");
 	    	}
 	    	else
 	    	{

@@ -121,6 +121,8 @@ public class StatesActivity extends SherlockFragment{
 		hapiness.setProgress(500);
 		hungry.setProgress(500);
 		health.setProgress(500);
+		energy.setProgress(500);
+		
 		///obtiene los datos de la BD/////////
 		Database_Helper db = new Database_Helper(thisActivity);
 		List<Pet> mascotas = db.getPets(); //lista de mascotas
@@ -223,7 +225,7 @@ public class StatesActivity extends SherlockFragment{
 	}
 	public boolean isFull()
 	{
-		if(hungry.getMax() == hungry.getProgress())
+		if(980 < hungry.getProgress())
 		{
 			return true;
 		}
@@ -231,11 +233,11 @@ public class StatesActivity extends SherlockFragment{
 	}
 	public void playing(){
 		hapiness.setProgress(hapiness.getProgress()+100);
+		energy.setProgress(energy.getProgress()-100);
 		hungry.setProgress(hungry.getProgress()-50);
 	}
 	public void sleep(){
 		health.setProgress(health.getProgress()+100);
-		hapiness.setProgress(hapiness.getProgress()+100);
 		hungry.setProgress(hungry.getProgress()-50);
 		sleeping = true;
 	}
@@ -355,7 +357,6 @@ public class StatesActivity extends SherlockFragment{
 			Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
 			setlifetime(petto._birthdate);
 			
-	    	energy.setProgress((int) ((MainActivity)thisActivity).getBatteryLevel()*10);
 	    	hungrypet();
 			if(((MainActivity)thisActivity).isConnected()){
 				btstate.setVisibility(View.VISIBLE);
@@ -364,6 +365,11 @@ public class StatesActivity extends SherlockFragment{
 				btstate.setVisibility(View.INVISIBLE);
 			
 			}
+			if(sleeping && energy.getProgress()<500){
+				
+				energy.setProgress(energy.getProgress()+5);
+			}
+				
 	
 			
 		}
