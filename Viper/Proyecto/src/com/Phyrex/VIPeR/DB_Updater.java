@@ -340,14 +340,13 @@ public class DB_Updater {
 			if (aux_cursor_ach.moveToFirst() == false){
 				return false;
 			}
-			if(scoreach>score)
+			if(scoreach>score || Integer.parseInt(aux_cursor_ach.getString(3))==1)
 				return false;
-			
 			//Datos a actualizar en achievement en BD
 			newAch._id = Integer.parseInt(aux_cursor_ach.getString(0));
 			newAch._name = aux_cursor_ach.getString(1);
 			newAch._desc = aux_cursor_ach.getString(2);
-			newAch._done = Integer.parseInt(aux_cursor_ach.getString(3)) + 1;
+			newAch._done = 1;
 
 			helper.confirmAchievement(newAch._id, newAch._name, newAch._desc, newAch._done);
 
