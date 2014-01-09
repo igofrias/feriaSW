@@ -322,11 +322,13 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			if(!canvas.release){
 				if(((MainActivity)thisActivity).isConnected()){
 					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "ReleaseBall");//TODO
-					waitRelease();	
 				}
 			}
-				if(((MainActivity)thisActivity).isConnected())
+				if(((MainActivity)thisActivity).isConnected()){
 					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "CloseClamps");
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "StartSensors");	
+				}
+				
 			
 		}
 		manager.unregisterListener(this);
@@ -358,20 +360,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			e.printStackTrace();
 		}
 	}
-        
-    public void waitRelease(){
-    	long  time = System.currentTimeMillis();
-    	long timePrev=0;
-    	long timeDelta=0;
-    	boolean flag=true;
-    	while(flag){
-    		timePrev = System.currentTimeMillis();
-	        timeDelta = timePrev - time;
-	        if ( timeDelta > 2000) {
-	           flag=false;
-	        }
-    	}
-    }   
+
         
 	public int getMAX_RANGE() {
 		return MAX_RANGE;
@@ -663,8 +652,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			if(catchball){
 				score = (int)(300 + score + lefttimeprogress/100);
 				count = count -1000;
-				if(count>5000)
-					count=5000;
+				if(count<0)
+					count=0;
 				catchball=false;
 			}
 		}
@@ -710,6 +699,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	            	inplay=true;
 	            	if(((MainActivity)thisActivity).isConnected()){
 	            		((MainActivity)thisActivity).getBTService().sendPetMessage(0, "OpenClamps");
+	            		((MainActivity)thisActivity).getBTService().sendPetMessage(0, "StopSensors");
 	    				release = true;
 	            	}
 			    }
