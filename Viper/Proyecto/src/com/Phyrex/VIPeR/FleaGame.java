@@ -239,7 +239,7 @@ public class FleaGame extends SimpleBaseGameActivity
 	            			thisActivity.runOnUiThread(new Runnable() {
 	            		        @Override
 	            		        public void run() {
-	            		        	Toast.makeText(thisActivity, "Logro "+ " Desbloqueado", Toast.LENGTH_SHORT).show();
+	            		        	Toast.makeText(thisActivity, "Logro Desparacitador principiante Desbloqueado", Toast.LENGTH_SHORT).show();
 	            		        }
 	            		    });
 	            			

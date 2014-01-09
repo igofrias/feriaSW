@@ -46,7 +46,7 @@ public class Init {
 	public static final String ach8 = "Reluciente";	
 	public static final String ach8_desc = "Tu mascota ha sido lavada 5 veces";
 	public static final int img8 = R.drawable.logrolavar;
-	public static final String ach9 = "Buena Digestion";	
+	public static final String ach9 = "asdf";	
 	public static final String ach9_desc = "Tu mascota ha hecho desechos 5 veces";
 	public static final int img9 = R.drawable.logropepe;
 	public static final String ach10 = "Cajita de Arena";	

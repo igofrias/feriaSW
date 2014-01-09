@@ -203,7 +203,7 @@ public class MainPetActivity extends SherlockFragment{
 				if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
 		 			if(!((StatesActivity)fragment1).isSleeping()){
 		 				if(updater.play(entry))
-		         			Toast.makeText(thisActivity, "Logro Desbloqueado Jugueton", Toast.LENGTH_LONG).show();
+		         			Toast.makeText(thisActivity, "Logro Desbloqueado Juguetón", Toast.LENGTH_LONG).show();
 		 				((StatesActivity)fragment1).playing();
 	 			    	if(((MainActivity)thisActivity).isConnected()){
 	 			    		((MainActivity)thisActivity).getBTService().sendPetMessage(1, "MoveTail");
