@@ -1,6 +1,9 @@
 package com.Phyrex.VIPeR;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.LimitedFPSEngine;
@@ -29,6 +32,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.color.Color;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.os.Vibrator;
 
 import com.Phyrex.VIPeR.BTService.BTBinder;
@@ -66,10 +70,11 @@ public class FleaGame extends SimpleBaseGameActivity
 	float randX;
 	float randY;
 	
+	
 	int level=0;
 	boolean reload=true;
 	
-	Sprite[] flea = new Sprite[maxFlea];
+	List<Sprite> flea = new LinkedList<Sprite>();
 	Sprite tento = null;
     
 	HUD hud; //HUD
@@ -224,6 +229,8 @@ public class FleaGame extends SimpleBaseGameActivity
 		//create tento and add to scene
 		tento = new Sprite(centerX, centerY, this.tento_region, this.getVertexBufferObjectManager());
 		scene.attachChild(tento);
+		scene.setTouchAreaBindingOnActionDownEnabled(true);
+		scene.setTouchAreaBindingOnActionMoveEnabled(true);
 		scene.registerUpdateHandler(new TimerHandler(1f, true, new ITimerCallback() { //countdown
 	        @Override
 	        public void onTimePassed(TimerHandler pTimerHandler) {
@@ -253,7 +260,8 @@ public class FleaGame extends SimpleBaseGameActivity
 
     	return scene;
     } //end create scene
-    
+   
+   
     void populateGame(int numPulgas, float centerX, float centerY, float centerFX, float centerFY, int nivel, boolean status){
     	Log.d("Posicion","Inicio Populate");
     	final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);		
@@ -266,16 +274,13 @@ public class FleaGame extends SimpleBaseGameActivity
 			randX = randFloat(-centerY*2 + 75, centerY*2 + 75);
 			
 			Log.d("randomX","pulga " + j + " randX " + (centerFX+randX) + " randY " + (centerFY+randY));
-			
-			flea[j] = new Sprite((centerFX+randX),(centerFY+randY), this.flea_region, this.getVertexBufferObjectManager()){
+			Sprite CurrentFlea = new Sprite((centerFX+randX),(centerFY+randY), this.flea_region, this.getVertexBufferObjectManager()){
 				float deltaX=0;
 				float deltaY=0;
-				boolean moving = false;
+				 boolean moving = false;
 				float velX = 0;
 				float velY = 0;
-				
-				//funciones de tiempo y gameover
-				
+								
 				@Override
 			    public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
 					
@@ -286,13 +291,13 @@ public class FleaGame extends SimpleBaseGameActivity
 			        
 			        //this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
 			        
-			        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+			        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP || (pSceneTouchEvent.isActionDown() && moving == true)) {
 			        	moving = false;
 			        				        	
 			        	Log.d("Action_UP","Dentro de actionUp: " + pSceneTouchEvent.getX() + " - " + pSceneTouchEvent.getY());
 			        		        	
 			        }
-			        if(pSceneTouchEvent.isActionMove())
+			        else if(pSceneTouchEvent.isActionMove())
 			        {
 			        	setPosition(pSceneTouchEvent.getX(),pSceneTouchEvent.getY());
 			        	moving = true;
@@ -304,27 +309,52 @@ public class FleaGame extends SimpleBaseGameActivity
 			    }
 				float lastX = this.getX();
 				float lastY = this.getY();
-				
+				int i=0;
+				float arregloDelta[][] = new float[2][2];
 				@Override
+		
 				protected void onManagedUpdate(float pSecondsElapsed)
 				{	
+				
 					if(moving)
 					{
+						arregloDelta[0][0]=deltaX;
+						arregloDelta[0][1]=deltaY;
+						
 						deltaX =  this.getX() - lastX;
 			        	deltaY = this.getY() - lastY;
 						velX = deltaX/2;
 						velY = deltaY/2;
 						lastX = this.getX();
 						lastY = this.getY();
+						
+						arregloDelta[1][0]=deltaX;
+						arregloDelta[1][1]=deltaY;
+						
+						Log.d("Action_UP","delta x: " + deltaX);
+						Log.d("Action_UP","delta y: " + deltaY);
+						Log.d("Action_UP", "iteracion numero: " + i);
+						i++;
 					}
+					
 					else{
+						if(arregloDelta[1][0]==0 && arregloDelta[1][1]==0)
+						{
+						
+							velX = arregloDelta[0][0]/2;
+							velY = arregloDelta[0][1] /2;
+						}
 						setPosition(this.getX() + velX,this.getY() + velY);
+						i=0;
+
+
 					}
 					if(checkPosition(10, CAMERA_WIDTH-50, 10, CAMERA_HEIGHT-50, this.getX() - this.getWidth() / 2, this.getY() - this.getHeight() / 2)==false)
 					{
 		        		this.setVisible(false);	//make flea invisible
 		        		addToScore(50);
 		        		dispose_sprite(this); //delete flea
+		        		
 		        		extractFlea();
 		        		vibe.vibrate(250);   
 		        		shake_sprite(tento);
@@ -333,9 +363,11 @@ public class FleaGame extends SimpleBaseGameActivity
 		        	}
 				}
 			};
-			scene.registerTouchArea(flea[j]);
+			flea.add(CurrentFlea);
+			scene.registerTouchArea(CurrentFlea);
 			scene.setTouchAreaBindingOnActionDownEnabled(true);
-			scene.attachChild(flea[j]);
+			scene.attachChild(CurrentFlea);
+			
 			reload=false;
 		} 
 		}//END IF
@@ -348,7 +380,7 @@ public class FleaGame extends SimpleBaseGameActivity
     	Log.d("Posicion","extractFlea");
     	amountFlea-=1;
 	    	if(isConnected()){
-		    		getBTService().sendPetMessage(47, "Shake");
+		    		getBTService().sendPetMessage(0, "Shake");
 		    	}
     	if(amountFlea==0){
         	reload=true;
@@ -362,19 +394,22 @@ public class FleaGame extends SimpleBaseGameActivity
     	{ 
     		level+=1;
     		amountFlea=5*level;
-    		addTime(15);
+    		addTime(5);
     		populateGame(amountFlea, centerX, centerY, centerFX, centerFY, level, reload);
     		reload=false;
     	}
     }
     
     void emptyGame(){
-    	
-    	for(int i=0;i<5*level;i++){
-    		flea[i].setVisible(false);
-    		dispose_sprite(flea[i]);  
-    		Log.d("Eliminar","Pulga " + i + "eliminada en nivel " + level);
+    	int size = flea.size();
+    	for(int i=flea.size()-1;i>=0;i--){
+    		Sprite currentFlea = flea.get(i);
+    		currentFlea.setVisible(false);
+    		scene.detachChild(currentFlea);
+    		Log.d("Eliminar","Pulga " + "eliminada en nivel "+i + level);
+    		currentFlea = null;
     	}
+    	flea.clear();
     }
     
     void restartGame(){
@@ -405,6 +440,8 @@ public class FleaGame extends SimpleBaseGameActivity
 		    	scene.detachChild(toDispose);
 		     }
 		});
+    	
+    	flea.remove(toDispose);
     }
     
     void shake_sprite(final Sprite toShake)
