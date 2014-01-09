@@ -71,7 +71,6 @@ task main(){
 	srand(nSysTime);
 	StartTask(ShowNormalEyes);
 	eyesTask = 1;
-	calibrate();
 	monitorInit();
 	readMessages();
 	return;
@@ -512,6 +511,7 @@ void monitorInit(){
 	StartTask(MonitorTouch);
 	StartTask(MonitorLLight);
 	StartTask(MonitorRLight);
+	calibrate();
 	StartTask(Photophobia);
 	StartTask(Caress);
 }
