@@ -99,6 +99,12 @@ void readMessages(){
 		if (nMessage != 0){
 			nAction = messageParm[0];
 			switch(nAction){
+				case 31: //Stop Sensors
+					monitorFinish();
+					break;
+				case 32: //Start Sensors
+					monitorInit();
+					break;
 				case 45: //Start Move Head
 					StartTask(moveHead);
 					break;
@@ -154,14 +160,12 @@ void playTheme(int t){
 
 //Function: monitorInit
 void monitorInit(){
-	//StartTask(taskFinish);
 	StartTask(MonitorTouch);
 	StartTask(Caress);
 }
 
 //Function: monitor Finish
 void monitorFinish(){
-	//StopTask(taskFinish);
 	StopTask(MonitorTouch);
 	StopTask(Caress);
 }
