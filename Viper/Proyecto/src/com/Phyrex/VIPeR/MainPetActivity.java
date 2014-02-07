@@ -685,10 +685,10 @@ public class MainPetActivity extends SherlockFragment{
 		
 		public void Drawtail(float center_x, float center_y, float width, float height){
 			if(!petFingerMove){
-				can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
+				can.drawBitmap(tail, center_x+tail.getWidth()*6/7, center_y - tail.getHeight()*5/7, color);
 			}else{
 				if(tailposition==0 || tailposition==-2 || tailposition==2){
-					can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
+					can.drawBitmap(tail, center_x+tail.getWidth()*6/7, center_y - tail.getHeight()*5/7, color);
 					if(timetail==4){
 						if(tailposition==-2){
 							tailposition=1;
@@ -701,8 +701,8 @@ public class MainPetActivity extends SherlockFragment{
 					timetail++;
 				}else if(tailposition==1){
 					can.save();
-					can.rotate(5, width*10/16, height*4/9);
-					can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
+					can.rotate(5, center_x-tail.getWidth()*6/7, center_y - tail.getHeight()*5/7);
+					can.drawBitmap(tail, center_x-tail.getWidth()*6/7, center_y - tail.getHeight()*5/7, color);
 					if(timetail==4){
 						tailposition=2;
 						timetail=0;
@@ -711,8 +711,8 @@ public class MainPetActivity extends SherlockFragment{
 					can.restore();
 				}else if(tailposition==-1){
 					can.save();
-					can.rotate(-5, width*10/16, height*4/9);
-					can.drawBitmap(tail, center_x-tail.getWidth()*1/3, center_y - tail.getHeight()*4/7, color);
+					can.rotate(-5, center_x-tail.getWidth()*6/7, center_y - tail.getHeight()*5/7);
+					can.drawBitmap(tail, center_x-tail.getWidth()*6/7, center_y - tail.getHeight()*5/7, color);
 					if(timetail==4){
 						tailposition=-2;
 						timetail=0;
@@ -795,8 +795,8 @@ public class MainPetActivity extends SherlockFragment{
 		
 		public void Drawtouchingpet(float center_x, float center_y, float x, float y){
 			if(cleanning){
-				can.drawBitmap(eyespooping, center_x/4-eyespooping.getWidth()/2, 
-						center_y*3/6 - eyespooping.getHeight()/2, color);
+				can.drawBitmap(eyespooping, center_x-eyespooping.getWidth()*4/10, 
+						center_y - eyespooping.getHeight()*15/7, color);
 				
 				Createbubbles(x,y,center_x*2, center_y*2);
 				if(cleantime%10==0){
@@ -805,22 +805,22 @@ public class MainPetActivity extends SherlockFragment{
 				}
 				cleantime++;
 			}else if(petFingerMove){
-				can.drawBitmap(eyeshappy, center_x-tento.getWidth()*1/3, 
-						center_y - tento.getHeight()*4/7, color);
+				can.drawBitmap(eyeshappy, center_x-eyeshappy.getWidth()*4/10, 
+						center_y - eyeshappy.getHeight()*29/4, color);
 			}else if(petstate==4){
-				can.drawBitmap(eyesangry, center_x-tento.getWidth()*1/3, 
-						center_y - tento.getHeight()*4/7, color);
+				can.drawBitmap(eyesangry, center_x-eyesangry.getWidth()*4/10, 
+						center_y - eyesangry.getHeight()*21/8, color);
 			}else{
 				if(eyesposition==0){
-					can.drawBitmap(eyesnormal, center_x-tento.getWidth()*1/3, 
-							center_y - tento.getHeight()*4/7, color);
+					can.drawBitmap(eyesnormal, center_x-eyesnormal.getWidth()*4/10, 
+							center_y - eyesnormal.getHeight()*24/7, color);
 					if(timeeyes==70){
 						eyesposition=1;
 						timeeyes =0;
 					}
 					timeeyes++;
 				}else if(eyesposition==1){
-					can.drawBitmap(eyesclose, center_x-tento.getWidth()*1/3, center_y - tento.getHeight()*4/7, color);
+					can.drawBitmap(eyesclose, center_x-eyesclose.getWidth()*4/10, center_y - eyesclose.getHeight()*47/3, color);
 					if(timeeyes==4){
 						eyesposition=0;
 						timeeyes=0;
@@ -880,9 +880,9 @@ public class MainPetActivity extends SherlockFragment{
 				//limit frame rate to max 60fps
 				timeNow = System.currentTimeMillis();
                 timeDelta = timeNow - timePrevFrame;
-                if ( timeDelta < 32) {
+                if ( timeDelta < 50) {
                     try {
-                        Thread.sleep(32 - timeDelta);
+                        Thread.sleep(50 - timeDelta);
                     }
                     catch(InterruptedException e) {
 
