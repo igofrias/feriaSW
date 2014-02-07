@@ -201,7 +201,7 @@ public class MainPetActivity extends SherlockFragment{
 			break;
 			case 5://jugar
 				if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
-		 			if(!((StatesActivity)fragment1).isSleeping()){
+		 			if(!((StatesActivity)fragment1).isSleeping() && ((StatesActivity)fragment1).getEnergylevel()>10){
 		 				if(updater.play(entry))
 		         			Toast.makeText(thisActivity, "Logro Desbloqueado Juguetón", Toast.LENGTH_LONG).show();
 		 				((StatesActivity)fragment1).playing();
@@ -266,6 +266,7 @@ public class MainPetActivity extends SherlockFragment{
 		Bitmap eyespooping;
 		Bitmap eyesclose;
 		Bitmap eyeshappy;
+		Bitmap eyesangry;
 		Bitmap dirt[]=new Bitmap[9];
 		//cola ? xD
 		Bitmap tail;
@@ -287,6 +288,7 @@ public class MainPetActivity extends SherlockFragment{
 		int cleantime=0;
 		int timeeyes=0;
 		int timesleep=0;
+		int timeangry=0;
 		//posiciones y estados
 		//burbujas
 		float posbubblesx=0;
@@ -294,7 +296,7 @@ public class MainPetActivity extends SherlockFragment{
 		int tailposition=0;
 		int bowlstate=0;
 		int eyesposition=0;	
-		int petstate=0;//0 normal //1 eating // 2 sleeping etc...
+		int petstate=0;//0 normal //1 eating // 2 sleeping // 3 sad //4 hungry
 		int dirtstate=0; //de 0 a el numero de mugre D:
 		//Measure frames per second.
 	    long now;
@@ -350,6 +352,8 @@ public class MainPetActivity extends SherlockFragment{
 					R.drawable.eyesclose);
 			eyeshappy = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.eyeshappy);
+			eyesangry = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.eyesangry);
 			tail = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.tentosauriotail);
 			dirt[0]= BitmapFactory.decodeResource(getResources(), 
@@ -528,7 +532,7 @@ public class MainPetActivity extends SherlockFragment{
 				}else if(bowlstate==3){
 					can.drawBitmap(bowl[3], width*1/16, height*5/8, color);
 				}
-				if(petstate==0){//si la mascta en estado normal
+				if(petstate==0 || petstate==4){//si la masta en estado normal
 					
 					Drawtail(center_x, center_y, width, height);
 					canvas.drawBitmap(tento, center_x-tento.getWidth()*1/3, 
@@ -537,7 +541,7 @@ public class MainPetActivity extends SherlockFragment{
 					Drawdirt(center_x,center_y, canvas);
 				}else if(petstate==2){
 					Drawsleeping(center_x,center_y);
-				}else if(petstate==1){
+				}else if(petstate==1){//comiendo
 					//sendNonOpenEyes("HappyEyes");
 					LinkedList<PetMessage> messageList = new LinkedList<PetMessage>();
 					messageList.add(new PetMessage(0,"HappyEyes"));
@@ -545,7 +549,7 @@ public class MainPetActivity extends SherlockFragment{
 					sendNonOpenEyes(messageList);
 					Draweating(width, height, center_x, center_y);
 					
-				}	
+				}
 				/*//Measure frame rate (unit: frames per second).
 		         now=System.currentTimeMillis();
 		         canvas.drawText(framesCountAvg+" fps", 40, 70, fpsPaint);
@@ -751,9 +755,16 @@ public class MainPetActivity extends SherlockFragment{
 	        		can.rotate(-40, width*3/16, height*4/7);
 					can.drawBitmap(food, width*1/16, height*6/11, color);
 					can.restore();
-					bowlstate=3;
-					petstate=1;
-					timeeat=150;
+					SherlockFragment fragment = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
+					if(!((StatesActivity)fragment).isFull()){
+						bowlstate=3;
+						petstate=1;
+						timeeat=150;
+					}else{
+						petstate=4;//enojado
+						timeangry=60;
+						((StatesActivity)fragment).foodwhenfull();
+					}
 				}else if(bowlstate==3 || (x==-1 && y==-1)){
 					can.drawBitmap(food, 0, height*5/6, color);
 				}else{
@@ -784,8 +795,8 @@ public class MainPetActivity extends SherlockFragment{
 		
 		public void Drawtouchingpet(float center_x, float center_y, float x, float y){
 			if(cleanning){
-				can.drawBitmap(eyespooping, center_x-eyespooping.getWidth()*1/3, 
-						center_y - eyespooping.getHeight()*4/7, color);
+				can.drawBitmap(eyespooping, center_x/4-eyespooping.getWidth()/2, 
+						center_y*3/6 - eyespooping.getHeight()/2, color);
 				
 				Createbubbles(x,y,center_x*2, center_y*2);
 				if(cleantime%10==0){
@@ -794,19 +805,22 @@ public class MainPetActivity extends SherlockFragment{
 				}
 				cleantime++;
 			}else if(petFingerMove){
-				can.drawBitmap(eyeshappy, center_x-eyeshappy.getWidth()*1/3, 
-						center_y - eyeshappy.getHeight()*4/7, color);
+				can.drawBitmap(eyeshappy, center_x-tento.getWidth()*1/3, 
+						center_y - tento.getHeight()*4/7, color);
+			}else if(petstate==4){
+				can.drawBitmap(eyesangry, center_x-tento.getWidth()*1/3, 
+						center_y - tento.getHeight()*4/7, color);
 			}else{
 				if(eyesposition==0){
-					can.drawBitmap(eyesnormal, center_x-eyesnormal.getWidth()*1/3, 
-							center_y - eyesnormal.getHeight()*4/7, color);
+					can.drawBitmap(eyesnormal, center_x-tento.getWidth()*1/3, 
+							center_y - tento.getHeight()*4/7, color);
 					if(timeeyes==70){
 						eyesposition=1;
 						timeeyes =0;
 					}
 					timeeyes++;
 				}else if(eyesposition==1){
-					can.drawBitmap(eyesclose, center_x-eyesclose.getWidth()*1/3, center_y - eyesclose.getHeight()*4/7, color);
+					can.drawBitmap(eyesclose, center_x-tento.getWidth()*1/3, center_y - tento.getHeight()*4/7, color);
 					if(timeeyes==4){
 						eyesposition=0;
 						timeeyes=0;
