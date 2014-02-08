@@ -666,10 +666,37 @@ public class MainPetActivity extends SherlockFragment{
 		public void Drawdirt(float center_x, float center_y, Canvas canvas){
 			if(dirtstate>0){
 				int i=0;
+				int desx=0;
+				int desy=0;
 				do{
-					canvas.drawBitmap(dirt[i], center_x-dirt[i].getWidth()*1/3, 
-							center_y - dirt[i].getHeight()*4/7, color);
+					switch(i){
+					case 0:
+						desx=14/13;
+						desy=-5/4;
+					break;
 					
+					case 1:
+						desx=-6/4;
+						desy=-1/16;
+					break;
+					
+					case 2:
+						desx=-9/4;
+						desy=4/2;
+					break;
+					
+					case 3:
+						desx=1/4;
+						desy=3/5;
+					break;
+					
+					default:
+						desx=0;
+						desy=0;
+					break;
+				}
+				canvas.drawBitmap(dirt[i], center_x-dirt[i].getWidth()*desx, 
+						center_y - dirt[i].getHeight()*desy, color);
 					i++;
 				}while(i<dirtstate && i>0);
 			}
@@ -701,8 +728,8 @@ public class MainPetActivity extends SherlockFragment{
 					timetail++;
 				}else if(tailposition==1){
 					can.save();
-					can.rotate(5, center_x-tail.getWidth()*6/7, center_y - tail.getHeight()*5/7);
-					can.drawBitmap(tail, center_x-tail.getWidth()*6/7, center_y - tail.getHeight()*5/7, color);
+					can.rotate(5, center_x*19/25, center_y);
+					can.drawBitmap(tail, center_x+tail.getWidth()*6/7, center_y - tail.getHeight()*5/7, color);
 					if(timetail==4){
 						tailposition=2;
 						timetail=0;
@@ -711,8 +738,8 @@ public class MainPetActivity extends SherlockFragment{
 					can.restore();
 				}else if(tailposition==-1){
 					can.save();
-					can.rotate(-5, center_x-tail.getWidth()*6/7, center_y - tail.getHeight()*5/7);
-					can.drawBitmap(tail, center_x-tail.getWidth()*6/7, center_y - tail.getHeight()*5/7, color);
+					can.rotate(-5, center_x*19/25, center_y);
+					can.drawBitmap(tail, center_x+tail.getWidth()*6/7, center_y - tail.getHeight()*5/7, color);
 					if(timetail==4){
 						tailposition=-2;
 						timetail=0;
