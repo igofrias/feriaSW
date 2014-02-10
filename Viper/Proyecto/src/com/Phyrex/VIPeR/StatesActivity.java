@@ -275,7 +275,23 @@ public class StatesActivity extends SherlockFragment{
 	
 	int getEnergylevel()
 	{
-		return energy.getProgress();
+		int energypercent=(energy.getProgress()*100)/energy.getMax();
+		return energypercent;
+	}
+	int getHungrylevel()
+	{
+		int hungrypercent=(hungry.getProgress()*100)/hungry.getMax();
+		return hungrypercent;
+	}
+	int getHapinesslevel()
+	{
+		int hapinesspercent=(hapiness.getProgress()*100)/hapiness.getMax();
+		return hapinesspercent;
+	}
+	int getHealthlevel()
+	{
+		int healthpercent=(health.getProgress()*100)/health.getMax();
+		return healthpercent;
 	}
 	public void wake()
 	{
