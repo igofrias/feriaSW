@@ -231,6 +231,16 @@ public class StatesActivity extends SherlockFragment{
 		}
 		return false;
 	}
+	public boolean isFullSleep()
+	{
+		if(980 < energy.getProgress())
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	
 	public void playing(){
 		hapiness.setProgress(hapiness.getProgress()+100);
 		energy.setProgress(energy.getProgress()-100);
@@ -255,7 +265,7 @@ public class StatesActivity extends SherlockFragment{
 	public void cleaning(){
 		health.setProgress(health.getProgress()+100); //digamos que se pone menos sano porque esta sucio el ambiente, que suba salud cuando se limpia
 	} 
-	public void foodwhenfull(){
+	public void actionwhenfull(){
 		hapiness.setProgress(hapiness.getProgress()-100);//se pone triste cuando le das comida y esta lleno
 	}
 	boolean isSleeping()

@@ -201,7 +201,7 @@ public class MainPetActivity extends SherlockFragment{
 			break;
 			case 5://jugar
 				if(fragment1!=null && !fragment1.isDetached()){//si el fragmento esta activo
-		 			if(!((StatesActivity)fragment1).isSleeping() && ((StatesActivity)fragment1).getEnergylevel()>10){
+		 			if(!((StatesActivity)fragment1).isSleeping()){
 		 				if(updater.play(entry))
 		         			Toast.makeText(thisActivity, "Logro Desbloqueado Juguetón", Toast.LENGTH_LONG).show();
 		 				((StatesActivity)fragment1).playing();
@@ -309,6 +309,7 @@ public class MainPetActivity extends SherlockFragment{
 		int timesleep=0;
 		int timeangry=0;
 		int timenope=0;
+		int nopecount=0;
 		//posiciones y estados
 		//burbujas
 		float posbubblesx=0;
@@ -316,7 +317,7 @@ public class MainPetActivity extends SherlockFragment{
 		int tailposition=0;
 		int bowlstate=0;
 		int eyesposition=0;	
-		int petstate=4;//0 normal //1 eating // 2 sleeping // 3 sad //4 nope //5 angry //TODO
+		int petstate=0;//0 normal //1 eating // 2 sleeping // 3 sad //4 nope //5 angry //TODO
 		int dirtstate=0; //de 0 a el numero de mugre D:
 		//Measure frames per second.
 	    long now;
@@ -497,10 +498,16 @@ public class MainPetActivity extends SherlockFragment{
 							
 						Actions(2);//despertar
 					}else{
-						petstate=2;
-						sleeping=true;
-						timesleep=90;
-						Actions(2);//accion dormir
+						SherlockFragment fragment = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
+						if(!((StatesActivity)fragment).isFullSleep()){
+							petstate=2;
+							sleeping=true;
+							timesleep=90;
+							Actions(2);//accion dormir
+						}else{
+							petstate=4;//enojado
+							((StatesActivity)fragment).actionwhenfull();
+						}
 					}
 			      break;
 			    }
@@ -516,7 +523,13 @@ public class MainPetActivity extends SherlockFragment{
 			if(timeeat==0 && !sleeping && touchX>width*3/4 && touchX<width*3/4+play.getWidth() && touchY>height*5/6 && touchY<height*5/6+play.getHeight()){
 				switch (e.getAction()) {
 				case MotionEvent.ACTION_DOWN:
-					Actions(5);//accion de jugar
+					SherlockFragment fragment = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
+					if(((StatesActivity)fragment).getEnergylevel()<10){
+						Actions(5);//accion de jugar
+					}else{
+						petstate=4;//enojado
+						((StatesActivity)fragment).actionwhenfull();
+					}
 			      break;
 			    }
 			}
@@ -623,6 +636,7 @@ public class MainPetActivity extends SherlockFragment{
 			can.drawARGB(150, 0, 0, 0);
 			DrawZetas(center_x*2,center_y*2);
 			if(sleeping){
+				//respirar
 			}
 		}
 		
@@ -806,42 +820,46 @@ public class MainPetActivity extends SherlockFragment{
 		
 		//TODO 
 		public void Drawnope(float center_x, float center_y, float width, float height){
-			timetail=4;
-			tailposition=-1;
 			if(tailposition==0 || tailposition==-2 || tailposition==2){
 				can.drawBitmap(tentonopefront, center_x-tentonopefront.getWidth()*1/3, 
 							center_y - tentonopefront.getHeight()*4/7, color);
-				if(timetail==4){
+				if(timenope==6){
 					if(tailposition==-2){
 						tailposition=1;
-						timetail =0;
+						timenope =0;
+						nopecount++;
 					}else{
 						tailposition=-1;
-						timetail=0;
+						timenope=0;
 					}
 				}
 				timenope++;
+				
 			}else if(tailposition==1){
 				can.drawBitmap(tentonopebody, center_x-tentonopebody.getWidth()*1/3, 
 						center_y - tentonopebody.getHeight()*4/7, color);
-				can.drawBitmap(headnoper, center_x-headnoper.getWidth()*48/104, 
+				can.drawBitmap(headnoper, center_x-headnoper.getWidth()*50/104, 
 						center_y - headnoper.getHeight()*452/480, color);
-				if(timenope==4){
+				if(timenope==6){
 					tailposition=2;
 					timenope=0;
 				}
-				timetail++;
+				timenope++;
 				can.restore();
 			}else if(tailposition==-1){
 				can.drawBitmap(tentonopebody, center_x-tentonopebody.getWidth()*1/3, 
 						center_y - tentonopebody.getHeight()*4/7, color);
-				can.drawBitmap(headnopel, center_x-headnopel.getWidth()*1/104, 
-						center_y - headnopel.getHeight()*452/480, color);				
-				if(timenope==4){
+				can.drawBitmap(headnopel, center_x-headnopel.getWidth()*26/104, 
+						center_y - headnopel.getHeight()*451/480, color);				
+				if(timenope==6){
 					tailposition=-2;
 					timenope=0;
 				}
 				timenope++;
+			}
+			if(nopecount==3){
+				petstate=0;
+				nopecount=0;
 			}
 		}
 		
@@ -883,8 +901,8 @@ public class MainPetActivity extends SherlockFragment{
 						timeeat=150;
 					}else{
 						petstate=4;//enojado
-						timeangry=60;
-						((StatesActivity)fragment).foodwhenfull();
+						//timeangry=60;
+						((StatesActivity)fragment).actionwhenfull();
 					}
 				}else if(bowlstate==3 || (x==-1 && y==-1)){
 					can.drawBitmap(food, 0, height*5/6, color);
@@ -928,7 +946,7 @@ public class MainPetActivity extends SherlockFragment{
 			}else if(petFingerMove){
 				can.drawBitmap(eyeshappy, center_x-eyeshappy.getWidth()*4/10, 
 						center_y - eyeshappy.getHeight()*29/4, color);
-			}else if(petstate==4){
+			}else if(petstate==5){
 				can.drawBitmap(eyesangry, center_x-eyesangry.getWidth()*4/10, 
 						center_y - eyesangry.getHeight()*21/8, color);
 			}else{
