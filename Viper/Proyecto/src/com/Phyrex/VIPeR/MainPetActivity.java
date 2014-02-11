@@ -769,7 +769,7 @@ public class MainPetActivity extends SherlockFragment{
 				do{
 					switch(i){
 						case 0:
-							if(petstate==0){
+							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
 								desx=(float)-3/8;//pecho
 								desy=(float)5/10;
 							}else if(petstate==2){
@@ -779,7 +779,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 1:
-							if(petstate==0){
+							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
 								desx=(float)-1;//cara
 								desy=(float)21/10;
 							}else if(petstate==2){
@@ -790,7 +790,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 2:
-							if(petstate==0){
+							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
 								desx=(float)1/10;//guata
 								desy=(float)-7/4;
 							}else if(petstate==2){
@@ -800,7 +800,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 3:
-							if(petstate==0){
+							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
 								desx=(float)5/8;//guata2
 								desy=(float)0;
 							}else if(petstate==2){
@@ -810,7 +810,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 4:
-							if(petstate==0){
+							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
 								desx=(float)6/8;//ojos
 								desy=(float)13/8;
 							}else if(petstate==2){
@@ -820,7 +820,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 5:
-							if(petstate==0){
+							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
 								desx=(float)-27/8;//cola
 								desy=(float)13/8;
 							}else if(petstate==2){
@@ -829,7 +829,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 6:
-							if(petstate==0){
+							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
 								desx=(float)-10/16;//medi espalda guata
 								desy=(float)-7/8;
 							}else if(petstate==2){
@@ -838,7 +838,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 7:
-							if(petstate==0){
+							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
 								desx=(float)23/16;//pata
 								desy=(float)-16/8;
 							}else if(petstate==2){
@@ -847,7 +847,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 8:
-							if(petstate==0){
+							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
 								desx=(float)-25/16;//cola2
 								desy=(float)1/8;
 							}else if(petstate==2){
