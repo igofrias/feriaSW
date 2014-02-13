@@ -16,6 +16,7 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.modifier.SequenceEntityModifier;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
@@ -34,9 +35,7 @@ import org.andengine.util.color.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.os.Vibrator;
-
 import com.Phyrex.VIPeR.BTService.BTBinder;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
@@ -79,8 +78,10 @@ public class FleaGame extends SimpleBaseGameActivity
     
 	HUD hud; //HUD
 	private Text hudText;
+	private Text hudTextFlea;
 	private int score = 0; 	
 	private int time = 30;
+	private int killFlea =0;
 	private Font font;
 	private Font fontGame;
 	
@@ -178,6 +179,10 @@ public class FleaGame extends SimpleBaseGameActivity
     	hudText = new Text(20, 20, font, "Score: 0123456789", 100, this.getVertexBufferObjectManager());
     	hudText.setText("Puntaje: 0 Tiempo: 30");
         hud.attachChild(hudText);
+        
+    	hudTextFlea = new Text(20, 400, font, "Fleas: 0123456789", 100, this.getVertexBufferObjectManager());
+    	hudTextFlea.setText("Pulgas: 0");
+    	hud.attachChild(hudTextFlea);
         camera.setHUD(hud);
     }
     
@@ -189,8 +194,9 @@ public class FleaGame extends SimpleBaseGameActivity
     private void displayGameOverText()
     {
         camera.setChaseEntity(null);
-        gameOverText.setPosition(CAMERA_WIDTH/2 - 250,CAMERA_HEIGHT/2);
+        gameOverText.setPosition(CAMERA_WIDTH/2 - 250,CAMERA_HEIGHT/4);
         scene.attachChild(gameOverText);
+        createControllers();
     }
     
     private void addToScore(int i)
@@ -206,7 +212,39 @@ public class FleaGame extends SimpleBaseGameActivity
     	time -= i;
         hudText.setText("Puntaje: " + score + " Tiempo: " + time);	
     }
+    private void addFlea(){
+    	hudTextFlea.setText("Pulgas restantes: " + amountFlea);
+    }
+    
     Scene scene;
+    
+    public void timer(){
+    	
+    	scene.registerUpdateHandler(new TimerHandler(1f, true, new ITimerCallback() { //countdown
+	        @Override
+	        public void onTimePassed(TimerHandler pTimerHandler) {
+	        	SubstractTime(1);	                
+	                if(time==0){
+		                scene.unregisterUpdateHandler(pTimerHandler);
+		                displayGameOverText();
+		                emptyGame();
+		                final Database_Helper entry = new Database_Helper(thisActivity);
+	            		final DB_Updater updater = new DB_Updater(thisActivity);
+	            		updater.updateHS(entry, 3, score);
+	            		if(updater.unlock_achgame(entry, 3, score, 1500, "Desparacitador principiante"))
+	            			thisActivity.runOnUiThread(new Runnable() {
+	            		        @Override
+	            		        public void run() {
+	            		        	Toast.makeText(thisActivity, "Logro Desparacitador principiante Desbloqueado", Toast.LENGTH_SHORT).show();
+	            		        }
+	            		    });
+	            			
+	                }        
+	                pTimerHandler.reset();
+	        	}
+		}));
+    	
+    }
     @Override
     protected Scene onCreateScene()
     {
@@ -231,7 +269,10 @@ public class FleaGame extends SimpleBaseGameActivity
 		scene.attachChild(tento);
 		scene.setTouchAreaBindingOnActionDownEnabled(true);
 		scene.setTouchAreaBindingOnActionMoveEnabled(true);
-		scene.registerUpdateHandler(new TimerHandler(1f, true, new ITimerCallback() { //countdown
+		
+		timer(); //HACE ANDAR EL TIEMPO!
+		
+/*		scene.registerUpdateHandler(new TimerHandler(1f, true, new ITimerCallback() { //countdown
 	        @Override
 	        public void onTimePassed(TimerHandler pTimerHandler) {
 	        	SubstractTime(1);	                
@@ -253,8 +294,9 @@ public class FleaGame extends SimpleBaseGameActivity
 	                }        
 	                pTimerHandler.reset();
 	        	}
-		}));
+		}));*/
 		level=1;
+	
 		populateGame(amountFlea, centerX, centerY, centerFX, centerFY, level, reload );
 		reload=false;
 
@@ -265,7 +307,7 @@ public class FleaGame extends SimpleBaseGameActivity
     void populateGame(int numPulgas, float centerX, float centerY, float centerFX, float centerFY, int nivel, boolean status){
     	Log.d("Posicion","Inicio Populate");
     	final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);		
-
+    	addFlea();
 		//DESDE AQUI
 		if(status==true){
 			status=false;
@@ -277,7 +319,7 @@ public class FleaGame extends SimpleBaseGameActivity
 			Sprite CurrentFlea = new Sprite((centerFX+randX),(centerFY+randY), this.flea_region, this.getVertexBufferObjectManager()){
 				float deltaX=0;
 				float deltaY=0;
-				 boolean moving = false;
+				boolean moving = false;
 				float velX = 0;
 				float velY = 0;
 								
@@ -356,6 +398,7 @@ public class FleaGame extends SimpleBaseGameActivity
 		        		dispose_sprite(this); //delete flea
 		        		
 		        		extractFlea();
+		        		
 		        		vibe.vibrate(250);   
 		        		shake_sprite(tento);
 		        		Log.d("Pulgas","Cantidad de pulgas: " + amountFlea);
@@ -376,9 +419,50 @@ public class FleaGame extends SimpleBaseGameActivity
 		}
     }
     
+    private void createControllers()
+    {
+        HUD yourHud = new HUD();
+        
+        final Rectangle left = new Rectangle(CAMERA_WIDTH/2-240+60, CAMERA_HEIGHT/2, 120, 60, this.getVertexBufferObjectManager())//posx, posy, sizex, sizey-------
+        {
+            public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
+            {
+                if (touchEvent.isActionUp())
+                {
+                    Log.d("Botones","Boton izquierdo");
+                    restartGame();
+                }
+                return true;
+            };
+        };
+        
+        final Rectangle right = new Rectangle(CAMERA_WIDTH/2+120-60, CAMERA_HEIGHT/2, 120, 60, this.getVertexBufferObjectManager()) //posx, posy, sizex, sizey
+        {
+            public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
+            {
+                if (touchEvent.isActionUp())
+                {
+                	Log.d("Botones","Boton derecho");     
+                	finish(); //hace lo mismo que boton atras, por ende regresa a seleccion de juegos
+                }
+                return true;
+            };
+        };
+        
+        yourHud.registerTouchArea(left);
+        yourHud.registerTouchArea(right);
+        yourHud.attachChild(left);
+        yourHud.attachChild(right);
+        
+        camera.setHUD(yourHud);
+    }
+    
+    
+    
     void extractFlea(){
     	Log.d("Posicion","extractFlea");
     	amountFlea-=1;
+    	addFlea();
 	    	if(isConnected()){
 		    		getBTService().sendPetMessage(0, "Shake");
 		    	}
@@ -413,10 +497,15 @@ public class FleaGame extends SimpleBaseGameActivity
     }
     
     void restartGame(){
+    	
     	addTime(30);
+    	timer();
     	amountFlea = 5;
     	level = 1;
+    	score = 0;
     	reload = true;
+    	scene.detachChild(gameOverText);    	
+    	createHUD(); //muestra puntajes y tiempos
     	populateGame(amountFlea, centerX, centerY, centerFX, centerFY, level, reload);
     }
     
@@ -535,13 +624,10 @@ public class FleaGame extends SimpleBaseGameActivity
         switch (requestCode) {
             case BTService.REQUEST_CONNECT_DEVICE:
 
-                
                 if (resultCode == Activity.RESULT_OK) {
                     String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
                     pairing = data.getExtras().getBoolean(DeviceListActivity.PAIRING);
-                    btservice.startBTCommunicator(address);
-                    
-	 		        
+                    btservice.startBTCommunicator(address);        
                 }
                 
                 break;
