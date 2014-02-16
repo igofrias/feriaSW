@@ -256,7 +256,10 @@ public class MainPetActivity extends SherlockFragment{
 		//Cuerpos
 		Bitmap tento;
 		Bitmap tentosleeping;
+		Bitmap tentobreath []= new Bitmap[2];
 		Bitmap tentoeating;
+		Bitmap tentoeatingtail;
+		Bitmap tentoeatingtongue []= new Bitmap[3];
 		Bitmap tentonopefront;
 		Bitmap tentonopebody;
 		Bitmap headnopel;
@@ -302,9 +305,11 @@ public class MainPetActivity extends SherlockFragment{
 	    //tiempos de movimientos
 		int timetail=0;
 		int timeeat=0;
+		int timetongue=0;
 		int cleantime=0;
 		int timeeyes=0;
 		int timesleep=0;
+		int timesleepbreath=0;
 		int timeangry=0;
 		int timenope=0;
 		int nopecount=0;
@@ -349,8 +354,20 @@ public class MainPetActivity extends SherlockFragment{
 					R.drawable.tentosaurio);
 			tentosleeping=BitmapFactory.decodeResource(getResources(), 
 					R.drawable.tentosauriosleeping);
+			tentobreath[0]=BitmapFactory.decodeResource(getResources(), 
+					R.drawable.tentobreath1);
+			tentobreath[1]=BitmapFactory.decodeResource(getResources(), 
+					R.drawable.tentobreath2);
 			tentoeating=BitmapFactory.decodeResource(getResources(),
 					R.drawable.tentosaurioeating);
+			tentoeatingtail=BitmapFactory.decodeResource(getResources(),
+					R.drawable.tentoeatingtail);
+			tentoeatingtongue[0]= BitmapFactory.decodeResource(getResources(),
+					R.drawable.tentoeatingtongue);
+			tentoeatingtongue[1]= BitmapFactory.decodeResource(getResources(),
+					R.drawable.tentoeatingtongue2);
+			tentoeatingtongue[2]= BitmapFactory.decodeResource(getResources(),
+					R.drawable.tentoeatingtongue3);
 			tentonopefront=BitmapFactory.decodeResource(getResources(),
 					R.drawable.tentonopefront);
 			tentonopebody=BitmapFactory.decodeResource(getResources(),
@@ -503,6 +520,7 @@ public class MainPetActivity extends SherlockFragment{
 							petstate=2;
 							sleeping=true;
 							timesleep=90;
+							timesleepbreath=80;
 							Actions(2);//accion dormir
 						}else{
 							petstate=4;//enojado
@@ -584,14 +602,18 @@ public class MainPetActivity extends SherlockFragment{
 				Drawdirt(center_x,center_y, canvas);
 			}else if(petstate==2){
 				Drawsleeping(center_x,center_y);
-				Drawdirt(center_x,center_y, canvas);
 			}else if(petstate==1){//comiendo
 				//sendNonOpenEyes("HappyEyes");
 				LinkedList<PetMessage> messageList = new LinkedList<PetMessage>();
 				messageList.add(new PetMessage(0,"HappyEyes"));
 				messageList.add(new PetMessage(1,"StartMoveHead"));
 				sendNonOpenEyes(messageList);
+				//TODO
+				Drawtaileating(center_x,center_y, x , y);
+				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
+						center_y - tentoeating.getHeight()*4/7, color);
 				Draweating(width, height, center_x, center_y);
+				DrawTongue(center_x,center_y);
 				Drawdirt(center_x,center_y, canvas);
 			}else if(petstate==4){
 				Drawnope(center_x,center_y, x , y);
@@ -634,17 +656,17 @@ public class MainPetActivity extends SherlockFragment{
 		public void Drawsleeping(float center_x, float center_y){ //TODO
 			can.drawBitmap(tentosleeping, center_x-tentosleeping.getWidth()/2, 
 					center_y - tentosleeping.getHeight()*2/7, color);
+			DrawBreath(center_x,center_y);
+			Drawdirt(center_x,center_y, can);
 			can.drawARGB(150, 0, 0, 0);
 			DrawZetas(center_x*2,center_y*2);
-			if(sleeping){
-				//respirar
-			}
+			
 		}
 		
 		public void Changestate(){
 			SherlockFragment fragment = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
 			
-				if(petstate!=2 && petstate!=1){
+				if(petstate!=2 && petstate!=1 && petstate!=4){
 					if (((StatesActivity)fragment).getHungrylevel()<20){
 						petstate=7;//Hungry
 					}else if (((StatesActivity)fragment).getHealthlevel()<20){
@@ -694,6 +716,23 @@ public class MainPetActivity extends SherlockFragment{
 			textPaint.getTextBounds(text, 0, text.length(), bounds);
 			can.drawText(text, posx, posy, textPaint);
 			can.restore();
+		}
+		
+		public void DrawBreath(float center_x, float center_y){//TODO
+			if(timesleepbreath>60){
+				timesleepbreath--;
+			}else if(timesleepbreath>40 || timesleepbreath<=20){
+				can.drawBitmap(tentobreath[0], center_x-tentobreath[0].getWidth()*955/2048, 
+						center_y - tentobreath[0].getHeight()*519/896, color);
+				timesleepbreath--;
+				if (timesleepbreath==0)
+					timesleepbreath=80;
+			}else if(timesleepbreath>20){
+				can.drawBitmap(tentobreath[1], center_x-tentobreath[1].getWidth()*469/1024, 
+						center_y - tentobreath[1].getHeight()*519/896, color);
+				timesleepbreath--;
+				
+			}
 		}
 		
 		public void Dopoop(){
@@ -773,8 +812,11 @@ public class MainPetActivity extends SherlockFragment{
 								desx=(float)-3/8;//pecho
 								desy=(float)5/10;
 							}else if(petstate==2){
-								desx=(float)5/8;//guata2
-								desy=(float)0;
+								desx=(float)12/8;//guata2
+								desy=(float)5/8;
+							}else if(petstate==1){
+								desx=(float)8/8;//guata2
+								desy=(float)5/8;
 							}
 						break;
 						
@@ -783,18 +825,25 @@ public class MainPetActivity extends SherlockFragment{
 								desx=(float)-1;//cara
 								desy=(float)21/10;
 							}else if(petstate==2){
-								desx=(float)-10;//cara
-								desy=(float)-21/10;
+								desx=(float)3;//cara
+								desy=(float)-23/10;
+							}else if(petstate==1){
+								desx=(float)17/4;//cara bajo ojo
+								desy=(float)-14/10;
 							}
 							
 						break;
 						
 						case 2:
 							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
-								desx=(float)1/10;//guata
-								desy=(float)-7/4;
+								desx=(float)1/10;//guata baja entre pierna
+								desy=(float)-6/4;
 							}else if(petstate==2){
-								
+								desx=(float)9/10;//
+								desy=(float)-9/10;
+							}else if(petstate==1){
+								desx=(float)-19/10;//
+								desy=(float)-14/10;
 							}
 							
 						break;
@@ -804,8 +853,11 @@ public class MainPetActivity extends SherlockFragment{
 								desx=(float)5/8;//guata2
 								desy=(float)0;
 							}else if(petstate==2){
-								desx=(float)-3/8;//pecho
-								desy=(float)7/10;
+								desx=(float)1/8;//pecho
+								desy=(float)-3/10;
+							}else if(petstate==1){
+								desx=(float)1/16;//pecho
+								desy=(float)-6/10;
 							}
 						break;
 						
@@ -814,8 +866,11 @@ public class MainPetActivity extends SherlockFragment{
 								desx=(float)6/8;//ojos
 								desy=(float)13/8;
 							}else if(petstate==2){
+								desx=(float)17/8;//ojos
+								desy=(float)-5/8;
+							}else if(petstate==1){
 								desx=(float)20/8;//ojos
-								desy=(float)-13/8;
+								desy=(float)-1/16;
 							}
 						break;
 						
@@ -824,7 +879,11 @@ public class MainPetActivity extends SherlockFragment{
 								desx=(float)-27/8;//cola
 								desy=(float)13/8;
 							}else if(petstate==2){
-								
+								desx=(float)-16/16;//cola
+								desy=(float)-43/16;
+							}else if(petstate==1){
+								desx=(float)-65/16;//cola
+								desy=(float)43/16;
 							}
 						break;
 						
@@ -833,7 +892,11 @@ public class MainPetActivity extends SherlockFragment{
 								desx=(float)-10/16;//medi espalda guata
 								desy=(float)-7/8;
 							}else if(petstate==2){
-								
+								desx=(float)-15/16;//cola
+								desy=(float)4/16;
+							}else if(petstate==1){
+								desx=(float)-38/32;//cola
+								desy=(float)7/32;
 							}
 						break;
 						
@@ -842,7 +905,11 @@ public class MainPetActivity extends SherlockFragment{
 								desx=(float)23/16;//pata
 								desy=(float)-16/8;
 							}else if(petstate==2){
-															
+								desx=(float)-5/16;//espalda media
+								desy=(float)15/16;						
+							}else if(petstate==1){
+								desx=(float)-9/16;//espalda media
+								desy=(float)8/16;
 							}	
 						break;
 						
@@ -851,8 +918,17 @@ public class MainPetActivity extends SherlockFragment{
 								desx=(float)-25/16;//cola2
 								desy=(float)1/8;
 							}else if(petstate==2){
-															
+								desx=(float)-35/16;//cola
+								desy=(float)-15/16;								
+							}else if(petstate==1){
+								desx=(float)-36/16;//cola
+								desy=(float)17/16;	
 							}
+						break;
+						
+						default:
+							desx=100;
+							desy=100;
 						break;
 
 					}
@@ -890,8 +966,9 @@ public class MainPetActivity extends SherlockFragment{
 					timetail++;
 				}else if(tailposition==1){
 					can.save();
-					can.rotate(5, center_x*19/25, center_y);
+					can.rotate(5, (center_x*2)*13/16, center_y);
 					can.drawBitmap(tail, center_x+tail.getWidth()*6/7, center_y - tail.getHeight()*5/7, color);
+					can.drawCircle((center_x*2)*13/16, center_y, 10, color);
 					if(timetail==4){
 						tailposition=2;
 						timetail=0;
@@ -900,7 +977,7 @@ public class MainPetActivity extends SherlockFragment{
 					can.restore();
 				}else if(tailposition==-1){
 					can.save();
-					can.rotate(-5, center_x*19/25, center_y);
+					can.rotate(-5, (center_x*2)*13/16, center_y);
 					can.drawBitmap(tail, center_x+tail.getWidth()*6/7, center_y - tail.getHeight()*5/7, color);
 					if(timetail==4){
 						tailposition=-2;
@@ -963,22 +1040,72 @@ public class MainPetActivity extends SherlockFragment{
 			if(timeeat>80){
 				bowlstate=3;
 				timeeat--;
-				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
-						center_y - tentoeating.getHeight()*4/7, color);
 			}else if(timeeat>30){
 				bowlstate=2;
 				timeeat--;
-				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
-						center_y - tentoeating.getHeight()*4/7, color);
 			}else if(timeeat>0){
 				bowlstate=1;
 				timeeat--;
-				can.drawBitmap(tentoeating, center_x-tentoeating.getWidth()/2, 
-						center_y - tentoeating.getHeight()*4/7, color);
 			}else if(timeeat==0){
 				bowlstate=0;
 				petstate=0;
 				Actions(1);//uno para comer
+			}
+		}
+		
+		public void Drawtaileating(float center_x, float center_y, float width, float height){
+			if(tailposition==0 || tailposition==-2 || tailposition==2){
+				can.drawBitmap(tentoeatingtail, center_x+tentoeatingtail.getWidth()*8/7, center_y - tentoeatingtail.getHeight()*6/7, color);
+				if(timetail==3){
+					if(tailposition==-2){
+						tailposition=1;
+						timetail =0;
+					}else{
+						tailposition=-1;
+						timetail=0;
+					}
+				}
+				timetail++;
+			}else if(tailposition==1){
+				can.save();
+				can.rotate(5, (center_x*2)*13/16, center_y);
+				can.drawBitmap(tentoeatingtail, center_x+tentoeatingtail.getWidth()*8/7, center_y - tentoeatingtail.getHeight()*6/7, color);
+				if(timetail==3){
+					tailposition=2;
+					timetail=0;
+				}
+				timetail++;
+				can.restore();
+			}else if(tailposition==-1){
+				can.save();
+				can.rotate(-5, (center_x*2)*13/16, center_y);
+				can.drawBitmap(tentoeatingtail, center_x+tentoeatingtail.getWidth()*8/7, center_y - tentoeatingtail.getHeight()*6/7, color);
+				if(timetail==3){
+					tailposition=-2;
+					timetail=0;
+				}
+				timetail++;
+				can.restore();
+			}
+		}
+		
+		public void DrawTongue(float center_x, float center_y){//TODO
+			if(timetongue>9){
+				can.drawBitmap(tentoeatingtongue[2], center_x-tentoeatingtongue[2].getWidth()*24/4, 
+						center_y + tentoeatingtongue[2].getHeight()*63/8, color);
+				timetongue--;
+			}else if(timetongue>6 || timetongue<=3){
+				can.drawBitmap(tentoeatingtongue[0], center_x-tentoeatingtongue[0].getWidth()*50/8, 
+						center_y + tentoeatingtongue[0].getHeight()*50/8, color);
+				
+				if (timetongue==0)
+					timetongue=12;
+				timetongue--;
+			}else if(timetongue>3){
+				can.drawBitmap(tentoeatingtongue[1], center_x-tentoeatingtongue[1].getWidth()*39/8, 
+						center_y + tentoeatingtongue[1].getHeight()*63/8, color);
+				timetongue--;
+				
 			}
 		}
 		
@@ -994,6 +1121,8 @@ public class MainPetActivity extends SherlockFragment{
 						bowlstate=3;
 						petstate=1;
 						timeeat=150;
+						timetail=0;
+						timetongue=12;
 					}else{
 						petstate=4;//enojado
 						//timeangry=60;

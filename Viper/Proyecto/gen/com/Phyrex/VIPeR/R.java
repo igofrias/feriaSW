@@ -1115,17 +1115,23 @@ containing a value of this type.
         public static final int soap=0x7f0200b4;
         public static final int soappet=0x7f0200b5;
         public static final int soapstat=0x7f0200b6;
-        public static final int tentonopebody=0x7f0200b7;
-        public static final int tentonopefront=0x7f0200b8;
-        public static final int tentonopeheadl=0x7f0200b9;
-        public static final int tentonopeheadr=0x7f0200ba;
-        public static final int tentosaurio=0x7f0200bb;
-        public static final int tentosaurioava=0x7f0200bc;
-        public static final int tentosaurioeating=0x7f0200bd;
-        public static final int tentosaurioshot=0x7f0200be;
-        public static final int tentosauriosleeping=0x7f0200bf;
-        public static final int tentosauriotail=0x7f0200c0;
-        public static final int toiletpaper=0x7f0200c1;
+        public static final int tentobreath1=0x7f0200b7;
+        public static final int tentobreath2=0x7f0200b8;
+        public static final int tentoeatingtail=0x7f0200b9;
+        public static final int tentoeatingtongue=0x7f0200ba;
+        public static final int tentoeatingtongue2=0x7f0200bb;
+        public static final int tentoeatingtongue3=0x7f0200bc;
+        public static final int tentonopebody=0x7f0200bd;
+        public static final int tentonopefront=0x7f0200be;
+        public static final int tentonopeheadl=0x7f0200bf;
+        public static final int tentonopeheadr=0x7f0200c0;
+        public static final int tentosaurio=0x7f0200c1;
+        public static final int tentosaurioava=0x7f0200c2;
+        public static final int tentosaurioeating=0x7f0200c3;
+        public static final int tentosaurioshot=0x7f0200c4;
+        public static final int tentosauriosleeping=0x7f0200c5;
+        public static final int tentosauriotail=0x7f0200c6;
+        public static final int toiletpaper=0x7f0200c7;
     }
     public static final class id {
         public static final int Colortext=0x7f040049;
