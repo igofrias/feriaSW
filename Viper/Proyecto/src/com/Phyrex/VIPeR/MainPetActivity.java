@@ -585,13 +585,13 @@ public class MainPetActivity extends SherlockFragment{
 			}
 			canvas.drawARGB(255, 50, 50, 255);
 			if(bowlstate==0){
-				can.drawBitmap(bowl[0], width*1/16, height*5/8, color);
+				can.drawBitmap(bowl[0], width*1/16, height*41/64, color);
 			}else if(bowlstate==1){
-				can.drawBitmap(bowl[1], width*1/16, height*5/8, color);
+				can.drawBitmap(bowl[1], width*1/16, height*41/64, color);
 			}else if(bowlstate==2){
-				can.drawBitmap(bowl[2], width*1/16, height*5/8, color);
+				can.drawBitmap(bowl[2], width*1/16, height*41/64, color);
 			}else if(bowlstate==3){
-				can.drawBitmap(bowl[3], width*1/16, height*5/8, color);
+				can.drawBitmap(bowl[3], width*1/16, height*41/64, color);
 			}
 			if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){//si la masta en estado normal
 				
@@ -808,7 +808,7 @@ public class MainPetActivity extends SherlockFragment{
 				do{
 					switch(i){
 						case 0:
-							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
+							if(petstate==0 || petstate==3 || (petstate>=4 && petstate<11)){
 								desx=(float)-3/8;//pecho
 								desy=(float)5/10;
 							}else if(petstate==2){
@@ -821,7 +821,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 1:
-							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
+							if(petstate==0 || petstate==3 || (petstate>=4 && petstate<11)){
 								desx=(float)-1;//cara
 								desy=(float)21/10;
 							}else if(petstate==2){
@@ -835,7 +835,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 2:
-							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
+							if(petstate==0 || petstate==3 || (petstate>=4 && petstate<11)){
 								desx=(float)1/10;//guata baja entre pierna
 								desy=(float)-6/4;
 							}else if(petstate==2){
@@ -849,7 +849,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 3:
-							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
+							if(petstate==0 || petstate==3 || (petstate>=4 && petstate<11)){
 								desx=(float)5/8;//guata2
 								desy=(float)0;
 							}else if(petstate==2){
@@ -862,7 +862,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 4:
-							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
+							if(petstate==0 || petstate==3 || (petstate>=4 && petstate<11)){
 								desx=(float)6/8;//ojos
 								desy=(float)13/8;
 							}else if(petstate==2){
@@ -875,7 +875,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 5:
-							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
+							if(petstate==0 || petstate==3 || (petstate>=4 && petstate<11)){
 								desx=(float)-27/8;//cola
 								desy=(float)13/8;
 							}else if(petstate==2){
@@ -888,7 +888,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 6:
-							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
+							if(petstate==0 || petstate==3 || (petstate>=4 && petstate<11)){
 								desx=(float)-10/16;//medi espalda guata
 								desy=(float)-7/8;
 							}else if(petstate==2){
@@ -901,7 +901,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 7:
-							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
+							if(petstate==0 || petstate==3 || (petstate>=4 && petstate<11)){
 								desx=(float)23/16;//pata
 								desy=(float)-16/8;
 							}else if(petstate==2){
@@ -914,7 +914,7 @@ public class MainPetActivity extends SherlockFragment{
 						break;
 						
 						case 8:
-							if(petstate==0 || petstate==3 || (petstate>4 && petstate<11)){
+							if(petstate==0 || petstate==3 || (petstate>=4 && petstate<11)){
 								desx=(float)-25/16;//cola2
 								desy=(float)1/8;
 							}else if(petstate==2){
@@ -954,7 +954,7 @@ public class MainPetActivity extends SherlockFragment{
 			}else{
 				if(tailposition==0 || tailposition==-2 || tailposition==2){
 					can.drawBitmap(tail, center_x+tail.getWidth()*6/7, center_y - tail.getHeight()*5/7, color);
-					if(timetail==4){
+					if(timetail==3){
 						if(tailposition==-2){
 							tailposition=1;
 							timetail =0;
@@ -966,10 +966,10 @@ public class MainPetActivity extends SherlockFragment{
 					timetail++;
 				}else if(tailposition==1){
 					can.save();
-					can.rotate(5, (center_x*2)*13/16, center_y);
+					can.rotate(5, (center_x*2)*11/16, center_y*43/40);
 					can.drawBitmap(tail, center_x+tail.getWidth()*6/7, center_y - tail.getHeight()*5/7, color);
-					can.drawCircle((center_x*2)*13/16, center_y, 10, color);
-					if(timetail==4){
+					//can.drawCircle((center_x*2)*11/16, center_y*43/40, 10, color);
+					if(timetail==3){
 						tailposition=2;
 						timetail=0;
 					}
@@ -977,9 +977,9 @@ public class MainPetActivity extends SherlockFragment{
 					can.restore();
 				}else if(tailposition==-1){
 					can.save();
-					can.rotate(-5, (center_x*2)*13/16, center_y);
+					can.rotate(-5,  (center_x*2)*11/16, center_y*43/40);
 					can.drawBitmap(tail, center_x+tail.getWidth()*6/7, center_y - tail.getHeight()*5/7, color);
-					if(timetail==4){
+					if(timetail==3){
 						tailposition=-2;
 						timetail=0;
 					}
@@ -1056,7 +1056,7 @@ public class MainPetActivity extends SherlockFragment{
 		public void Drawtaileating(float center_x, float center_y, float width, float height){
 			if(tailposition==0 || tailposition==-2 || tailposition==2){
 				can.drawBitmap(tentoeatingtail, center_x+tentoeatingtail.getWidth()*8/7, center_y - tentoeatingtail.getHeight()*6/7, color);
-				if(timetail==3){
+				if(timetail==4){
 					if(tailposition==-2){
 						tailposition=1;
 						timetail =0;
@@ -1070,7 +1070,7 @@ public class MainPetActivity extends SherlockFragment{
 				can.save();
 				can.rotate(5, (center_x*2)*13/16, center_y);
 				can.drawBitmap(tentoeatingtail, center_x+tentoeatingtail.getWidth()*8/7, center_y - tentoeatingtail.getHeight()*6/7, color);
-				if(timetail==3){
+				if(timetail==4){
 					tailposition=2;
 					timetail=0;
 				}
@@ -1080,7 +1080,7 @@ public class MainPetActivity extends SherlockFragment{
 				can.save();
 				can.rotate(-5, (center_x*2)*13/16, center_y);
 				can.drawBitmap(tentoeatingtail, center_x+tentoeatingtail.getWidth()*8/7, center_y - tentoeatingtail.getHeight()*6/7, color);
-				if(timetail==3){
+				if(timetail==4){
 					tailposition=-2;
 					timetail=0;
 				}
