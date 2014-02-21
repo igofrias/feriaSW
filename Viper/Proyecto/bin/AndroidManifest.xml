@@ -38,6 +38,11 @@
         <service android:name="com.Phyrex.VIPeR.BTService" />
         <activity android:label="@string/title_activity_ballgame" android:name="com.Phyrex.VIPeR.BallGame" android:configChanges="orientation|screenSize"></activity>
         <activity android:label="@string/title_activity_fleagame" android:name="com.Phyrex.VIPeR.FleaGame" android:configChanges="orientation|screenSize"></activity>
+        <service android:label="StatesService" android:name="StatesService">
+            <intent-filter>
+                <action android:name="com.Phyrex.VIPeR.StatesService.ACTION"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

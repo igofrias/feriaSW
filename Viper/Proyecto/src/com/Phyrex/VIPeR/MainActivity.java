@@ -4,6 +4,7 @@ import com.Phyrex.VIPeR.BTConnectable;
 import com.Phyrex.VIPeR.BTCommunicator;
 import com.Phyrex.VIPeR.BTService.BTBinder;
 import com.Phyrex.VIPeR.DeviceListActivity;
+import com.Phyrex.VIPeR.StatesService.StatesReceiver;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Window;
@@ -64,7 +65,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     private FrameLayout frame1;
     private FrameLayout frame2;
     SlidingMenu sm;
-    
+    StatesReceiver statesReceiver;
     ////////////////Menu/////////////
     public static final int MENU_TOGGLE_CONNECT = com.actionbarsherlock.view.Menu.FIRST;
     public static final int MENU_MAIN = com.actionbarsherlock.view.Menu.FIRST + 1;
@@ -145,7 +146,8 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 			launch_states();
 			launch_mainpet();
 		}
-		
+		StatesReceiver statesReceiver = StatesService.getCurrentReceiver();
+		StatesService.sendCommandToStatesService("getHealthLevel", this);
 	}
     public SlidingMenu getSM(){
     	return sm;
@@ -594,6 +596,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
             showToast(R.string.bt_off_message, Toast.LENGTH_SHORT);
             BluetoothAdapter.getDefaultAdapter().disable();
         }
+        
         super.onDestroy();
         finish();
          
