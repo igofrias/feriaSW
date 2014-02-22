@@ -18,9 +18,9 @@ task ShowShameEyes();
 task ShowSadEyes();
 task ShowCryEyes();
 task ShowDeadEyes();
+task MonitorColor();
 task MonitorRLight();
 task MonitorLLight();
-task MonitorColor();
 task MonitorTouch();
 task Caress();
 task Photophobia();
@@ -511,9 +511,9 @@ void monitorInit(){
 	StartTask(MonitorTouch);
 	StartTask(MonitorLLight);
 	StartTask(MonitorRLight);
+	StartTask(Caress);
 	calibrate();
 	StartTask(Photophobia);
-	StartTask(Caress);
 }
 
 //Function: monitorFinish
