@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="1"
         android:background="#033600"
         android:gravity="center"
         android:orientation="vertical" >
@@ -29,67 +28,202 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="7"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin" >
 
-        <TextView
-            android:id="@+id/nametext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nombre"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:inputType="textUri"
-            android:lines="1"
-            android:maxLength="10" />
+            android:layout_weight="1" >
 
-        <TextView
-            android:id="@+id/Razatext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Raza"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            />
+            <TextView
+                android:id="@+id/nametext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:text="Nombre"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <Spinner
-            android:id="@+id/raza"
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                android:inputType="textUri"
+                android:lines="1"
+                android:maxLength="10" >
+
+                <requestFocus />
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/Colortext"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Color"/>
+            android:layout_weight="1" >
 
-        <Spinner
-            android:id="@+id/color"
+            <ImageButton
+                android:id="@+id/imageButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/abs__ic_ab_back_holo_light" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#FFF" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/textView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Raza: "
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#000" />
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tentosaurio"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center" >
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical" >
+
+                            <ImageButton
+                                android:id="@+id/imageButton1"
+                                android:layout_width="40dp"
+                                android:layout_height="36dp"
+                                android:layout_margin="10dp"
+                                android:src="@drawable/ballyellow" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton3"
+                                android:layout_width="39dp"
+                                android:layout_height="35dp"
+                                android:layout_margin="10dp"
+                                android:src="@drawable/ballblue" />
+
+                            <ImageButton
+                                android:id="@+id/imageButton2"
+                                android:layout_width="42dp"
+                                android:layout_height="34dp"
+                                android:layout_margin="10dp"
+                                android:src="@drawable/ballred" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/imageView1"
+                            android:layout_width="123dp"
+                            android:layout_height="175dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/tentosaurioshot" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+            <ImageButton
+                android:id="@+id/imageButton5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/abs__ic_go_search_api_holo_light" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/bncnt"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Vincular con Robot" />
+            android:layout_weight="1"
+            android:visibility="gone" >
 
-        <Button
-            android:id="@+id/crear"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/Razatext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Raza"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/raza"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Crear Mascota" />
+            android:layout_weight="1"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/Colortext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Color" />
+
+            <Spinner
+                android:id="@+id/color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" >
+
+            <Button
+                android:id="@+id/bncnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Brick 1" />
+
+            <Button
+                android:id="@+id/btncnt2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Brick 2" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/crear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crear Mascota" />
 
 </LinearLayout>
