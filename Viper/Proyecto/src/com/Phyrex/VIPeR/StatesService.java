@@ -112,10 +112,19 @@ public class StatesService extends Service {
 	}
 	public static void sendCommandToStatesService(String command, Context thisContext)
 	{
+		//Envia un comando al servicio
+		//Pide el contexto (ej: la actividad que esta corriendo actual)
 		Intent intent = new Intent(thisContext,StatesService.class);
 		intent.setAction("StatesService");
 		intent.putExtra("Command",command);
 		thisContext.startService(intent);
+	}
+	public static void stopStatesService(Context thisContext)
+	{
+		//Hace que el servicio se detenga
+		Intent intent = new Intent(thisContext,StatesService.class);
+		intent.setAction("StatesService");
+		thisContext.stopService(intent);
 	}
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
@@ -137,10 +146,18 @@ public class StatesService extends Service {
 		
 	}
 	@Override
+	public void onDestroy()
+	{
+		//Lo que hace cuando sale el servicio
+		started = false;
+		super.onDestroy();
+	}
+	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 	class StatesRunnable implements Runnable
 	{
 		//Clase que implementa la logica para los estados
@@ -149,16 +166,13 @@ public class StatesService extends Service {
 			// TODO Auto-generated method stub
 			long currentTime = System.currentTimeMillis();
 			long lastUpdate = currentTime;
-			while(true)
+			while(started)
 			{
 				//Ejecuta las acciones de background cada cierta cantidad de ms
 				currentTime = System.currentTimeMillis();
 				updateReceiverStates();
 				if(currentTime - lastUpdate > 300.0)
 				{
-
-					
-					
 					 hungrypet();
 					 sleepingPet();
 					 lastUpdate = System.currentTimeMillis();
@@ -234,7 +248,7 @@ public class StatesService extends Service {
 		//Lo que hace la mascota cuando duerme
 		if(sleeping && energy<MAX_ENERGY){
 			
-			modEnergy(5);
+			modEnergy(10);
 			modHunger(-1);
 		}
 	}

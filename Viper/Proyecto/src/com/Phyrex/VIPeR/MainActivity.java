@@ -596,7 +596,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
             showToast(R.string.bt_off_message, Toast.LENGTH_SHORT);
             BluetoothAdapter.getDefaultAdapter().disable();
         }
-        
+        StatesService.stopStatesService(thisActivity);
         super.onDestroy();
         finish();
          
