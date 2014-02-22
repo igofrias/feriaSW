@@ -59,6 +59,7 @@ public class StatesActivity extends SherlockFragment{
 	private ImageView petava;
 	private boolean sleeping;
 	Task task = new Task(this);
+	Thread currentUpdaterThread = null;
 
 	private String[] from = new String[]{Database_Helper.Key_name,Database_Helper.Key_name};
 	private int[] to = new int[] {android.R.id.text1,android.R.id.text2}; 
@@ -80,24 +81,19 @@ public class StatesActivity extends SherlockFragment{
 	}	
 	
 	public void onStart(){
-		if(task!=null){
-			if(task.getStatus()== AsyncTask.Status.FINISHED){
-				//task.execute();
-			}else if(task.getStatus()== AsyncTask.Status.PENDING){
-				task.execute();
-			
-			}else if(task.getStatus() == AsyncTask.Status.RUNNING){
-				
-				
-			}
-		}
 		super.onStart();
-	
+		currentUpdaterThread = new Thread(updaterThread);
+		currentUpdaterThread.start();
 	}
 	
 	public void onDestroyView(){
 		super.onDestroyView();
-		task.cancel(true);
+		try {
+			currentUpdaterThread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 
@@ -130,6 +126,7 @@ public class StatesActivity extends SherlockFragment{
 		Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
 		name.setText(petto._name);
 		setlifetime(petto._birthdate);
+		
 		petava.setOnTouchListener(new OnTouchListener()
         {
 
@@ -199,70 +196,106 @@ public class StatesActivity extends SherlockFragment{
 
 	protected void OnDetach(){
 		super.onDetach();
-		//task.cancel(true);
 		
 	}
 	
 	public void onPause(){
 		super.onPause();
-		task.cancel(true);
+		
 		
 	}
 	
 	public void onDestroy(){
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		task.cancel(true);
+		updaterThread.running = false;
+		try {
+			currentUpdaterThread.join();
+			currentUpdaterThread = null;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
     }
 	
 	public void onStop(){
 		super.onStop();
-		task.cancel(true);
+		updaterThread.running = false;
+		try {
+			currentUpdaterThread.join();
+			currentUpdaterThread = null;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void eating(){
-		hungry.setProgress(hungry.getProgress()+100);
+		StatesService.sendCommandToStatesService("eating", thisActivity);
 	}
 	public boolean isFull()
 	{
-		if(980 < hungry.getProgress())
-		{
-			return true;
-		}
-		return false;
+		StatesService.sendCommandToStatesService("isFull", thisActivity);
+		return StatesService.getCurrentReceiver().full;
 	}
+	public boolean isFullSleep()
+	{
+		StatesService.sendCommandToStatesService("isFullSleep", thisActivity);
+		return StatesService.getCurrentReceiver().fullSleep;
+	}
+	
+	
 	public void playing(){
-		hapiness.setProgress(hapiness.getProgress()+100);
-		energy.setProgress(energy.getProgress()-100);
-		hungry.setProgress(hungry.getProgress()-50);
+		StatesService.sendCommandToStatesService("playing", thisActivity);
 	}
 	public void sleep(){
-		health.setProgress(health.getProgress()+100);
-		hungry.setProgress(hungry.getProgress()-50);
-		sleeping = true;
+		StatesService.sendCommandToStatesService("sleeping", thisActivity);
 	}
 	
 	public void washing(){
-		health.setProgress(health.getProgress()+100);
-		hapiness.setProgress(hapiness.getProgress()+50);
+		StatesService.sendCommandToStatesService("washing", thisActivity);
 	}
 	
 	public void pooing(){
-		health.setProgress(health.getProgress()-100); //digamos que se pone menos sano porque esta sucio el ambiente, que suba salud cuando se limpia
-		hapiness.setProgress(hapiness.getProgress()+10);
+		StatesService.sendCommandToStatesService("pooing", thisActivity);
 	} 
 	
 	public void cleaning(){
-		health.setProgress(health.getProgress()+100); //digamos que se pone menos sano porque esta sucio el ambiente, que suba salud cuando se limpia
+		StatesService.sendCommandToStatesService("cleaning", thisActivity);
 	} 
-	
+	public void actionwhenfull(){
+		StatesService.sendCommandToStatesService("actionwhenfull", thisActivity);
+	}
 	boolean isSleeping()
 	{
-		return sleeping;
+		StatesService.sendCommandToStatesService("isSleeping", thisActivity);
+		return StatesService.getCurrentReceiver().sleeping;
+	}
+	
+	int getEnergylevel()
+	{
+		int energypercent=(energy.getProgress()*100)/energy.getMax();
+		return energypercent;
+	}
+	int getHungrylevel()
+	{
+		int hungrypercent=(hungry.getProgress()*100)/hungry.getMax();
+		return hungrypercent;
+	}
+	int getHapinesslevel()
+	{
+		int hapinesspercent=(hapiness.getProgress()*100)/hapiness.getMax();
+		return hapinesspercent;
+	}
+	int getHealthlevel()
+	{
+		int healthpercent=(health.getProgress()*100)/health.getMax();
+		return healthpercent;
 	}
 	public void wake()
 	{
-		sleeping = false;
+		StatesService.sendCommandToStatesService("wake", thisActivity);
 	}
 	public void hungrypet(){
 		if(hungry.getProgress()!=0){
@@ -306,6 +339,63 @@ public class StatesActivity extends SherlockFragment{
 		return diff/1000;
 	}
 	
+	
+	private class UpdaterThread implements Runnable
+	{
+		//Este thread cambia las barras por lo que está en el StateService
+		//Reemplaza al asynctask
+		boolean running = true;
+		Pet petto = null;
+		@Override
+		public void run() {
+			Database_Helper db = new Database_Helper(thisActivity);
+			List<Pet> mascotas = db.getPets(); //lista de mascotas
+			petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
+			db.close();
+			long currentTime = System.currentTimeMillis();
+			long lastUpdate = currentTime;
+			while(running)
+			{
+				
+				
+				
+				//Espera una cantidad de milisegundos antes de updatear las barras
+				currentTime = System.currentTimeMillis();
+				if(currentTime - lastUpdate >= 100.0)
+				{
+					thisActivity.runOnUiThread(new Runnable()
+					{
+
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+
+							health.setProgress(StatesService.getCurrentReceiver().health);
+							hungry.setProgress(StatesService.getCurrentReceiver().hunger);
+							hapiness.setProgress(StatesService.getCurrentReceiver().hapiness);
+							energy.setProgress(StatesService.getCurrentReceiver().energy);
+							setlifetime(petto._birthdate);
+
+							if(((MainActivity)thisActivity).isConnected()){
+								btstate.setVisibility(View.VISIBLE);
+
+							}else{
+								btstate.setVisibility(View.INVISIBLE);
+
+							}
+						}
+
+					});
+					lastUpdate = System.currentTimeMillis();
+				}
+				
+
+				
+			}
+		}
+		
+	}
+	UpdaterThread updaterThread = new UpdaterThread();
 	/********Task
 	 * corre tareas en paralelo y se encarga de actualizar los datos de la 
 	 * mascota mientras corre la app
