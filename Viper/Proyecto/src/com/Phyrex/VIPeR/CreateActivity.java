@@ -147,5 +147,17 @@ public class CreateActivity extends SherlockFragment{
 	 private boolean isEmpty(EditText etText) {
          return etText.getText().toString().trim().length() == 0;
      }
+	 
+	 public void onDestroy(){
+		 super.onDestroy();
+	 }
+	 
+	 public  void onStop(){
+		 super.onStop();
+	 }
+	 
+	 public void onResume(){
+		 super.onResume();
+	 }
 
 }
