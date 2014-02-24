@@ -83,13 +83,19 @@ public class StatesActivity extends SherlockFragment{
 	public void onStart(){
 		super.onStart();
 		currentUpdaterThread = new Thread(updaterThread);
+		updaterThread.running = true;
 		currentUpdaterThread.start();
 	}
 	
 	public void onDestroyView(){
 		super.onDestroyView();
 		try {
-			currentUpdaterThread.join();
+			updaterThread.running = false;
+			if(currentUpdaterThread != null)
+			{
+				currentUpdaterThread.join();
+				currentUpdaterThread = null;
+			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -145,6 +151,7 @@ public class StatesActivity extends SherlockFragment{
 	 * @param birthdate
 	 */
 	void setlifetime(String birthdate){
+		
 		if (((int) (lifetimecalc(birthdate) / (60*60*24))==0))
 		{
 			if (((int) (lifetimecalc(birthdate) / (60*60)))==0){
@@ -210,8 +217,11 @@ public class StatesActivity extends SherlockFragment{
 		super.onDestroy();
 		updaterThread.running = false;
 		try {
-			currentUpdaterThread.join();
-			currentUpdaterThread = null;
+			if(currentUpdaterThread != null)
+			{
+				currentUpdaterThread.join();
+				currentUpdaterThread = null;
+			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -356,9 +366,6 @@ public class StatesActivity extends SherlockFragment{
 			long lastUpdate = currentTime;
 			while(running)
 			{
-				
-				
-				
 				//Espera una cantidad de milisegundos antes de updatear las barras
 				currentTime = System.currentTimeMillis();
 				if(currentTime - lastUpdate >= 100.0)
