@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -136,7 +137,7 @@ public class StatesService extends Service {
 			LocalBroadcastManager.getInstance(this).registerReceiver(currentReceiver,
 				      new IntentFilter("com.Phyrex.VIPeR.StatesService.ACTION"));
 			currentStatesRunnable = new StatesRunnable();
-			new Thread(currentStatesRunnable).start();
+			statesHandler.post(currentStatesRunnable);
 			started = true;
 			Log.d("StatesService","StatesService started");
 		}
@@ -157,26 +158,20 @@ public class StatesService extends Service {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+	Handler statesHandler = new Handler(); //Ayuda a ejecutar el StatesRunnable mientras este funciona
 	class StatesRunnable implements Runnable
 	{
+		long postTime = 400;
 		//Clase que implementa la logica para los estados
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			long currentTime = System.currentTimeMillis();
-			long lastUpdate = currentTime;
-			while(started)
-			{
-				//Ejecuta las acciones de background cada cierta cantidad de ms
-				currentTime = System.currentTimeMillis();
-				updateReceiverStates();
-				if(currentTime - lastUpdate > 300.0)
-				{
-					 hungrypet();
-					 sleepingPet();
-					 lastUpdate = System.currentTimeMillis();
-				}
+
+			hungrypet();
+			sleepingPet();
+			updateReceiverStates();	
+			if(started){
+				statesHandler.postDelayed(this, postTime);
 			}
 			
 		}

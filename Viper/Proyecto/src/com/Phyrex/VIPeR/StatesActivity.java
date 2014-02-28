@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit;
 import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -58,7 +60,7 @@ public class StatesActivity extends SherlockFragment{
 	private ImageView btstate;
 	private ImageView petava;
 	private boolean sleeping;
-	Task task = new Task(this);
+	
 	Thread currentUpdaterThread = null;
 
 	private String[] from = new String[]{Database_Helper.Key_name,Database_Helper.Key_name};
@@ -349,7 +351,7 @@ public class StatesActivity extends SherlockFragment{
 		return diff/1000;
 	}
 	
-	
+	String birthdate = "";
 	private class UpdaterThread implements Runnable
 	{
 		//Este thread cambia las barras por lo que está en el StateService
@@ -362,41 +364,14 @@ public class StatesActivity extends SherlockFragment{
 			List<Pet> mascotas = db.getPets(); //lista de mascotas
 			petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
 			db.close();
+			birthdate = petto._birthdate;
 			long currentTime = System.currentTimeMillis();
 			long lastUpdate = currentTime;
 			while(running)
 			{
 				//Espera una cantidad de milisegundos antes de updatear las barras
-				currentTime = System.currentTimeMillis();
-				if(currentTime - lastUpdate >= 100.0)
-				{
-					time = lifetimecalc(petto._birthdate);
-					thisActivity.runOnUiThread(new Runnable()
-					{
-
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-
-							health.setProgress(StatesService.getCurrentReceiver().health);
-							hungry.setProgress(StatesService.getCurrentReceiver().hunger);
-							hapiness.setProgress(StatesService.getCurrentReceiver().hapiness);
-							energy.setProgress(StatesService.getCurrentReceiver().energy);
-							setlifetime(petto._birthdate);
-
-							if(((MainActivity)thisActivity).isConnected()){
-								btstate.setVisibility(View.VISIBLE);
-
-							}else{
-								btstate.setVisibility(View.INVISIBLE);
-
-							}
-						}
-
-					});
-					lastUpdate = System.currentTimeMillis();
-				}
-				
+				time = lifetimecalc(birthdate);
+				updatehandler.sendEmptyMessageAtTime(updateMsg, 100);
 
 				
 			}
@@ -404,80 +379,30 @@ public class StatesActivity extends SherlockFragment{
 		
 	}
 	UpdaterThread updaterThread = new UpdaterThread();
-	/********Task
-	 * corre tareas en paralelo y se encarga de actualizar los datos de la 
-	 * mascota mientras corre la app
-	 * @author Neko-sama
-	 *
-	 */
-    //task para realizar tareas paralelas
-    private class Task extends AsyncTask<Void, Integer, Void>{
+	static int updateMsg = 0x01;
+	Handler updatehandler = new Handler()
+	{
+		//Handler para updatear UI
 		
-    	
-
-		public Task(StatesActivity tarea) {
-			// TODO Auto-generated constructor stub
-		}
-
 		@Override
-	    protected void onPreExecute() {
-	    	super.onPreExecute();
-	    }
-	      
-	    @Override
-	    protected Void doInBackground(Void... params) {
-	    	//ejecuta tarea cada 2000ms
-	    	int time = 1000;
-	    	boolean flag= true;	
-	    	while(flag){
-		    	if (isCancelled()){
-		    		try {
-		    			
-		    	         flag=false;
-		    	     } catch (UnsupportedOperationException e) {
-		    	         e.printStackTrace();
-		    	     }
-		    	}else{
-		    		publishProgress(); 
-		    		SystemClock.sleep(time);
-		    	}
-	    	}
-	    	return null;
-	    }
-	  
-	    @Override
-	    protected void onProgressUpdate(Integer... values) {
-	    	super.onProgressUpdate(values);
-	    	//si conexion = true logo visible
-	    	Database_Helper db = new Database_Helper(thisActivity);
-			List<Pet> mascotas = db.getPets(); //lista de mascotas
-			db.close();
-			Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
-			setlifetime(petto._birthdate);
-			
-	    	hungrypet();
-			if(((MainActivity)thisActivity).isConnected()){
-				btstate.setVisibility(View.VISIBLE);
-			
-			}else{
-				btstate.setVisibility(View.INVISIBLE);
-			
-			}
-			if(sleeping && energy.getProgress()<500){
-				
-				energy.setProgress(energy.getProgress()+5);
-			}
-				
-	
-			
-		}
-	    
-	    @Override
-	    protected void onPostExecute(Void voids) {
-	    
+		 public void handleMessage(Message msg) {
+				if(msg.what == updateMsg)
+				{
+					health.setProgress(StatesService.getCurrentReceiver().health);
+					hungry.setProgress(StatesService.getCurrentReceiver().hunger);
+					hapiness.setProgress(StatesService.getCurrentReceiver().hapiness);
+					energy.setProgress(StatesService.getCurrentReceiver().energy);
+					setlifetime(birthdate);
 
-	    }
-	    
-	}
+					if(((MainActivity)thisActivity).isConnected()){
+						btstate.setVisibility(View.VISIBLE);
+
+					}else{
+						btstate.setVisibility(View.INVISIBLE);
+
+					}
+				}
+	        }
+	};
 
 }
