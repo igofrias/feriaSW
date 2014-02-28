@@ -367,11 +367,11 @@ public class StatesActivity extends SherlockFragment{
 			birthdate = petto._birthdate;
 			long currentTime = System.currentTimeMillis();
 			long lastUpdate = currentTime;
+			updatehandler.sendEmptyMessage(updateMsg);
 			while(running)
 			{
-				//Espera una cantidad de milisegundos antes de updatear las barras
 				time = lifetimecalc(birthdate);
-				updatehandler.sendEmptyMessageAtTime(updateMsg, 100);
+				
 
 				
 			}
@@ -400,6 +400,10 @@ public class StatesActivity extends SherlockFragment{
 					}else{
 						btstate.setVisibility(View.INVISIBLE);
 
+					}
+					if(updaterThread.running)
+					{
+						this.sendEmptyMessageDelayed(updateMsg,2000);
 					}
 				}
 	        }
