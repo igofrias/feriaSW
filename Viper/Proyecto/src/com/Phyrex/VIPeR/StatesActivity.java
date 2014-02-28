@@ -150,32 +150,32 @@ public class StatesActivity extends SherlockFragment{
 	 * recibe un estring con la fecha de nacimiento
 	 * @param birthdate
 	 */
+	long time; //Puse esto aqui para que actualizara el tiempo en otro thread y updateara la barra en el main
 	void setlifetime(String birthdate){
-		
-		if (((int) (lifetimecalc(birthdate) / (60*60*24))==0))
+		if (((int) (time / (60*60*24))==0))
 		{
-			if (((int) (lifetimecalc(birthdate) / (60*60)))==0){
-				if(((int)lifetimecalc(birthdate) / (60))==1){
-					lifetime.setText(((int)lifetimecalc(birthdate) / (60)) + " Minuto");
+			if (((int) time / (60*60))==0){
+				if(((int)time / (60))==1){
+					lifetime.setText(((int)time / (60)) + " Minuto");
 				}else{
-					lifetime.setText(((int)lifetimecalc(birthdate) / (60)) + " Minutos");
+					lifetime.setText(((int)time / (60)) + " Minutos");
 				}		
 			}else{
-				if(((int)lifetimecalc(birthdate) / (60*60))==1){
-					lifetime.setText(((int)lifetimecalc(birthdate) / (60*60)) + " Hora");
+				if(((int)time / (60*60))==1){
+					lifetime.setText(((int)time / (60*60)) + " Hora");
 				}else{
-					lifetime.setText(((int)lifetimecalc(birthdate) / (60*60)) + " Horas");
+					lifetime.setText(((int)time / (60*60)) + " Horas");
 				}	
 			}
 		}else{
-			if(((int)lifetimecalc(birthdate) / (60*60*24))==1){
-				lifetime.setText(((int)lifetimecalc(birthdate) / (60*60*24)) + " Día");
+			if(((int)time / (60*60*24))==1){
+				lifetime.setText(((int)time / (60*60*24)) + " Día");
 				final DB_Updater updater = new DB_Updater(thisActivity);
 				if(lifetime.equals("1 Día")){
 					updater.achievement_unlock(db, "Creciendo");
 				}
 			}else{
-				lifetime.setText(((int)lifetimecalc(birthdate) / (60*60*24)) + " Días");
+				lifetime.setText(((int)time / (60*60*24)) + " Días");
 			}	
 		}
 	}
@@ -370,6 +370,7 @@ public class StatesActivity extends SherlockFragment{
 				currentTime = System.currentTimeMillis();
 				if(currentTime - lastUpdate >= 100.0)
 				{
+					time = lifetimecalc(petto._birthdate);
 					thisActivity.runOnUiThread(new Runnable()
 					{
 

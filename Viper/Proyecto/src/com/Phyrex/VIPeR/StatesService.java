@@ -185,13 +185,16 @@ public class StatesService extends Service {
 	public void updateReceiverStates()
 	{
 		//Envia los estados del servicio al receiver
-		getCurrentReceiver().energy = energy;
-		getCurrentReceiver().hapiness = hapiness;
-		getCurrentReceiver().health = health;
-		getCurrentReceiver().hunger = hunger;
-		getCurrentReceiver().full = isFull();
-		getCurrentReceiver().fullSleep = isFullSleep();
-		getCurrentReceiver().sleeping = sleeping;
+		if(currentReceiver != null)
+		{
+			currentReceiver.energy = energy;
+			currentReceiver.hapiness = hapiness;
+			currentReceiver.health = health;
+			currentReceiver.hunger = hunger;
+			currentReceiver.full = isFull();
+			currentReceiver.fullSleep = isFullSleep();
+			currentReceiver.sleeping = sleeping;
+		}
 	}
 	//Las funciones mod** modifican el atributo de tal forma que no se salgan de sus rangos
 	//Suman el delta al valor actual
