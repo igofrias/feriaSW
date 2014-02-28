@@ -28,6 +28,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="7"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -37,20 +38,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:layout_gravity="center"
+            android:gravity="center" >
 
             <TextView
                 android:id="@+id/nametext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="7"
+                android:layout_gravity="center"
                 android:text="Nombre"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
                 android:id="@+id/name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:ems="10"
                 android:imeOptions="actionDone"
                 android:inputType="textUri"
@@ -65,106 +68,77 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:layout_weight="50"
+            android:visibility="gone" >
 
-            <ImageButton
-                android:id="@+id/imageButton4"
+            <ImageView
+                android:id="@+id/imageView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/abs__ic_ab_back_holo_light" />
+                android:layout_gravity="center"
+                android:src="@drawable/arrowleft" />
 
             <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#FFF" >
+                android:layout_height="fill_parent"
+                android:layout_weight="10"
+                android:background="#0000cc" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical" >
+                    android:layout_gravity="center"
+                    android:gravity="center" >
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <TextView
-                            android:id="@+id/textView1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Raza: "
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="#000" />
-
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tentosaurio"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="#000" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center" >
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical" >
-
-                            <ImageButton
-                                android:id="@+id/imageButton1"
-                                android:layout_width="40dp"
-                                android:layout_height="36dp"
-                                android:layout_margin="10dp"
-                                android:src="@drawable/ballyellow" />
-
-                            <ImageButton
-                                android:id="@+id/imageButton3"
-                                android:layout_width="39dp"
-                                android:layout_height="35dp"
-                                android:layout_margin="10dp"
-                                android:src="@drawable/ballblue" />
-
-                            <ImageButton
-                                android:id="@+id/imageButton2"
-                                android:layout_width="42dp"
-                                android:layout_height="34dp"
-                                android:layout_margin="10dp"
-                                android:src="@drawable/ballred" />
-
-                        </LinearLayout>
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical" >
 
                         <ImageView
-                            android:id="@+id/imageView1"
-                            android:layout_width="123dp"
-                            android:layout_height="175dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/tentosaurioshot" />
+                            android:id="@+id/imageView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ballblue" />
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ballred" />
+
+                        <ImageView
+                            android:id="@+id/imageView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ballyellow" />
                     </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="116dp"
+                        android:layout_height="178dp"
+                        android:layout_weight="5"
+                        android:src="@drawable/tentosaurioshot" />
                 </LinearLayout>
             </FrameLayout>
 
-            <ImageButton
-                android:id="@+id/imageButton5"
+            <ImageView
+                android:id="@+id/imageView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/abs__ic_go_search_api_holo_light" />
+                android:layout_gravity="center"
+                android:src="@drawable/arrowright" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:visibility="gone" >
+            android:orientation="vertical"
+            android:visibility="visible" >
 
             <TextView
                 android:id="@+id/Razatext"
@@ -177,14 +151,6 @@
                 android:id="@+id/raza"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:visibility="gone" >
 
             <TextView
                 android:id="@+id/Colortext"
@@ -200,30 +166,49 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical" >
 
-            <Button
-                android:id="@+id/bncnt"
+            <TextView
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Brick 1" />
+                android:layout_weight="1"
+                android:text="Seleccion de bricks para vincular:"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <Button
-                android:id="@+id/btncnt2"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Brick 2" />
+                android:layout_weight="1"
+                android:gravity="center" >
+
+                <Button
+                    android:id="@+id/bncnt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vincular con Robot" />
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Button" />
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/crear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Crear Mascota" />
 
-    <Button
-        android:id="@+id/crear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Crear Mascota" />
+    </LinearLayout>
 
 </LinearLayout>
