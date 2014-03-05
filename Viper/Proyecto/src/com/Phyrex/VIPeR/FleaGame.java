@@ -49,9 +49,15 @@ import android.widget.Toast;
 
 public class FleaGame extends SimpleBaseGameActivity
 {
+
+	Activity parent;
+	
 	private Camera camera;
     private static final int CAMERA_WIDTH = 720;
     private static final int CAMERA_HEIGHT = 480;
+    
+    final int BUTTON_WIDTH = 120;
+    final int BUTTON_HEIGHT = 60;
     
     private BitmapTextureAtlas tentoImage; //tentosaurio
     private ITextureRegion tento_region;
@@ -460,9 +466,24 @@ public class FleaGame extends SimpleBaseGameActivity
     
     
     void extractFlea(){
+    	final  DB_Updater updaterGame = new DB_Updater(thisActivity);
+    	final Database_Helper helper2 = new Database_Helper(thisActivity);;
+    	
     	Log.d("Posicion","extractFlea");
     	amountFlea-=1;
-    	addFlea();
+    	addFlea(); //updatea HUD de pulgas restantes
+    	
+    	killFlea+=1; //pulgas totales matadas
+		updaterGame.updateHS(helper2, 4, killFlea); //update database
+		if(updaterGame.unlock_achgame(helper2, 4, killFlea, 25, "Exterminador"))
+			thisActivity.runOnUiThread(new Runnable() {
+		        @Override
+		        public void run() {
+		        	Toast.makeText(thisActivity, "Logro Exterminador Desbloqueado", Toast.LENGTH_SHORT).show();
+		        }
+		    });
+    	
+    	
 	    	if(isConnected()){
 		    		getBTService().sendPetMessage(0, "Shake");
 		    	}
