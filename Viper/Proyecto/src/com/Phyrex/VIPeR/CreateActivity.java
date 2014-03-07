@@ -15,6 +15,8 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
@@ -33,6 +35,13 @@ public class CreateActivity extends SherlockFragment{
 	private Button btn;
 	private static Activity thisActivity;
 	private Button bncnt;
+	private Button bncnt2;
+	private ImageButton leftarrow;
+	private ImageButton rightarrow;
+	private ImageButton btncolor []= new ImageButton [3];
+	private String color;
+	private String raze;
+	private ImageView screenshot;
 	MainActivity blublu = new MainActivity();
 	///////////////////////////
 	@Override
@@ -48,33 +57,97 @@ public class CreateActivity extends SherlockFragment{
 		return v;
 	}	
 	
+	OnClickListener listener = new OnClickListener(){
+		@Override
+		public void onClick(View v) {
+			switch(v.getId()){
+			case R.id.btncolor1:
+				Log.e("Create","1");
+				screenshot.setImageResource(R.drawable.tentosaurioshot);
+				color="Verde";
+				break;
+			case R.id.btncolor2:
+				Log.e("Create","2");
+				screenshot.setImageResource(R.drawable.tentosaurioshot2);
+				color="Amarillo";
+				break;
+			case R.id.btncolor3:
+				Log.e("Create","3");
+				screenshot.setImageResource(R.drawable.tentosaurioshot3);
+				color="Azul";
+				break;
+			}
+		}
+	};
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState); 
 		thisActivity = getActivity();
-		//setContentView(R.layout.activity_create);
-		final Spinner raza = (Spinner) thisActivity.findViewById(R.id.raza);
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(
-        		getActivity(), R.array.mnth_array, android.R.layout.simple_spinner_item);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        final Spinner color = (Spinner) thisActivity.findViewById(R.id.color);
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(
-        		getActivity(), R.array.colors_array, android.R.layout.simple_spinner_item);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        raza.setAdapter(adapter1);
-        color.setAdapter(adapter2);
 		name = (EditText)thisActivity.findViewById(R.id.name);
 		btn = (Button)thisActivity.findViewById(R.id.crear);
-		
+		screenshot= (ImageView)thisActivity.findViewById(R.id.screenshot);
+		screenshot.setImageResource(R.drawable.tentosaurioshot);
+		color="Verde";
+		raze="Tentosaurio";
+		btncolor[0]  = (ImageButton)thisActivity.findViewById(R.id.btncolor1);
+		btncolor[1]  = (ImageButton)thisActivity.findViewById(R.id.btncolor2);
+		btncolor[2]  = (ImageButton)thisActivity.findViewById(R.id.btncolor3);
+		for(int i=0; i<3; i++)
+			btncolor[i].setOnClickListener(listener);
+		leftarrow = (ImageButton)thisActivity.findViewById(R.id.leftarrow);
+		rightarrow = (ImageButton)thisActivity.findViewById(R.id.rightarrow);
 		bncnt = (Button)thisActivity.findViewById(R.id.bncnt);
-		//Reload();	//cargar datos de la BD
+		bncnt2 = (Button)thisActivity.findViewById(R.id.bncnt2);
 		
+		leftarrow.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				if(raze.equals("Tentosaurio")){
+					screenshot.setImageResource(R.drawable.tentonopebody);
+					btncolor[1].setVisibility(View.GONE);
+					btncolor[2].setVisibility(View.GONE);
+					raze="Escorpion";
+				}else{
+					screenshot.setImageResource(R.drawable.tentosaurioshot);
+					btncolor[1].setVisibility(View.VISIBLE);
+					btncolor[2].setVisibility(View.VISIBLE);
+					btncolor[0].setVisibility(View.VISIBLE);
+					raze="Tentosaurio";
+				}
+			}});
+		rightarrow.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				if(raze.equals("Tentosaurio")){
+					screenshot.setImageResource(R.drawable.tentonopebody);
+					btncolor[1].setVisibility(View.GONE);
+					btncolor[2].setVisibility(View.GONE);
+					raze="Escorpion";
+				}else{
+					screenshot.setImageResource(R.drawable.tentosaurioshot);
+					btncolor[1].setVisibility(View.VISIBLE);
+					btncolor[2].setVisibility(View.VISIBLE);
+					btncolor[0].setVisibility(View.VISIBLE);
+					raze="Tentosaurio";
+				}
+			}});
 		bncnt.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				((MainActivity)thisActivity).pairing();
 			}});
-
+		
+		bncnt2.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				//((MainActivity)thisActivity).pairing();
+				/********mensaje para juan del futuro************
+				 * aca deberias estar el pairing para el segundo brick
+				 * hay q ver bien como guardarlo y diferenciarlo del otro
+				 */
+			}});
+		
 		/************bnt listener
 		 *  boton para crear mascota
 		 *  muestra un dialog para confirmacion y se encarga de validar datos minimos
@@ -100,8 +173,8 @@ public class CreateActivity extends SherlockFragment{
 				        dialog.setMessage("¿Desea Crear la mascota con los siguientes datos?\n" + 
 				        "Nombre: "+ name.getText().toString() +  "\n"+
 				        "Fecha de Nacimiento: " + currentDateandTime+ "\n"+
-				        "Raza: "+ raza.getSelectedItem().toString() + "\n"+
-				        "Color: "+ color.getSelectedItem().toString() + "\n"+
+				        "Raza: "+ raze + "\n"+
+				        "Color: "+ color + "\n"+
 				        "MAC: "+((MainActivity)thisActivity).return_mac()); 
 				        
 				        
@@ -109,7 +182,7 @@ public class CreateActivity extends SherlockFragment{
 				        dialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {  //boton positivo (opcional)
 				            public void onClick(DialogInterface dialogo1, int id) {  
 				            	entry.open_write();            	
-						    	entry.createEntry(name.getText().toString(), currentDateandTime, raza.getSelectedItem().toString(), color.getSelectedItem().toString(), ((MainActivity)thisActivity).return_mac(), 0);
+						    	entry.createEntry(name.getText().toString(), currentDateandTime, raze, color, ((MainActivity)thisActivity).return_mac(), 0);
 						    	entry.close();
 						    	initialize.AchievementsList(entry);
 						    	initialize.StatisticsList(entry);
@@ -122,7 +195,7 @@ public class CreateActivity extends SherlockFragment{
 						    		if(updater.achievement_unlock(entry, "Pepe"))
 						    			Toast.makeText(thisActivity, "Logro Pepe Debloqueado", Toast.LENGTH_LONG).show();
 						    	}
-						    	if(raza.getSelectedItem().toString().equals("Tentosaurio")){
+						    	if(raze.equals("Tentosaurio")){
 						    		Log.d("pepe", "es tentosaurio");
 						    		if(updater.achievement_unlock(entry, "Tentosaurio"))
 						    			Toast.makeText(thisActivity, "Logro Pepe Debloqueado", Toast.LENGTH_LONG).show();

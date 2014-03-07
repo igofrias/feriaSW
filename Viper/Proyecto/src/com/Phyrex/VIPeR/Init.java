@@ -65,6 +65,9 @@ public class Init {
 			"Saca pulgas";
 	public static final int img13 = R.drawable.logrosacapulgas;
 	
+	public static final String ach14 = "Exterminador";	
+	public static final String ach14_desc = "Has exterminado 100 pulgas";
+	public static final int img14 = R.drawable.firstpetarch;
 	int done =0;
 		
 
@@ -134,6 +137,7 @@ public class Init {
 		helper.createAchievement(ach11, ach11_desc, done, img11);
 		helper.createAchievement(ach12, ach12_desc, done, img12);
 		helper.createAchievement(ach13, ach13_desc, done, img13);
+		helper.createAchievement(ach14, ach14_desc, done, img14);
 
 		helper.close();    	
 	}
@@ -176,9 +180,9 @@ public class Init {
 			helper.close();  
 
 			helper.open_write();
-			helper.createGames(game1, game1_desc, imggame1, score);
-			helper.createGames(game2, game2_desc, imggame2, score);
-			helper.createGames(game3, game3_desc, imggame3, score);
+			helper.createGames(game1, game1_desc, imggame1, score,0);
+			helper.createGames(game2, game2_desc, imggame2, score,0);
+			helper.createGames(game3, game3_desc, imggame3, score,0);
 			helper.close();    	
 		}
 	

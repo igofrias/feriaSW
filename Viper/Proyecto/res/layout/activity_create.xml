@@ -69,13 +69,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:visibility="gone" >
+            android:visibility="visible" >
 
-            <ImageView
-                android:id="@+id/imageView5"
+            <ImageButton
+                android:id="@+id/leftarrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="10"
                 android:src="@drawable/arrowleft" />
 
             <FrameLayout
@@ -97,39 +98,48 @@
                         android:gravity="center"
                         android:orientation="vertical" >
 
-                        <ImageView
-                            android:id="@+id/imageView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ballblue" />
+                        <ImageButton
+                            android:id="@+id/btncolor1"
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/greencolor" />
 
-                        <ImageView
-                            android:id="@+id/imageView3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ballred" />
+                        <ImageButton
+                            android:id="@+id/btncolor2"
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:src="@drawable/yellowcolor" />
 
-                        <ImageView
-                            android:id="@+id/imageView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ballyellow" />
+                        <ImageButton
+                            android:id="@+id/btncolor3"
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/bluecolor" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" >
                     </LinearLayout>
 
                     <ImageView
-                        android:id="@+id/imageView1"
-                        android:layout_width="116dp"
-                        android:layout_height="178dp"
-                        android:layout_weight="5"
+                        android:id="@+id/screenshot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/tentosaurioshot" />
+
                 </LinearLayout>
             </FrameLayout>
 
-            <ImageView
-                android:id="@+id/imageView6"
+            <ImageButton
+                android:id="@+id/rightarrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="10"
                 android:src="@drawable/arrowright" />
 
         </LinearLayout>
@@ -138,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="visible" >
+            android:visibility="gone" >
 
             <TextView
                 android:id="@+id/Razatext"
@@ -173,31 +183,32 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Seleccion de bricks para vincular:"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center" >
 
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Seleccion de bricks para vincular:"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
                 <Button
                     android:id="@+id/bncnt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vincular con Robot" />
+                    android:text="Cabeza" />
 
                 <Button
-                    android:id="@+id/button1"
+                    android:id="@+id/bncnt2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Button" />
+                    android:text="Espalda" />
+
             </LinearLayout>
 
         </LinearLayout>

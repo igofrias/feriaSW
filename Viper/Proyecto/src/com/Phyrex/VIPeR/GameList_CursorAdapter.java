@@ -57,6 +57,7 @@ public class GameList_CursorAdapter extends SimpleCursorAdapter{
 		gamedes.setText(cursor.getString(cursor.getColumnIndex(from[2])));
 		gameimg.setImageResource(Integer.valueOf(cursor.getString(cursor.getColumnIndex(from[3]))));
 		gamescore.setText(cursor.getString(cursor.getColumnIndex(from[4])));
+		
 		/*El evento de click tambien se lo pueden dar al convertvews
 		 * EJ: convertView.setOnClickListener(listener);
 		 */

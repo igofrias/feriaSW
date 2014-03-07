@@ -131,10 +131,11 @@ public class StatesActivity extends SherlockFragment{
 		Database_Helper db = new Database_Helper(thisActivity);
 		List<Pet> mascotas = db.getPets(); //lista de mascotas
 		db.close();
-		Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
-		name.setText(petto._name);
-		setlifetime(petto._birthdate);
-		
+		if(!mascotas.isEmpty()){
+			Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
+			name.setText(petto._name);
+			setlifetime(petto._birthdate);
+		}
 		petava.setOnTouchListener(new OnTouchListener()
         {
 

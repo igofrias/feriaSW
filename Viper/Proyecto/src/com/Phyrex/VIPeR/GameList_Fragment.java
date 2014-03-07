@@ -32,7 +32,7 @@ public class GameList_Fragment extends SherlockFragment {
 	//Adaptación del ejemplo de Taller de Android 
 	//Fusión entre BaseAdapter (Row.xml) y Cursor_Adapter 
 	//(para dinamicidad en caso q se agreguen mas cosas a la BD)
-	private String[] from = new String[]{Database_Helper.Key_id_game,Database_Helper.Key_name_game,Database_Helper.Key_desc_game,Database_Helper.Key_img_game,Database_Helper.Key_score_game};
+	private String[] from = new String[]{Database_Helper.Key_id_game,Database_Helper.Key_name_game,Database_Helper.Key_desc_game,Database_Helper.Key_img_game,Database_Helper.Key_score_game, Database_Helper.Key_count_game};
 	private Database_Helper db;
 	private GameList_CursorAdapter adapter;
 	private ListView lista;	
