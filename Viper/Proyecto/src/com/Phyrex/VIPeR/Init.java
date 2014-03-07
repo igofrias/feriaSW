@@ -180,9 +180,9 @@ public class Init {
 			helper.close();  
 
 			helper.open_write();
-			helper.createGames(game1, game1_desc, imggame1, score);
-			helper.createGames(game2, game2_desc, imggame2, score);
-			helper.createGames(game3, game3_desc, imggame3, score);
+			helper.createGames(game1, game1_desc, imggame1, score,0);
+			helper.createGames(game2, game2_desc, imggame2, score,0);
+			helper.createGames(game3, game3_desc, imggame3, score,0);
 			helper.close();    	
 		}
 	

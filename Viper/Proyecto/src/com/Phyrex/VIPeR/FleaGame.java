@@ -74,7 +74,7 @@ public class FleaGame extends SimpleBaseGameActivity
 	int maxFlea = 200;
 	float randX;
 	float randY;
-	
+
 	
 	int level=0;
 	boolean reload=true;
@@ -88,6 +88,7 @@ public class FleaGame extends SimpleBaseGameActivity
 	private int score = 0; 	
 	private int time = 30;
 	private int killFlea =0;
+	private int oldScore = 0;
 	private Font font;
 	private Font fontGame;
 	
@@ -234,6 +235,7 @@ public class FleaGame extends SimpleBaseGameActivity
 		                scene.unregisterUpdateHandler(pTimerHandler);
 		                displayGameOverText();
 		                emptyGame();
+		                achievement();
 		                final Database_Helper entry = new Database_Helper(thisActivity);
 	            		final DB_Updater updater = new DB_Updater(thisActivity);
 	            		updater.updateHS(entry, 3, score);
@@ -302,7 +304,8 @@ public class FleaGame extends SimpleBaseGameActivity
 	        	}
 		}));*/
 		level=1;
-	
+		loadAmountFleas(); //carga cantidad de pulgas exterminadas hasta la fecha
+
 		populateGame(amountFlea, centerX, centerY, centerFX, centerFY, level, reload );
 		reload=false;
 
@@ -464,26 +467,39 @@ public class FleaGame extends SimpleBaseGameActivity
     }
     
     
+    void loadAmountFleas(){ //carga cantidad de pulgas exterminadas hasta antes de iniciar el juego
+    	final DB_Updater loadScore = new DB_Updater(thisActivity);
+    	final Database_Helper helperScore = new Database_Helper(thisActivity);;
+    	oldScore = loadScore.getHS(helperScore, 3);
     
-    void extractFlea(){
-    	final  DB_Updater updaterGame = new DB_Updater(thisActivity);
-    	final Database_Helper helper2 = new Database_Helper(thisActivity);;
+    }
+    
+    void achievement(){
+    	final DB_Updater updaterGame = new DB_Updater(thisActivity);
+    	final Database_Helper helper = new Database_Helper(thisActivity);
+    	int totalKilledFleas = oldScore + killFlea;
+    	Log.d("AchievementFlea","oldScore: " + oldScore);
+    	Log.d("AchievementFlea","currentScore: " + killFlea);
+    	Log.d("AchievementFlea","newScore: " + totalKilledFleas);
     	
-    	Log.d("Posicion","extractFlea");
-    	amountFlea-=1;
-    	addFlea(); //updatea HUD de pulgas restantes
-    	
-    	killFlea+=1; //pulgas totales matadas
-		updaterGame.updateHS(helper2, 4, killFlea); //update database
-		if(updaterGame.unlock_achgame(helper2, 4, killFlea, 25, "Exterminador"))
+		updaterGame.updateAmount(helper, 3, totalKilledFleas); //update database
+		if(updaterGame.unlock_achgame(helper, 3, totalKilledFleas, 100, "Exterminador"))
 			thisActivity.runOnUiThread(new Runnable() {
 		        @Override
 		        public void run() {
 		        	Toast.makeText(thisActivity, "Logro Exterminador Desbloqueado", Toast.LENGTH_SHORT).show();
 		        }
-		    });
+		    });	
+    }
+    
+    void extractFlea(){
+
+    	Log.d("Posicion","extractFlea");
+    	amountFlea-=1;
+    	addFlea(); //updatea HUD de pulgas restantes
     	
-    	
+    	killFlea+=1; //pulgas totales matadas
+
 	    	if(isConnected()){
 		    		getBTService().sendPetMessage(0, "Shake");
 		    	}
@@ -492,6 +508,7 @@ public class FleaGame extends SimpleBaseGameActivity
         	checkStateGame();
     	}			
     }
+    
     void checkStateGame(){
     	Log.d("Posicion","checkStateGame");
     	
@@ -525,6 +542,7 @@ public class FleaGame extends SimpleBaseGameActivity
     	level = 1;
     	score = 0;
     	reload = true;
+    	loadAmountFleas();
     	scene.detachChild(gameOverText);    	
     	createHUD(); //muestra puntajes y tiempos
     	populateGame(amountFlea, centerX, centerY, centerFX, centerFY, level, reload);

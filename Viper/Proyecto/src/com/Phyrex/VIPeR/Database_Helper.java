@@ -48,6 +48,7 @@ public class Database_Helper {
 		public static final String Key_desc_game = "desc";
 		public static final String Key_img_game = "img";
 		public static final String Key_score_game = "score";
+		public static final String Key_count_game = "count"; //contador de cosas, como pulgas
 		
 	
 	private DBhelper helper;
@@ -95,7 +96,8 @@ public class Database_Helper {
 					+ Key_name_game + " TEXT NOT NULL," 
 					+ Key_desc_game + " TEXT NOT NULL,"
 					+ Key_img_game + " INTEGER NOT NULL,"
-					+ Key_score_game + " INTEGER NOT NULL);");
+					+ Key_score_game + " INTEGER NOT NULL, " 
+					+ Key_count_game + " INTEGER NOT NULL);");
 		}
 
 		@Override
@@ -238,12 +240,13 @@ public class Database_Helper {
 	}
 	
 	//Agregar Indicador en Games
-		public void createGames(String nombre, String desc, int img, int score) {
+		public void createGames(String nombre, String desc, int img, int score, int count) {
 			ContentValues cv = new ContentValues();
 			cv.put(Key_name_game, nombre);
 			cv.put(Key_desc_game, desc);
 			cv.put(Key_img_game, img);
 			cv.put(Key_score_game, score);
+			cv.put(Key_count_game, count);
 			Database.insert(DB_table_games, null, cv);
 		}
 	
@@ -301,6 +304,14 @@ public class Database_Helper {
 			cv.put(Key_score_game, score);
 		    Database.update(DB_table_games, cv, "_id=" + id, null);   
 		}
+		
+		//Modifica Estadísticas Actuales
+				public void updateAmount(int id, int count){
+				    ContentValues cv = new ContentValues();
+				    cv.put("_id", id);
+					cv.put(Key_count_game,count);
+				    Database.update(DB_table_games, cv, "_id=" + id, null);   
+				}
 	
 	//Confirma Realización de achievement.
 	//Cambios esperados: 
