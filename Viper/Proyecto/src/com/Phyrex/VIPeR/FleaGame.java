@@ -29,6 +29,7 @@ import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.color.Color;
@@ -64,7 +65,14 @@ public class FleaGame extends SimpleBaseGameActivity
     
     public ITextureRegion flea_region; //flea
     private BitmapTextureAtlas splashTextureAtlas;
-
+    
+    private BitmapTextureAtlas retry_image;
+    private BitmapTextureAtlas exit_image;
+    
+    private ITextureRegion retry_region; //boton de jugar de nuevo
+    private ITextureRegion exit_region;  //boton de salir
+   
+    
 	BTService btservice; //bluetooth
 	Activity thisActivity = this;
 	
@@ -81,8 +89,10 @@ public class FleaGame extends SimpleBaseGameActivity
 	
 	List<Sprite> flea = new LinkedList<Sprite>();
 	Sprite tento = null;
-    
-	HUD hud; //HUD
+    Sprite exitSprite = null;
+    Sprite retrySprite = null;
+	public HUD hud; //HUD
+	public HUD yourHud;
 	private Text hudText;
 	private Text hudTextFlea;
 	private int score = 0; 	
@@ -170,6 +180,14 @@ public class FleaGame extends SimpleBaseGameActivity
     	flea_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(splashTextureAtlas, this, "cartoon_flea.png", 0, 0);
     	splashTextureAtlas.load();
     	
+    	retry_image = new BitmapTextureAtlas(this.getTextureManager(),150,75,TextureOptions.BILINEAR);
+    	retry_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(retry_image, this, "backbuttonMid.png",0,0);
+    	retry_image.load();
+    	
+    	exit_image = new BitmapTextureAtlas(this.getTextureManager(), 150, 75, TextureOptions.BILINEAR);
+    	exit_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(exit_image, this, "retrybuttonMid.png",0,0);
+    	exit_image.load();
+    	
     	//tento = new BitmapTextureAtlas(this.getTextureManager(), 470, 482, TextureOptions.BILINEAR); //cargar tentosaurio
     	//tento_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(tento, this, "tentosaurioeating.png", 0, 0);
     	tentoImage = new BitmapTextureAtlas(this.getTextureManager(), 650, 301, TextureOptions.BILINEAR); //cargar tentosaurio
@@ -203,6 +221,9 @@ public class FleaGame extends SimpleBaseGameActivity
         camera.setChaseEntity(null);
         gameOverText.setPosition(CAMERA_WIDTH/2 - 250,CAMERA_HEIGHT/4);
         scene.attachChild(gameOverText);
+        scene.attachChild(exitSprite);
+        scene.attachChild(retrySprite);
+
         createControllers();
     }
     
@@ -278,6 +299,36 @@ public class FleaGame extends SimpleBaseGameActivity
 		scene.setTouchAreaBindingOnActionDownEnabled(true);
 		scene.setTouchAreaBindingOnActionMoveEnabled(true);
 		
+		//create game over buttons
+		exitSprite = new Sprite(CAMERA_WIDTH/2+120-60, CAMERA_HEIGHT/2, this.exit_region, this.getVertexBufferObjectManager())
+				{
+		    @Override
+		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float X, float Y) 
+		    {
+		        if (pSceneTouchEvent.isActionUp())
+		        {
+		        	Log.d("BotonesVisual","Boton izquierdo");
+                    restartGame();
+		        }
+		        return false;
+		    };
+		};
+		
+		retrySprite = new Sprite(CAMERA_WIDTH/2-240+60, CAMERA_HEIGHT/2, this.retry_region, this.getVertexBufferObjectManager())
+		{
+		    @Override
+		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float X, float Y) 
+		    {
+		        if (pSceneTouchEvent.isActionUp())
+		        {
+		        	Log.d("BotonesVisual","Boton Derecho");
+                    finish();
+		        }
+		        return false;
+		    };
+		};
+		
+		
 		timer(); //HACE ANDAR EL TIEMPO!
 		
 /*		scene.registerUpdateHandler(new TimerHandler(1f, true, new ITimerCallback() { //countdown
@@ -298,7 +349,7 @@ public class FleaGame extends SimpleBaseGameActivity
 	            		        	Toast.makeText(thisActivity, "Logro Desparacitador principiante Desbloqueado", Toast.LENGTH_SHORT).show();
 	            		        }
 	            		    });
-	            			
+	            			 
 	                }        
 	                pTimerHandler.reset();
 	        	}
@@ -428,11 +479,11 @@ public class FleaGame extends SimpleBaseGameActivity
 		}
     }
     
-    private void createControllers()
+    private void createControllers() //botones van aqui
     {
         HUD yourHud = new HUD();
         
-        final Rectangle left = new Rectangle(CAMERA_WIDTH/2-240+60, CAMERA_HEIGHT/2, 120, 60, this.getVertexBufferObjectManager())//posx, posy, sizex, sizey-------
+/*        final Rectangle left = new Rectangle(CAMERA_WIDTH/2-240+60, CAMERA_HEIGHT/2, 120, 60, this.getVertexBufferObjectManager())//posx, posy, sizex, sizey-------
         {
             public boolean onAreaTouched(TouchEvent touchEvent, float X, float Y)
             {
@@ -456,12 +507,15 @@ public class FleaGame extends SimpleBaseGameActivity
                 }
                 return true;
             };
-        };
+        };*/
         
-        yourHud.registerTouchArea(left);
+        scene.registerTouchArea(exitSprite);
+        scene.registerTouchArea(retrySprite);
+        
+/*      yourHud.registerTouchArea(left);
         yourHud.registerTouchArea(right);
         yourHud.attachChild(left);
-        yourHud.attachChild(right);
+        yourHud.attachChild(right);*/
         
         camera.setHUD(yourHud);
     }
@@ -543,7 +597,17 @@ public class FleaGame extends SimpleBaseGameActivity
     	score = 0;
     	reload = true;
     	loadAmountFleas();
+  
     	scene.detachChild(gameOverText);    	
+    	scene.detachChild(exitSprite);
+    	scene.detachChild(retrySprite);
+    	
+    	scene.unregisterTouchArea(exitSprite);
+    	scene.unregisterTouchArea(retrySprite);
+    	
+    	dispose_other_sprite(exitSprite);
+    	dispose_other_sprite(retrySprite);
+    	
     	createHUD(); //muestra puntajes y tiempos
     	populateGame(amountFlea, centerX, centerY, centerFX, centerFY, level, reload);
     }
@@ -558,6 +622,20 @@ public class FleaGame extends SimpleBaseGameActivity
 	    	 }
     	
     }
+    
+    void dispose_other_sprite(final Sprite toDispose)
+    {
+    	this.runOnUpdateThread(new Runnable()
+		{
+		    @Override
+		     public void run()
+		     {
+		    	scene.detachChild(toDispose);
+		     }
+		});
+    	
+    }
+    
     void dispose_sprite(final Sprite toDispose)
     {
     	this.runOnUpdateThread(new Runnable()
