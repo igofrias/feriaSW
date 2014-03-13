@@ -135,17 +135,14 @@ public class CreateActivity extends SherlockFragment{
 		bncnt.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				((MainActivity)thisActivity).pairing();
+				((MainActivity)thisActivity).pairing(1);
 			}});
 		
 		bncnt2.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				//((MainActivity)thisActivity).pairing();
-				/********mensaje para juan del futuro************
-				 * aca deberias estar el pairing para el segundo brick
-				 * hay q ver bien como guardarlo y diferenciarlo del otro
-				 */
+				((MainActivity)thisActivity).pairing(2);
+				
 			}});
 		
 		/************bnt listener

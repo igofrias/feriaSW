@@ -145,8 +145,26 @@ public class BTService extends Service implements BTConnectable{
         myHandler = new btHandler(btcHandler);
         slaveHandler = new btHandler(slaveBtcHandler);
     }
+    public void setMac(String mac, int brick)
+    {
+    	//setea el macde la cabeza o del lomo dependiendo de que numero de brick
+    	//se le de
+    	switch(brick)
+    	{
+    	case 1:
+    		mac_nxt = mac;
+    		break;
+    	case 2:
+    		mac_slave = mac;
+    		break;
+    	default:
+    		break;
+    	}
+    }
     //crea y arranca un thread para la conexion bluetooth/////////////
     //recibe la mac del robot/////////////
+    //A partir de ahora la mac la setea por otro lado (setMac())
+    //Potencialmente se podria quitar el mac_address pero no lo voy a hacer por flojera
     public void startBTCommunicator(String mac_address) {
         mac_nxt= mac_address;
         connectingProgressDialog = ProgressDialog.show(thisActivity, "", getResources().getString(R.string.connecting_please_wait), true);
@@ -228,11 +246,11 @@ public class BTService extends Service implements BTConnectable{
     		return mac_nxt;
     }
     
-    public void selectTypeCnt(){
+    public void selectTypeCnt(int bricknumber){
     	if(connectionType!=null){//si contiene una mac conecta
     		connect(connectionType);
     	}else{//si no parea
-    		pairing();
+    		pairing(bricknumber);
     	}
     }
    
@@ -254,7 +272,7 @@ public class BTService extends Service implements BTConnectable{
     }
     
     //conexion intent a dispositivo
-	public void pairing(){
+	public void pairing(int bricknumber){
     	//si no esta conectado verifica presencia de bluetooth 
 		if(connected==false){
 			///inicia el adaptador
@@ -268,9 +286,11 @@ public class BTService extends Service implements BTConnectable{
 				connectionType=null;
 		        if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
 		            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		            enableIntent.putExtra("Brick", bricknumber);
 		            thisActivity.startActivityForResult(enableIntent, REQUEST_ENABLE_BT);		     
-		        } else {//si esta activado busca dispositivos para conectarse
-		           selectNXT();
+		        } else {//si esta activado busca dispositivos para conectarse al brick
+		        	//dado por bricknumber
+		           selectNXT(bricknumber);
 		        }
 		        
 		}else if(connected==true){
@@ -481,8 +501,10 @@ public class BTService extends Service implements BTConnectable{
             btchandler.sendMessageDelayed(myMessage, delay);
     }
     //llama a la actividad que  busca dispositivos
-    void selectNXT() {
+    void selectNXT(int bricknumber) {
+    	//Parea al brick dado por bricknumber (0 para cabeza, 1 para lomo)
         Intent serverIntent = new Intent(thisActivity, DeviceListActivity.class);
+        serverIntent.putExtra("Brick", bricknumber);
         thisActivity.startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
     }
     

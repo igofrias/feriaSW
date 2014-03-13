@@ -654,8 +654,10 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 
                 
                 if (resultCode == Activity.RESULT_OK) {
+                	int brick = data.getExtras().getInt("Brick");
                     String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
                     pairing = data.getExtras().getBoolean(DeviceListActivity.PAIRING);
+                    btservice.setMac(address, brick);
                     btservice.startBTCommunicator(address);
                     
 	 		        
@@ -669,7 +671,8 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         btOnByUs = true;
-                        btservice.selectTypeCnt();
+                        int brick = data.getExtras().getInt("Brick");
+                        btservice.selectTypeCnt(brick);
                         break;
                     case Activity.RESULT_CANCELED:
                         showToast(R.string.bt_needs_to_be_enabled, Toast.LENGTH_SHORT);
@@ -819,9 +822,9 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 	}
 	
 	//Funciones para que clases viejas no se quejen por el cambio a service
-	public void pairing() {
+	public void pairing(int bricknumber) {
 		// TODO Auto-generated method stub
-		btservice.pairing();
+		btservice.pairing(bricknumber);
 	}
 
 	public boolean isConnected() {
