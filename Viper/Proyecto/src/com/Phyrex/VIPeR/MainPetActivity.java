@@ -486,7 +486,7 @@ public class MainPetActivity extends SherlockFragment{
 				    		petFingerMove = true;
 					    		sendNonOpenEyes("HappyEyes");
 				    		if(dirtstate<9){
-				    			dirtstate++;
+				    			//dirtstate++;
 				    		}
 				    	}else{
 				    		petFingerMove = false;
@@ -534,6 +534,7 @@ public class MainPetActivity extends SherlockFragment{
 				switch (e.getAction()) {
 				case MotionEvent.ACTION_DOWN:
 					poop= false;
+					StatesService.sendCommandToStatesService("washing", thisActivity);
 					Actions(4);
 			      break;
 			    }
@@ -736,19 +737,8 @@ public class MainPetActivity extends SherlockFragment{
 		}
 		
 		public void Dopoop(){
-			poop=true;
-			Runnable shameFace = new Runnable()
-			{
-
-				@Override
-				public void run() {
-					
-					sendNonOpenEyes("ShameEyes");
-				}
-				
-			};
-			Handler h = new Handler();
-			h.postDelayed(shameFace, 10);
+			
+			sendNonOpenEyes("ShameEyes");
 			sendMiscAction("FartSound",1);	
 			Actions(7); //hacer caca
 		}
@@ -942,7 +932,8 @@ public class MainPetActivity extends SherlockFragment{
 		
 		public void Drawclean(float center_x, float center_y){
 			if(dirtstate>0){
-				dirtstate--;
+				//dirtstate--;
+				StatesService.sendCommandToStatesService("cleaning", thisActivity);
 				if(dirtstate==0)
 					Actions(3);
 			}
@@ -1273,8 +1264,9 @@ public class MainPetActivity extends SherlockFragment{
                 if(hold.getSurface().isValid())
 				{
 					can = hold.lockCanvas();
-				
-					
+						
+					poop = StatesService.getCurrentReceiver().poop;
+					dirtstate = StatesService.getCurrentReceiver().dirtstate;
 						canvas.Draw(can);
 					
 					hold.unlockCanvasAndPost(can);

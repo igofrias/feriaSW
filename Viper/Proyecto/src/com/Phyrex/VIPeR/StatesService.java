@@ -35,6 +35,8 @@ public class StatesService extends Service {
 		energy = INITIAL_ENERGY;
 		hapiness = INITIAL_HAPINESS;
 		sleeping = false;
+		dirtstate = 0;
+		poop = false;
 		getCurrentReceiver();
 		
 	}
@@ -60,6 +62,8 @@ public class StatesService extends Service {
 			sleeping = false;
 			full = false;
 			fullSleep = false;
+			dirtstate = 0;
+			poop = false;
 		}
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -141,7 +145,8 @@ public class StatesService extends Service {
 			LocalBroadcastManager.getInstance(this).registerReceiver(currentReceiver,
 				      new IntentFilter("com.Phyrex.VIPeR.StatesService.ACTION"));
 			currentStatesRunnable = new StatesRunnable();
-			statesHandler.post(currentStatesRunnable);
+			statesThread = new Thread(currentStatesRunnable);
+			statesThread.start();
 			started = true;
 			Log.d("StatesService","StatesService started");
 		}
@@ -163,37 +168,46 @@ public class StatesService extends Service {
 		return null;
 	}
 	Handler statesHandler = new Handler(); //Ayuda a ejecutar el StatesRunnable mientras este funciona
+	Thread statesThread = null;
 	class StatesRunnable implements Runnable
 	{
-		long postTime = 400;
+		long postTime = 1000;
 		//Clase que implementa la logica para los estados
 		
 		
 		static final int runsBeforePoop = 1000;
 		static final int runsBeforeDirt = 100;
-		int currentRun;
+		int currentRun = 0;
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-
-			hungrypet();
-			sleepingPet();
-			updateReceiverStates();
-			//Esto permite controlar la cantidad de veces que el runnable se ejecuta antes de hacer caca
-			//o de ensuciarse. Equivale a postTime*runsBeforeWhatever ms antes de hacer Whatever
-			if(currentRun % runsBeforePoop == 0 && currentRun <= runsBeforeDirt)
-			{
-				dirtyPet();
+			while(started){
+				hungrypet();
+				sleepingPet();
+				updateReceiverStates();
+				//Esto permite controlar la cantidad de veces que el runnable se ejecuta antes de hacer caca
+				//o de ensuciarse. Equivale a postTime*runsBeforeWhatever ms antes de hacer Whatever
+				if(currentRun > 0)
+				{
+					if(currentRun % runsBeforePoop == 0 && currentRun <= runsBeforePoop)
+					{
+						dirtyPet();
+						currentRun = 0;
+					}
+					if(currentRun % runsBeforeDirt == 0 && currentRun <= runsBeforePoop)
+					{
+						poopingPet();
+						
+					}
+				}
+				
+				try {
+					Thread.sleep(postTime);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			if(currentRun % runsBeforeDirt == 0 && currentRun <= runsBeforeDirt)
-			{
-				poopingPet();
-				currentRun = 0;
-			}
-			if(started){
-				statesHandler.postDelayed(this, postTime);
-			}
-			
 		}
 		
 	}
@@ -447,15 +461,18 @@ public class StatesService extends Service {
 	{
 		modHealth(100);
 		modHapiness(50);
+		poop = false;
 	}
 	public void pooing()
 	{
 		modHealth(-50);
 		modHapiness(10);
+		poop = true;
 	}
 	public void cleaning()
 	{
 		modHealth(60);
+		dirtyMod(-1);
 	}
 	public void actionwhenfull()
 	{
