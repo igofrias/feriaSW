@@ -146,8 +146,9 @@ public class StatesService extends Service {
 				      new IntentFilter("com.Phyrex.VIPeR.StatesService.ACTION"));
 			currentStatesRunnable = new StatesRunnable();
 			statesThread = new Thread(currentStatesRunnable);
-			statesThread.start();
 			started = true;
+			statesThread.start();
+			
 			Log.d("StatesService","StatesService started");
 		}
 		receiveCommand(intent);
@@ -171,7 +172,7 @@ public class StatesService extends Service {
 	Thread statesThread = null;
 	class StatesRunnable implements Runnable
 	{
-		long postTime = 1000;
+		long postTime = 400;
 		//Clase que implementa la logica para los estados
 		
 		
@@ -191,16 +192,17 @@ public class StatesService extends Service {
 				{
 					if(currentRun % runsBeforePoop == 0 && currentRun <= runsBeforePoop)
 					{
-						dirtyPet();
+						poopingPet();
 						currentRun = 0;
 					}
 					if(currentRun % runsBeforeDirt == 0 && currentRun <= runsBeforePoop)
 					{
-						poopingPet();
+						dirtyPet();
+						
 						
 					}
 				}
-				
+				currentRun++;
 				try {
 					Thread.sleep(postTime);
 				} catch (InterruptedException e) {
