@@ -235,13 +235,7 @@ public class StatesActivity extends SherlockFragment{
 	public void onStop(){
 		super.onStop();
 		updaterThread.running = false;
-		try {
-			currentUpdaterThread.join();
-			currentUpdaterThread = null;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		currentUpdaterThread = null;
 	}
 	
 	public void eating(){
