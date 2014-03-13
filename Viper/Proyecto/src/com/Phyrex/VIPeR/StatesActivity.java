@@ -372,7 +372,12 @@ public class StatesActivity extends SherlockFragment{
 			while(running)
 			{
 				time = lifetimecalc(birthdate);
-				
+				try {
+					Thread.sleep(30000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 				
 			}
