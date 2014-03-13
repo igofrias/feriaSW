@@ -18,6 +18,8 @@ public class StatesService extends Service {
 	int hunger;
 	int energy;
 	int hapiness;
+	int dirtstate;
+	boolean poop;
 	static int MAX_HEALTH = 1000;
 	static int MAX_HUNGER = 1000;
 	static int MAX_ENERGY = 1000;
@@ -43,9 +45,11 @@ public class StatesService extends Service {
 		int hunger;
 		int energy;
 		int hapiness;
+		int dirtstate;
 		boolean sleeping;
 		boolean full;
 		boolean fullSleep;
+		boolean poop;
 		public StatesReceiver()
 		{
 			super();
@@ -163,13 +167,29 @@ public class StatesService extends Service {
 	{
 		long postTime = 400;
 		//Clase que implementa la logica para los estados
+		
+		
+		static final int runsBeforePoop = 1000;
+		static final int runsBeforeDirt = 100;
+		int currentRun;
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
 
 			hungrypet();
 			sleepingPet();
-			updateReceiverStates();	
+			updateReceiverStates();
+			//Esto permite controlar la cantidad de veces que el runnable se ejecuta antes de hacer caca
+			//o de ensuciarse. Equivale a postTime*runsBeforeWhatever ms antes de hacer Whatever
+			if(currentRun % runsBeforePoop == 0 && currentRun <= runsBeforeDirt)
+			{
+				dirtyPet();
+			}
+			if(currentRun % runsBeforeDirt == 0 && currentRun <= runsBeforeDirt)
+			{
+				poopingPet();
+				currentRun = 0;
+			}
 			if(started){
 				statesHandler.postDelayed(this, postTime);
 			}
@@ -177,6 +197,31 @@ public class StatesService extends Service {
 		}
 		
 	}
+	public void dirtyMod(int val)
+	{
+		//Modifica el estado de suciedad para que quede consistente
+		//Le suma el valor de val
+		dirtstate += val;
+		if(dirtstate > 8){
+			dirtstate = 8;
+		}	
+		else if (dirtstate < 0)
+		{
+			dirtstate = 0;
+		}
+	
+	}
+	public void dirtyPet()
+	{
+		//Hace que la mascota se ensucie
+		dirtyMod(1);
+	}
+	public void poopingPet()
+	{
+		//Hace que la mascota se cague
+		poop = true;
+	}
+
 	public void updateReceiverStates()
 	{
 		//Envia los estados del servicio al receiver
@@ -189,6 +234,8 @@ public class StatesService extends Service {
 			currentReceiver.full = isFull();
 			currentReceiver.fullSleep = isFullSleep();
 			currentReceiver.sleeping = sleeping;
+			currentReceiver.dirtstate = dirtstate;
+			currentReceiver.poop = poop;
 		}
 	}
 	//Las funciones mod** modifican el atributo de tal forma que no se salgan de sus rangos
