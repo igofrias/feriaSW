@@ -511,14 +511,15 @@ public class MainPetActivity extends SherlockFragment{
 				case MotionEvent.ACTION_DOWN:
 					if(petstate==2){
 						petstate=0;
-						sleeping=false;
-							
+						//sleeping=false;
+						StatesService.sendCommandToStatesService("wake", thisActivity);	
 						Actions(2);//despertar
 					}else{
 						SherlockFragment fragment = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
 						if(!((StatesActivity)fragment).isFullSleep()){
 							petstate=2;
-							sleeping=true;
+							//sleeping=true;
+							StatesService.sendCommandToStatesService("sleep", thisActivity);
 							timesleep=90;
 							timesleepbreath=80;
 							Actions(2);//accion dormir
@@ -1267,6 +1268,7 @@ public class MainPetActivity extends SherlockFragment{
 						
 					poop = StatesService.getCurrentReceiver().poop;
 					dirtstate = StatesService.getCurrentReceiver().dirtstate;
+					sleeping = StatesService.getCurrentReceiver().sleeping;
 						canvas.Draw(can);
 					
 					hold.unlockCanvasAndPost(can);

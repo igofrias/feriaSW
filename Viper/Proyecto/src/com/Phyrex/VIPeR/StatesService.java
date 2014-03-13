@@ -310,7 +310,10 @@ public class StatesService extends Service {
 		if(sleeping && energy<MAX_ENERGY){
 			
 			modEnergy(10);
-			modHunger(-1);
+		}
+		else if(energy < MAX_ENERGY)
+		{
+			modEnergy(-1);
 		}
 	}
 	public void hungrypet(){

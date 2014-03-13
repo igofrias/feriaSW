@@ -151,22 +151,23 @@ public class BTService extends Service implements BTConnectable{
     	//se le de
     	switch(brick)
     	{
-    	case 1:
+    	case 0:
     		mac_nxt = mac;
     		break;
-    	case 2:
+    	case 1:
     		mac_slave = mac;
     		break;
     	default:
     		break;
     	}
+    	Log.d("BTService", "pairing: MAC="+mac+"Brick="+brick);
     }
     //crea y arranca un thread para la conexion bluetooth/////////////
     //recibe la mac del robot/////////////
     //A partir de ahora la mac la setea por otro lado (setMac())
     //Potencialmente se podria quitar el mac_address pero no lo voy a hacer por flojera
     public void startBTCommunicator(String mac_address) {
-        mac_nxt= mac_address;
+        //mac_nxt= mac_address;
         connectingProgressDialog = ProgressDialog.show(thisActivity, "", getResources().getString(R.string.connecting_please_wait), true);
 
         if (myBTCommunicator != null) {

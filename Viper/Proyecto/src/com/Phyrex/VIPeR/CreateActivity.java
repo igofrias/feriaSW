@@ -135,13 +135,13 @@ public class CreateActivity extends SherlockFragment{
 		bncnt.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				((MainActivity)thisActivity).pairing(1);
+				((MainActivity)thisActivity).pairing(0);
 			}});
 		
 		bncnt2.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				((MainActivity)thisActivity).pairing(2);
+				((MainActivity)thisActivity).pairing(1);
 				
 			}});
 		
