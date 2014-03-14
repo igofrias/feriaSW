@@ -8,6 +8,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -74,38 +77,10 @@ public class StatesService extends Service {
 			{
 				String command = extras.getString("StateReceiverCommand");
 				if(command != null)
-					if(command.equals("HapinessState"))
-					{
-						hapiness = extras.getInt("HapinessState");
-						//Log.i("StateReceiver","Hapiness=" + hapiness);
-					}
-					else if(command.equals("EnergyState"))
-					{
-						energy = extras.getInt("EnergyState");
-						//Log.i("StateReceiver","Energys=" + energy);
-					}
-					else if(command.equals("HealthState"))
-					{
-						health = extras.getInt("HealthState");
-						//Log.i("StateReceiver","Health=" + health);
-					}
-					else if(command.equals("HungerState"))
-					{
-						hunger = extras.getInt("HungerState");
-						//Log.i("StateReceiver","Hunger=" + hunger);
-					}
-					else if(command.equals("SleepState"))
-					{
-						sleeping = extras.getBoolean("SleepState");
-					}
-					else if(command.equals("FullState"))
-					{
-						full = extras.getBoolean("FullState");
-					}
-					else if(command.equals("FullSleepState"))
-					{
-						fullSleep = extras.getBoolean("FullSleepState");
-					}
+				{
+					
+				}
+					
 			}
 		}
 	}
@@ -163,10 +138,36 @@ public class StatesService extends Service {
 		started = false;
 		super.onDestroy();
 	}
+
+	//clientHandler maneja la comunicacion con los distintos clientes del servicio
+	static int REGISTER_CLIENT = 0x00;
+	static int UNREGISTER_CLIENT = 0x01;
+	static int MASCOT_POOPED = 0x02;
+	static int MASCOT_CLEANED = 0x03;
+	Messenger currentClient = null;
+	Handler clientHandler = new Handler()
+	{
+		@Override
+		public void handleMessage(Message msg) {
+			int msgType = msg.what;
+			if(msgType == REGISTER_CLIENT)
+			{
+				currentClient = msg.replyTo;
+			}
+			else if(msgType == UNREGISTER_CLIENT)
+			{
+				currentClient = null;
+			}
+
+		}
+
+	};
+	private Messenger msg = new Messenger(clientHandler);
+
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
-		return null;
+		return msg.getBinder();
 	}
 	Handler statesHandler = new Handler(); //Ayuda a ejecutar el StatesRunnable mientras este funciona
 	Thread statesThread = null;
@@ -188,8 +189,9 @@ public class StatesService extends Service {
 				updateReceiverStates();
 				//Esto permite controlar la cantidad de veces que el runnable se ejecuta antes de hacer caca
 				//o de ensuciarse. Equivale a postTime*runsBeforeWhatever ms antes de hacer Whatever
-				if(currentRun > 0)
+				if(currentRun >= 0)
 				{
+					currentRun++;
 					if(currentRun % runsBeforePoop == 0 && currentRun <= runsBeforePoop)
 					{
 						poopingPet();
@@ -201,8 +203,9 @@ public class StatesService extends Service {
 						
 						
 					}
+					
 				}
-				currentRun++;
+				
 				try {
 					Thread.sleep(postTime);
 				} catch (InterruptedException e) {
@@ -473,11 +476,32 @@ public class StatesService extends Service {
 		modHealth(-50);
 		modHapiness(10);
 		poop = true;
+		Message message = new Message();
+		message.what = MASCOT_POOPED;
+		try {
+			if(currentClient != null)
+				currentClient.send(message);	
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void cleaning()
 	{
 		modHealth(60);
 		dirtyMod(-1);
+		if(dirtstate == 0)
+		{
+			Message message = new Message();
+			message.what = MASCOT_CLEANED;
+			try {
+				if(currentClient != null)
+					currentClient.send(message);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	public void actionwhenfull()
 	{

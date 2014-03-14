@@ -12,16 +12,23 @@ import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,6 +52,22 @@ public class MainPetActivity extends SherlockFragment{
 	Activity parent_activity;
 	MainActivity thisActivity;
 	
+	private Messenger messenger;
+	private ServiceConnection sConn;
+	public void sendBindMessage()
+	{
+		//Envia un mensaje al servicio para hacer bind
+		Message msg = Message.obtain(null, StatesService.REGISTER_CLIENT);
+		msg.replyTo = new Messenger(this.statesHandler);
+		try {
+			if(messenger != null)
+				messenger.send(msg);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,6 +91,23 @@ public class MainPetActivity extends SherlockFragment{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		thisActivity = (MainActivity) getActivity();
+		sConn = new ServiceConnection() {
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                messenger = null;
+            }
+
+            @Override
+            public void onServiceConnected(ComponentName name,IBinder service) {
+                // We are conntected to the service
+                messenger = new Messenger(service);
+                sendBindMessage();
+
+            }
+        };
+        thisActivity.bindService(new Intent(thisActivity, StatesService.class), sConn,
+                Context.BIND_AUTO_CREATE);
 		
 	}
 	 
@@ -234,7 +274,23 @@ public class MainPetActivity extends SherlockFragment{
     {
     	eyesOpen = false;
     }
-    
+    //Este handler recive instrucciones desde el StatesService para que sean ejecutadas
+    //aqui
+    Handler statesHandler = new Handler()
+    {
+    	@Override
+		public void handleMessage(Message msg) {
+			int msgType = msg.what;
+			if(msgType == StatesService.MASCOT_POOPED)
+			{
+				MainPetActivity.this.canvas.Dopoop();
+			}
+			else if(msgType == StatesService.MASCOT_CLEANED)
+			{
+				Actions(3);
+			}
+		}
+    };
    /////////////////////////////clase draw joytick////////////////////////////////////
 	
 	private class Drawpet extends SurfaceView implements SurfaceHolder.Callback, Runnable

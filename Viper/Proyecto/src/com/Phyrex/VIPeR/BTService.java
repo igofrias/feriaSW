@@ -3,25 +3,18 @@ package com.Phyrex.VIPeR;
 import com.Phyrex.VIPeR.BTConnectable;
 import com.Phyrex.VIPeR.BTCommunicator;
 import com.Phyrex.VIPeR.DeviceListActivity;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-import android.support.v4.app.FragmentTransaction;
-
-import android.os.BatteryManager;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
-import android.content.IntentFilter;
 import android.util.Log;
 import android.widget.Toast;
 import android.app.ProgressDialog;
