@@ -666,12 +666,16 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
                 break;
                 
             case REQUEST_ENABLE_BT:
-
+            case BTService.REQUEST_ENABLE_BT_2BRICK:
+            	int brick = 0;
+            	if(requestCode == BTService.REQUEST_ENABLE_BT_2BRICK)
+            	{
+            		brick = 1;
+            	}
                 // When the request to enable Bluetooth returns
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         btOnByUs = true;
-                        int brick = data.getExtras().getInt("Brick");
                         btservice.selectTypeCnt(brick);
                         break;
                     case Activity.RESULT_CANCELED:

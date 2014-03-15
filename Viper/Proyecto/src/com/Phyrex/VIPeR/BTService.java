@@ -38,6 +38,7 @@ public class BTService extends Service implements BTConnectable{
 	private boolean connected = false;
     static final int REQUEST_CONNECT_DEVICE = 500;
     static final int REQUEST_ENABLE_BT = 2000;
+    static final int REQUEST_ENABLE_BT_2BRICK = 2001;
     private ProgressDialog connectingProgressDialog;
     private Activity thisActivity;
     private boolean btErrorPending = false;
@@ -280,8 +281,10 @@ public class BTService extends Service implements BTConnectable{
 				connectionType=null;
 		        if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
 		            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-		            enableIntent.putExtra("Brick", bricknumber);
-		            thisActivity.startActivityForResult(enableIntent, REQUEST_ENABLE_BT);		     
+		            if(bricknumber == 2)
+		            	thisActivity.startActivityForResult(enableIntent, REQUEST_ENABLE_BT_2BRICK);
+		            else
+		            	thisActivity.startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
 		        } else {//si esta activado busca dispositivos para conectarse al brick
 		        	//dado por bricknumber
 		           selectNXT(bricknumber);
