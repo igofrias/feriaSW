@@ -23,6 +23,8 @@ import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
+import org.andengine.input.sensor.acceleration.AccelerationData;
+import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
@@ -32,6 +34,7 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.color.Color;
 
@@ -49,14 +52,14 @@ import android.os.IBinder;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-public class BallGame extends SimpleBaseGameActivity{
+public class BallGame extends SimpleBaseGameActivity implements IAccelerationListener{
 
 	private Camera camera;
 	private static final int CAMERA_WIDTH = 800;
 	private static final int CAMERA_HEIGHT = 480;
 	
 	private Font font;
-	private Font smallfont;
+	private Font gameOverfont;
 	HUD hud;
 	private Text hudText;
 	Control control;
@@ -168,9 +171,9 @@ public class BallGame extends SimpleBaseGameActivity{
 	    final ITexture fontTexture = new BitmapTextureAtlas(this.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
 	    font = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 40.0f, true, Color.BLACK.getABGRPackedInt());
-	    smallfont = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 25.0f, true, Color.BLACK.getABGRPackedInt());
+	    gameOverfont = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "ARCADECLASSIC.TTF", 100.0f, true, Color.BLACK.getABGRPackedInt());
 	    font.load();
-	    smallfont.load();
+	    gameOverfont.load();
 	    
 	    BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 	    ballTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR);
@@ -236,11 +239,12 @@ public class BallGame extends SimpleBaseGameActivity{
     		    });
     			
 			hud.detachChild(hudText);
-			hudText = new Text(70, 40, smallfont, "Game Over. Presione el boton atrás para volver",100,BallGame.this.vbo);
+			hudText = new Text(0, CAMERA_HEIGHT/2, gameOverfont, "Game Over",100,BallGame.this.vbo);
 			hud.attachChild(hudText);
 			player.detach();
 		}
 	}
+	SensorManager sensorManager;
 	@Override
 	protected Scene onCreateScene() {
 		// TODO Auto-generated method stub
@@ -268,6 +272,7 @@ public class BallGame extends SimpleBaseGameActivity{
 	     scene.attachChild(player.sprite);
 	     inGame = true;
 	     ballGenerator.CreateBall();
+	     
 	     return scene;
 	}
 	
@@ -656,9 +661,48 @@ public class BallGame extends SimpleBaseGameActivity{
 			// TODO Auto-generated method stub
 			
 		}
+		public void toggleRightOn()
+		{
+			rightOn.isOn = true;
+		}
+		public void toggleLeftOn()
+		{
+			leftOn.isOn = true;
+		}
+		public void toggleRightOff()
+		{
+			rightOn.isOn = false;
+		}
+		public void toggleLeftOff()
+		{
+			leftOn.isOn = false;
+		}
     }
+
     private class RestartScene extends Scene
     {
     	
-    };
+    }
+	
+	@Override
+	public void onAccelerationChanged(AccelerationData pAccelerationData) {
+		//Va hacia algun lado de acuerdo a la inclinacion del celu
+		float X = pAccelerationData.getX();
+		if(X > 0)
+		{
+			control.toggleLeftOff();
+			control.toggleRightOn();
+		}
+		else if (X < 0)
+		{
+			control.toggleLeftOn();
+			control.toggleRightOff();
+		}
+	}
+	@Override
+	public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {
+		// TODO Auto-generated method stub
+		
+	};
+	 
 }
