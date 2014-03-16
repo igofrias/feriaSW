@@ -19,6 +19,7 @@ import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.util.FPSLogger;
@@ -89,8 +90,8 @@ public class FleaGame extends SimpleBaseGameActivity
 	
 	List<Sprite> flea = new LinkedList<Sprite>();
 	Sprite tento = null;
-    Sprite exitSprite = null;
-    Sprite retrySprite = null;
+    ButtonSprite exitSprite = null;
+    ButtonSprite retrySprite = null;
 	public HUD hud; //HUD
 	public HUD yourHud;
 	private Text hudText;
@@ -300,28 +301,28 @@ public class FleaGame extends SimpleBaseGameActivity
 		scene.setTouchAreaBindingOnActionMoveEnabled(true);
 		
 		//create game over buttons
-		exitSprite = new Sprite(CAMERA_WIDTH/2+120-60, CAMERA_HEIGHT/2, this.exit_region, this.getVertexBufferObjectManager())
+		exitSprite = new ButtonSprite(CAMERA_WIDTH/2+120-60, CAMERA_HEIGHT/2, this.exit_region, this.getVertexBufferObjectManager())
 				{
 		    @Override
 		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float X, float Y) 
 		    {
-		        if (pSceneTouchEvent.isActionUp())
+		        if (pSceneTouchEvent.isActionDown())
 		        {
-		        	Log.d("BotonesVisual","Boton izquierdo");
+		        	Log.d("BotonesVisual","Boton derecho");
                     restartGame();
 		        }
 		        return false;
 		    };
 		};
 		
-		retrySprite = new Sprite(CAMERA_WIDTH/2-240+60, CAMERA_HEIGHT/2, this.retry_region, this.getVertexBufferObjectManager())
+		retrySprite = new ButtonSprite(CAMERA_WIDTH/2-240+60, CAMERA_HEIGHT/2, this.retry_region, this.getVertexBufferObjectManager())
 		{
 		    @Override
 		    public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float X, float Y) 
 		    {
-		        if (pSceneTouchEvent.isActionUp())
+		        if (pSceneTouchEvent.isActionDown())
 		        {
-		        	Log.d("BotonesVisual","Boton Derecho");
+		        	Log.d("BotonesVisual","Boton izquierdo");
                     finish();
 		        }
 		        return false;
