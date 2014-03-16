@@ -177,7 +177,7 @@ public class StatesService extends Service {
 		//Clase que implementa la logica para los estados
 		
 		
-		static final int runsBeforePoop = 1000;
+		static final int runsBeforePoop = 500;
 		static final int runsBeforeDirt = 100;
 		int currentRun = 0;
 		@Override
@@ -239,6 +239,7 @@ public class StatesService extends Service {
 	{
 		//Hace que la mascota se cague
 		poop = true;
+		pooing();
 	}
 
 	public void updateReceiverStates()
@@ -423,7 +424,8 @@ public class StatesService extends Service {
 	}
 	public void eatingCommand()
 	{
-		modHunger(100);
+		modHunger(500);
+		modHapiness(100);
 	}
 	public boolean isFull()
 	{

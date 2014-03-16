@@ -223,7 +223,7 @@ public class MainPetActivity extends SherlockFragment{
 				break;
 			case 2://dormir
 				SleepTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
-				if(((StatesActivity)fragment1).isSleeping())
+				if(!StatesService.getCurrentReceiver().sleeping) //El ! va ahi. Como que sleeping esta invertido
 				{
 					sendNonOpenEyes("CloseEyes");
 					sendMiscAction("YawnSound",0);

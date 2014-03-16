@@ -182,17 +182,22 @@ public class BTService extends Service implements BTConnectable{
         slaveBTCommunicator.setMACAddress(mac_slave);
         slaveBTCommunicator.start();
         connected=true;
+//        startProgram("MasterMain.rxe",0);
+//        startProgram("SlaveMain.rxe",1);
     }
     
     ////Termina la conexion bluetooth (destruye el thread)//////////
     public void destroyBTCommunicator() {
-
+    	//Para los programas antes de salir
+    	
         if (myBTCommunicator != null) {
+        	sendBTCmessage(BTCommunicator.NO_DELAY,BTCommunicator.STOP_PROGRAM,"MasterMain.rxe",btcHandler);
             sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.DISCONNECT, 0, 0,myHandler,btcHandler);
             myBTCommunicator = null;
         }
         if(slaveBTCommunicator != null)
         {
+        	sendBTCmessage(BTCommunicator.NO_DELAY,BTCommunicator.STOP_PROGRAM,"SlaveMain.rxe",slaveBtcHandler);
         	sendBTCmessage(BTCommunicator.NO_DELAY, BTCommunicator.DISCONNECT, 0, 0,slaveHandler,slaveBtcHandler);
             slaveBTCommunicator = null;
         }

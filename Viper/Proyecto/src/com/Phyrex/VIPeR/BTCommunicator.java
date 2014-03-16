@@ -299,7 +299,7 @@ public class BTCommunicator extends Thread {
                    sendState(RECEIVE_INT_MESSAGE);
 
                 break;
-                //TODO
+            
         }
         
         	
