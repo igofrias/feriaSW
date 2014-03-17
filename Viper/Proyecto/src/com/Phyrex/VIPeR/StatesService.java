@@ -173,7 +173,7 @@ public class StatesService extends Service {
 	Thread statesThread = null;
 	class StatesRunnable implements Runnable
 	{
-		long postTime = 400;
+		long postTime = 200;
 		//Clase que implementa la logica para los estados
 		
 		
@@ -241,7 +241,18 @@ public class StatesService extends Service {
 		poop = true;
 		pooing();
 	}
-
+	public void uncleanPet()
+	{
+		//Hace cosas cuando la mascota esta sucia de alguna u otra forma
+		if(poop && dirtstate > 0)
+		{
+			modHealth(-2);
+		}
+		else if (poop | dirtstate > 0)
+		{
+			modHealth(-1);
+		}
+	}
 	public void updateReceiverStates()
 	{
 		//Envia los estados del servicio al receiver
@@ -310,7 +321,7 @@ public class StatesService extends Service {
 	}
 	public void sleepingPet()
 	{
-		//Lo que hace la mascota cuando duerme
+		//Lo que hace la mascota cuando duerme, o no duerme
 		if(sleeping && energy<MAX_ENERGY){
 			
 			modEnergy(10);
@@ -318,6 +329,13 @@ public class StatesService extends Service {
 		else if(energy < MAX_ENERGY)
 		{
 			modEnergy(-1);
+		}
+		else if(energy <= 0)
+		{
+			//Una mascota que se cae exhausta no debiese estar contenta
+			sleeping = true;
+			modHunger(-50);
+			modHapiness(-30);
 		}
 	}
 	public void hungrypet(){
@@ -461,6 +479,7 @@ public class StatesService extends Service {
 	{
 		sleeping = true;
 		modHealth(100);
+		modHapiness(30);
 		modHunger(-50);
 	}
 	public void wake()

@@ -704,7 +704,7 @@ public class BallGame extends SimpleBaseGameActivity implements SensorEventListe
 		float X = event.values[1];
 		if(control != null)
 		{
-			control.accel = (float) (X*0.75);
+			control.accel = (float) (X*0.60);
 			if(X > 0)
 			{
 				control.toggleLeftOff();

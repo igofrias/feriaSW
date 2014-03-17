@@ -164,7 +164,9 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 			    	List<Pet> mascotas = db.getPets(); //lista de mascotas
 			    	db.close();
 			    	Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
-					btservice.connect(petto.get_mac());
+					btservice.setMac(petto.get_mac(), 0);
+					btservice.setMac(petto.get_mac(), 1);
+			    	btservice.connect(petto.get_mac());
 					
 			    } 
 				else if(btservice.isConnected()){
