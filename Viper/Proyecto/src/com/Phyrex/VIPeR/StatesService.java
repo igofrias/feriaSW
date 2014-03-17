@@ -173,7 +173,7 @@ public class StatesService extends Service {
 	Thread statesThread = null;
 	class StatesRunnable implements Runnable
 	{
-		long postTime = 200;
+		long postTime = 400;
 		//Clase que implementa la logica para los estados
 		
 		

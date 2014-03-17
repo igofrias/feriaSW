@@ -6,6 +6,7 @@ public class Pet {
 	String _color;
 	String _raza;
 	String _mac;
+	String _mac2;
 	String _birthdate;
 	int _death;
 	 
@@ -14,13 +15,14 @@ public class Pet {
 	 }
 	 
 	 //constructor con id
-	public Pet(int id, String name, String raza, String color, String birthdate, String mac, int death){
+	public Pet(int id, String name, String raza, String color, String birthdate, String mac, String mac2, int death){
 		 this._id=id;
 		 this._name=name;
 		 this._raza=raza;
 		 this._color=color;
 		 this._birthdate=birthdate;
 		 this._mac=mac;
+		 this._mac2=mac2;
 		 this._death=death;
 	}
 	
@@ -79,11 +81,18 @@ public class Pet {
 	public void set_death(int _death) {
 		this._death = _death;
 	}
-
+	public void set_mac2(String mac2)
+	{
+		_mac2 = mac2;
+	}
+	public String get_mac2()
+	{
+		return _mac2;
+	}
 	@Override
 	public String toString() {
 		return "mascota [_id=" + _id + ", _name=" + _name + ", _color="
-				+ _color + ", _raza=" + _raza + ", _mac=" + _mac
+				+ _color + ", _raza=" + _raza + ", _mac=" + _mac +", _mac2=" + _mac2
 				+ ", _birthdate=" + _birthdate + ", _death=" + _death + "]";
 	}
 

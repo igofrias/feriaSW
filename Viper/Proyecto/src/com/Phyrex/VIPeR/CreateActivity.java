@@ -179,7 +179,8 @@ public class CreateActivity extends SherlockFragment{
 				        dialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {  //boton positivo (opcional)
 				            public void onClick(DialogInterface dialogo1, int id) {  
 				            	entry.open_write();            	
-						    	entry.createEntry(name.getText().toString(), currentDateandTime, raze, color, ((MainActivity)thisActivity).return_mac(), 0);
+						    	entry.createEntry(name.getText().toString(), currentDateandTime, raze, color, ((MainActivity)thisActivity).return_mac(),
+						    							((MainActivity)thisActivity).getBTService().mac_slave, 0);
 						    	entry.close();
 						    	initialize.AchievementsList(entry);
 						    	initialize.StatisticsList(entry);

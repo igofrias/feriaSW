@@ -16,6 +16,7 @@ public class Database_Helper {
 	public static final String Key_color = "color";
 	public static final String Key_date = "birthdate";
 	private static final String Key_mac = "mac_adress";
+	private static final String Key_mac2 = "slave_mac_address";
 	private static final String Key_death = "death";
 	private static final String DB_name = "BD_1";
 	private static final String DB_table = "Pet_data";
@@ -72,6 +73,7 @@ public class Database_Helper {
 					+ Key_color + " VARCHAR(15),"
 					+ Key_date + " DATETIME, " 
 					+ Key_mac + " VARCHAR(18), "
+					+ Key_mac2 + " VARCHAR(18),"
 					+ Key_death +" INTEGER NOT NULL);");
 			
 			//db.execSQL("DROP TABLE IF EXISTS " + DB_table_ach);
@@ -144,13 +146,14 @@ public class Database_Helper {
 	    helper.close();
 	}
 	//agregar entrada nueva
-	public void createEntry(String nombre, String datetime, String raza, String color, String mac_adress, int death) {
+	public void createEntry(String nombre, String datetime, String raza, String color, String mac_adress, String slave_address, int death) {
 		ContentValues cv = new ContentValues();
 		cv.put(Key_name, nombre);
 		cv.put(Key_date, datetime);
 		cv.put(Key_raza, raza);
 		cv.put(Key_color, color);
 		cv.put(Key_mac, mac_adress);
+		cv.put(Key_mac2, slave_address);
 		cv.put(Key_death, death);
 		Database.insert(DB_table, null, cv);
 	}
@@ -167,7 +170,12 @@ public class Database_Helper {
     	Cursor c = Database.rawQuery(select, null);
 		return c;
 	}
-
+	public Cursor updatePetSlaveMac(String nombre, String mac)
+	{
+		String select = "Update " + DB_table + " SET  "+ Key_mac2 + " = '" + mac +"' WHERE " + Key_name + "= '" + nombre + "';";
+    	Cursor c = Database.rawQuery(select, null);
+		return c;
+	}
 	//obtener todo
 	public Cursor getAll() {
 		String select = "Select *From "+DB_table;
@@ -204,7 +212,8 @@ public class Database_Helper {
 				pet.set_color(cursor.getString(3));
 				pet.set_birthdate(cursor.getString(4));
 				pet.set_mac(cursor.getString(5));
-				pet.set_death(Integer.parseInt(cursor.getString(6)));
+				pet.set_mac2(cursor.getString(6));
+				pet.set_death(Integer.parseInt(cursor.getString(7)));
 				// agregar mascota a lista
 				listamascotas.add(pet);
 			} while (cursor.moveToNext());

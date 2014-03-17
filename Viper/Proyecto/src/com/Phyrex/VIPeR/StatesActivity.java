@@ -132,7 +132,7 @@ public class StatesActivity extends SherlockFragment{
 		List<Pet> mascotas = db.getPets(); //lista de mascotas
 		db.close();
 		if(!mascotas.isEmpty()){
-			Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
+			Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_mac2(),mascotas.get(0).get_death());
 			name.setText(petto._name);
 			setlifetime(petto._birthdate);
 		}
@@ -357,7 +357,7 @@ public class StatesActivity extends SherlockFragment{
 		public void run() {
 			Database_Helper db = new Database_Helper(thisActivity);
 			List<Pet> mascotas = db.getPets(); //lista de mascotas
-			petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
+			petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_mac2(),mascotas.get(0).get_death());
 			db.close();
 			birthdate = petto._birthdate;
 			long currentTime = System.currentTimeMillis();
