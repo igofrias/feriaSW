@@ -23,6 +23,8 @@ import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
+import org.andengine.input.sensor.acceleration.AccelerationData;
+import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
@@ -32,6 +34,7 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.color.Color;
 
@@ -44,19 +47,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-public class BallGame extends SimpleBaseGameActivity{
+public class BallGame extends SimpleBaseGameActivity implements SensorEventListener{
 
 	private Camera camera;
 	private static final int CAMERA_WIDTH = 800;
 	private static final int CAMERA_HEIGHT = 480;
 	
 	private Font font;
-	private Font smallfont;
+	private Font gameOverfont;
 	HUD hud;
 	private Text hudText;
 	Control control;
@@ -83,7 +88,10 @@ public class BallGame extends SimpleBaseGameActivity{
 	int dificultad;
 	int vidas;
 	boolean inGame;
-
+	
+	SensorManager manager;
+	Sensor accelerometer;
+	
 	protected boolean mBound;
 	private Toast reusableToast;
 	private boolean pairing;
@@ -98,6 +106,10 @@ public class BallGame extends SimpleBaseGameActivity{
 			bindService(new Intent(this,BTService.class),btconnection,Context.BIND_AUTO_CREATE);
 		}
 		super.onStart();
+		manager =(SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		accelerometer = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+		
 	}
 	@Override
 	protected void onResume() {
@@ -106,6 +118,8 @@ public class BallGame extends SimpleBaseGameActivity{
 			bindService(new Intent(this,BTService.class),btconnection,Context.BIND_AUTO_CREATE);
 		}
 		super.onResume();
+		manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+		
 	}
 	private ServiceConnection btconnection = new ServiceConnection() {
 
@@ -149,6 +163,7 @@ public class BallGame extends SimpleBaseGameActivity{
     public void onPause()
     {
     	super.onPause();
+    	manager.unregisterListener(this);
     }
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -168,9 +183,9 @@ public class BallGame extends SimpleBaseGameActivity{
 	    final ITexture fontTexture = new BitmapTextureAtlas(this.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
 	    font = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 40.0f, true, Color.BLACK.getABGRPackedInt());
-	    smallfont = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "font.ttf", 25.0f, true, Color.BLACK.getABGRPackedInt());
+	    gameOverfont = FontFactory.createFromAsset(getFontManager(), fontTexture, getAssets(), "ARCADECLASSIC.TTF", 100.0f, true, Color.BLACK.getABGRPackedInt());
 	    font.load();
-	    smallfont.load();
+	    gameOverfont.load();
 	    
 	    BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 	    ballTexture = new BitmapTextureAtlas(getTextureManager(), 256, 256, TextureOptions.BILINEAR);
@@ -236,11 +251,12 @@ public class BallGame extends SimpleBaseGameActivity{
     		    });
     			
 			hud.detachChild(hudText);
-			hudText = new Text(70, 40, smallfont, "Game Over. Presione el boton atrás para volver",100,BallGame.this.vbo);
+			hudText = new Text(CAMERA_WIDTH/2 - 250, CAMERA_HEIGHT/4, gameOverfont, "Game Over",100,BallGame.this.vbo);
 			hud.attachChild(hudText);
 			player.detach();
 		}
 	}
+	SensorManager sensorManager;
 	@Override
 	protected Scene onCreateScene() {
 		// TODO Auto-generated method stub
@@ -250,7 +266,7 @@ public class BallGame extends SimpleBaseGameActivity{
 		vbo = mEngine.getVertexBufferObjectManager();
 		registerButtons();
 		control = new Control(leftListener, rightListener);
-		scene.setOnSceneTouchListener(control.tcontrol);
+		//scene.setOnSceneTouchListener(control.tcontrol); //Activar para tener touch
 		scene.setTouchAreaBindingOnActionDownEnabled(true);
 		hud.registerUpdateHandler(control);
 		
@@ -258,16 +274,12 @@ public class BallGame extends SimpleBaseGameActivity{
 		ParallaxBackground background = new ParallaxBackground(0, 0, 0);
 	    background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(0, 0, bgTextureRegion, vbo)));
 	    scene.setBackground(background);
-	     if(btservice != null)
-	    	 if(btservice.isConnected())
-	    	 {
-	    		 btservice.startProgram("Eat.rxe");
-	    	 }
 	     player = new Player();
 	     ballGenerator = new BallGenerator();
 	     scene.attachChild(player.sprite);
 	     inGame = true;
 	     ballGenerator.CreateBall();
+	     
 	     return scene;
 	}
 	
@@ -278,8 +290,10 @@ public class BallGame extends SimpleBaseGameActivity{
 
                 
                 if (resultCode == Activity.RESULT_OK) {
+                	int brick = data.getExtras().getInt("Brick");
                     String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
                     pairing = data.getExtras().getBoolean(DeviceListActivity.PAIRING);
+                    btservice.setMac(address, brick);
                     btservice.startBTCommunicator(address);
                     
 	 		        
@@ -292,8 +306,9 @@ public class BallGame extends SimpleBaseGameActivity{
                 // When the request to enable Bluetooth returns
                 switch (resultCode) {
                     case Activity.RESULT_OK:
-                        btservice.setBtOnByUs(true);
-                        btservice.selectTypeCnt();
+                        BTService.setBtOnByUs(true);
+                        int brick = data.getExtras().getInt("Brick");
+                        btservice.selectTypeCnt(brick);
                         break;
                     case Activity.RESULT_CANCELED:
                         showToast(R.string.bt_needs_to_be_enabled, Toast.LENGTH_SHORT);
@@ -561,6 +576,7 @@ public class BallGame extends SimpleBaseGameActivity{
     }
     class TouchControl implements IOnSceneTouchListener
     {
+    	//Implementa el control por touch. 
     	btnListener leftListener;
     	btnListener rightListener;
     	public TouchControl(btnListener left, btnListener right)
@@ -613,11 +629,13 @@ public class BallGame extends SimpleBaseGameActivity{
     	btnListener leftOn;
     	btnListener rightOn;
     	TouchControl tcontrol;
+    	float accel;
     	public Control(btnListener left, btnListener right)
     	{
     		leftOn = left;
     	    rightOn = right;
     		tcontrol = new TouchControl(leftOn,rightOn);
+    		accel = 0;
     	    
     	}
 		@Override
@@ -634,7 +652,7 @@ public class BallGame extends SimpleBaseGameActivity{
     			Player player = BallGame.this.player;
     			if(player.sprite.getX()< BallGame.CAMERA_WIDTH - Player.size_x)
     			{
-    				player.sprite.setPosition(player.sprite.getX()+Player.speed, player.sprite.getY());
+    				player.sprite.setPosition(player.sprite.getX()+accel*Player.speed, player.sprite.getY());
     			}
     		}
 			else if (leftOn.isOn)
@@ -643,7 +661,7 @@ public class BallGame extends SimpleBaseGameActivity{
     			Player player = BallGame.this.player;
     			if(player.sprite.getX()>0)
     			{
-    				player.sprite.setPosition(player.sprite.getX()-Player.speed, player.sprite.getY());
+    				player.sprite.setPosition(player.sprite.getX()+accel*Player.speed, player.sprite.getY());
     			}
     		}
 			
@@ -653,9 +671,52 @@ public class BallGame extends SimpleBaseGameActivity{
 			// TODO Auto-generated method stub
 			
 		}
+		public void toggleRightOn()
+		{
+			rightOn.isOn = true;
+		}
+		public void toggleLeftOn()
+		{
+			leftOn.isOn = true;
+		}
+		public void toggleRightOff()
+		{
+			rightOn.isOn = false;
+		}
+		public void toggleLeftOff()
+		{
+			leftOn.isOn = false;
+		}
     }
-    private class RestartScene extends Scene
-    {
-    	
-    };
+	
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		//Implementa el control por acelerometro
+		// TODO Auto-generated method stub
+		if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
+            return;
+		
+		float X = event.values[1];
+		if(control != null)
+		{
+			control.accel = (float) (X*0.60);
+			if(X > 0)
+			{
+				control.toggleLeftOff();
+				control.toggleRightOn();
+			}
+			else if (X < 0)
+			{
+				control.toggleLeftOn();
+				control.toggleRightOff();
+			}
+		}
+		
+	}
+	 
 }

@@ -163,8 +163,10 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 					Database_Helper db = new Database_Helper(thisActivity);
 			    	List<Pet> mascotas = db.getPets(); //lista de mascotas
 			    	db.close();
-			    	Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_death());
-					btservice.connect(petto.get_mac());
+			    	Pet petto = new Pet(mascotas.get(0).get_id(), mascotas.get(0).get_name(), mascotas.get(0).get_raza(), mascotas.get(0).get_color(), mascotas.get(0).get_birthdate(), mascotas.get(0).get_mac(), mascotas.get(0).get_mac2(),mascotas.get(0).get_death());
+					btservice.setMac(petto.get_mac(), 0);
+					btservice.setMac(petto.get_mac2(), 1);
+			    	btservice.connect(petto.get_mac());
 					
 			    } 
 				else if(btservice.isConnected()){
@@ -654,8 +656,10 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 
                 
                 if (resultCode == Activity.RESULT_OK) {
+                	int brick = data.getExtras().getInt("Brick");
                     String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
                     pairing = data.getExtras().getBoolean(DeviceListActivity.PAIRING);
+                    btservice.setMac(address, brick);
                     btservice.startBTCommunicator(address);
                     
 	 		        
@@ -664,12 +668,17 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
                 break;
                 
             case REQUEST_ENABLE_BT:
-
+            case BTService.REQUEST_ENABLE_BT_2BRICK:
+            	int brick = 0;
+            	if(requestCode == BTService.REQUEST_ENABLE_BT_2BRICK)
+            	{
+            		brick = 1;
+            	}
                 // When the request to enable Bluetooth returns
                 switch (resultCode) {
                     case Activity.RESULT_OK:
                         btOnByUs = true;
-                        btservice.selectTypeCnt();
+                        btservice.selectTypeCnt(brick);
                         break;
                     case Activity.RESULT_CANCELED:
                         showToast(R.string.bt_needs_to_be_enabled, Toast.LENGTH_SHORT);
@@ -819,9 +828,9 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 	}
 	
 	//Funciones para que clases viejas no se quejen por el cambio a service
-	public void pairing() {
+	public void pairing(int bricknumber) {
 		// TODO Auto-generated method stub
-		btservice.pairing();
+		btservice.pairing(bricknumber);
 	}
 
 	public boolean isConnected() {

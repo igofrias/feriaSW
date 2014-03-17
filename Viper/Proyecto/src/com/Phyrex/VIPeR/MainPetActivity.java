@@ -12,16 +12,23 @@ import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,6 +52,22 @@ public class MainPetActivity extends SherlockFragment{
 	Activity parent_activity;
 	MainActivity thisActivity;
 	
+	private Messenger messenger;
+	private ServiceConnection sConn;
+	public void sendBindMessage()
+	{
+		//Envia un mensaje al servicio para hacer bind
+		Message msg = Message.obtain(null, StatesService.REGISTER_CLIENT);
+		msg.replyTo = new Messenger(this.statesHandler);
+		try {
+			if(messenger != null)
+				messenger.send(msg);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,6 +91,23 @@ public class MainPetActivity extends SherlockFragment{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		thisActivity = (MainActivity) getActivity();
+		sConn = new ServiceConnection() {
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                messenger = null;
+            }
+
+            @Override
+            public void onServiceConnected(ComponentName name,IBinder service) {
+                // We are conntected to the service
+                messenger = new Messenger(service);
+                sendBindMessage();
+
+            }
+        };
+        thisActivity.bindService(new Intent(thisActivity, StatesService.class), sConn,
+                Context.BIND_AUTO_CREATE);
 		
 	}
 	 
@@ -183,7 +223,7 @@ public class MainPetActivity extends SherlockFragment{
 				break;
 			case 2://dormir
 				SleepTask.petAction(thisActivity, updater, entry, (StatesActivity)fragment1);
-				if(((StatesActivity)fragment1).isSleeping())
+				if(!StatesService.getCurrentReceiver().sleeping) //El ! va ahi. Como que sleeping esta invertido
 				{
 					sendNonOpenEyes("CloseEyes");
 					sendMiscAction("YawnSound",0);
@@ -234,7 +274,23 @@ public class MainPetActivity extends SherlockFragment{
     {
     	eyesOpen = false;
     }
-    
+    //Este handler recive instrucciones desde el StatesService para que sean ejecutadas
+    //aqui
+    Handler statesHandler = new Handler()
+    {
+    	@Override
+		public void handleMessage(Message msg) {
+			int msgType = msg.what;
+			if(msgType == StatesService.MASCOT_POOPED)
+			{
+				MainPetActivity.this.canvas.Dopoop();
+			}
+			else if(msgType == StatesService.MASCOT_CLEANED)
+			{
+				Actions(3);
+			}
+		}
+    };
    /////////////////////////////clase draw joytick////////////////////////////////////
 	
 	private class Drawpet extends SurfaceView implements SurfaceHolder.Callback, Runnable
@@ -486,7 +542,7 @@ public class MainPetActivity extends SherlockFragment{
 				    		petFingerMove = true;
 					    		sendNonOpenEyes("HappyEyes");
 				    		if(dirtstate<9){
-				    			dirtstate++;
+				    			//dirtstate++;
 				    		}
 				    	}else{
 				    		petFingerMove = false;
@@ -511,14 +567,15 @@ public class MainPetActivity extends SherlockFragment{
 				case MotionEvent.ACTION_DOWN:
 					if(petstate==2){
 						petstate=0;
-						sleeping=false;
-							
+						//sleeping=false;
+						StatesService.sendCommandToStatesService("wake", thisActivity);	
 						Actions(2);//despertar
 					}else{
 						SherlockFragment fragment = ((StatesActivity)getFragmentManager().findFragmentByTag("state"));
 						if(!((StatesActivity)fragment).isFullSleep()){
 							petstate=2;
-							sleeping=true;
+							//sleeping=true;
+							StatesService.sendCommandToStatesService("sleep", thisActivity);
 							timesleep=90;
 							timesleepbreath=80;
 							Actions(2);//accion dormir
@@ -534,6 +591,7 @@ public class MainPetActivity extends SherlockFragment{
 				switch (e.getAction()) {
 				case MotionEvent.ACTION_DOWN:
 					poop= false;
+					StatesService.sendCommandToStatesService("washing", thisActivity);
 					Actions(4);
 			      break;
 			    }
@@ -736,19 +794,8 @@ public class MainPetActivity extends SherlockFragment{
 		}
 		
 		public void Dopoop(){
-			poop=true;
-			Runnable shameFace = new Runnable()
-			{
-
-				@Override
-				public void run() {
-					
-					sendNonOpenEyes("ShameEyes");
-				}
-				
-			};
-			Handler h = new Handler();
-			h.postDelayed(shameFace, 10);
+			
+			sendNonOpenEyes("ShameEyes");
 			sendMiscAction("FartSound",1);	
 			Actions(7); //hacer caca
 		}
@@ -942,7 +989,8 @@ public class MainPetActivity extends SherlockFragment{
 		
 		public void Drawclean(float center_x, float center_y){
 			if(dirtstate>0){
-				dirtstate--;
+				//dirtstate--;
+				StatesService.sendCommandToStatesService("cleaning", thisActivity);
 				if(dirtstate==0)
 					Actions(3);
 			}
@@ -1273,8 +1321,10 @@ public class MainPetActivity extends SherlockFragment{
                 if(hold.getSurface().isValid())
 				{
 					can = hold.lockCanvas();
-				
-					
+						
+					poop = StatesService.getCurrentReceiver().poop;
+					dirtstate = StatesService.getCurrentReceiver().dirtstate;
+					sleeping = StatesService.getCurrentReceiver().sleeping;
 						canvas.Draw(can);
 					
 					hold.unlockCanvasAndPost(can);

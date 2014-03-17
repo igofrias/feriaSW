@@ -44,7 +44,7 @@ public class DeviceListActivity extends Activity {
     private BluetoothAdapter mBtAdapter;
     private ArrayAdapter<String> mPairedDevicesArrayAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
-
+    int currentbrick = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +57,8 @@ public class DeviceListActivity extends Activity {
         // Initialize the button to perform device discovery
         Button scanButton = (Button) findViewById(R.id.button_scan);
         //findViewById(R.id.title_devicelistactivity).setVisibility(View.VISIBLE);
+        Intent brickIntent = getIntent();
+        currentbrick = brickIntent.getExtras().getInt("Brick");
         scanButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 doDiscovery();
@@ -163,6 +165,7 @@ public class DeviceListActivity extends Activity {
             // Create the result Intent and include the infos
             Intent intent = new Intent();
             Bundle data = new Bundle();
+            data.putInt("Brick", currentbrick);
             data.putString(DEVICE_NAME_AND_ADDRESS, info);
             data.putString(EXTRA_DEVICE_ADDRESS, address);
             data.putBoolean(PAIRING,av.getId()==R.id.new_devices);

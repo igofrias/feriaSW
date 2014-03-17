@@ -135,17 +135,14 @@ public class CreateActivity extends SherlockFragment{
 		bncnt.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				((MainActivity)thisActivity).pairing();
+				((MainActivity)thisActivity).pairing(0);
 			}});
 		
 		bncnt2.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				//((MainActivity)thisActivity).pairing();
-				/********mensaje para juan del futuro************
-				 * aca deberias estar el pairing para el segundo brick
-				 * hay q ver bien como guardarlo y diferenciarlo del otro
-				 */
+				((MainActivity)thisActivity).pairing(1);
+				
 			}});
 		
 		/************bnt listener
@@ -182,7 +179,8 @@ public class CreateActivity extends SherlockFragment{
 				        dialog.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {  //boton positivo (opcional)
 				            public void onClick(DialogInterface dialogo1, int id) {  
 				            	entry.open_write();            	
-						    	entry.createEntry(name.getText().toString(), currentDateandTime, raze, color, ((MainActivity)thisActivity).return_mac(), 0);
+						    	entry.createEntry(name.getText().toString(), currentDateandTime, raze, color, ((MainActivity)thisActivity).return_mac(),
+						    							((MainActivity)thisActivity).getBTService().mac_slave, 0);
 						    	entry.close();
 						    	initialize.AchievementsList(entry);
 						    	initialize.StatisticsList(entry);

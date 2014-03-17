@@ -8,6 +8,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -18,6 +21,8 @@ public class StatesService extends Service {
 	int hunger;
 	int energy;
 	int hapiness;
+	int dirtstate;
+	boolean poop;
 	static int MAX_HEALTH = 1000;
 	static int MAX_HUNGER = 1000;
 	static int MAX_ENERGY = 1000;
@@ -33,6 +38,8 @@ public class StatesService extends Service {
 		energy = INITIAL_ENERGY;
 		hapiness = INITIAL_HAPINESS;
 		sleeping = false;
+		dirtstate = 0;
+		poop = false;
 		getCurrentReceiver();
 		
 	}
@@ -43,9 +50,11 @@ public class StatesService extends Service {
 		int hunger;
 		int energy;
 		int hapiness;
+		int dirtstate;
 		boolean sleeping;
 		boolean full;
 		boolean fullSleep;
+		boolean poop;
 		public StatesReceiver()
 		{
 			super();
@@ -56,6 +65,8 @@ public class StatesService extends Service {
 			sleeping = false;
 			full = false;
 			fullSleep = false;
+			dirtstate = 0;
+			poop = false;
 		}
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -66,38 +77,10 @@ public class StatesService extends Service {
 			{
 				String command = extras.getString("StateReceiverCommand");
 				if(command != null)
-					if(command.equals("HapinessState"))
-					{
-						hapiness = extras.getInt("HapinessState");
-						//Log.i("StateReceiver","Hapiness=" + hapiness);
-					}
-					else if(command.equals("EnergyState"))
-					{
-						energy = extras.getInt("EnergyState");
-						//Log.i("StateReceiver","Energys=" + energy);
-					}
-					else if(command.equals("HealthState"))
-					{
-						health = extras.getInt("HealthState");
-						//Log.i("StateReceiver","Health=" + health);
-					}
-					else if(command.equals("HungerState"))
-					{
-						hunger = extras.getInt("HungerState");
-						//Log.i("StateReceiver","Hunger=" + hunger);
-					}
-					else if(command.equals("SleepState"))
-					{
-						sleeping = extras.getBoolean("SleepState");
-					}
-					else if(command.equals("FullState"))
-					{
-						full = extras.getBoolean("FullState");
-					}
-					else if(command.equals("FullSleepState"))
-					{
-						fullSleep = extras.getBoolean("FullSleepState");
-					}
+				{
+					
+				}
+					
 			}
 		}
 	}
@@ -137,8 +120,10 @@ public class StatesService extends Service {
 			LocalBroadcastManager.getInstance(this).registerReceiver(currentReceiver,
 				      new IntentFilter("com.Phyrex.VIPeR.StatesService.ACTION"));
 			currentStatesRunnable = new StatesRunnable();
-			statesHandler.post(currentStatesRunnable);
+			statesThread = new Thread(currentStatesRunnable);
 			started = true;
+			statesThread.start();
+			
 			Log.d("StatesService","StatesService started");
 		}
 		receiveCommand(intent);
@@ -153,29 +138,120 @@ public class StatesService extends Service {
 		started = false;
 		super.onDestroy();
 	}
+
+	//clientHandler maneja la comunicacion con los distintos clientes del servicio
+	static int REGISTER_CLIENT = 0x00;
+	static int UNREGISTER_CLIENT = 0x01;
+	static int MASCOT_POOPED = 0x02;
+	static int MASCOT_CLEANED = 0x03;
+	Messenger currentClient = null;
+	Handler clientHandler = new Handler()
+	{
+		@Override
+		public void handleMessage(Message msg) {
+			int msgType = msg.what;
+			if(msgType == REGISTER_CLIENT)
+			{
+				currentClient = msg.replyTo;
+			}
+			else if(msgType == UNREGISTER_CLIENT)
+			{
+				currentClient = null;
+			}
+
+		}
+
+	};
+	private Messenger msg = new Messenger(clientHandler);
+
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
-		return null;
+		return msg.getBinder();
 	}
 	Handler statesHandler = new Handler(); //Ayuda a ejecutar el StatesRunnable mientras este funciona
+	Thread statesThread = null;
 	class StatesRunnable implements Runnable
 	{
 		long postTime = 400;
 		//Clase que implementa la logica para los estados
+		
+		
+		static final int runsBeforePoop = 500;
+		static final int runsBeforeDirt = 100;
+		int currentRun = 0;
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-
-			hungrypet();
-			sleepingPet();
-			updateReceiverStates();	
-			if(started){
-				statesHandler.postDelayed(this, postTime);
+			while(started){
+				hungrypet();
+				sleepingPet();
+				updateReceiverStates();
+				//Esto permite controlar la cantidad de veces que el runnable se ejecuta antes de hacer caca
+				//o de ensuciarse. Equivale a postTime*runsBeforeWhatever ms antes de hacer Whatever
+				if(currentRun >= 0)
+				{
+					currentRun++;
+					if(currentRun % runsBeforePoop == 0 && currentRun <= runsBeforePoop)
+					{
+						poopingPet();
+						currentRun = 0;
+					}
+					if(currentRun % runsBeforeDirt == 0 && currentRun <= runsBeforePoop)
+					{
+						dirtyPet();
+						
+						
+					}
+					
+				}
+				
+				try {
+					Thread.sleep(postTime);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			
 		}
 		
+	}
+	public void dirtyMod(int val)
+	{
+		//Modifica el estado de suciedad para que quede consistente
+		//Le suma el valor de val
+		dirtstate += val;
+		if(dirtstate > 8){
+			dirtstate = 8;
+		}	
+		else if (dirtstate < 0)
+		{
+			dirtstate = 0;
+		}
+	
+	}
+	public void dirtyPet()
+	{
+		//Hace que la mascota se ensucie
+		dirtyMod(1);
+	}
+	public void poopingPet()
+	{
+		//Hace que la mascota se cague
+		poop = true;
+		pooing();
+	}
+	public void uncleanPet()
+	{
+		//Hace cosas cuando la mascota esta sucia de alguna u otra forma
+		if(poop && dirtstate > 0)
+		{
+			modHealth(-2);
+		}
+		else if (poop | dirtstate > 0)
+		{
+			modHealth(-1);
+		}
 	}
 	public void updateReceiverStates()
 	{
@@ -189,6 +265,8 @@ public class StatesService extends Service {
 			currentReceiver.full = isFull();
 			currentReceiver.fullSleep = isFullSleep();
 			currentReceiver.sleeping = sleeping;
+			currentReceiver.dirtstate = dirtstate;
+			currentReceiver.poop = poop;
 		}
 	}
 	//Las funciones mod** modifican el atributo de tal forma que no se salgan de sus rangos
@@ -243,11 +321,21 @@ public class StatesService extends Service {
 	}
 	public void sleepingPet()
 	{
-		//Lo que hace la mascota cuando duerme
+		//Lo que hace la mascota cuando duerme, o no duerme
 		if(sleeping && energy<MAX_ENERGY){
 			
 			modEnergy(10);
-			modHunger(-1);
+		}
+		else if(energy < MAX_ENERGY)
+		{
+			modEnergy(-1);
+		}
+		else if(energy <= 0)
+		{
+			//Una mascota que se cae exhausta no debiese estar contenta
+			sleeping = true;
+			modHunger(-50);
+			modHapiness(-30);
 		}
 	}
 	public void hungrypet(){
@@ -354,7 +442,8 @@ public class StatesService extends Service {
 	}
 	public void eatingCommand()
 	{
-		modHunger(100);
+		modHunger(500);
+		modHapiness(100);
 	}
 	public boolean isFull()
 	{
@@ -390,6 +479,7 @@ public class StatesService extends Service {
 	{
 		sleeping = true;
 		modHealth(100);
+		modHapiness(30);
 		modHunger(-50);
 	}
 	public void wake()
@@ -400,15 +490,39 @@ public class StatesService extends Service {
 	{
 		modHealth(100);
 		modHapiness(50);
+		poop = false;
 	}
 	public void pooing()
 	{
 		modHealth(-50);
 		modHapiness(10);
+		poop = true;
+		Message message = new Message();
+		message.what = MASCOT_POOPED;
+		try {
+			if(currentClient != null)
+				currentClient.send(message);	
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void cleaning()
 	{
 		modHealth(60);
+		dirtyMod(-1);
+		if(dirtstate == 0)
+		{
+			Message message = new Message();
+			message.what = MASCOT_CLEANED;
+			try {
+				if(currentClient != null)
+					currentClient.send(message);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	public void actionwhenfull()
 	{

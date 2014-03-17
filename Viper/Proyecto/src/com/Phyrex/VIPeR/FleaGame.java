@@ -737,15 +737,20 @@ public class FleaGame extends SimpleBaseGameActivity
     	super.onPause();
     }
     
-	@Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case BTService.REQUEST_CONNECT_DEVICE:
 
+                
                 if (resultCode == Activity.RESULT_OK) {
+                	int brick = data.getExtras().getInt("Brick");
                     String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
                     pairing = data.getExtras().getBoolean(DeviceListActivity.PAIRING);
-                    btservice.startBTCommunicator(address);        
+                    btservice.setMac(address, brick);
+                    btservice.startBTCommunicator(address);
+                    
+	 		        
                 }
                 
                 break;
@@ -755,8 +760,9 @@ public class FleaGame extends SimpleBaseGameActivity
                 // When the request to enable Bluetooth returns
                 switch (resultCode) {
                     case Activity.RESULT_OK:
-                        btservice.setBtOnByUs(true);
-                        btservice.selectTypeCnt();
+                        BTService.setBtOnByUs(true);
+                        int brick = data.getExtras().getInt("Brick");
+                        btservice.selectTypeCnt(brick);
                         break;
                     case Activity.RESULT_CANCELED:
                         showToast(R.string.bt_needs_to_be_enabled, Toast.LENGTH_SHORT);
@@ -771,6 +777,7 @@ public class FleaGame extends SimpleBaseGameActivity
              
         }
     }
+    
 	
 	///muestra el Toast///
     ////recive el mensaje y la duracion del Toast///////////
