@@ -47,12 +47,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-public class BallGame extends SimpleBaseGameActivity implements IAccelerationListener{
+public class BallGame extends SimpleBaseGameActivity implements SensorEventListener{
 
 	private Camera camera;
 	private static final int CAMERA_WIDTH = 800;
@@ -86,7 +88,10 @@ public class BallGame extends SimpleBaseGameActivity implements IAccelerationLis
 	int dificultad;
 	int vidas;
 	boolean inGame;
-
+	
+	SensorManager manager;
+	Sensor accelerometer;
+	
 	protected boolean mBound;
 	private Toast reusableToast;
 	private boolean pairing;
@@ -101,6 +106,10 @@ public class BallGame extends SimpleBaseGameActivity implements IAccelerationLis
 			bindService(new Intent(this,BTService.class),btconnection,Context.BIND_AUTO_CREATE);
 		}
 		super.onStart();
+		manager =(SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		accelerometer = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+		
 	}
 	@Override
 	protected void onResume() {
@@ -109,6 +118,8 @@ public class BallGame extends SimpleBaseGameActivity implements IAccelerationLis
 			bindService(new Intent(this,BTService.class),btconnection,Context.BIND_AUTO_CREATE);
 		}
 		super.onResume();
+		manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+		
 	}
 	private ServiceConnection btconnection = new ServiceConnection() {
 
@@ -152,6 +163,7 @@ public class BallGame extends SimpleBaseGameActivity implements IAccelerationLis
     public void onPause()
     {
     	super.onPause();
+    	manager.unregisterListener(this);
     }
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -239,7 +251,7 @@ public class BallGame extends SimpleBaseGameActivity implements IAccelerationLis
     		    });
     			
 			hud.detachChild(hudText);
-			hudText = new Text(0, CAMERA_HEIGHT/2, gameOverfont, "Game Over",100,BallGame.this.vbo);
+			hudText = new Text(CAMERA_WIDTH/2 - 250, CAMERA_HEIGHT/4, gameOverfont, "Game Over",100,BallGame.this.vbo);
 			hud.attachChild(hudText);
 			player.detach();
 		}
@@ -254,7 +266,7 @@ public class BallGame extends SimpleBaseGameActivity implements IAccelerationLis
 		vbo = mEngine.getVertexBufferObjectManager();
 		registerButtons();
 		control = new Control(leftListener, rightListener);
-		scene.setOnSceneTouchListener(control.tcontrol);
+		//scene.setOnSceneTouchListener(control.tcontrol); //Activar para tener touch
 		scene.setTouchAreaBindingOnActionDownEnabled(true);
 		hud.registerUpdateHandler(control);
 		
@@ -262,11 +274,6 @@ public class BallGame extends SimpleBaseGameActivity implements IAccelerationLis
 		ParallaxBackground background = new ParallaxBackground(0, 0, 0);
 	    background.attachParallaxEntity(new ParallaxEntity(0, new Sprite(0, 0, bgTextureRegion, vbo)));
 	    scene.setBackground(background);
-	     if(btservice != null)
-	    	 if(btservice.isConnected())
-	    	 {
-	    		 btservice.startProgram("Eat.rxe");
-	    	 }
 	     player = new Player();
 	     ballGenerator = new BallGenerator();
 	     scene.attachChild(player.sprite);
@@ -569,6 +576,7 @@ public class BallGame extends SimpleBaseGameActivity implements IAccelerationLis
     }
     class TouchControl implements IOnSceneTouchListener
     {
+    	//Implementa el control por touch. 
     	btnListener leftListener;
     	btnListener rightListener;
     	public TouchControl(btnListener left, btnListener right)
@@ -621,11 +629,13 @@ public class BallGame extends SimpleBaseGameActivity implements IAccelerationLis
     	btnListener leftOn;
     	btnListener rightOn;
     	TouchControl tcontrol;
+    	float accel;
     	public Control(btnListener left, btnListener right)
     	{
     		leftOn = left;
     	    rightOn = right;
     		tcontrol = new TouchControl(leftOn,rightOn);
+    		accel = 0;
     	    
     	}
 		@Override
@@ -642,7 +652,7 @@ public class BallGame extends SimpleBaseGameActivity implements IAccelerationLis
     			Player player = BallGame.this.player;
     			if(player.sprite.getX()< BallGame.CAMERA_WIDTH - Player.size_x)
     			{
-    				player.sprite.setPosition(player.sprite.getX()+Player.speed, player.sprite.getY());
+    				player.sprite.setPosition(player.sprite.getX()+accel*Player.speed, player.sprite.getY());
     			}
     		}
 			else if (leftOn.isOn)
@@ -651,7 +661,7 @@ public class BallGame extends SimpleBaseGameActivity implements IAccelerationLis
     			Player player = BallGame.this.player;
     			if(player.sprite.getX()>0)
     			{
-    				player.sprite.setPosition(player.sprite.getX()-Player.speed, player.sprite.getY());
+    				player.sprite.setPosition(player.sprite.getX()+accel*Player.speed, player.sprite.getY());
     			}
     		}
 			
@@ -678,31 +688,35 @@ public class BallGame extends SimpleBaseGameActivity implements IAccelerationLis
 			leftOn.isOn = false;
 		}
     }
-
-    private class RestartScene extends Scene
-    {
-    	
-    }
 	
 	@Override
-	public void onAccelerationChanged(AccelerationData pAccelerationData) {
-		//Va hacia algun lado de acuerdo a la inclinacion del celu
-		float X = pAccelerationData.getX();
-		if(X > 0)
-		{
-			control.toggleLeftOff();
-			control.toggleRightOn();
-		}
-		else if (X < 0)
-		{
-			control.toggleLeftOn();
-			control.toggleRightOff();
-		}
-	}
-	@Override
-	public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
 		
-	};
+	}
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		//Implementa el control por acelerometro
+		// TODO Auto-generated method stub
+		if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
+            return;
+		
+		float X = event.values[1];
+		if(control != null)
+		{
+			control.accel = (float) (X*0.75);
+			if(X > 0)
+			{
+				control.toggleLeftOff();
+				control.toggleRightOn();
+			}
+			else if (X < 0)
+			{
+				control.toggleLeftOn();
+				control.toggleRightOff();
+			}
+		}
+		
+	}
 	 
 }
