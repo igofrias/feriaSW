@@ -289,6 +289,14 @@ public class MainPetActivity extends SherlockFragment{
 			{
 				Actions(3);
 			}
+			else if(msgType == StatesService.MASCOT_ASLEEP)
+			{
+				canvas.petstate = 2;
+			}
+			else if(msgType == StatesService.MASCOT_AWAKE)
+			{
+				canvas.petstate = 0;
+			}
 		}
     };
    /////////////////////////////clase draw joytick////////////////////////////////////

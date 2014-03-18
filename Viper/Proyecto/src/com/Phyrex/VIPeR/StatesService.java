@@ -144,6 +144,8 @@ public class StatesService extends Service {
 	static int UNREGISTER_CLIENT = 0x01;
 	static int MASCOT_POOPED = 0x02;
 	static int MASCOT_CLEANED = 0x03;
+	static int MASCOT_ASLEEP = 0x04;
+	static int MASCOT_AWAKE = 0x05;
 	Messenger currentClient = null;
 	Handler clientHandler = new Handler()
 	{
@@ -323,12 +325,12 @@ public class StatesService extends Service {
 	{
 		//Lo que hace la mascota cuando duerme, o no duerme
 		if(sleeping && energy<MAX_ENERGY){
-			
+			if(energy >=MAX_ENERGY - 30)
+			{
+				sleeping = false;
+				sendAwakeState();
+			}
 			modEnergy(10);
-		}
-		else if(energy < MAX_ENERGY)
-		{
-			modEnergy(-1);
 		}
 		else if(energy <= 0)
 		{
@@ -336,6 +338,11 @@ public class StatesService extends Service {
 			sleeping = true;
 			modHunger(-50);
 			modHapiness(-30);
+			sendSleepState();
+		}
+		else if(energy < MAX_ENERGY)
+		{
+			modEnergy(-1);
 		}
 	}
 	public void hungrypet(){
@@ -481,10 +488,38 @@ public class StatesService extends Service {
 		modHealth(100);
 		modHapiness(30);
 		modHunger(-50);
+		sendSleepState();
+	}
+	public void sendSleepState()
+	{
+		//Envia mensaje a mainpetactivity para decir que mascota se quedo dormida
+		Message message = new Message();
+		message.what = MASCOT_ASLEEP;
+		try {
+			if(currentClient != null)
+				currentClient.send(message);	
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void sendAwakeState()
+	{
+		//Envia mensaje a mainpetactivity para decir que mascota se desperto
+		Message message = new Message();
+		message.what = MASCOT_AWAKE;
+		try {
+			if(currentClient != null)
+				currentClient.send(message);	
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void wake()
 	{
 		sleeping = false;
+		sendAwakeState();
 	}
 	public void washing()
 	{
