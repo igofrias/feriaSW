@@ -358,8 +358,14 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 			ft.replace(R.id.linear, fragment,"remotecontrol");
 		}
 		else{
+			if(((RemoteControl) fragment).playmode)
+			{
+				//ft.detach(fragment); // Esto fuerza al fragmento a reiniciarse cuando se carga desde el juego de las bolas	
+				ft.remove(fragment);
+			}
+			
+			((RemoteControl) fragment).setPlaymode(false);
 			if(fragment.isDetached()){
-				((RemoteControl) fragment).setPlaymode(false);
 				ft.attach(fragment);
 			}
 		}
@@ -409,6 +415,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 				ft.detach(fragment);
 			}
 		}
+		
 		ft.commit();
 	}
     
