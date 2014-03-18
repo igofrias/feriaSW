@@ -528,11 +528,21 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     void changeLayoutVisibility(){
     	frame1 = (FrameLayout)this.findViewById(R.id.frame1);
 		frame2 = (FrameLayout)this.findViewById(R.id.frame2);
-		frame1.setVisibility(View.VISIBLE);
-		frame2.setVisibility(View.VISIBLE);
-		detach_statisticslist();
-		detach_remotecontrolgame();
-		detach_achievementlist();
+    	Runnable r = new Runnable(){
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				frame1.setVisibility(View.VISIBLE);
+				frame2.setVisibility(View.VISIBLE);
+				detach_statisticslist();
+				detach_remotecontrolgame();
+				detach_achievementlist();
+			}
+    		
+    	};
+    	this.runOnUiThread(r);
+    	
     }
     
     void detachAll(){

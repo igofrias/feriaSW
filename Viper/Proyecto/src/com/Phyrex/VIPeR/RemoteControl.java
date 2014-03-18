@@ -310,9 +310,10 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		else
 		{
 			thMesseger = new Thread(messegerRunnable);
-			canvas.startCanvas();
+			thMesseger.start();
+			
 		}
-		
+		canvas.startCanvas();
 		//getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.control_remoto_debug)).commit();
 	}
 	
@@ -332,8 +333,15 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 				
 			
 		}
+		canvas.stopCanvas();
+		
+	}
+	@Override
+	public void onStop()
+	{
+		super.onStop();
 		manager.unregisterListener(this);
-		running=false;
+		running = false;
 		try {
 			if(thMesseger != null)
 			{
@@ -344,7 +352,6 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		thisActivity.getCurrentBTService().destroyBTCommunicator();
 	}
         @Override
 	public void onDetach(){
@@ -361,7 +368,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		thisActivity.getCurrentBTService().destroyBTCommunicator();
+		
 	}
 
         
@@ -830,10 +837,14 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		}
 		public void startCanvas()
 		{
-			hold = canvas.getHolder();
-			running = true;
-			drawthread = new Thread(this);
-			drawthread.start();
+			if(!running)
+			{
+				hold = canvas.getHolder();
+				running = true;
+				drawthread = new Thread(this);
+				drawthread.start();
+			}
+			
 		}
 		public void stopCanvas()
 		{
