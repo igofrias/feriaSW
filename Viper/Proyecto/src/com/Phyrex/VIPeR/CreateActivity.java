@@ -67,9 +67,16 @@ public class CreateActivity extends SherlockFragment{
 				color="Verde";
 				break;
 			case R.id.btncolor2:
-				Log.e("Create","2");
-				screenshot.setImageResource(R.drawable.tentosaurioshot2);
-				color="Amarillo";
+				if(raze.equals("Tentosaurio")){
+					Log.e("Create","2");
+					screenshot.setImageResource(R.drawable.tentosaurioshot2);
+					color="Amarillo";
+					
+				}else{
+					Log.e("Create","3");
+					screenshot.setImageResource(R.drawable.scorpion);
+					color="Amarillo";
+				}
 				break;
 			case R.id.btncolor3:
 				Log.e("Create","3");
@@ -105,7 +112,7 @@ public class CreateActivity extends SherlockFragment{
 			public void onClick(View v) {
 				if(raze.equals("Tentosaurio")){
 					screenshot.setImageResource(R.drawable.scorpion);
-					btncolor[1].setVisibility(View.GONE);
+					btncolor[0].setVisibility(View.GONE);
 					btncolor[2].setVisibility(View.GONE);
 					raze="Escorpion";
 				}else{
@@ -121,16 +128,14 @@ public class CreateActivity extends SherlockFragment{
 			public void onClick(View v) {
 				if(raze.equals("Tentosaurio")){
 					screenshot.setImageResource(R.drawable.scorpion);
-					btncolor[1].setVisibility(View.GONE);
 					btncolor[2].setVisibility(View.GONE);
-					btncolor[0].setImageResource(R.id.btncolor3);
+					btncolor[0].setVisibility(View.GONE);
 					raze="Escorpion";
 				}else{
 					screenshot.setImageResource(R.drawable.tentosaurioshot);
 					btncolor[1].setVisibility(View.VISIBLE);
 					btncolor[2].setVisibility(View.VISIBLE);
 					btncolor[0].setVisibility(View.VISIBLE);
-					btncolor[0].setImageResource(R.id.btncolor1);
 					raze="Tentosaurio";
 				}
 			}});
