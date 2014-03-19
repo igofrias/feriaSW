@@ -416,6 +416,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		Bitmap ballb;
 		Bitmap ballr;
 		Bitmap bally;
+		Bitmap ballg;
 		Bitmap ballnext;
 		Bitmap buttonclose;
 		Bitmap buttonopen;
@@ -459,6 +460,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					R.drawable.ballred);
 			bally = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.ballyellow);
+			bally = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.ballgreen);
 			buttonclose = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.closepincers);
 			buttonopen = BitmapFactory.decodeResource(getResources(), 
@@ -736,7 +739,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		}
 		
 		public void nextball(){//escoje una pelota al azar
-			int rand = (int) (Math.random() * 3);
+			int rand = (int) (Math.random() * 4);
 			
 			if(rand==0){
 				ballnext = ballr;
@@ -744,9 +747,12 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			}else if(rand==1){
 				ballnext = ballb;
 				ballcolor=2;
-			}else{
+			}else if(rand==2){
 				ballnext = bally;
 				ballcolor=4;
+			}else{
+				ballnext = ballg;
+				ballcolor=3;
 			}
 			
 		}
