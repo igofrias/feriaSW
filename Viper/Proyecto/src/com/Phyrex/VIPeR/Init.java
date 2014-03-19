@@ -67,7 +67,7 @@ public class Init {
 	
 	public static final String ach14 = "Exterminador";	
 	public static final String ach14_desc = "Has exterminado 100 pulgas";
-	public static final int img14 = R.drawable.firstpetarch;
+	public static final int img14 = R.drawable.logroexterminador;
 	int done =0;
 		
 
