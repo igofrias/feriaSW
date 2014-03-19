@@ -292,10 +292,15 @@ public class MainPetActivity extends SherlockFragment{
 			else if(msgType == StatesService.MASCOT_ASLEEP)
 			{
 				canvas.petstate = 2;
+				sendNonOpenEyes("CloseEyes");
+				sendMiscAction("YawnSound",0);
+				
 			}
 			else if(msgType == StatesService.MASCOT_AWAKE)
 			{
 				canvas.petstate = 0;
+				sendOpenEyes();
+				
 			}
 		}
     };

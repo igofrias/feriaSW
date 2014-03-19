@@ -40,7 +40,7 @@ public class BTService extends Service implements BTConnectable{
     static final int REQUEST_ENABLE_BT = 2000;
     static final int REQUEST_ENABLE_BT_2BRICK = 2001;
     private ProgressDialog connectingProgressDialog;
-    private Activity thisActivity;
+    private Activity thisActivity = null;
     private boolean btErrorPending = false;
     private String programToStart;
 	private ThreadClass thread;
@@ -620,7 +620,7 @@ public class BTService extends Service implements BTConnectable{
                  case BTCommunicator.STATE_SENDERROR:
 
                      destroyBTCommunicator();
-                     if (btErrorPending == false) {
+                     if (btErrorPending == false && thisActivity != null) {
                          btErrorPending = true;
                          // inform the user of the error with an AlertDialog
                          AlertDialog.Builder builder = new AlertDialog.Builder(thisActivity);
@@ -635,7 +635,8 @@ public class BTService extends Service implements BTConnectable{
                                  //selectNXT();
                              }
                          });
-                         builder.create().show();
+                         if(thisActivity != null)
+                        	 builder.create().show();
                      }
 
                      break;
