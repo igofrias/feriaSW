@@ -86,6 +86,7 @@ public class GameList_Fragment extends SherlockFragment {
 					Intent intent = new Intent(thisActivity, BallGame.class);
 				    startActivity(intent);
 				}else if(position==1){
+					((MainActivity) thisActivity).detach_gamelist();
 					((MainActivity) thisActivity).launch_remotecontrolgame();
 					Log.e("remote","launch game list");
 				}else if(position==2){
