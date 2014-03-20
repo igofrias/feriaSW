@@ -67,10 +67,6 @@ public class RemoteControlGame extends SherlockFragment implements SensorEventLi
 	Activity parent_activity;
 	MainActivity thisActivity;
 	
-	public void setPlaymode(boolean value){
-		playmode=value;
-	}
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -460,7 +456,7 @@ public class RemoteControlGame extends SherlockFragment implements SensorEventLi
 					R.drawable.ballred);
 			bally = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.ballyellow);
-			bally = BitmapFactory.decodeResource(getResources(), 
+			ballg = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.ballgreen);
 			buttonclose = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.closepincers);

@@ -179,6 +179,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 	    		if (btservice.isConnected()){
 	    			detachAll();
 	    			detach_achievementlist();
+	    			detach_remotecontrolgame();
 	       		 	detach_statisticslist();
 	        		launch_remotecontrol();
 	        		getSlidingMenu().showContent();
@@ -371,14 +372,16 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     
   //llama al supa framento
     void launch_remotecontrolgame() {//identificamos y cargamos el fragmento control remoto
+    	Log.e("remote","launch main activity");
     	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		SherlockFragment fragment = ((RemoteControlGame)getSupportFragmentManager().findFragmentByTag("remotecontrolgame"));
 		
 		if(fragment==null){
+			Log.e("remote","launch main fragment == null");
 			fragment = new RemoteControlGame();
 			ft.replace(R.id.linear, fragment,"remotecontrolgame");
-		}
-		else{
+		}else{
+			Log.e("remote","launch main fragment != null");
 			if(fragment.isDetached()){
 				ft.attach(fragment);
 			}
@@ -419,11 +422,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		}
 		ft.commit();
 	}
-    else{
-		if(fragment.isDetached()){
-			ft.attach(fragment);
-		}
-	}
+    
   //mata el supa framento
     void detach_remotecontrolgame() {//identificamos y quitamos el fragmento control remoto 
     	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -434,7 +433,6 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 				ft.detach(fragment);
 			}
 		}
-		
 		ft.commit();
 	}
     
@@ -549,7 +547,6 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     
     void detachAll(){
     	detach_mainpet();
-    	detach_remotecontrol();
     }
     
 
@@ -805,6 +802,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     		 detach_achievementlist();
     		 detach_statisticslist();
     		 detach_remotecontrolgame();
+    		 detach_remotecontrol();
     		 detach_gamelist();
     		 detach_about();
     		 launch_states();
