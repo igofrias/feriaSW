@@ -354,17 +354,31 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		
 		if(fragment==null){
 			fragment = new RemoteControl();
-			((RemoteControl) fragment).setPlaymode(false);
 			ft.replace(R.id.linear, fragment,"remotecontrol");
+		}else{
+			if(fragment.isDetached()){
+				ft.attach(fragment);
+			}
+		}
+		
+		frame1 = (FrameLayout)this.findViewById(R.id.frame1);
+		frame2 = (FrameLayout)this.findViewById(R.id.frame2);
+		frame1.setVisibility(View.GONE);
+		frame2.setVisibility(View.GONE);
+		detachAll();
+		ft.commit();
+	}
+    
+  //llama al supa framento
+    void launch_remotecontrolgame() {//identificamos y cargamos el fragmento control remoto
+    	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+		SherlockFragment fragment = ((RemoteControlGame)getSupportFragmentManager().findFragmentByTag("remotecontrolgame"));
+		
+		if(fragment==null){
+			fragment = new RemoteControlGame();
+			ft.replace(R.id.linear, fragment,"remotecontrolgame");
 		}
 		else{
-			if(((RemoteControl) fragment).playmode)
-			{
-				//ft.detach(fragment); // Esto fuerza al fragmento a reiniciarse cuando se carga desde el juego de las bolas	
-				ft.remove(fragment);
-			}
-			
-			((RemoteControl) fragment).setPlaymode(false);
 			if(fragment.isDetached()){
 				ft.attach(fragment);
 			}
@@ -377,16 +391,17 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		ft.commit();
 	}
     
-    public RemoteControl getRemoteControl()
+    
+    public RemoteControlGame getRemoteControlGame()
     {
     	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		SherlockFragment fragment = ((RemoteControl)getSupportFragmentManager().findFragmentByTag("remotecontrol"));
+		SherlockFragment fragment = ((RemoteControlGame)getSupportFragmentManager().findFragmentByTag("remotecontrolgame"));
 		if(fragment==null ){
 			return null;
 		}
 		else{
 			if(!fragment.isDetached()){
-				return (RemoteControl) fragment;
+				return (RemoteControlGame) fragment;
 			}
 		}
 		return null;
@@ -404,11 +419,15 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		}
 		ft.commit();
 	}
-    
+    else{
+		if(fragment.isDetached()){
+			ft.attach(fragment);
+		}
+	}
   //mata el supa framento
     void detach_remotecontrolgame() {//identificamos y quitamos el fragmento control remoto 
     	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		SherlockFragment fragment = ((RemoteControl)getSupportFragmentManager().findFragmentByTag("remotecontrolgame"));
+		SherlockFragment fragment = ((RemoteControlGame)getSupportFragmentManager().findFragmentByTag("remotecontrolgame"));
 
 		if(fragment!=null){
 			if(!fragment.isDetached()){
@@ -416,30 +435,6 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 			}
 		}
 		
-		ft.commit();
-	}
-    
-  //llama al supa framento
-    void launch_remotecontrolgame() {//identificamos y cargamos el fragmento control remoto
-    	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		SherlockFragment fragment = ((RemoteControl)getSupportFragmentManager().findFragmentByTag("remotecontrolgame"));
-		
-		if(fragment==null){
-			fragment = new RemoteControl();
-			((RemoteControl) fragment).setPlaymode(true);
-			ft.replace(R.id.linear, fragment,"remotecontrol");
-		}
-		else{
-			((RemoteControl) fragment).setPlaymode(true);
-			if(fragment.isDetached()){
-				ft.attach(fragment);
-			}
-		}
-		frame1 = (FrameLayout)this.findViewById(R.id.frame1);
-		frame2 = (FrameLayout)this.findViewById(R.id.frame2);
-		frame1.setVisibility(View.GONE);
-		frame2.setVisibility(View.GONE);
-		detachAll();
 		ft.commit();
 	}
     

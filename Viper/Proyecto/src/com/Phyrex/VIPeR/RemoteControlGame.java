@@ -39,7 +39,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 //Maneja el control remoto usando acelerometro
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class RemoteControl extends SherlockFragment implements SensorEventListener{
+public class RemoteControlGame extends SherlockFragment implements SensorEventListener{
 	private int MAX_RANGE;
 	private double MAX_VEL;
 	private Sensor accelerometer;
@@ -62,10 +62,14 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	Runnable messegerRunnable;
 	Thread thMesseger;
 	//PLAYMODE
-	boolean playmode;
+	boolean playmode=true;
 	DrawJoystick canvas;
 	Activity parent_activity;
 	MainActivity thisActivity;
+	
+	public void setPlaymode(boolean value){
+		playmode=value;
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -111,7 +115,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					else
 					{
 						running = false;
-						thisActivity.detach_remotecontrol();
+						thisActivity.detach_remotecontrolgame();
 						thisActivity.launch_mainpet();
 					}
 					SystemClock.sleep(wait_time);
@@ -278,6 +282,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
             return;
 		//TODO
+		if(!playmode  || (playmode && canvas.inplay)){
 		    //Cada vez que cambia el sensor se reciben los valores y se procesan.
 		    raw_accel_x = event.values[0];
 		    raw_accel_y = event.values[1];
@@ -286,6 +291,7 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		    process_aceleration();
 		    get_speed();
 		    canvas.update_coordinates(this.vel_x, this.vel_y);
+		}
 	}
 	
 	@Override
@@ -314,6 +320,19 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 	@Override
 	public void onPause() {
 		super.onPause();
+		if(playmode){
+			if(!canvas.release){
+				if(((MainActivity)thisActivity).isConnected()){
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "ReleaseBall");//TODO
+				}
+			}
+				if(((MainActivity)thisActivity).isConnected()){
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "CloseClamps");
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "StartSensors");	
+				}
+				
+			
+		}
 		canvas.stopCanvas();
 		
 	}
@@ -391,7 +410,30 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		Thread drawthread;
 		Boolean running;
 		Bitmap centro;
-		Bitmap circulo;		
+		Bitmap circulo;
+		
+		///////////Play Mode ///////////
+		Bitmap ballb;
+		Bitmap ballr;
+		Bitmap bally;
+		Bitmap ballg;
+		Bitmap ballnext;
+		Bitmap buttonclose;
+		Bitmap buttonopen;
+		int pincersstate;
+		boolean addtime;
+		boolean inplay;
+		boolean catchball;
+		boolean release;
+		int score;
+		int ballcolor;
+
+		/////manejo de tiempo //////
+		int count=0;
+		int totalTime= 5000;
+		int timeLeft= totalTime;
+		float lefttimeprogress;
+			
 		public DrawJoystick(Context context) {
 			
 			super(context);
@@ -411,6 +453,24 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					R.drawable.remotecontrolbackground);
 			circulo = BitmapFactory.decodeResource(getResources(), 
 					R.drawable.pointremotecontrol);
+			///////////Modo play /////////////////
+			ballb = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.ballblue);
+			ballr = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.ballred);
+			bally = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.ballyellow);
+			bally = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.ballgreen);
+			buttonclose = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.closepincers);
+			buttonopen = BitmapFactory.decodeResource(getResources(), 
+					R.drawable.openpincers);
+			nextball();
+			pincersstate=0;
+			inplay=false;
+			catchball=false;
+			score=0;
 			
 			// TODO Auto-generated constructor stub
 		}
@@ -427,6 +487,8 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			// TODO Auto-generated method stub
 			
 			startCanvas();
+			if(playmode)
+				playmodedialog();
 		}
 
 		@Override
@@ -440,7 +502,9 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		{
 			
 			float center_x = canvas.getWidth()/2;
+			float width = canvas.getWidth();
 			float center_y = canvas.getHeight()/2;
+			float height = canvas.getHeight();
 			int size = 30;
 			float x = bar_percentage(canvas.getWidth() - size, center_x, -MAX_VEL, vel_x);
 			float y = bar_percentage(canvas.getHeight() - size, center_y,MAX_VEL, vel_y);
@@ -449,14 +513,284 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 					center_y - centro.getHeight()/2, color);
 			canvas.drawBitmap(circulo, x-circulo.getWidth()/2,
 					y-circulo.getHeight()/2, color);
+			if(playmode){
+				//seleccion de pelotas en funcion next ball
+				//cerrar llamar a start program
+				if(pincersstate==0){//cargar boton de las pinzas
+					canvas.drawBitmap(buttonclose, center_x*5/16-buttonclose.getWidth()/2,
+							center_y*2*13/16-buttonclose.getHeight()/2, color);
+				}else{
+					canvas.drawBitmap(buttonopen, center_x*5/16-buttonopen.getWidth()/2,
+							center_y*2*13/16-buttonopen.getHeight()/2, color);
+				}
+				canvas.drawBitmap(ballnext, center_x*2*2/16-ballnext.getWidth()/2,
+						center_y*2*2/16-ballnext.getHeight()/2, color);
+				if(inplay){
+					timecalc(height);
+				}
+				if(lefttimeprogress<height/4){
+					canvas.drawRect(width*13/14, 0, width , lefttimeprogress, red);
+				}else if(lefttimeprogress<height/2){
+					canvas.drawRect(width*13/14, 0, width , lefttimeprogress, yellow);
+				}
+				else{
+					canvas.drawRect(width*13/14, 0, width , lefttimeprogress, color);
+				}
+				insertTextObjetive(width, height);
+				insertTextScore(width, height);
+				insertTextScorevalue(width, height);
+				//TODO
+				if(!inplay /*&& count>0*/){
+					insertTextgameover(width, height);
+					//GAME OVER
+				}
+			}
+			
 		}
 		
+		public void insertTextObjetive(float width, float height){
+			String text = "Objetivo:";
+			int textColor = Color.GREEN;
+			float textSize=0;
+			textSize=TextSizedpi(textSize);
+			can.save();
+			 can.rotate(90, width*4/16, height/25);
+			 Paint textPaint = new Paint();
+			 textPaint.setAntiAlias(true);
+			 textPaint.setColor(textColor);
+			 textPaint.setTextSize(textSize);
+			 Rect bounds = new Rect();
+			 textPaint.getTextBounds(text, 0, text.length(), bounds);
+			 can.drawText(text, width*4/16, height/25, textPaint);
+			 can.restore();
+			
+		}
+		
+		public void insertTextgameover(float width, float height){
+			String text = "GAME OVER";
+			int textColor = Color.WHITE;
+			float textSize=0;
+			textSize=TextSizedpiGameover(textSize);
+			can.save();
+			 can.rotate(90, width/2, height/2);
+			 Paint textPaint = new Paint();
+			 textPaint.setAntiAlias(true);
+			 textPaint.setColor(textColor);
+			 textPaint.setTextSize(textSize);
+			 Rect bounds = new Rect();
+			 textPaint.getTextBounds(text, 0, text.length(), bounds);
+			 can.drawText(text, width/2-bounds.centerX(), height/2-bounds.centerY(), textPaint);
+			 can.restore();
+			
+		}
+		
+		public void insertTextScore(float width, float height){
+			String text = "Puntaje:";
+			int textColor = Color.GREEN;
+			float textSize = 0;
+			textSize=TextSizedpi(textSize);
+			 can.save();
+			 can.rotate(90, width*13/16, height/25);
+			 Paint textPaint = new Paint();
+			 textPaint.setAntiAlias(true);
+			 textPaint.setColor(textColor);
+			 textPaint.setTextSize(textSize);
+			 Rect bounds = new Rect();
+			 textPaint.getTextBounds(text, 0, text.length(), bounds);
+			 can.drawText(text, width*13/16, height/25, textPaint);
+			 can.restore();
+			
+		}
+		
+		public void insertTextScorevalue(float width, float height){
+			String text = String.valueOf(score);
+			int textColor = Color.GREEN;
+			float textSize=0;
+			textSize=TextSizedpiscore(textSize);
+			can.save();
+			 can.rotate(90, width*11/16, height/25);
+			 Paint textPaint = new Paint();
+			 textPaint.setAntiAlias(true);
+			 textPaint.setColor(textColor);
+			 textPaint.setTextSize(textSize);
+			 Rect bounds = new Rect();
+			 textPaint.getTextBounds(text, 0, text.length(), bounds);
+			 can.drawText(text, width*11/16, height/25, textPaint);
+			 can.restore();
+			
+		}
+		
+		public float TextSizedpi(float textSize){
+			float dpi = getResources().getDisplayMetrics().density;
+			if(dpi ==0.75){
+				textSize=15;
+			}else if(dpi==1){
+				textSize=25;
+			}
+			else if(dpi==1.5){
+				textSize=35;
+			}
+			return textSize;
+		}
+		public float TextSizedpiGameover(float textSize){
+			float dpi = getResources().getDisplayMetrics().density;
+			if(dpi ==0.75){
+				textSize=50;
+			}else if(dpi==1){
+				textSize=70;
+			}
+			else if(dpi==1.5){
+				textSize=90;
+			}
+			return textSize;
+		}
+		public float TextSizedpiscore(float textSize){
+			float dpi = getResources().getDisplayMetrics().density;
+			if(dpi ==0.75){
+				textSize=25;
+			}else if(dpi==1){
+				textSize=35;
+			}
+			else if(dpi==1.5){
+				textSize=45;
+			}
+			return textSize;
+		}
+		
+		public void timecalc(float height){;
+            lefttimeprogress = (height*timeLeft)/totalTime;
+		}
+		
+		public void score(){//manejo de puntaje
+			if(catchball){
+				score = (int)(300 + score + lefttimeprogress/100);
+				count = count -1000;
+				if(count<0)
+					count=0;
+				catchball=false;
+			}
+		}
+		
+		public void validcatchball(int sensorball) throws IOException{
+			Log.e("Mensaje Recibido", String.valueOf(sensorball));
+			if (sensorball==ballcolor){
+				catchball=true;
+				score();
+				int beforeballcolor=ballcolor;
+				while(ballcolor==beforeballcolor){
+					nextball();
+				}
+				totalTime=totalTime-300;
+			}
+		}
+		
+		public void exitgame(){
+			running=false;
+        	thisActivity.detach_remotecontrolgame();
+			thisActivity.launch_mainpet();
+		}
+		
+		public void playmodedialog(){
+			AlertDialog.Builder dialog = new AlertDialog.Builder(thisActivity);  
+	        dialog.setTitle("Tento pelota (?)");		//titulo (opcional)
+	        dialog.setIcon(R.drawable.ic_launcher);		//icono  (opcional)
+	        dialog.setMessage("Debes encontrar la pelota objetivo dentro del tiempo" +
+	        		"controlando el robot y sus pinzas.\n" +
+	        		"¡Cuidado con el tiempo! ¡Entre mas" +
+	        		" rápido las recojas, más puntaje tendras!\n\n"
+	        		); 
+	        
+	        
+	        dialog.setNegativeButton("Salir", new DialogInterface.OnClickListener() {  //boton positivo (opcional)
+	            public void onClick(DialogInterface dialogo1, int id) {  
+	            	exitgame();
+			    }
+	        }); 
+	        dialog.setPositiveButton("Jugar", new DialogInterface.OnClickListener() {  //boton positivo (opcional)
+	            public void onClick(DialogInterface dialogo1, int id) {  
+	            	//aceptar
+	            	inplay=true;
+	            	if(((MainActivity)thisActivity).isConnected()){
+	            		((MainActivity)thisActivity).getBTService().sendPetMessage(0, "OpenClamps");
+	            		((MainActivity)thisActivity).getBTService().sendPetMessage(0, "StopSensors");
+	    				release = true;
+	            	}
+			    }
+	        });
+	        dialog.show();
+	        
+		}
+		
+		public void movepincers() throws IOException{//llama a cerrar las pinzas
+			if(pincersstate==0){//cerrar
+				pincersstate=1;
+				if(((MainActivity)thisActivity).isConnected()){
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "CatchBall");
+    				///validcatchball();
+    				release=false;
+				}
+			}else{//abrir TODO
+				pincersstate=0;
+				if(((MainActivity)thisActivity).isConnected()){
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "ReleaseBall");
+    				release=true;
+				}
+			}
+		}
+		
+		public void nextball(){//escoje una pelota al azar
+			int rand = (int) (Math.random() * 4);
+			
+			if(rand==0){
+				ballnext = ballr;
+				ballcolor=5;
+			}else if(rand==1){
+				ballnext = ballb;
+				ballcolor=2;
+			}else if(rand==2){
+				ballnext = bally;
+				ballcolor=4;
+			}else{
+				ballnext = ballg;
+				ballcolor=3;
+			}
+			
+		}
 		
 		public void update_coordinates(Double x, Double y)
 		{
 			vel_x = x;
 			vel_y = y;
 			
+		}
+		
+		public boolean onTouchEvent(MotionEvent e) {
+			float touchX = (int)e.getX();
+			float touchY = (int)e.getY();
+			float width = canvas.getWidth();
+			float height= canvas.getHeight();
+			
+			if(inplay && playmode){
+				if(touchX>width*5/32-buttonclose.getWidth()/2 && touchX<width*5/32+buttonclose.getWidth()/2 && touchY>height*13/16-buttonclose.getHeight()/2 && touchY<height*13/16+buttonclose.getHeight()/2){
+					switch (e.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+						try {
+							movepincers();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+				      break;
+				    }
+				}
+			}else{
+				switch (e.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					exitgame();
+			      break;
+			    }
+			}
+			  return true;
 		}
 
 		@Override
@@ -465,6 +799,28 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 			while(running){
 				if(hold.getSurface().isValid() && thisActivity.isConnected())
 				{
+					///////////Manejo de tiempo/////
+					if (inplay){
+						timeLeft = totalTime-count;  
+						count++;
+		                if(timeLeft == 0){
+		                	inplay=false;
+		                	final Database_Helper entry = new Database_Helper(thisActivity);
+		            		final DB_Updater updater = new DB_Updater(thisActivity);
+		            		updater.updateHS(entry, 2, score);
+		            		if(updater.unlock_achgame(entry, 2, score, 1000, "Controlador principiante"))
+		            			thisActivity.runOnUiThread(new Runnable() {
+		            		        @Override
+		            		        public void run() {
+		            		        	Toast.makeText(thisActivity, "Logro Controlador principiante Desbloqueado", Toast.LENGTH_SHORT).show();
+		            		        }
+		            		    });
+		                }
+					}
+					if(catchball){
+						score();
+					}
+		            ////////////////////////////////
 					
 					
 					can = hold.lockCanvas();

@@ -659,7 +659,7 @@ public class BTService extends Service implements BTConnectable{
 //     		 					Toast.LENGTH_SHORT).show();
                  		if(thisActivity instanceof MainActivity)
                  		{
-                 				RemoteControl control = ((MainActivity)thisActivity).getRemoteControl();
+                 				RemoteControlGame control = ((MainActivity)thisActivity).getRemoteControlGame();
                  				if(control != null)
                  				{
                  					try {
