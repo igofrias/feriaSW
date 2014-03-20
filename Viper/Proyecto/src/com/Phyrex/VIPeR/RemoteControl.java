@@ -370,8 +370,70 @@ public class RemoteControl extends SherlockFragment implements SensorEventListen
 		}
 		
 	}
-
-        
+    /*
+     * Ejecuta lo que hay que hacer para que el control remoto vuelva
+     * a la normalidad    
+     */
+    public void resumeRemoteControl()
+    {
+    	running=true;
+		manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
+		if(thMesseger != null)
+		{
+			if(!thMesseger.isAlive())
+		
+			{
+				thMesseger.start();
+			}
+		}
+		else
+		{
+			thMesseger = new Thread(messegerRunnable);
+			thMesseger.start();
+			
+		}
+		canvas.startCanvas();
+    }
+    /*
+     * Hace lo necesario para parar el control remoto
+     */
+    public void stopRemoteControl()
+    {
+    	if(playmode){
+			if(!canvas.release){
+				if(((MainActivity)thisActivity).isConnected()){
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "ReleaseBall");//TODO
+				}
+			}
+				if(((MainActivity)thisActivity).isConnected()){
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "CloseClamps");
+					((MainActivity)thisActivity).getBTService().sendPetMessage(0, "StartSensors");	
+				}
+				
+			
+		}
+    	manager.unregisterListener(this);
+		running = false;
+		try {
+			if(thMesseger != null)
+			{
+				thMesseger.join();
+			}
+			canvas.stopCanvas();
+			thMesseger = null;
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+    }
+    /*
+     * Resetea el control remoto en su tipo correspondiente
+     */
+    public void restartRemoteControl(boolean playmode)
+    {
+    	stopRemoteControl();
+    	this.playmode = playmode;
+    	resumeRemoteControl();
+    }
 	public int getMAX_RANGE() {
 		return MAX_RANGE;
 	}

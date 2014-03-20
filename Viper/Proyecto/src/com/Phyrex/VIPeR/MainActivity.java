@@ -360,8 +360,7 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 		else{
 			if(((RemoteControl) fragment).playmode)
 			{
-				//ft.detach(fragment); // Esto fuerza al fragmento a reiniciarse cuando se carga desde el juego de las bolas	
-				ft.remove(fragment);
+				((RemoteControl) fragment).restartRemoteControl(false);
 			}
 			
 			((RemoteControl) fragment).setPlaymode(false);
@@ -607,13 +606,14 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
 	@Override
     protected void onDestroy() {
         btservice.destroyBTCommunicator();
-        if (mBound) {
-            unbindService(btconnection);
-            mBound = false;
-        }
         if (btOnByUs){
             showToast(R.string.bt_off_message, Toast.LENGTH_SHORT);
             BluetoothAdapter.getDefaultAdapter().disable();
+        }
+        if (mBound) {
+            unbindService(btconnection);
+            mBound = false;
+            Log.d("MainActivity","Unbinding BTService");
         }
         btservice.setCurrentActivity(null);
         StatesService.stopStatesService(thisActivity);
