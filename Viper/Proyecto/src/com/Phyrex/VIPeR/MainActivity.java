@@ -397,7 +397,6 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     
     public RemoteControlGame getRemoteControlGame()
     {
-    	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		SherlockFragment fragment = ((RemoteControlGame)getSupportFragmentManager().findFragmentByTag("remotecontrolgame"));
 		if(fragment==null ){
 			return null;
@@ -425,11 +424,14 @@ public class MainActivity extends SlidingFragmentActivity implements BTConnectab
     
   //mata el supa framento
     void detach_remotecontrolgame() {//identificamos y quitamos el fragmento control remoto 
+    	Log.e("remote","detach");
     	FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		SherlockFragment fragment = ((RemoteControlGame)getSupportFragmentManager().findFragmentByTag("remotecontrolgame"));
 
 		if(fragment!=null){
+			Log.e("remote","detach fragment !=null");
 			if(!fragment.isDetached()){
+				Log.e("remote","detach detach");
 				ft.detach(fragment);
 			}
 		}
