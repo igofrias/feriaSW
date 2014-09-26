@@ -1078,6 +1078,7 @@ public class MainPetActivity extends SherlockFragment{
 					timenope=0;
 				}
 				timenope++;
+				can.save();
 				can.restore();
 			}else if(tailposition==-1){
 				can.drawBitmap(tentonopebody, center_x-tentonopebody.getWidth()*1/3, 
